@@ -32,6 +32,16 @@
         }
       }
     },
+    "%@ cm": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ cm"
+          }
+        }
+      }
+    },
     "%@ h Schlaf": {
       "localizations": {
         "en": {
@@ -132,6 +142,16 @@
         }
       }
     },
+    "%lld Sätze eingetragen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld sets logged"
+          }
+        }
+      }
+    },
     "%lld XP · noch %lld XP bis Level %lld": {
       "localizations": {
         "en": {
@@ -148,6 +168,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "%lld × per week. The other days are rest days."
+          }
+        }
+      }
+    },
+    "%lld Übungen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld exercises"
           }
         }
       }
@@ -182,12 +212,42 @@
         }
       }
     },
+    "10 Workouts": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "10 workouts"
+          }
+        }
+      }
+    },
     "10 min einlaufen, 6 × 1 min zügig / 2 min locker": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "10 min warm-up, 6 × 1 min fast / 2 min easy"
+          }
+        }
+      }
+    },
+    "100 Mahlzeiten": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "100 meals"
+          }
+        }
+      }
+    },
+    "100 Sätze": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "100 sets"
           }
         }
       }
@@ -232,12 +292,32 @@
         }
       }
     },
+    "30 Tage am Stück": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "30 days in a row"
+          }
+        }
+      }
+    },
     "40–45 Minuten ruhig": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "40–45 minutes easy"
+          }
+        }
+      }
+    },
+    "50 Workouts": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "50 workouts"
           }
         }
       }
@@ -258,6 +338,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "7 days"
+          }
+        }
+      }
+    },
+    "7 Tage am Stück": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "7 days in a row"
           }
         }
       }
@@ -318,6 +408,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Lose weight"
+          }
+        }
+      }
+    },
+    "Abzeichen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Badges"
           }
         }
       }
@@ -408,6 +508,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "All values are estimates. Körperkompass is no substitute for medical advice."
+          }
+        }
+      }
+    },
+    "Allrounder": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All-rounder"
+          }
+        }
+      }
+    },
+    "Alter": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Age"
           }
         }
       }
@@ -512,6 +632,16 @@
         }
       }
     },
+    "Ausdauerläufer": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Endurance runner"
+          }
+        }
+      }
+    },
     "Ausfallschritte – 3 × 10 je Seite": {
       "localizations": {
         "en": {
@@ -578,6 +708,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Please enter address and code manually."
+          }
+        }
+      }
+    },
+    "Bronze": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bronze"
           }
         }
       }
@@ -1042,6 +1182,16 @@
         }
       }
     },
+    "Erster Schritt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "First step"
+          }
+        }
+      }
+    },
     "Export erstellen (JSON)": {
       "localizations": {
         "en": {
@@ -1292,6 +1442,16 @@
         }
       }
     },
+    "Gold": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gold"
+          }
+        }
+      }
+    },
     "Größe": {
       "localizations": {
         "en": {
@@ -1522,12 +1682,42 @@
         }
       }
     },
+    "Keine Werte": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No values"
+          }
+        }
+      }
+    },
+    "Klasse": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Class"
+          }
+        }
+      }
+    },
     "Klimmzüge oder Latziehen – 3 × 6–10": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Pull-ups or lat pulldown – 3 × 6–10"
+          }
+        }
+      }
+    },
+    "Kniebeugen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Squats"
           }
         }
       }
@@ -1652,6 +1842,16 @@
         }
       }
     },
+    "Kraftpaket": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Powerhouse"
+          }
+        }
+      }
+    },
     "Kreuzheben – 3 × 5": {
       "localizations": {
         "en": {
@@ -1752,12 +1952,52 @@
         }
       }
     },
+    "Level 10": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Level 10"
+          }
+        }
+      }
+    },
+    "Level 25": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Level 25"
+          }
+        }
+      }
+    },
+    "Level 5": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Level 5"
+          }
+        }
+      }
+    },
     "Level aufgestiegen!": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Level up!"
+          }
+        }
+      }
+    },
+    "Liegestütze": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Push-ups"
           }
         }
       }
@@ -1802,6 +2042,26 @@
         }
       }
     },
+    "Max. Gewicht": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Max. weight"
+          }
+        }
+      }
+    },
+    "Max. Wiederholungen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Max. reps"
+          }
+        }
+      }
+    },
     "Meditieren": {
       "localizations": {
         "en": {
@@ -1828,6 +2088,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "My devices"
+          }
+        }
+      }
+    },
+    "Meine Übungen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "My exercises"
           }
         }
       }
@@ -1962,6 +2232,16 @@
         }
       }
     },
+    "Neuling": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Newcomer"
+          }
+        }
+      }
+    },
     "Noch %@ kg bis zum Wunschgewicht": {
       "localizations": {
         "en": {
@@ -1978,6 +2258,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "No measurement yet"
+          }
+        }
+      }
+    },
+    "Noch keine Übung eingetragen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No exercise logged yet"
           }
         }
       }
@@ -2008,6 +2298,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Offline – changes will be synced later (%@)"
+          }
+        }
+      }
+    },
+    "Ohne Fehltag": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No missed day"
           }
         }
       }
@@ -2062,6 +2362,16 @@
         }
       }
     },
+    "Platin": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Platinum"
+          }
+        }
+      }
+    },
     "Profil & Ziele": {
       "localizations": {
         "en": {
@@ -2088,6 +2398,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "End program"
+          }
+        }
+      }
+    },
+    "Programm beendet": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Program finished"
           }
         }
       }
@@ -2142,12 +2462,32 @@
         }
       }
     },
+    "Rang": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rank"
+          }
+        }
+      }
+    },
     "Rudern – 3 × 8–10": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Rows – 3 × 8–10"
+          }
+        }
+      }
+    },
+    "Ruhepol": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calm anchor"
           }
         }
       }
@@ -2188,6 +2528,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Core & mobility"
+          }
+        }
+      }
+    },
+    "Satz eintragen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Log a set"
           }
         }
       }
@@ -2312,6 +2662,16 @@
         }
       }
     },
+    "Serie": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Streak"
+          }
+        }
+      }
+    },
     "Server": {
       "localizations": {
         "en": {
@@ -2328,6 +2688,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Save"
+          }
+        }
+      }
+    },
+    "Silber": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Silver"
+          }
+        }
+      }
+    },
+    "Silber ab 10 Prozent, Gold ab 25 Prozent, Platin ab 50 Prozent Steigerung gegenüber deinem ersten Eintrag.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Silver from 10 percent, gold from 25 percent, platinum from 50 percent improvement over your first entry."
           }
         }
       }
@@ -2368,6 +2748,46 @@
           "stringUnit": {
             "state": "translated",
             "value": "Penalty for missed training"
+          }
+        }
+      }
+    },
+    "Stratege": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Strategist"
+          }
+        }
+      }
+    },
+    "Stufe": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tier"
+          }
+        }
+      }
+    },
+    "Sätze": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sets"
+          }
+        }
+      }
+    },
+    "Sätze eintragen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Log sets"
           }
         }
       }
@@ -2742,12 +3162,42 @@
         }
       }
     },
+    "Wert": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Value"
+          }
+        }
+      }
+    },
+    "Wiederholungen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reps"
+          }
+        }
+      }
+    },
     "Willkommen beim Körperkompass": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Welcome to Körperkompass"
+          }
+        }
+      }
+    },
+    "Workouts": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Workouts"
           }
         }
       }
@@ -2862,6 +3312,26 @@
         }
       }
     },
+    "Zusatzgewicht": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Added weight"
+          }
+        }
+      }
+    },
+    "Zusatzgewicht (kg, optional)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Added weight (kg, optional)"
+          }
+        }
+      }
+    },
     "Zustimmen": {
       "localizations": {
         "en": {
@@ -2948,6 +3418,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "About you"
+          }
+        }
+      }
+    },
+    "Übung": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exercise"
+          }
+        }
+      }
+    },
+    "Übungen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exercises"
           }
         }
       }

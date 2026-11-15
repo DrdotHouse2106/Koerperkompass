@@ -22,7 +22,8 @@ Es gibt keinen zentralen Dienst: Die Entwickler betreiben keinen Server und sehe
 | 🍽 **Ernährung** | Tagesziele, Ringe für Eiweiß/Kohlenhydrate/Fett, 7-Tage-Diagramm, Tagebuch (Frühstück, Mittag, Abend, Snack), optional Foto-Eintrag mit Nährwert-Schätzung |
 | ⚖️ **Gewicht & Maße** | Gewicht, Körperfett, Taille, Hüfte, Brust – mit Verlauf und Wunschgewicht |
 | 🚶 **Aktivität & Schlaf** | Schritte, aktive Energie, Schlaf, Ruhepuls und Trainings aus Apple Health |
-| 🏁 **Abenteuer** | Gamification: Wochenleiste und 🔥-Serie, tägliche Quests, eigene Quests (z. B. Lesen, Meditieren), XP, Level, Ränge (Wanderer → Legende), Attribute (Kraft, Ausdauer, Erholung, Disziplin, Balance) |
+| 🏁 **Abenteuer** | Gamification: Charakterkarte (Level, Workouts, Serie, Klasse, Rang), Abzeichen, Wochenleiste und 🔥-Serie, tägliche Quests, eigene Quests (z. B. Lesen, Meditieren), XP, Level, Ränge (Wanderer → Legende), Attribute (Kraft, Ausdauer, Erholung, Disziplin, Balance) |
+| 📈 **Übungen** | Sätze mit Wiederholungen und Gewicht, Verlauf pro Übung, Stufen Bronze → Silber → Gold → Platin |
 | 🏋️ **Trainingsprogramme** | 4-Wochen-Programme mit Trainings- und Ruhetagen, XP pro Einheit, Vorlagen oder persönlich von Claude erstellt; optional Strafpunkte für verpasste Einheiten |
 | 💧 **Wasser**, 🏋️ **Training** | einfache Beispielmodule – Vorlage für eigene Module |
 | 🧭 **Kompass** | Auswertung über 7/30/90 Tage: Durchschnitte, Trends, Zielerreichung, Zusammenhänge (z. B. Schlaf ↔ Kalorien). Optional ausführliche Auswertung mit Claude |
@@ -188,6 +189,7 @@ Team-ID in `app/Local.xcconfig` eintragen, oben das iPhone als Ziel wählen und 
 | Ernährung | `nutrition` | kcal, protein, carbs, fat (+ meal, name, photo) | Eingabe, Foto |
 | Gewicht & Maße | `body` | weight, bodyFat, waist, hip, chest | Eingabe, Apple Health (Gewicht) |
 | Aktivität & Schlaf | `activity` | steps, activeEnergy, sleepHours, restingHR, workoutMinutes | Apple Health |
+| Übungen | `exercises` | reps, weight (+ exercise) | Eingabe |
 | Wasser | `water` | ml | Eingabe (Beispielmodul) |
 | Training | `training` | minutes (+ name) | Eingabe (Beispielmodul) |
 

@@ -45,6 +45,8 @@ enum Demo {
             }
             context.insert(Entry(module: "water", date: day, values: ["ml": r(4...8) * 250], dirty: false))
             if i % 3 == 0 {
+                context.insert(Entry(module: "exercises", date: day, values: ["exercise": String(localized: "Kniebeugen"), "reps": (10 + Double(i) / 3).rounded()], dirty: false))
+                context.insert(Entry(module: "exercises", date: day, values: ["exercise": String(localized: "Liegestütze"), "reps": (6 + Double(i) / 4).rounded()], dirty: false))
                 context.insert(Entry(id: "plan-" + day, module: "training", date: day, values: ["name": String(localized: "Laufen"), "minutes": r(30...50)], dirty: false))
             }
         }

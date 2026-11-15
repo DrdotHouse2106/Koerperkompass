@@ -28,7 +28,7 @@ type Field struct {
 }
 
 // modules: die Liste aller Module. Reihenfolge = Reihenfolge in der Analyse.
-var modules = []Module{quests, nutrition, body, activity, water, training}
+var modules = []Module{quests, nutrition, body, activity, water, training, exercises}
 
 func moduleByID(id string) *Module {
 	for i := range modules {

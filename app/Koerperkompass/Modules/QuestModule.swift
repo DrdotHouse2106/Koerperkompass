@@ -96,6 +96,12 @@ struct Quest {
     }
 }
 
+struct Badge {
+    let title: LocalizedStringResource
+    let symbol: String
+    let unlocked: Bool
+}
+
 /// Stand einer Quest heute
 struct QuestState {
     let quest: Quest
@@ -111,6 +117,10 @@ struct QuestProgress {
     var activeDays = Set<String>()
     var planDone = 0
     var missed = 0
+    var bestStreak = 0
+    var workouts = 0
+    var meals = 0
+    var exerciseSets = 0
 
     /// Level-Kurve: Level n beginnt bei 50·(n−1)² XP – anfangs schnell, später langsamer
     var level: Int { Int((Double(xp) / 50).squareRoot()) + 1 }
@@ -156,6 +166,16 @@ struct QuestProgress {
         let todays = days[Day.today] ?? []
         today = Quest.list(Day.today, profile).map { QuestState(quest: $0, done: $0.done(todays, profile)) }
         activeDays = active
+        var run = 0, prev: Date?
+        for d in active.map(Day.date).sorted() {
+            run = prev.map { Calendar.current.dateComponents([.day], from: $0, to: d).day == 1 } == true ? run + 1 : 1
+            bestStreak = max(bestStreak, run)
+            prev = d
+        }
+        let live = entries.filter { !$0.deleted }
+        workouts = live.filter { $0.module == "training" }.count
+        meals = live.filter { $0.module == "nutrition" }.count
+        exerciseSets = live.filter { $0.module == "exercises" }.count
 
         // Trainingsprogramm: absolvierte Einheiten zählen, verpasste Trainingstage ggf. abziehen
         if let plan = profile.plan {
@@ -172,6 +192,36 @@ struct QuestProgress {
 
     /// Attributwert: startet bei 1, +1 je 100 XP
     func value(_ a: Attribute) -> Int { 1 + (attributes[a] ?? 0) / 100 }
+
+    /// Klasse nach dem stärksten Attribut
+    var characterClass: LocalizedStringResource {
+        guard let top = attributes.max(by: { $0.value < $1.value })?.key else { return "Neuling" }
+        switch top {
+        case .strength: return "Kraftpaket"
+        case .endurance: return "Ausdauerläufer"
+        case .recovery: return "Ruhepol"
+        case .discipline: return "Stratege"
+        case .balance: return "Allrounder"
+        }
+    }
+
+    /// Abzeichen – werden aus dem Fortschritt berechnet
+    func badges(_ profile: Profile) -> [Badge] {
+        [
+            Badge(title: "Erster Schritt", symbol: "shoeprints.fill", unlocked: xp > 0),
+            Badge(title: "7 Tage am Stück", symbol: "flame", unlocked: bestStreak >= 7),
+            Badge(title: "30 Tage am Stück", symbol: "flame.fill", unlocked: bestStreak >= 30),
+            Badge(title: "10 Workouts", symbol: "dumbbell", unlocked: workouts >= 10),
+            Badge(title: "50 Workouts", symbol: "dumbbell.fill", unlocked: workouts >= 50),
+            Badge(title: "100 Mahlzeiten", symbol: "fork.knife", unlocked: meals >= 100),
+            Badge(title: "100 Sätze", symbol: "chart.line.uptrend.xyaxis", unlocked: exerciseSets >= 100),
+            Badge(title: "Level 5", symbol: "star", unlocked: level >= 5),
+            Badge(title: "Level 10", symbol: "star.fill", unlocked: level >= 10),
+            Badge(title: "Level 25", symbol: "crown", unlocked: level >= 25),
+            Badge(title: "Programm beendet", symbol: "trophy", unlocked: profile.plan?.finished == true && planDone > 0),
+            Badge(title: "Ohne Fehltag", symbol: "checkmark.seal", unlocked: profile.plan != nil && planDone >= 6 && missed == 0),
+        ]
+    }
 }
 
 private struct QuestTile: View {
@@ -201,19 +251,7 @@ private struct QuestDetail: View {
         List {
             Section {
                 WeekStrip(active: p.activeDays)
-                VStack(spacing: 8) {
-                    Image(systemName: "safari.fill").font(.system(size: 56)).foregroundStyle(.orange.gradient)
-                        .symbolEffect(.bounce, value: p.level)
-                    Text("Level \(p.level)").font(.largeTitle.bold())
-                    Text(p.rank).font(.headline).foregroundStyle(.secondary)
-                    ProgressView(value: p.levelProgress).tint(.orange)
-                    Text("\(p.xp) XP · noch \(QuestProgress.xp(for: p.level + 1) - p.xp) XP bis Level \(p.level + 1)")
-                        .font(.caption).foregroundStyle(.secondary)
-                    if let next = p.nextRank {
-                        Text("Nächster Rang ab Level \(next.level): \(String(localized: next.title))").font(.caption).foregroundStyle(.secondary)
-                    }
-                }
-                .frame(maxWidth: .infinity)
+                CharacterCard(progress: p)
             }
 
             TodayCard(progress: p)
@@ -251,6 +289,21 @@ private struct QuestDetail: View {
                 }
             } header: { Text("Eigene Quests") } footer: { Text("Gelten jeden Tag, +15 XP pro Quest.") }
 
+            Section("Abzeichen") {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 90))], spacing: 16) {
+                    ForEach(p.badges(state.profile), id: \.symbol) { b in
+                        VStack(spacing: 6) {
+                            Image(systemName: b.symbol).font(.title2)
+                                .frame(width: 52, height: 52)
+                                .background(b.unlocked ? Color.orange.opacity(0.2) : Color.gray.opacity(0.1), in: Circle())
+                                .foregroundStyle(b.unlocked ? .orange : .secondary)
+                            Text(b.title).font(.caption2).multilineTextAlignment(.center)
+                        }
+                        .opacity(b.unlocked ? 1 : 0.45)
+                    }
+                }
+                .padding(.vertical, 4)
+            }
             Section("Attribute") {
                 ForEach(Attribute.allCases, id: \.self) { a in
                     HStack {
@@ -339,6 +392,11 @@ private struct TodayCard: View {
                     state.changed(context)
                 }
                 .buttonStyle(.borderedProminent).tint(.orange).disabled(doneToday)
+                if state.profile.modules.contains("exercises") {
+                    NavigationLink("Sätze eintragen") {
+                        ExerciseModule().detail(entries.filter { $0.module == "exercises" && !$0.deleted }).navigationTitle(Text("Übungen"))
+                    }
+                }
             } else if plan != nil {
                 Label("Ruhetag", systemImage: "moon.zzz").font(.headline)
                 Text("Erholung gehört zum Training. Heute zählen deine eigenen Quests – Schlaf, Essen, Ausgleich.")
@@ -356,5 +414,57 @@ private struct TodayCard: View {
             }
             NavigationLink("Trainingsprogramme") { PlanView() }
         } header: { Text(state.profile.plan?.name ?? String(localized: "Training")) }
+    }
+}
+
+/// Charakterkarte: Ringe für Level, Workouts und Serie, Klasse, Rang und Körperdaten
+private struct CharacterCard: View {
+    let progress: QuestProgress
+    @Environment(AppState.self) private var state
+    @Query(sort: \Entry.date) private var entries: [Entry]
+
+    var body: some View {
+        let p = progress, prof = state.profile
+        let weight = entries.last { $0.module == "body" && !$0.deleted && $0.num("weight") != nil }?.num("weight") ?? prof.weight
+        VStack(spacing: 14) {
+            HStack {
+                stat(Text("\(p.level)"), "Level", p.levelProgress, .orange)
+                stat(Text("\(p.workouts)"), "Workouts", min(Double(p.workouts % 10) / 10, 1), .purple)
+                stat(Text("\(p.streak)"), "Serie", min(Double(p.streak) / 7, 1), .red)
+            }
+            Grid(alignment: .leading, horizontalSpacing: 12, verticalSpacing: 6) {
+                GridRow {
+                    Text("Klasse").foregroundStyle(.secondary); Text(p.characterClass).bold()
+                    Text("Größe").foregroundStyle(.secondary); Text("\(prof.height.whole) cm").bold()
+                }
+                GridRow {
+                    Text("Rang").foregroundStyle(.secondary); Text(p.rank).bold()
+                    Text("Gewicht").foregroundStyle(.secondary); Text("\(weight.short) kg").bold()
+                }
+                GridRow {
+                    Text("Alter").foregroundStyle(.secondary); Text("\(prof.age)").bold()
+                    Text("Ziel").foregroundStyle(.secondary); Text("\(prof.targetWeight.short) kg").bold()
+                }
+            }
+            .font(.subheadline)
+            Text("\(p.xp) XP · noch \(QuestProgress.xp(for: p.level + 1) - p.xp) XP bis Level \(p.level + 1)")
+                .font(.caption).foregroundStyle(.secondary)
+            if let next = p.nextRank {
+                Text("Nächster Rang ab Level \(next.level): \(String(localized: next.title))").font(.caption).foregroundStyle(.secondary)
+            }
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 6)
+    }
+
+    private func stat(_ value: Text, _ label: LocalizedStringResource, _ progress: Double, _ color: Color) -> some View {
+        VStack(spacing: 6) {
+            ZStack {
+                Ring(progress: progress, color: color, size: 64)
+                value.font(.title3.bold())
+            }
+            Text(label).font(.caption).foregroundStyle(.secondary)
+        }
+        .frame(maxWidth: .infinity)
     }
 }

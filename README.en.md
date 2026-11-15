@@ -19,6 +19,7 @@ There is no central service: the developers run no server and never see any data
 - ⚖️ **Weight & measurements** – weight, body fat, waist, hip, chest, with history and target weight
 - 🚶 **Activity & sleep** – steps, active energy, sleep, resting heart rate and workouts from Apple Health
 - 🏁 **Adventure** – gamification: week strip and 🔥 streak, daily and custom quests, XP, levels, ranks, attributes
+- 📈 **Exercises** – log sets with reps and weight, progress chart per exercise, tiers bronze → silver → gold → platinum
 - 🏋️ **Training programs** – 4-week programs with training and rest days, XP per session, templates or created by Claude; optional penalties for missed sessions
 - 💧 **Water**, 🏋️ **Training** – simple sample modules, templates for your own modules
 - 🧭 **Compass** – 7/30/90-day analysis: averages, trends, goal achievement, correlations (e.g. sleep ↔ calories). Optional detailed analysis with Claude
