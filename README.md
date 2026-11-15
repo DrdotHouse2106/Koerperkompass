@@ -22,9 +22,10 @@ Es gibt keinen zentralen Dienst: Die Entwickler betreiben keinen Server und sehe
 | 🍽 **Ernährung** | Tagesziele, Ringe für Eiweiß/Kohlenhydrate/Fett, 7-Tage-Diagramm, Tagebuch (Frühstück, Mittag, Abend, Snack), optional Foto-Eintrag mit Nährwert-Schätzung |
 | ⚖️ **Gewicht & Maße** | Gewicht, Körperfett, Taille, Hüfte, Brust – mit Verlauf und Wunschgewicht |
 | 🚶 **Aktivität & Schlaf** | Schritte, aktive Energie, Schlaf, Ruhepuls und Trainings aus Apple Health |
+| 🏁 **Abenteuer** | Gamification: tägliche Quests, XP, Level, Ränge (Wanderer → Legende), Attribute (Kraft, Ausdauer, Erholung, Disziplin, Balance) und Serien |
 | 💧 **Wasser**, 🏋️ **Training** | einfache Beispielmodule – Vorlage für eigene Module |
 | 🧭 **Kompass** | Auswertung über 7/30/90 Tage: Durchschnitte, Trends, Zielerreichung, Zusammenhänge (z. B. Schlaf ↔ Kalorien). Optional ausführliche Auswertung mit Claude |
-| 👨‍👩‍👧 **Familie** | mehrere Nutzer pro Server, jeder sieht nur seine Daten |
+| 👥 **Mehrere Nutzer** | weitere Personen einladen – jede mit eigenem Konto, eigenen Zugängen und eigenen Daten |
 | ✈️ **Offline** | lokaler Zwischenspeicher, Abgleich sobald der Server erreichbar ist |
 | 🎮 **Demo-Modus** | mit Beispieldaten, ganz ohne Server |
 
@@ -144,10 +145,37 @@ Alle Daten liegen in **einer SQLite-Datei** (`data/koerperkompass.db`, dazu ggf.
    Die Tagesziele werden nach **Mifflin-St-Jeor** berechnet (mit aktiver Energie aus Apple Health, falls vorhanden) und lassen sich später ändern.
 3. Optional Apple Health verbinden.
 
-**Weitere Geräte und Familienmitglieder:** *Einstellungen → Server → „Weiteres eigenes Gerät koppeln“* bzw. *„Familienmitglied einladen“* zeigt einen QR-Code (einmalig, 24 Stunden gültig).
-Auf dem Server geht es auch mit `docker exec koerperkompass /koerperkompass invite`.
+### Weitere Personen und Geräte
+
+- **Weitere Person einladen** (*Einstellungen → Server*): Name eingeben → QR-Code bzw. Link (einmalig, 24 Stunden gültig).
+  Die Person bekommt ein **eigenes Konto mit eigenem Zugang**; ihre Daten sind von deinen getrennt, keiner sieht die Daten des anderen.
+- **Weiteres eigenes Gerät koppeln** (z. B. iPad): gleiches Konto, gleiche Daten.
+- **Meine Geräte:** gekoppelte Geräte ansehen und einzelnen den Zugang entziehen (z. B. bei Verlust).
+- Auf dem Server: `docker exec koerperkompass /koerperkompass invite "Name"`.
 
 **Ohne Server ausprobieren:** „Demo ausprobieren“ auf dem Startbildschirm.
+
+---
+
+## App auf dein iPhone bringen
+
+Solange die App noch nicht im App Store ist, gibt es zwei Wege:
+
+**A) TestFlight (empfohlen, ohne Mac)** – braucht einen Apple-Developer-Account (99 €/Jahr):
+
+1. In [App Store Connect](https://appstoreconnect.apple.com) unter *Apps → +* eine neue App anlegen: Bundle-ID `de.drdothouse.koerperkompass`
+   (falls nicht auswählbar: vorher unter [developer.apple.com → Identifiers](https://developer.apple.com/account/resources/identifiers) anlegen, Fähigkeit **HealthKit** anhaken).
+2. *Benutzer und Zugriff → Integrationen → App Store Connect API*: Schlüssel mit Rolle *App Manager* erzeugen, `.p8` herunterladen, Key-ID und Issuer-ID notieren.
+3. Im GitHub-Repo unter *Settings → Secrets and variables → Actions* anlegen:
+   `APPLE_TEAM_ID`, `ASC_KEY_ID`, `ASC_ISSUER_ID`, `ASC_KEY_P8` (kompletter Inhalt der `.p8`).
+4. *Actions → „TestFlight (iOS)“ → Run workflow*. Nach ca. 10–20 Minuten erscheint der Build in App Store Connect.
+5. In App Store Connect unter *TestFlight* dich als **interne Testerin/internen Tester** eintragen, auf dem iPhone die App **TestFlight** installieren und Körperkompass dort installieren.
+
+Danach lädt jeder Push mit Änderungen in `app/` automatisch eine neue Version hoch.
+
+**B) Direkt aus Xcode (Mac nötig):** iPhone per Kabel anschließen, `cd app && xcodegen generate && open Koerperkompass.xcodeproj`,
+Team-ID in `app/Local.xcconfig` eintragen, oben das iPhone als Ziel wählen und ▶︎ drücken. Auf dem iPhone den Entwicklermodus aktivieren
+(*Einstellungen → Datenschutz & Sicherheit → Entwicklermodus*).
 
 ---
 
@@ -155,6 +183,7 @@ Auf dem Server geht es auch mit `docker exec koerperkompass /koerperkompass invi
 
 | Modul | id | Felder | Quelle |
 |---|---|---|---|
+| Abenteuer | `quests` | – (berechnet aus allen anderen Modulen) | Quests, XP, Level |
 | Ernährung | `nutrition` | kcal, protein, carbs, fat (+ meal, name, photo) | Eingabe, Foto |
 | Gewicht & Maße | `body` | weight, bodyFat, waist, hip, chest | Eingabe, Apple Health (Gewicht) |
 | Aktivität & Schlaf | `activity` | steps, activeEnergy, sleepHours, restingHR, workoutMinutes | Apple Health |

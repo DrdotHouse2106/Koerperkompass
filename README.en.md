@@ -18,9 +18,10 @@ There is no central service: the developers run no server and never see any data
 - 🍽 **Nutrition** – daily goals, protein/carb/fat rings, 7-day chart, diary (breakfast, lunch, dinner, snack), optional photo entry with nutrient estimate
 - ⚖️ **Weight & measurements** – weight, body fat, waist, hip, chest, with history and target weight
 - 🚶 **Activity & sleep** – steps, active energy, sleep, resting heart rate and workouts from Apple Health
+- 🏁 **Adventure** – gamification: daily quests, XP, levels, ranks, attributes and streaks
 - 💧 **Water**, 🏋️ **Training** – simple sample modules, templates for your own modules
 - 🧭 **Compass** – 7/30/90-day analysis: averages, trends, goal achievement, correlations (e.g. sleep ↔ calories). Optional detailed analysis with Claude
-- 👨‍👩‍👧 **Family** – several users per server, each only sees their own data
+- 👥 **Multiple users** – invite other people, each with their own account, own access and own data
 - ✈️ **Offline** – local cache, syncs when the server is reachable
 - 🎮 **Demo mode** – sample data, no server needed
 
@@ -83,10 +84,15 @@ All data is stored in **one SQLite file** (`data/koerperkompass.db` plus `-wal`/
 
 More devices and family members: *Settings → Server → invite*, or `docker exec koerperkompass /koerperkompass invite` on the server.
 
+## Getting the app onto your iPhone
+
+Until it is on the App Store: create the app in App Store Connect (bundle ID `de.drdothouse.koerperkompass`, HealthKit enabled), create an App Store Connect API key, add the secrets `APPLE_TEAM_ID`, `ASC_KEY_ID`, `ASC_ISSUER_ID`, `ASC_KEY_P8` to the GitHub repo, run the “TestFlight (iOS)” workflow and install the build via the TestFlight app. Alternatively build it from Xcode on a Mac. Details in the German [README](README.md#app-auf-dein-iphone-bringen).
+
 ## Modules
 
 | Module | id | Fields |
 |---|---|---|
+| Adventure | `quests` | – (computed from all other modules) |
 | Nutrition | `nutrition` | kcal, protein, carbs, fat |
 | Weight & measurements | `body` | weight, bodyFat, waist, hip, chest |
 | Activity & sleep | `activity` | steps, activeEnergy, sleepHours, restingHR, workoutMinutes |

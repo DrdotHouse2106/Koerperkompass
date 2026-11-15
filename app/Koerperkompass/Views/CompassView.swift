@@ -26,7 +26,7 @@ struct CompassView: View {
                 .pickerStyle(.segmented)
                 .listRowBackground(Color.clear)
 
-                ForEach(state.activeModules, id: \.id) { m in
+                ForEach(state.activeModules.filter { !$0.fields.isEmpty }, id: \.id) { m in
                     let stats = m.summary(entries(m.id), days: days)
                     Section {
                         if stats.isEmpty { Text("Keine Daten im Zeitraum").foregroundStyle(.secondary) }

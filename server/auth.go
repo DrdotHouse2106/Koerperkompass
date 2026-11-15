@@ -11,17 +11,17 @@ import (
 )
 
 // Kopplungscodes: 8 Zeichen ohne verwechselbare Zeichen, einmalig, 24 Stunden gültig.
-// user_id 0 = neuer Nutzer, sonst weiteres Gerät desselben Nutzers.
+// user_id 0 = neuer Nutzer (mit eigenem Konto und eigenen Daten), sonst weiteres Gerät desselben Nutzers.
 const codeChars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"
 
-func newCode(userID int64) (string, error) {
+func newCode(userID int64, name string) (string, error) {
 	b := make([]byte, 8)
 	rand.Read(b)
 	for i := range b {
 		b[i] = codeChars[int(b[i])%len(codeChars)]
 	}
 	code := string(b[:4]) + "-" + string(b[4:])
-	_, err := db.Exec(`INSERT INTO codes(code, user_id, expires) VALUES(?,?,?)`, code, userID, time.Now().Add(24*time.Hour).Unix())
+	_, err := db.Exec(`INSERT INTO codes(code, user_id, name, expires) VALUES(?,?,?,?)`, code, userID, name, time.Now().Add(24*time.Hour).Unix())
 	return code, err
 }
 
@@ -36,7 +36,7 @@ func firstStartCode() string {
 	if db.QueryRow(`SELECT code FROM codes WHERE user_id=0 AND expires>?`, time.Now().Unix()).Scan(&code) == nil {
 		return code
 	}
-	code, _ = newCode(0)
+	code, _ = newCode(0, "")
 	return code
 }
 
@@ -53,8 +53,12 @@ func pair(code, name, device string) (token string, userID int64, err error) {
 		return
 	}
 	defer tx.Rollback()
-	if err = tx.QueryRow(`DELETE FROM codes WHERE code=? AND expires>? RETURNING user_id`, code, time.Now().Unix()).Scan(&userID); err != nil {
+	var codeName string
+	if err = tx.QueryRow(`DELETE FROM codes WHERE code=? AND expires>? RETURNING user_id, name`, code, time.Now().Unix()).Scan(&userID, &codeName); err != nil {
 		return
+	}
+	if codeName != "" {
+		name = codeName
 	}
 	now := time.Now().Unix()
 	if userID == 0 {

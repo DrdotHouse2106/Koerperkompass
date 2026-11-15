@@ -11,6 +11,8 @@ struct SettingsView: View {
     @State private var importing = false
     @State private var confirmReset = false
     @State private var message: String?
+    @State private var askName = false
+    @State private var memberName = ""
 
     var body: some View {
         @Bindable var state = state
@@ -58,9 +60,10 @@ struct SettingsView: View {
                         if let error = state.syncError { Text(error).foregroundStyle(.orange) }
                         Button("Jetzt abgleichen", systemImage: "arrow.triangle.2.circlepath") { Task { await state.sync(context) } }
                         Button("Weiteres eigenes Gerät koppeln", systemImage: "iphone") { createInvite(sameUser: true) }
-                        Button("Familienmitglied einladen", systemImage: "person.badge.plus") { createInvite(sameUser: false) }
+                        Button("Weitere Person einladen", systemImage: "person.badge.plus") { memberName = ""; askName = true }
+                        NavigationLink("Meine Geräte") { DevicesView() }
                     } header: { Text("Server") } footer: {
-                        Text("Familienmitglieder bekommen ein eigenes Konto auf deinem Server und sehen nur ihre eigenen Daten.")
+                        Text("Eingeladene Personen bekommen ein eigenes Konto mit eigenem Zugang auf deinem Server und sehen nur ihre eigenen Daten.")
                     }
                 }
                 Section("Daten") {
@@ -91,6 +94,13 @@ struct SettingsView: View {
             } message: {
                 Text("Die Daten auf deinem Server bleiben erhalten.")
             }
+            .alert("Weitere Person einladen", isPresented: $askName) {
+                TextField("Name", text: $memberName)
+                Button("Einladen") { createInvite(sameUser: false, name: memberName) }
+                Button("Abbrechen", role: .cancel) {}
+            } message: {
+                Text("Die Person bekommt ein eigenes Konto. Ihre Daten bleiben getrennt von deinen.")
+            }
             .sheet(item: $invite) { InviteView(link: $0.link) }
             .fileImporter(isPresented: $importing, allowedContentTypes: [.json]) { result in
                 if case .success(let url) = result { importFile(url) }
@@ -100,10 +110,10 @@ struct SettingsView: View {
 
     private var appVersion: String { Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "" }
 
-    private func createInvite(sameUser: Bool) {
+    private func createInvite(sameUser: Bool, name: String = "") {
         Task {
             do {
-                let r = try await state.api.object("POST", "/api/invite", json: ["sameUser": sameUser])
+                let r = try await state.api.object("POST", "/api/invite", json: ["sameUser": sameUser, "name": name])
                 if let code = r["code"] as? String {
                     var c = URLComponents()
                     c.scheme = "koerperkompass"
@@ -180,5 +190,50 @@ struct InviteView: View {
         guard let out = f.outputImage?.transformed(by: CGAffineTransform(scaleX: 10, y: 10)),
               let cg = CIContext().createCGImage(out, from: out.extent) else { return nil }
         return UIImage(cgImage: cg)
+    }
+}
+
+/// Eigene gekoppelte Geräte – Zugang einzelner Geräte widerrufen (z. B. bei Verlust)
+struct DevicesView: View {
+    @Environment(AppState.self) private var state
+    @State private var name = ""
+    @State private var devices: [[String: Any]] = []
+    @State private var error: String?
+
+    var body: some View {
+        List {
+            if !name.isEmpty { LabeledContent("Konto", value: name) }
+            Section {
+                ForEach(devices.indices, id: \.self) { i in
+                    let d = devices[i]
+                    HStack {
+                        Text(d["device"] as? String ?? "–")
+                        Spacer()
+                        if d["current"] as? Bool == true { Text("Dieses Gerät").foregroundStyle(.secondary) }
+                    }
+                    .deleteDisabled(d["current"] as? Bool == true)
+                }
+                .onDelete { idx in idx.forEach { remove(devices[$0]) } }
+            } footer: { Text("Zum Entfernen nach links wischen. Das Gerät muss danach neu gekoppelt werden.") }
+            if let error { Text(error).foregroundStyle(.red) }
+        }
+        .navigationTitle("Meine Geräte")
+        .task { await load() }
+    }
+
+    private func load() async {
+        do {
+            let r = try await state.api.object("GET", "/api/me")
+            name = r["name"] as? String ?? ""
+            devices = r["devices"] as? [[String: Any]] ?? []
+        } catch { self.error = error.localizedDescription }
+    }
+
+    private func remove(_ d: [String: Any]) {
+        guard let id = (d["id"] as? NSNumber)?.intValue else { return }
+        Task {
+            _ = try? await state.api.call("DELETE", "/api/devices/\(id)")
+            await load()
+        }
     }
 }

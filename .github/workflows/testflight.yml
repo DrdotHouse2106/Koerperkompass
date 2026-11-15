@@ -70,6 +70,10 @@ jobs:
           ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
         run: |
+          if [ -z "$ASC_KEY_ID" ] || [ -z "$APPLE_TEAM_ID" ]; then
+            echo "::warning::Secrets für App Store Connect fehlen – die App wurde gebaut, aber nicht hochgeladen."
+            exit 0
+          fi
           /usr/libexec/PlistBuddy -c "Set :teamID $APPLE_TEAM_ID" exportOptions.plist
           xcodebuild -exportArchive -archivePath "$RUNNER_TEMP/App.xcarchive" \
             -exportOptionsPlist exportOptions.plist -exportPath "$RUNNER_TEMP/export" \

@@ -112,12 +112,42 @@
         }
       }
     },
+    "%lld XP · noch %lld XP bis Level %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld XP · %lld XP to level %lld"
+          }
+        }
+      }
+    },
+    "%lld/%lld Quests · 🔥 %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld/%lld quests · 🔥 %lld"
+          }
+        }
+      }
+    },
     "+%@ ml": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "+%@ ml"
+          }
+        }
+      }
+    },
+    "+%lld XP": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "+%lld XP"
           }
         }
       }
@@ -132,12 +162,32 @@
         }
       }
     },
+    "7 Stunden Schlaf": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "7 hours of sleep"
+          }
+        }
+      }
+    },
     "7 Tage": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "7 days"
+          }
+        }
+      }
+    },
+    "8.000 Schritte": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "8,000 steps"
           }
         }
       }
@@ -168,6 +218,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Dinner"
+          }
+        }
+      }
+    },
+    "Abenteuer": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adventure"
           }
         }
       }
@@ -228,6 +288,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "All sample data will be deleted."
+          }
+        }
+      }
+    },
+    "Alle Quests eines Tages geschafft: +%lld XP Bonus. Serie: %lld Tage in Folge.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All quests of a day done: +%lld XP bonus. Streak: %lld days in a row."
           }
         }
       }
@@ -302,6 +372,26 @@
         }
       }
     },
+    "Attribute": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Attributes"
+          }
+        }
+      }
+    },
+    "Ausdauer": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Endurance"
+          }
+        }
+      }
+    },
     "Ausführliche Auswertung mit Claude": {
       "localizations": {
         "en": {
@@ -318,6 +408,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Analysing …"
+          }
+        }
+      }
+    },
+    "Balance": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Balance"
           }
         }
       }
@@ -492,6 +592,16 @@
         }
       }
     },
+    "Die Person bekommt ein eigenes Konto. Ihre Daten bleiben getrennt von deinen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The person gets their own account. Their data stays separate from yours."
+          }
+        }
+      }
+    },
     "Die Schätzung ist nur ein Anhaltspunkt – bitte prüfen.": {
       "localizations": {
         "en": {
@@ -512,6 +622,46 @@
         }
       }
     },
+    "Dieses Gerät": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This device"
+          }
+        }
+      }
+    },
+    "Disziplin": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Discipline"
+          }
+        }
+      }
+    },
+    "Drei Hauptmahlzeiten erfassen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Log three main meals"
+          }
+        }
+      }
+    },
+    "Du hast Level %lld erreicht – %@.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You reached level %lld – %@."
+          }
+        }
+      }
+    },
     "Eigener Server": {
       "localizations": {
         "en": {
@@ -528,6 +678,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "A few details so Körperkompass can suggest suitable daily goals."
+          }
+        }
+      }
+    },
+    "Eingeladene Personen bekommen ein eigenes Konto mit eigenem Zugang auf deinem Server und sehen nur ihre eigenen Daten.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Invited people get their own account with their own access on your server and only see their own data."
+          }
+        }
+      }
+    },
+    "Einladen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Invite"
           }
         }
       }
@@ -592,12 +762,42 @@
         }
       }
     },
+    "Eiweißziel erreichen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reach protein goal"
+          }
+        }
+      }
+    },
     "Energie": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Energy"
+          }
+        }
+      }
+    },
+    "Entdecker": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Explorer"
+          }
+        }
+      }
+    },
+    "Erholung": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recovery"
           }
         }
       }
@@ -638,26 +838,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Extremely active"
-          }
-        }
-      }
-    },
-    "Familienmitglied einladen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Invite family member"
-          }
-        }
-      }
-    },
-    "Familienmitglieder bekommen ein eigenes Konto auf deinem Server und sehen nur ihre eigenen Daten.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Family members get their own account on your server and only see their own data."
           }
         }
       }
@@ -752,6 +932,16 @@
         }
       }
     },
+    "Fährtenleser": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tracker"
+          }
+        }
+      }
+    },
     "Für die Auswertung werden Profil und zusammengefasste Werte der aktiven Module über deinen Server an die Claude API (Anthropic) gesendet. Health-Daten nur, wenn du ihrem Hochladen zugestimmt hast. Du kannst die Zustimmung in den Einstellungen widerrufen.": {
       "localizations": {
         "en": {
@@ -798,6 +988,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Weight & measurements"
+          }
+        }
+      }
+    },
+    "Gewicht messen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Weigh yourself"
           }
         }
       }
@@ -882,6 +1082,16 @@
         }
       }
     },
+    "Heutige Quests": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Today’s quests"
+          }
+        }
+      }
+    },
     "Hinzufügen": {
       "localizations": {
         "en": {
@@ -952,12 +1162,32 @@
         }
       }
     },
+    "Kalorien im Zielbereich": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calories within target"
+          }
+        }
+      }
+    },
     "Kalorienziel (±10 Prozent) an %lld von %lld erfassten Tagen erreicht": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Calorie goal (±10 percent) reached on %lld of %lld logged days"
+          }
+        }
+      }
+    },
+    "Kartograph": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cartographer"
           }
         }
       }
@@ -1042,6 +1272,16 @@
         }
       }
     },
+    "Konto": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Account"
+          }
+        }
+      }
+    },
     "Koppeln": {
       "localizations": {
         "en": {
@@ -1068,6 +1308,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Pairing code"
+          }
+        }
+      }
+    },
+    "Kraft": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Strength"
           }
         }
       }
@@ -1102,6 +1352,16 @@
         }
       }
     },
+    "Legende": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Legend"
+          }
+        }
+      }
+    },
     "Leicht aktiv": {
       "localizations": {
         "en": {
@@ -1122,6 +1382,26 @@
         }
       }
     },
+    "Level %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Level %lld"
+          }
+        }
+      }
+    },
+    "Level aufgestiegen!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Level up!"
+          }
+        }
+      }
+    },
     "Link teilen": {
       "localizations": {
         "en": {
@@ -1138,6 +1418,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Let’s go"
+          }
+        }
+      }
+    },
+    "Meine Geräte": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "My devices"
           }
         }
       }
@@ -1212,6 +1502,26 @@
         }
       }
     },
+    "Name": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Name"
+          }
+        }
+      }
+    },
+    "Navigator": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Navigator"
+          }
+        }
+      }
+    },
     "Neue Einheit": {
       "localizations": {
         "en": {
@@ -1248,6 +1558,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "No measurement yet"
+          }
+        }
+      }
+    },
+    "Nächster Rang ab Level %lld: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next rank at level %lld: %@"
           }
         }
       }
@@ -1292,6 +1612,16 @@
         }
       }
     },
+    "Pfadfinder": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scout"
+          }
+        }
+      }
+    },
     "Profil & Ziele": {
       "localizations": {
         "en": {
@@ -1308,6 +1638,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Scan QR code"
+          }
+        }
+      }
+    },
+    "Quests richten sich nach deinen eingeschalteten Modulen und Tageszielen. Es geht um kleine, gesunde Gewohnheiten – nicht um Rekorde.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quests follow your enabled modules and daily goals. It’s about small, healthy habits – not records."
           }
         }
       }
@@ -1532,6 +1872,16 @@
         }
       }
     },
+    "Training absolvieren": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Complete a workout"
+          }
+        }
+      }
+    },
     "Trennen und lokale Daten löschen": {
       "localizations": {
         "en": {
@@ -1652,6 +2002,16 @@
         }
       }
     },
+    "Wanderer": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wanderer"
+          }
+        }
+      }
+    },
     "Was hast du trainiert?": {
       "localizations": {
         "en": {
@@ -1672,12 +2032,42 @@
         }
       }
     },
+    "Wasserziel erreichen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reach water goal"
+          }
+        }
+      }
+    },
     "Weiblich": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Female"
+          }
+        }
+      }
+    },
+    "Weiter": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Continue"
+          }
+        }
+      }
+    },
+    "Weitere Person einladen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Invite another person"
           }
         }
       }
@@ -1758,6 +2148,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Goal achievement"
+          }
+        }
+      }
+    },
+    "Zum Entfernen nach links wischen. Das Gerät muss danach neu gekoppelt werden.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Swipe left to remove. The device then has to be paired again."
           }
         }
       }

@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"net/url"
 	"strconv"
+	"strings"
 	"time"
 
 	qrcode "github.com/skip2/go-qrcode"
@@ -33,6 +34,8 @@ func routes() http.Handler {
 	m.HandleFunc("GET /api/modules", func(w http.ResponseWriter, r *http.Request) { writeJSON(w, modules) })
 	m.HandleFunc("POST /api/pair", pairHandler)
 	m.HandleFunc("POST /api/invite", auth(invite))
+	m.HandleFunc("GET /api/me", auth(me))
+	m.HandleFunc("DELETE /api/devices/{id}", auth(deleteDevice))
 	m.HandleFunc("GET /api/profile", auth(getProfile))
 	m.HandleFunc("PUT /api/profile", auth(putProfile))
 	m.HandleFunc("GET /api/entries", auth(listEntries))
@@ -73,18 +76,48 @@ func pairHandler(w http.ResponseWriter, r *http.Request) {
 
 // invite erzeugt einen Code für ein weiteres Gerät („sameUser“) oder ein neues Familienmitglied.
 func invite(w http.ResponseWriter, r *http.Request) {
-	var req struct{ SameUser bool }
+	var req struct {
+		SameUser bool
+		Name     string
+	}
 	json.NewDecoder(r.Body).Decode(&req)
 	var id int64
 	if req.SameUser {
 		id = uid(r)
 	}
-	code, err := newCode(id)
+	code, err := newCode(id, req.Name)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return
 	}
 	writeJSON(w, map[string]string{"code": code})
+}
+
+// me liefert Namen und gekoppelte Geräte des eigenen Kontos.
+func me(w http.ResponseWriter, r *http.Request) {
+	var name string
+	db.QueryRow(`SELECT name FROM users WHERE id=?`, uid(r)).Scan(&name)
+	current := hashToken(strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer "))
+	rows, err := db.Query(`SELECT rowid, device, created, hash FROM tokens WHERE user_id=? ORDER BY created`, uid(r))
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+	defer rows.Close()
+	devices := []map[string]any{}
+	for rows.Next() {
+		var id, created int64
+		var device, hash string
+		rows.Scan(&id, &device, &created, &hash)
+		devices = append(devices, map[string]any{"id": id, "device": device, "created": created, "current": hash == current})
+	}
+	writeJSON(w, map[string]any{"name": name, "devices": devices})
+}
+
+// deleteDevice entzieht einem eigenen Gerät den Zugang.
+func deleteDevice(w http.ResponseWriter, r *http.Request) {
+	db.Exec(`DELETE FROM tokens WHERE rowid=? AND user_id=?`, r.PathValue("id"), uid(r))
+	w.WriteHeader(http.StatusNoContent)
 }
 
 func getProfile(w http.ResponseWriter, r *http.Request) {

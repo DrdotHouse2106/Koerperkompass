@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 
 	_ "modernc.org/sqlite"
 )
@@ -34,10 +35,11 @@ func main() {
 	if _, err = db.Exec(schema); err != nil {
 		log.Fatal("Datenbank: ", err)
 	}
+	db.Exec(`ALTER TABLE codes ADD COLUMN name TEXT NOT NULL DEFAULT ''`) // ältere Datenbanken nachrüsten
 
-	// „koerperkompass invite“ erzeugt einen Kopplungscode für ein weiteres Familienmitglied
+	// „koerperkompass invite [Name]“ erzeugt einen Kopplungscode für einen neuen Nutzer
 	if len(os.Args) > 1 && os.Args[1] == "invite" {
-		code, err := newCode(0)
+		code, err := newCode(0, strings.Join(os.Args[2:], " "))
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -63,7 +65,7 @@ func main() {
 const schema = `
 CREATE TABLE IF NOT EXISTS users   (id INTEGER PRIMARY KEY, name TEXT NOT NULL DEFAULT '', profile TEXT NOT NULL DEFAULT '{}', created INTEGER NOT NULL);
 CREATE TABLE IF NOT EXISTS tokens  (hash TEXT PRIMARY KEY, user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE, device TEXT NOT NULL DEFAULT '', created INTEGER NOT NULL);
-CREATE TABLE IF NOT EXISTS codes   (code TEXT PRIMARY KEY, user_id INTEGER, expires INTEGER NOT NULL);
+CREATE TABLE IF NOT EXISTS codes   (code TEXT PRIMARY KEY, user_id INTEGER, expires INTEGER NOT NULL, name TEXT NOT NULL DEFAULT '');
 CREATE TABLE IF NOT EXISTS entries (
   user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   id TEXT NOT NULL, module TEXT NOT NULL, date TEXT NOT NULL,

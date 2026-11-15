@@ -45,6 +45,8 @@ Jedes Modul hat auf **beiden Seiten** dieselben Angaben:
 | Eingabe-/Detailansicht | `detail(_:)` | – |
 | Zusammenfassung für die Analyse | `summary(_:days:)` (generisch aus `fields`) | `Summary()` (generisch aus `Fields`) |
 
+Module ohne Felder (z. B. `quests`, Gamification) berechnen ihre Anzeige aus den Einträgen der anderen Module (`@Query` in der Ansicht) und speichern nichts Eigenes. Neue Quests: Eintrag in `Quest.all` (`QuestModule.swift`).
+
 `Field.agg` bestimmt die Zusammenfassung: `sum` (pro Tag addieren, z. B. kcal), `avg` (Durchschnitt, z. B. Ruhepuls), `last` (Verlauf, z. B. Gewicht).
 
 ## Neues Modul anlegen – Schritt für Schritt
