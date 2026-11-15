@@ -1,0 +1,5 @@
+// Team-ID für die Signierung. Nicht hier eintragen, sondern in Local.xcconfig (wird nicht eingecheckt):
+//   DEVELOPMENT_TEAM = ABCDE12345
+// Die GitHub Action setzt sie aus dem Secret APPLE_TEAM_ID.
+DEVELOPMENT_TEAM =
+#include? "Local.xcconfig"

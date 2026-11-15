@@ -1,0 +1,8 @@
+*.xcodeproj
+Local.xcconfig
+build/
+DerivedData/
+xcuserdata/
+.DS_Store
+Koerperkompass/Info.plist
+Koerperkompass/Koerperkompass.entitlements

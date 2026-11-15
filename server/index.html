@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Körperkompass-Server</title>
+<style>
+  :root { color-scheme: light dark; font-family: -apple-system, system-ui, sans-serif; }
+  body { max-width: 34rem; margin: 2rem auto; padding: 0 1rem; line-height: 1.5; }
+  img { width: 100%; max-width: 320px; background: #fff; border-radius: 12px; }
+  code { font-size: 1.4rem; letter-spacing: .1em; }
+  small { opacity: .7; }
+</style>
+</head>
+<body>
+<h1>🧭 Körperkompass</h1>
+{{if .Code}}
+  <p>Öffne die App, wähle <b>„QR-Code scannen“</b> und scanne diesen Code:</p>
+  <img src="{{.QR}}" alt="QR-Code zum Koppeln">
+  <p>Oder gib von Hand ein:<br>Server: <b>{{.Server}}</b><br>Kopplungscode: <code>{{.Code}}</code></p>
+  <p><small>Der Code ist einmalig und 24 Stunden gültig. Nach der ersten Kopplung verschwindet er von dieser Seite.
+  Weitere Familienmitglieder lädst du in der App ein (Einstellungen → Server → Einladen).</small></p>
+{{else}}
+  <p>Der Server läuft. Neue Geräte und Familienmitglieder lädst du in der App ein
+  (Einstellungen → Server → Einladen) oder mit <code style="font-size:1rem">koerperkompass invite</code> auf dem Server.</p>
+{{end}}
+<p><small>Version {{.Version}} · Claude API: {{if .AI}}aktiv{{else}}nicht eingerichtet{{end}}</small></p>
+</body>
+</html>

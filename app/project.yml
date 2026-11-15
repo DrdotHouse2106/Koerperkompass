@@ -1,0 +1,49 @@
+# XcodeGen-Projekt: `xcodegen generate` im Ordner app/ erzeugt Koerperkompass.xcodeproj
+name: Koerperkompass
+options:
+  bundleIdPrefix: de.drdothouse
+  deploymentTarget:
+    iOS: "17.0"
+  developmentLanguage: de
+configFiles:
+  Debug: Config.xcconfig
+  Release: Config.xcconfig
+targets:
+  Koerperkompass:
+    type: application
+    platform: iOS
+    sources: [Koerperkompass]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: de.drdothouse.koerperkompass
+        PRODUCT_NAME: Koerperkompass
+        MARKETING_VERSION: "1.0.0"
+        CURRENT_PROJECT_VERSION: "1"
+        SWIFT_VERSION: "5.0"
+        TARGETED_DEVICE_FAMILY: "1"
+        CODE_SIGN_STYLE: Automatic
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        LOCALIZATION_PREFERS_STRING_CATALOGS: YES
+        SWIFT_EMIT_LOC_STRINGS: YES
+    info:
+      path: Koerperkompass/Info.plist
+      properties:
+        CFBundleDisplayName: Körperkompass
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        CFBundleDevelopmentRegion: de
+        CFBundleLocalizations: [de, en]
+        ITSAppUsesNonExemptEncryption: false
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+        NSHealthShareUsageDescription: Körperkompass liest Schritte, aktive Energie, Schlaf, Ruhepuls, Gewicht und Trainings, um sie dir anzuzeigen und auszuwerten.
+        NSHealthUpdateUsageDescription: Körperkompass speichert dein Gewicht und deine Mahlzeiten in Apple Health.
+        NSCameraUsageDescription: Die Kamera wird zum Scannen des Kopplungscodes und für Fotos von Mahlzeiten verwendet.
+        CFBundleURLTypes:
+          - CFBundleURLName: de.drdothouse.koerperkompass
+            CFBundleURLSchemes: [koerperkompass]
+    entitlements:
+      path: Koerperkompass/Koerperkompass.entitlements
+      properties:
+        com.apple.developer.healthkit: true
+        com.apple.developer.healthkit.access: []

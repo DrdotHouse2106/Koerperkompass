@@ -1,0 +1,16 @@
+# Beispiel: docker compose up -d
+# Danach den Kopplungscode im Log ansehen (docker compose logs) oder http://<server>:8080 öffnen.
+services:
+  koerperkompass:
+    image: ghcr.io/drdothouse2106/koerperkompass:latest
+    container_name: koerperkompass
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./data:/data
+    environment:
+      # Optional: eigener Claude-API-Key für Foto-Erkennung und Analyse (ohne Key nur lokale Auswertung)
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      # Optional: öffentliche Adresse hinter dem Reverse Proxy (für den QR-Code)
+      KK_PUBLIC_URL: ${KK_PUBLIC_URL:-}

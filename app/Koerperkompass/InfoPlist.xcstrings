@@ -1,0 +1,46 @@
+{
+  "sourceLanguage": "de",
+  "version": "1.0",
+  "strings": {
+    "NSHealthShareUsageDescription": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Körperkompass reads steps, active energy, sleep, resting heart rate, weight and workouts to show and analyse them for you."
+          }
+        }
+      }
+    },
+    "NSHealthUpdateUsageDescription": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Körperkompass saves your weight and meals to Apple Health."
+          }
+        }
+      }
+    },
+    "NSCameraUsageDescription": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The camera is used to scan the pairing code and to take photos of meals."
+          }
+        }
+      }
+    },
+    "CFBundleDisplayName": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Körperkompass"
+          }
+        }
+      }
+    }
+  }
+}

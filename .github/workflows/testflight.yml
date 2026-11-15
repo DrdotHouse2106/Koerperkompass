@@ -1,0 +1,82 @@
+name: TestFlight (iOS)
+
+# Baut die iOS-App bei Änderungen in app/ und lädt sie zu App Store Connect bzw. TestFlight hoch.
+# Zusätzlich von Hand startbar (Actions → „TestFlight (iOS)“ → „Run workflow“).
+#
+# Benötigte Secrets (Settings → Secrets and variables → Actions):
+#   APPLE_TEAM_ID  Team-ID (developer.apple.com → Membership)
+#   ASC_KEY_ID     Key-ID des App-Store-Connect-API-Schlüssels (Rolle Admin oder App Manager)
+#   ASC_ISSUER_ID  Issuer-ID
+#   ASC_KEY_P8     kompletter Inhalt der .p8-Datei
+on:
+  push:
+    branches: [main]
+    paths: ['app/**', '.github/workflows/testflight.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: testflight
+  cancel-in-progress: false
+
+jobs:
+  ios:
+    name: Bauen und zu TestFlight hochladen
+    # Mit älteren Runnern lehnt Apple den Upload ab (zu altes SDK)
+    runs-on: macos-26
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Xcode-Projekt erzeugen (XcodeGen)
+        working-directory: app
+        run: |
+          brew install xcodegen
+          xcodegen generate
+
+      - name: API-Schlüssel ablegen
+        env:
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/asc"
+          printf '%s\n' "$ASC_KEY_P8" > "$RUNNER_TEMP/asc/AuthKey_$ASC_KEY_ID.p8"
+
+      # Unsigniert archivieren: Würde jeder Lauf selbst signieren, legte er jedes Mal ein neues Zertifikat an,
+      # bis Apples Höchstzahl erreicht ist. Die Build-Nummer ist die Laufnummer der Action.
+      - name: Archivieren
+        working-directory: app
+        env:
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+        run: |
+          xcodebuild -project Koerperkompass.xcodeproj -scheme Koerperkompass -configuration Release \
+            -destination 'generic/platform=iOS' -archivePath "$RUNNER_TEMP/App.xcarchive" \
+            CODE_SIGNING_ALLOWED=NO DEVELOPMENT_TEAM="$APPLE_TEAM_ID" \
+            CURRENT_PROJECT_VERSION=$GITHUB_RUN_NUMBER archive
+
+      # Vorläufig mit den Berechtigungen signieren, damit HealthKit beim Export erhalten bleibt
+      - name: Berechtigungen eintragen
+        run: |
+          codesign --force --sign - --entitlements app/Koerperkompass/Koerperkompass.entitlements \
+            "$RUNNER_TEMP/App.xcarchive/Products/Applications/Koerperkompass.app"
+
+      # Apple signiert beim Export mit dem verwalteten Zertifikat und erzeugt die Profile selbst
+      - name: Exportieren und hochladen
+        working-directory: app
+        env:
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+        run: |
+          /usr/libexec/PlistBuddy -c "Set :teamID $APPLE_TEAM_ID" exportOptions.plist
+          xcodebuild -exportArchive -archivePath "$RUNNER_TEMP/App.xcarchive" \
+            -exportOptionsPlist exportOptions.plist -exportPath "$RUNNER_TEMP/export" \
+            -allowProvisioningUpdates \
+            -authenticationKeyPath "$RUNNER_TEMP/asc/AuthKey_$ASC_KEY_ID.p8" \
+            -authenticationKeyID "$ASC_KEY_ID" -authenticationKeyIssuerID "$ASC_ISSUER_ID"
+
+      - name: API-Schlüssel entfernen
+        if: always()
+        run: rm -rf "$RUNNER_TEMP/asc"

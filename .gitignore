@@ -1,0 +1,8 @@
+# Keine persönlichen Daten oder Zugangsdaten einchecken
+.env
+*.p8
+*.db
+*.db-wal
+*.db-shm
+server/data/
+.DS_Store
