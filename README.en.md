@@ -38,7 +38,7 @@ _Placeholder_
 
 ```bash
 mkdir koerperkompass && cd koerperkompass
-curl -O https://raw.githubusercontent.com/DrdotHouse2106/K-rperkompass/main/server/docker-compose.yml
+curl -O https://raw.githubusercontent.com/DrdotHouse2106/Koerperkompass/main/server/docker-compose.yml
 docker compose up -d
 docker compose logs        # shows the pairing code
 ```

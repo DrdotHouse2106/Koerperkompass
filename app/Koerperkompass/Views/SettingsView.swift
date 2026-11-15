@@ -76,8 +76,8 @@ struct SettingsView: View {
                     }
                 }
                 Section {
-                    Link("Datenschutz", destination: URL(string: "https://github.com/DrdotHouse2106/K-rperkompass/blob/main/PRIVACY.md")!)
-                    Link("Anleitung & Quellcode", destination: URL(string: "https://github.com/DrdotHouse2106/K-rperkompass")!)
+                    Link("Datenschutz", destination: URL(string: "https://github.com/DrdotHouse2106/Koerperkompass/blob/main/PRIVACY.md")!)
+                    Link("Anleitung & Quellcode", destination: URL(string: "https://github.com/DrdotHouse2106/Koerperkompass")!)
                 } footer: {
                     Text("Version \(appVersion) · Alle Werte sind Schätzungen und keine ärztliche Beratung.")
                 }

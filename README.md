@@ -48,7 +48,7 @@ Sprachen: Deutsch (Standard) und Englisch.
 
 ```bash
 mkdir koerperkompass && cd koerperkompass
-curl -O https://raw.githubusercontent.com/DrdotHouse2106/K-rperkompass/main/server/docker-compose.yml
+curl -O https://raw.githubusercontent.com/DrdotHouse2106/Koerperkompass/main/server/docker-compose.yml
 docker compose up -d
 docker compose logs        # zeigt den Kopplungscode
 ```
@@ -81,7 +81,7 @@ und weiter wie bei Docker Compose.
 
 ```bash
 apt update && apt install -y golang git
-git clone https://github.com/DrdotHouse2106/K-rperkompass.git /opt/kk-src
+git clone https://github.com/DrdotHouse2106/Koerperkompass.git /opt/kk-src
 cd /opt/kk-src/server && CGO_ENABLED=0 go build -o /usr/local/bin/koerperkompass .
 mkdir -p /var/lib/koerperkompass
 cat > /etc/systemd/system/koerperkompass.service <<'EOF'

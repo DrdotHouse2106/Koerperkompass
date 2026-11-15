@@ -37,7 +37,7 @@ Alle Werte sind Schätzungen. Die App ersetzt keine ärztliche Beratung, Diagnos
 
 ## Kontakt
 
-Fragen zur App: [GitHub Issues](https://github.com/DrdotHouse2106/K-rperkompass/issues).
+Fragen zur App: [GitHub Issues](https://github.com/DrdotHouse2106/Koerperkompass/issues).
 
 ---
 
@@ -80,4 +80,4 @@ All values are estimates. The app is no substitute for medical advice, diagnosis
 
 ## Contact
 
-Questions about the app: [GitHub Issues](https://github.com/DrdotHouse2106/K-rperkompass/issues).
+Questions about the app: [GitHub Issues](https://github.com/DrdotHouse2106/Koerperkompass/issues).
