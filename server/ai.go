@@ -77,7 +77,11 @@ Schätze die sichtbare Portion. Sprache für "name": ` + langName(req.Lang) + `.
 		http.Error(w, err.Error(), http.StatusBadGateway)
 		return
 	}
-	// Nur das JSON-Objekt aus der Antwort übernehmen
+	writeObject(w, out)
+}
+
+// writeObject übernimmt nur das JSON-Objekt aus der Antwort des Modells.
+func writeObject(w http.ResponseWriter, out string) {
 	i, j := strings.Index(out, "{"), strings.LastIndex(out, "}")
 	var res map[string]any
 	if i < 0 || j < i || json.Unmarshal([]byte(out[i:j+1]), &res) != nil {
@@ -85,6 +89,32 @@ Schätze die sichtbare Portion. Sprache für "name": ` + langName(req.Lang) + `.
 		return
 	}
 	writeJSON(w, res)
+}
+
+// aiPlan erstellt ein Trainingsprogramm mit einigen Trainingstagen, die im Wechsel absolviert werden.
+func aiPlan(w http.ResponseWriter, r *http.Request) {
+	var req struct {
+		Wish, Profile, Lang string
+		Days                int
+	}
+	if !requireAI(w) || !readJSON(w, r, &req) {
+		return
+	}
+	if req.Days < 1 || req.Days > 7 {
+		req.Days = 3
+	}
+	system := `Du bist ein erfahrener, vorsichtiger Trainer. Erstelle ein 4-Wochen-Trainingsprogramm mit 2 bis 4 unterschiedlichen
+Trainingstagen, die reihum absolviert werden. Passe Umfang und Übungen an Profil und Wunsch an, sicher und realistisch.
+Antworte ausschließlich mit JSON:
+{"name": "kurzer Programmname", "days": [{"title": "Name des Trainingstags", "exercises": ["Übung – Sätze × Wiederholungen", ...]}]}
+Sprache: ` + langName(req.Lang) + `.`
+	prompt := "Trainingstage pro Woche: " + strconv.Itoa(req.Days) + "\nWunsch: " + req.Wish + "\nProfil: " + req.Profile
+	out, err := ask(r.Context(), system, anthropic.BetaOutputConfigEffortMedium, anthropic.NewBetaTextBlock(prompt))
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadGateway)
+		return
+	}
+	writeObject(w, out)
 }
 
 // aiAnalysis erstellt die Kompass-Auswertung über die aktiven Module.

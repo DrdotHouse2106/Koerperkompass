@@ -45,7 +45,7 @@ Jedes Modul hat auf **beiden Seiten** dieselben Angaben:
 | Eingabe-/Detailansicht | `detail(_:)` | – |
 | Zusammenfassung für die Analyse | `summary(_:days:)` (generisch aus `fields`) | `Summary()` (generisch aus `Fields`) |
 
-Module ohne Felder (z. B. `quests`, Gamification) berechnen ihre Anzeige aus den Einträgen der anderen Module (`@Query` in der Ansicht) und speichern nichts Eigenes. Neue Quests: Eintrag in `Quest.all` (`QuestModule.swift`).
+Module ohne Felder (z. B. `quests`, Gamification) berechnen ihre Anzeige aus den Einträgen der anderen Module (`@Query` in der Ansicht) und speichern nichts Eigenes. Neue Quests: Eintrag in `Quest.all` (`QuestModule.swift`). Trainingsprogramme und Vorlagen: `Core/Training.swift` (Programm liegt im Profil, absolvierte Einheiten sind Training-Einträge mit id `plan-<Tag>`, eigene Quests sind Einträge im Modul `quests` mit id `habit-<Tag>-<Name>`).
 
 `Field.agg` bestimmt die Zusammenfassung: `sum` (pro Tag addieren, z. B. kcal), `avg` (Durchschnitt, z. B. Ruhepuls), `last` (Verlauf, z. B. Gewicht).
 

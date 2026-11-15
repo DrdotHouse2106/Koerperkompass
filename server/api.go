@@ -44,6 +44,7 @@ func routes() http.Handler {
 	m.HandleFunc("POST /api/import", auth(importData))
 	m.HandleFunc("POST /api/ai/photo", auth(aiPhoto))
 	m.HandleFunc("POST /api/ai/analysis", auth(aiAnalysis))
+	m.HandleFunc("POST /api/ai/plan", auth(aiPlan))
 	return http.MaxBytesHandler(m, 20<<20)
 }
 

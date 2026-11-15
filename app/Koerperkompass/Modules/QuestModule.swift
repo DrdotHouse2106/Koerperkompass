@@ -76,6 +76,21 @@ struct Quest {
         },
     ]
 
+    /// Quests eines Tages: Standard-Quests der aktiven Module, Trainingseinheit (an Trainingstagen) und eigene Quests
+    static func list(_ day: String, _ p: Profile) -> [Quest] {
+        var list = all.filter { p.modules.contains($0.module) && !($0.id == "training" && p.plan != nil) }
+        if let plan = p.plan, plan.isTrainingDay(day) {
+            list.append(Quest(id: "plan", title: "Trainingseinheit absolvieren", symbol: "figure.strengthtraining.traditional",
+                              module: "quests", xp: planXP, attribute: .strength) { e, _ in e.contains { $0.module == "training" } })
+        }
+        for h in p.habitList {
+            list.append(Quest(id: "habit-" + h, title: LocalizedStringResource(stringLiteral: h), symbol: "star", module: "quests", xp: 15, attribute: .discipline) { e, _ in
+                e.contains { $0.module == "quests" && $0.text("habit") == h }
+            })
+        }
+        return list
+    }
+
     private static func sum(_ e: [Entry], _ module: String, _ key: String) -> Double {
         e.filter { $0.module == module }.compactMap { $0.num(key) }.reduce(0, +)
     }
@@ -93,6 +108,9 @@ struct QuestProgress {
     var streak = 0
     var attributes: [Attribute: Int] = [:]
     var today: [QuestState] = []
+    var activeDays = Set<String>()
+    var planDone = 0
+    var missed = 0
 
     /// Level-Kurve: Level n beginnt bei 50·(n−1)² XP – anfangs schnell, später langsamer
     var level: Int { Int((Double(xp) / 50).squareRoot()) + 1 }
@@ -112,10 +130,10 @@ struct QuestProgress {
     init() {}
 
     init(_ entries: [Entry], _ profile: Profile) {
-        let quests = Quest.all.filter { profile.modules.contains($0.module) }
         let days = Dictionary(grouping: entries.filter { !$0.deleted }, by: \.date)
         var active = Set<String>()
         for (day, es) in days {
+            let quests = Quest.list(day, profile)
             let done = quests.filter { $0.done(es, profile) }
             for q in done {
                 xp += q.xp
@@ -136,7 +154,20 @@ struct QuestProgress {
             date = Calendar.current.date(byAdding: .day, value: -1, to: date)!
         }
         let todays = days[Day.today] ?? []
-        today = quests.map { QuestState(quest: $0, done: $0.done(todays, profile)) }
+        today = Quest.list(Day.today, profile).map { QuestState(quest: $0, done: $0.done(todays, profile)) }
+        activeDays = active
+
+        // Trainingsprogramm: absolvierte Einheiten zählen, verpasste Trainingstage ggf. abziehen
+        if let plan = profile.plan {
+            planDone = entries.filter { $0.id.hasPrefix("plan-") && !$0.deleted && $0.date >= plan.start }.count
+            var date = Day.date(plan.start)
+            while Day.string(date) < min(Day.today, plan.end) {
+                let day = Day.string(date)
+                if plan.isTrainingDay(day) && !(days[day] ?? []).contains(where: { $0.module == "training" }) { missed += 1 }
+                date = Calendar.current.date(byAdding: .day, value: 1, to: date)!
+            }
+            if profile.penalties == true { xp = max(0, xp - missed * missedXP) }
+        }
     }
 
     /// Attributwert: startet bei 1, +1 je 100 XP
@@ -159,14 +190,17 @@ private struct QuestTile: View {
 
 private struct QuestDetail: View {
     @Environment(AppState.self) private var state
+    @Environment(\.modelContext) private var context
     @Query private var entries: [Entry]
     @AppStorage("seenLevel") private var seenLevel = 0
     @State private var levelUp = false
+    @State private var newHabit = ""
 
     var body: some View {
         let p = QuestProgress(entries, state.profile)
         List {
             Section {
+                WeekStrip(active: p.activeDays)
                 VStack(spacing: 8) {
                     Image(systemName: "safari.fill").font(.system(size: 56)).foregroundStyle(.orange.gradient)
                         .symbolEffect(.bounce, value: p.level)
@@ -181,20 +215,42 @@ private struct QuestDetail: View {
                 }
                 .frame(maxWidth: .infinity)
             }
+
+            TodayCard(progress: p)
+
             Section {
                 ForEach(p.today, id: \.quest.id) { item in
-                    HStack {
-                        Image(systemName: item.done ? "checkmark.circle.fill" : "circle")
-                            .foregroundStyle(item.done ? .green : .secondary)
-                        Label { Text(item.quest.title) } icon: { Image(systemName: item.quest.symbol) }
-                        Spacer()
-                        Text("+\(item.quest.xp) XP").font(.caption.bold()).foregroundStyle(.orange)
+                    Button {
+                        if item.quest.id.hasPrefix("habit-") { toggle(String(item.quest.id.dropFirst(6))) }
+                    } label: {
+                        HStack {
+                            Image(systemName: item.done ? "checkmark.circle.fill" : "circle")
+                                .foregroundStyle(item.done ? .green : .secondary)
+                            Label { Text(item.quest.title) } icon: { Image(systemName: item.quest.symbol) }
+                            Spacer()
+                            Text("+\(item.quest.xp) XP").font(.caption.bold()).foregroundStyle(.orange)
+                        }
+                        .opacity(item.done ? 0.6 : 1)
                     }
-                    .opacity(item.done ? 0.6 : 1)
+                    .buttonStyle(.plain)
                 }
             } header: { Text("Heutige Quests") } footer: {
-                Text("Alle Quests eines Tages geschafft: +\(Quest.bonus) XP Bonus. Serie: \(p.streak) Tage in Folge.")
+                Text("Alle Quests eines Tages geschafft: +\(Quest.bonus) XP Bonus. Eigene Quests hakst du durch Antippen ab.")
             }
+
+            Section {
+                ForEach(state.profile.habitList, id: \.self) { Text($0) }
+                    .onDelete { idx in state.profile.habits = state.profile.habitList.enumerated().filter { !idx.contains($0.offset) }.map(\.element) }
+                HStack {
+                    TextField("Neue Quest, z. B. „10 Minuten dehnen“", text: $newHabit)
+                    Button("Hinzufügen") {
+                        state.profile.habits = state.profile.habitList + [newHabit.trimmingCharacters(in: .whitespaces)]
+                        newHabit = ""
+                    }
+                    .disabled(newHabit.trimmingCharacters(in: .whitespaces).isEmpty)
+                }
+            } header: { Text("Eigene Quests") } footer: { Text("Gelten jeden Tag, +15 XP pro Quest.") }
+
             Section("Attribute") {
                 ForEach(Attribute.allCases, id: \.self) { a in
                     HStack {
@@ -209,6 +265,9 @@ private struct QuestDetail: View {
                     .font(.footnote).foregroundStyle(.secondary)
             }
         }
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) { Label("\(p.streak)", systemImage: "flame.fill").labelStyle(.titleAndIcon).foregroundStyle(.orange) }
+        }
         .onAppear {
             if seenLevel > 0 && p.level > seenLevel { levelUp = true }
             seenLevel = p.level
@@ -218,5 +277,84 @@ private struct QuestDetail: View {
         } message: {
             Text("Du hast Level \(p.level) erreicht – \(String(localized: p.rank)).")
         }
+    }
+
+    /// Eigene Quest für heute abhaken bzw. wieder öffnen
+    private func toggle(_ habit: String) {
+        let id = "habit-\(Day.today)-\(habit)"
+        if let e = context.entry(id), !e.deleted {
+            state.delete(e, context)
+        } else {
+            context.upsert(id: id, module: "quests", date: Day.today, values: ["habit": habit], dirty: !state.demo)
+            state.changed(context)
+        }
+    }
+}
+
+/// Aktuelle Woche (Mo–So): gefüllter Punkt = an dem Tag mindestens eine Quest geschafft
+private struct WeekStrip: View {
+    let active: Set<String>
+    var body: some View {
+        var cal = Calendar.current
+        cal.firstWeekday = 2
+        let monday = cal.dateInterval(of: .weekOfYear, for: Date())?.start ?? Date()
+        let days = (0..<7).map { cal.date(byAdding: .day, value: $0, to: monday)! }
+        return HStack {
+            ForEach(days, id: \.self) { d in
+                let day = Day.string(d), today = day == Day.today
+                VStack(spacing: 6) {
+                    Text(d, format: .dateTime.weekday(.narrow)).font(.caption2)
+                    Text(d, format: .dateTime.day()).font(.callout.bold())
+                    Image(systemName: active.contains(day) ? "circle.fill" : "circle").font(.caption2)
+                        .foregroundStyle(active.contains(day) ? .orange : .secondary)
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 8)
+                .background(today ? Color.orange.opacity(0.15) : .clear, in: RoundedRectangle(cornerRadius: 12))
+            }
+        }
+    }
+}
+
+/// Heute: fällige Trainingseinheit oder Ruhetag – plus Zugang zu den Programmen
+private struct TodayCard: View {
+    let progress: QuestProgress
+    @Environment(AppState.self) private var state
+    @Environment(\.modelContext) private var context
+    @Query private var entries: [Entry]
+
+    var body: some View {
+        let plan = state.profile.plan
+        let doneToday = entries.contains { $0.id == "plan-" + Day.today && !$0.deleted }
+        Section {
+            if let plan, plan.finished {
+                Label("Programm abgeschlossen!", systemImage: "trophy.fill").font(.headline).foregroundStyle(.orange)
+                Text("Glückwunsch – \(progress.planDone) Einheiten geschafft. Such dir ein neues Programm aus.")
+            } else if let plan, plan.isTrainingDay(Day.today), let day = plan.next(done: progress.planDone - (doneToday ? 1 : 0)) {
+                Text(day.title).font(.headline)
+                ForEach(day.exercises, id: \.self) { Label($0, systemImage: "checkmark.circle").font(.subheadline) }
+                Button(doneToday ? LocalizedStringKey("Einheit erledigt ✓") : "Einheit abschließen (+\(planXP) XP)") {
+                    context.upsert(id: "plan-" + Day.today, module: "training", date: Day.today,
+                                   values: ["name": day.title, "minutes": 45], dirty: !state.demo)
+                    state.changed(context)
+                }
+                .buttonStyle(.borderedProminent).tint(.orange).disabled(doneToday)
+            } else if plan != nil {
+                Label("Ruhetag", systemImage: "moon.zzz").font(.headline)
+                Text("Erholung gehört zum Training. Heute zählen deine eigenen Quests – Schlaf, Essen, Ausgleich.")
+                    .font(.subheadline).foregroundStyle(.secondary)
+            } else {
+                Text("Wähle ein Trainingsprogramm – an Trainingstagen gibt es dann eine Einheit mit +\(planXP) XP.")
+                    .font(.subheadline).foregroundStyle(.secondary)
+            }
+            if progress.missed > 0 {
+                if state.profile.penalties == true {
+                    Text("Verpasste Einheiten: \(progress.missed) (−\(progress.missed * missedXP) XP)").font(.caption).foregroundStyle(.red)
+                } else {
+                    Text("Verpasste Einheiten: \(progress.missed)").font(.caption).foregroundStyle(.secondary)
+                }
+            }
+            NavigationLink("Trainingsprogramme") { PlanView() }
+        } header: { Text(state.profile.plan?.name ?? String(localized: "Training")) }
     }
 }

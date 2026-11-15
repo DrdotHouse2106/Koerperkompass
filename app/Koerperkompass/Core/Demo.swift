@@ -14,6 +14,9 @@ enum Demo {
         p.sex = .male
         p.activity = 2
         p.computeGoals(activeEnergy: nil)
+        var plan = planTemplates[0]
+        plan.start = Day.last(14)[0]
+        p.plan = plan
         state.profile = p
 
         var rng = SystemRandomNumberGenerator()
@@ -42,7 +45,7 @@ enum Demo {
             }
             context.insert(Entry(module: "water", date: day, values: ["ml": r(4...8) * 250], dirty: false))
             if i % 3 == 0 {
-                context.insert(Entry(module: "training", date: day, values: ["name": String(localized: "Laufen"), "minutes": r(30...50)], dirty: false))
+                context.insert(Entry(id: "plan-" + day, module: "training", date: day, values: ["name": String(localized: "Laufen"), "minutes": r(30...50)], dirty: false))
             }
         }
         try? context.save()

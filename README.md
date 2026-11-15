@@ -22,7 +22,8 @@ Es gibt keinen zentralen Dienst: Die Entwickler betreiben keinen Server und sehe
 | 🍽 **Ernährung** | Tagesziele, Ringe für Eiweiß/Kohlenhydrate/Fett, 7-Tage-Diagramm, Tagebuch (Frühstück, Mittag, Abend, Snack), optional Foto-Eintrag mit Nährwert-Schätzung |
 | ⚖️ **Gewicht & Maße** | Gewicht, Körperfett, Taille, Hüfte, Brust – mit Verlauf und Wunschgewicht |
 | 🚶 **Aktivität & Schlaf** | Schritte, aktive Energie, Schlaf, Ruhepuls und Trainings aus Apple Health |
-| 🏁 **Abenteuer** | Gamification: tägliche Quests, XP, Level, Ränge (Wanderer → Legende), Attribute (Kraft, Ausdauer, Erholung, Disziplin, Balance) und Serien |
+| 🏁 **Abenteuer** | Gamification: Wochenleiste und 🔥-Serie, tägliche Quests, eigene Quests (z. B. Lesen, Meditieren), XP, Level, Ränge (Wanderer → Legende), Attribute (Kraft, Ausdauer, Erholung, Disziplin, Balance) |
+| 🏋️ **Trainingsprogramme** | 4-Wochen-Programme mit Trainings- und Ruhetagen, XP pro Einheit, Vorlagen oder persönlich von Claude erstellt; optional Strafpunkte für verpasste Einheiten |
 | 💧 **Wasser**, 🏋️ **Training** | einfache Beispielmodule – Vorlage für eigene Module |
 | 🧭 **Kompass** | Auswertung über 7/30/90 Tage: Durchschnitte, Trends, Zielerreichung, Zusammenhänge (z. B. Schlaf ↔ Kalorien). Optional ausführliche Auswertung mit Claude |
 | 👥 **Mehrere Nutzer** | weitere Personen einladen – jede mit eigenem Konto, eigenen Zugängen und eigenen Daten |
@@ -217,7 +218,7 @@ Alle Endpunkte außer `status`, `modules` und `pair` brauchen `Authorization: Be
 | GET | `/api/entries?since=<rev>` | Einträge seit Revision (Abgleich) |
 | POST | `/api/entries` | Einträge anlegen/ändern/löschen (`deleted: true`) |
 | GET/POST | `/api/export`, `/api/import` | alles als JSON |
-| POST | `/api/ai/photo`, `/api/ai/analysis` | nur mit `ANTHROPIC_API_KEY` |
+| POST | `/api/ai/photo`, `/api/ai/analysis`, `/api/ai/plan` | nur mit `ANTHROPIC_API_KEY` |
 
 ---
 

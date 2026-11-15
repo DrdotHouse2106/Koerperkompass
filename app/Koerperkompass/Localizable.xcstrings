@@ -82,12 +82,32 @@
         }
       }
     },
+    "%@ · %lld Trainingstage im Wechsel": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ · %lld alternating training days"
+          }
+        }
+      }
+    },
     "%@: %@ (r = %@, %lld Tage)": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "%@: %@ (r = %@, %lld days)"
+          }
+        }
+      }
+    },
+    "%lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld"
           }
         }
       }
@@ -122,6 +142,16 @@
         }
       }
     },
+    "%lld × pro Woche. Die übrigen Tage sind Ruhetage.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld × per week. The other days are rest days."
+          }
+        }
+      }
+    },
     "%lld/%lld Quests · 🔥 %lld": {
       "localizations": {
         "en": {
@@ -152,12 +182,62 @@
         }
       }
     },
+    "10 min einlaufen, 6 × 1 min zügig / 2 min locker": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "10 min warm-up, 6 × 1 min fast / 2 min easy"
+          }
+        }
+      }
+    },
+    "20 Minuten Dehnen und Mobilisieren": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "20 minutes of stretching and mobility"
+          }
+        }
+      }
+    },
+    "25–30 Minuten in ruhigem Tempo": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "25–30 minutes at an easy pace"
+          }
+        }
+      }
+    },
+    "30 Minuten zügig gehen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "30 minutes brisk walking"
+          }
+        }
+      }
+    },
     "30 Tage": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "30 days"
+          }
+        }
+      }
+    },
+    "40–45 Minuten ruhig": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "40–45 minutes easy"
           }
         }
       }
@@ -282,6 +362,26 @@
         }
       }
     },
+    "Aktuelles Programm": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Current program"
+          }
+        }
+      }
+    },
+    "Alle": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All"
+          }
+        }
+      }
+    },
     "Alle Beispieldaten werden gelöscht.": {
       "localizations": {
         "en": {
@@ -292,12 +392,12 @@
         }
       }
     },
-    "Alle Quests eines Tages geschafft: +%lld XP Bonus. Serie: %lld Tage in Folge.": {
+    "Alle Quests eines Tages geschafft: +%lld XP Bonus. Eigene Quests hakst du durch Antippen ab.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "All quests of a day done: +%lld XP bonus. Streak: %lld days in a row."
+            "value": "All quests of a day done: +%lld XP bonus. Tap your own quests to tick them off."
           }
         }
       }
@@ -328,6 +428,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Guide & source code"
+          }
+        }
+      }
+    },
+    "Antwort nicht verwertbar": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Response could not be used"
           }
         }
       }
@@ -392,6 +502,26 @@
         }
       }
     },
+    "Ausdauer aufbauen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Build endurance"
+          }
+        }
+      }
+    },
+    "Ausfallschritte – 3 × 10 je Seite": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lunges – 3 × 10 per side"
+          }
+        }
+      }
+    },
     "Ausführliche Auswertung mit Claude": {
       "localizations": {
         "en": {
@@ -418,6 +548,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Balance"
+          }
+        }
+      }
+    },
+    "Bankdrücken – 4 × 6–8": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bench press – 4 × 6–8"
           }
         }
       }
@@ -458,6 +598,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Claude API"
+          }
+        }
+      }
+    },
+    "Claude erstellt ein 4-Wochen-Programm aus deinem Wunsch und deinem Profil. Keine ärztliche Beratung – bei Beschwerden bitte abklären lassen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Claude creates a 4-week program from your wish and your profile. Not medical advice – please get any complaints checked."
           }
         }
       }
@@ -542,6 +692,16 @@
         }
       }
     },
+    "Dein Wunsch und dein Profil (Ziel, Alter, Größe, Gewicht) werden über deinen Server an die Claude API (Anthropic) gesendet.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your wish and your profile (goal, age, height, weight) are sent via your server to the Claude API (Anthropic)."
+          }
+        }
+      }
+    },
     "Deine Daten liegen auf deinem eigenen Server. Starte ihn (siehe Anleitung auf GitHub) und kopple die App mit dem Code aus dem Server-Log oder der Weboberfläche.": {
       "localizations": {
         "en": {
@@ -612,6 +772,16 @@
         }
       }
     },
+    "Die Trainingstage kommen reihum dran. Ein laufendes Programm wird ersetzt.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Training days rotate. A running program will be replaced."
+          }
+        }
+      }
+    },
     "Die Werte sind Schätzungen und ersetzen keine ärztliche oder ernährungsfachliche Beratung.": {
       "localizations": {
         "en": {
@@ -662,6 +832,16 @@
         }
       }
     },
+    "Eigene Quests": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your own quests"
+          }
+        }
+      }
+    },
     "Eigener Server": {
       "localizations": {
         "en": {
@@ -692,6 +872,26 @@
         }
       }
     },
+    "Einheit abschließen (+%lld XP)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Complete session (+%lld XP)"
+          }
+        }
+      }
+    },
+    "Einheit erledigt ✓": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Session done ✓"
+          }
+        }
+      }
+    },
     "Einladen": {
       "localizations": {
         "en": {
@@ -708,6 +908,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Setup"
+          }
+        }
+      }
+    },
+    "Einsteiger": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beginner"
           }
         }
       }
@@ -802,12 +1012,32 @@
         }
       }
     },
+    "Erholung gehört zum Training. Heute zählen deine eigenen Quests – Schlaf, Essen, Ausgleich.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recovery is part of training. Today your own quests count – sleep, food, balance."
+          }
+        }
+      }
+    },
     "Ernährung": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Nutrition"
+          }
+        }
+      }
+    },
+    "Erste Schritte": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "First steps"
           }
         }
       }
@@ -868,6 +1098,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Fat (g)"
+          }
+        }
+      }
+    },
+    "Fortgeschritten": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Intermediate"
           }
         }
       }
@@ -962,12 +1202,42 @@
         }
       }
     },
+    "Ganzkörper ohne Geräte": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Full body, no equipment"
+          }
+        }
+      }
+    },
+    "Gelten jeden Tag, +15 XP pro Quest.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apply every day, +15 XP per quest."
+          }
+        }
+      }
+    },
     "Geschlecht": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Sex"
+          }
+        }
+      }
+    },
+    "Gesund essen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eat healthy"
           }
         }
       }
@@ -1008,6 +1278,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Weight history"
+          }
+        }
+      }
+    },
+    "Glückwunsch – %lld Einheiten geschafft. Such dir ein neues Programm aus.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Congratulations – %lld sessions done. Pick a new program."
           }
         }
       }
@@ -1132,6 +1412,16 @@
         }
       }
     },
+    "Intervalle": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Intervals"
+          }
+        }
+      }
+    },
     "Jetzt abgleichen": {
       "localizations": {
         "en": {
@@ -1232,6 +1522,36 @@
         }
       }
     },
+    "Klimmzüge oder Latziehen – 3 × 6–10": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pull-ups or lat pulldown – 3 × 6–10"
+          }
+        }
+      }
+    },
+    "Kniebeugen – 3 × 12–15": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Squats – 3 × 12–15"
+          }
+        }
+      }
+    },
+    "Kniebeugen – 4 × 6–8": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Squats – 4 × 6–8"
+          }
+        }
+      }
+    },
     "Kohlenh.": {
       "localizations": {
         "en": {
@@ -1322,6 +1642,26 @@
         }
       }
     },
+    "Kraft-Basis": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Strength basics"
+          }
+        }
+      }
+    },
+    "Kreuzheben – 3 × 5": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deadlift – 3 × 5"
+          }
+        }
+      }
+    },
     "Körperfett": {
       "localizations": {
         "en": {
@@ -1338,6 +1678,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Körperkompass"
+          }
+        }
+      }
+    },
+    "Langer Lauf": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Long run"
           }
         }
       }
@@ -1372,6 +1722,16 @@
         }
       }
     },
+    "Lesen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Read"
+          }
+        }
+      }
+    },
     "Letzte 7 Tage": {
       "localizations": {
         "en": {
@@ -1402,6 +1762,16 @@
         }
       }
     },
+    "Liegestütze (auch auf den Knien) – 3 × 8–12": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Push-ups (knees allowed) – 3 × 8–12"
+          }
+        }
+      }
+    },
     "Link teilen": {
       "localizations": {
         "en": {
@@ -1412,12 +1782,42 @@
         }
       }
     },
+    "Locker laufen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Easy run"
+          }
+        }
+      }
+    },
     "Los geht’s": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Let’s go"
+          }
+        }
+      }
+    },
+    "Meditieren": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meditate"
+          }
+        }
+      }
+    },
+    "Mein Programm": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "My program"
           }
         }
       }
@@ -1468,6 +1868,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Lunch"
+          }
+        }
+      }
+    },
+    "Mobilität": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mobility"
           }
         }
       }
@@ -1542,6 +1952,16 @@
         }
       }
     },
+    "Neue Quest, z. B. „10 Minuten dehnen“": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New quest, e.g. “Stretch for 10 minutes”"
+          }
+        }
+      }
+    },
     "Noch %@ kg bis zum Wunschgewicht": {
       "localizations": {
         "en": {
@@ -1612,6 +2032,26 @@
         }
       }
     },
+    "Persönlich": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Personal"
+          }
+        }
+      }
+    },
+    "Persönliches Programm": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Personal program"
+          }
+        }
+      }
+    },
     "Pfadfinder": {
       "localizations": {
         "en": {
@@ -1628,6 +2068,56 @@
           "stringUnit": {
             "state": "translated",
             "value": "Profile & goals"
+          }
+        }
+      }
+    },
+    "Programm abgeschlossen!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Program completed!"
+          }
+        }
+      }
+    },
+    "Programm beenden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "End program"
+          }
+        }
+      }
+    },
+    "Programm mit Claude erstellen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create program with Claude"
+          }
+        }
+      }
+    },
+    "Programm starten (4 Wochen)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start program (4 weeks)"
+          }
+        }
+      }
+    },
+    "Programm wird erstellt …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Creating program …"
           }
         }
       }
@@ -1652,12 +2142,52 @@
         }
       }
     },
+    "Rudern – 3 × 8–10": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rows – 3 × 8–10"
+          }
+        }
+      }
+    },
     "Ruhepuls": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Resting heart rate"
+          }
+        }
+      }
+    },
+    "Ruhetag": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rest day"
+          }
+        }
+      }
+    },
+    "Rumpf": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Core"
+          }
+        }
+      }
+    },
+    "Rumpf & Beweglichkeit": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Core & mobility"
           }
         }
       }
@@ -1772,6 +2302,16 @@
         }
       }
     },
+    "Seitstütz – 3 × 30 s je Seite": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Side plank – 3 × 30 s per side"
+          }
+        }
+      }
+    },
     "Server": {
       "localizations": {
         "en": {
@@ -1788,6 +2328,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Save"
+          }
+        }
+      }
+    },
+    "Sit-ups – 3 × 15": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sit-ups – 3 × 15"
           }
         }
       }
@@ -1812,12 +2362,42 @@
         }
       }
     },
+    "Strafpunkte bei verpasstem Training": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Penalty for missed training"
+          }
+        }
+      }
+    },
     "Tag": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Day"
+          }
+        }
+      }
+    },
+    "Tag A – Beine & Drücken": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Day A – legs & push"
+          }
+        }
+      }
+    },
+    "Tag B – Rücken & Ziehen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Day B – back & pull"
           }
         }
       }
@@ -1882,6 +2462,36 @@
         }
       }
     },
+    "Trainingseinheit absolvieren": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Complete training session"
+          }
+        }
+      }
+    },
+    "Trainingsprogramme": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Training programs"
+          }
+        }
+      }
+    },
+    "Trainingstage": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Training days"
+          }
+        }
+      }
+    },
     "Trennen und lokale Daten löschen": {
       "localizations": {
         "en": {
@@ -1908,6 +2518,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "No Körperkompass server is running at this address"
+          }
+        }
+      }
+    },
+    "Unterarmstütz – 3 × 30 s": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Plank – 3 × 30 s"
+          }
+        }
+      }
+    },
+    "Unterarmstütz – 3 × 45 s": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Plank – 3 × 45 s"
           }
         }
       }
@@ -1972,6 +2602,26 @@
         }
       }
     },
+    "Verpasste Einheiten: %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Missed sessions: %lld"
+          }
+        }
+      }
+    },
+    "Verpasste Einheiten: %lld (−%lld XP)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Missed sessions: %lld (−%lld XP)"
+          }
+        }
+      }
+    },
     "Version": {
       "localizations": {
         "en": {
@@ -1998,6 +2648,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Wholegrain bread with cheese"
+          }
+        }
+      }
+    },
+    "Vorlagen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Templates"
           }
         }
       }
@@ -2092,6 +2752,16 @@
         }
       }
     },
+    "Wunsch, z. B. „Muskelaufbau, nur Kurzhanteln, 40 min“": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wish, e.g. “build muscle, dumbbells only, 40 min”"
+          }
+        }
+      }
+    },
     "Wunschgewicht": {
       "localizations": {
         "en": {
@@ -2108,6 +2778,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Target weight reached 🎉"
+          }
+        }
+      }
+    },
+    "Wähle ein Trainingsprogramm – an Trainingstagen gibt es dann eine Einheit mit +%lld XP.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose a training program – on training days you then get a session worth +%lld XP."
           }
         }
       }
@@ -2188,6 +2868,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Agree"
+          }
+        }
+      }
+    },
+    "Zügiger Spaziergang": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Brisk walk"
           }
         }
       }
