@@ -25,6 +25,7 @@ struct SetupView: View {
                 number("Wunschgewicht", $p.targetWeight, "kg")
             }
             Section("Über dich") {
+                TextField("Name (optional)", text: Binding(get: { p.name ?? "" }, set: { p.name = $0.isEmpty ? nil : $0 }))
                 number("Gewicht", $p.weight, "kg")
                 number("Größe", $p.height, "cm")
                 Stepper(value: $p.age, in: 14...110) { Text("Alter: \(p.age)") }

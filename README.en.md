@@ -18,7 +18,8 @@ There is no central service: the developers run no server and never see any data
 - 🍽 **Nutrition** – daily goals, protein/carb/fat rings, 7-day chart, diary (breakfast, lunch, dinner, snack), optional photo entry with nutrient estimate
 - ⚖️ **Weight & measurements** – weight, body fat, waist, hip, chest, with history and target weight
 - 🚶 **Activity & sleep** – steps, active energy, sleep, resting heart rate and workouts from Apple Health
-- 🏁 **Adventure** – gamification: week strip and 🔥 streak, daily and custom quests, XP, levels, ranks, attributes
+- 🗺 **My plan** – overview: weight path to goal, BMI scale, daily goals, water and training
+- 🏁 **Adventure** – gamification: character card, shareable player card with your own photo, achievements, week strip and 🔥 streak, daily and custom quests, XP, levels, ranks, attributes
 - 📈 **Exercises** – log sets with reps and weight, progress chart per exercise, tiers bronze → silver → gold → platinum
 - 🏋️ **Training programs** – 4-week programs with training and rest days, XP per session, templates or created by Claude; optional penalties for missed sessions
 - 💧 **Water**, 🏋️ **Training** – simple sample modules, templates for your own modules

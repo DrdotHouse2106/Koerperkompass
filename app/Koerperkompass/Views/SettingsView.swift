@@ -19,6 +19,7 @@ struct SettingsView: View {
         NavigationStack {
             Form {
                 Section {
+                    NavigationLink("Mein Plan") { GoalsView() }
                     NavigationLink("Profil & Ziele") { SetupView(editing: true) }
                 }
                 Section("Module") {

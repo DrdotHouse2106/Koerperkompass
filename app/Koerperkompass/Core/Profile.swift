@@ -19,6 +19,7 @@ struct Profile: Codable, Equatable {
     var carbs = 0.0
     var fat = 0.0
     var water: Double? = 2000
+    var name: String?                 // Anzeigename (Spielerkarte)
     var plan: TrainingPlan?           // aktives Trainingsprogramm
     var habits: [String]? = nil       // eigene tägliche Quests (z. B. „Ein Buch lesen“)
     var penalties: Bool? = nil        // XP-Abzug für verpasste Trainingstage

@@ -422,6 +422,16 @@
         }
       }
     },
+    "Adipositas": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Obesity"
+          }
+        }
+      }
+    },
     "Adresse": {
       "localizations": {
         "en": {
@@ -498,6 +508,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "All quests of a day done: +%lld XP bonus. Tap your own quests to tick them off."
+          }
+        }
+      }
+    },
+    "Alle Werte sind Schätzungen und ersetzen keine ärztliche oder ernährungsfachliche Beratung.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All values are estimates and no substitute for medical or nutritional advice."
           }
         }
       }
@@ -672,6 +692,16 @@
         }
       }
     },
+    "BMI": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BMI"
+          }
+        }
+      }
+    },
     "Balance": {
       "localizations": {
         "en": {
@@ -688,6 +718,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Bench press – 4 × 6–8"
+          }
+        }
+      }
+    },
+    "Bei gesundem Tempo voraussichtlich erreicht: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "At a healthy pace, expected by: %@"
           }
         }
       }
@@ -812,6 +852,16 @@
         }
       }
     },
+    "Datum": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Date"
+          }
+        }
+      }
+    },
     "Dauer": {
       "localizations": {
         "en": {
@@ -878,6 +928,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Demo mode with sample data"
+          }
+        }
+      }
+    },
+    "Der BMI ist nur ein grober Richtwert – Muskelmasse und Körperbau berücksichtigt er nicht.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BMI is only a rough guide – it ignores muscle mass and build."
           }
         }
       }
@@ -1142,6 +1202,16 @@
         }
       }
     },
+    "Erfolge – %lld/%lld freigeschaltet": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Achievements – %lld/%lld unlocked"
+          }
+        }
+      }
+    },
     "Erholung": {
       "localizations": {
         "en": {
@@ -1293,6 +1363,16 @@
       }
     },
     "Foto auswählen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose photo"
+          }
+        }
+      }
+    },
+    "Foto wählen": {
       "localizations": {
         "en": {
           "stringUnit": {
@@ -2072,6 +2152,26 @@
         }
       }
     },
+    "Mein Plan": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "My plan"
+          }
+        }
+      }
+    },
+    "Mein Plan – Ziele, BMI und Makros": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "My plan – goals, BMI and macros"
+          }
+        }
+      }
+    },
     "Mein Programm": {
       "localizations": {
         "en": {
@@ -2192,6 +2292,16 @@
         }
       }
     },
+    "Name (optional)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Name (optional)"
+          }
+        }
+      }
+    },
     "Navigator": {
       "localizations": {
         "en": {
@@ -2268,6 +2378,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "No exercise logged yet"
+          }
+        }
+      }
+    },
+    "Normal": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Normal"
+          }
+        }
+      }
+    },
+    "Normalgewicht": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Normal weight"
           }
         }
       }
@@ -2378,6 +2508,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Profile & goals"
+          }
+        }
+      }
+    },
+    "Programm": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Program"
           }
         }
       }
@@ -2742,6 +2882,16 @@
         }
       }
     },
+    "Spielerkarte": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Player card"
+          }
+        }
+      }
+    },
     "Strafpunkte bei verpasstem Training": {
       "localizations": {
         "en": {
@@ -2862,6 +3012,16 @@
         }
       }
     },
+    "Teilen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Share"
+          }
+        }
+      }
+    },
     "Training": {
       "localizations": {
         "en": {
@@ -2932,6 +3092,16 @@
         }
       }
     },
+    "Unter": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Under"
+          }
+        }
+      }
+    },
     "Unter dieser Adresse läuft kein Körperkompass-Server": {
       "localizations": {
         "en": {
@@ -2958,6 +3128,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Plank – 3 × 45 s"
+          }
+        }
+      }
+    },
+    "Untergewicht": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Underweight"
           }
         }
       }
@@ -3202,6 +3382,16 @@
         }
       }
     },
+    "Workouts pro Woche": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Workouts per week"
+          }
+        }
+      }
+    },
     "Wunsch, z. B. „Muskelaufbau, nur Kurzhanteln, 40 min“": {
       "localizations": {
         "en": {
@@ -3268,6 +3458,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Goal: %@ kg"
+          }
+        }
+      }
+    },
+    "Ziele anpassen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adjust goals"
           }
         }
       }
@@ -3412,12 +3612,32 @@
         }
       }
     },
+    "Über": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Over"
+          }
+        }
+      }
+    },
     "Über dich": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "About you"
+          }
+        }
+      }
+    },
+    "Übergewicht": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Overweight"
           }
         }
       }
@@ -3438,6 +3658,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Exercises"
+          }
+        }
+      }
+    },
+    "🔥 %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🔥 %lld"
           }
         }
       }

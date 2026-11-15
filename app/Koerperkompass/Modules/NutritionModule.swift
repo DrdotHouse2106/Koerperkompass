@@ -84,6 +84,9 @@ private struct NutritionDetail: View {
                 }
                 .frame(maxWidth: .infinity)
             }
+            Section {
+                NavigationLink("Mein Plan – Ziele, BMI und Makros") { GoalsView() }
+            }
             Section("Letzte 7 Tage") {
                 Chart {
                     ForEach(Day.last(7), id: \.self) { d in

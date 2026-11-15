@@ -289,11 +289,11 @@ private struct QuestDetail: View {
                 }
             } header: { Text("Eigene Quests") } footer: { Text("Gelten jeden Tag, +15 XP pro Quest.") }
 
-            Section("Abzeichen") {
+            Section {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 90))], spacing: 16) {
                     ForEach(p.badges(state.profile), id: \.symbol) { b in
                         VStack(spacing: 6) {
-                            Image(systemName: b.symbol).font(.title2)
+                            Image(systemName: b.unlocked ? b.symbol : "questionmark").font(.title2)
                                 .frame(width: 52, height: 52)
                                 .background(b.unlocked ? Color.orange.opacity(0.2) : Color.gray.opacity(0.1), in: Circle())
                                 .foregroundStyle(b.unlocked ? .orange : .secondary)
@@ -303,6 +303,8 @@ private struct QuestDetail: View {
                     }
                 }
                 .padding(.vertical, 4)
+            } header: {
+                Text("Erfolge – \(p.badges(state.profile).filter(\.unlocked).count)/\(p.badges(state.profile).count) freigeschaltet")
             }
             Section("Attribute") {
                 ForEach(Attribute.allCases, id: \.self) { a in
@@ -422,6 +424,7 @@ private struct CharacterCard: View {
     let progress: QuestProgress
     @Environment(AppState.self) private var state
     @Query(sort: \Entry.date) private var entries: [Entry]
+    @State private var showCard = false
 
     var body: some View {
         let p = progress, prof = state.profile
@@ -452,9 +455,12 @@ private struct CharacterCard: View {
             if let next = p.nextRank {
                 Text("Nächster Rang ab Level \(next.level): \(String(localized: next.title))").font(.caption).foregroundStyle(.secondary)
             }
+            Button("Spielerkarte", systemImage: "person.crop.rectangle") { showCard = true }
+                .buttonStyle(.bordered).tint(.orange)
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 6)
+        .sheet(isPresented: $showCard) { PlayerCardView(progress: p) }
     }
 
     private func stat(_ value: Text, _ label: LocalizedStringResource, _ progress: Double, _ color: Color) -> some View {
