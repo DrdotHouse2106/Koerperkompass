@@ -31,6 +31,7 @@ import UIKit
     private var lastRev: Int64 { didSet { defaults.set(lastRev, forKey: "lastRev") } }
     private var profileDirty = false
     private var syncing = false
+    private var syncAgain = false  // Änderung während eines laufenden Abgleichs → danach erneut abgleichen
 
     init() {
         server = defaults.string(forKey: "server") ?? ""
@@ -97,9 +98,13 @@ import UIKit
 
     /// Überträgt geänderte Einträge und holt neue vom Server. Ohne Netz bleibt alles lokal und wird später nachgeholt.
     func sync(_ context: ModelContext) async {
-        guard !demo, token != nil, !syncing else { return }
+        guard !demo, token != nil else { return }
+        guard !syncing else { syncAgain = true; return }
         syncing = true
-        defer { syncing = false }
+        defer {
+            syncing = false
+            if syncAgain { syncAgain = false; Task { await sync(context) } }
+        }
         do {
             let status = try await api.status()
             aiAvailable = status.ai
