@@ -112,16 +112,41 @@ import Speech
         // Fest gewählte Server-Stimme (Einstellungen → Stimme), sonst passend zum Coach-Stil
         let fixed = UserDefaults.standard.string(forKey: "serverVoicePreset") ?? ""
         let persona = fixed.isEmpty ? persona : fixed
-        Task {
-            if let data = await Self.audio(clean, persona: persona, api: api), let p = try? AVAudioPlayer(data: data) {
-                synth.stopSpeaking(at: .immediate)
-                player?.stop()
+        stop()
+        // Lange Texte (z. B. Gesundheitscoach) satzweise holen: der erste Teil spielt, während der nächste entsteht
+        let parts = Self.chunks(clean)
+        playTask = Task {
+            var next: Task<Data?, Never>? = Task { await Self.audio(parts[0], persona: persona, api: api) }
+            for i in parts.indices {
+                let data = await next?.value
+                next = i + 1 < parts.count ? Task { await Self.audio(parts[i + 1], persona: persona, api: api) } : nil
+                if Task.isCancelled { return }
+                guard let data, let p = try? AVAudioPlayer(data: data) else {
+                    speakLocal(parts[i...].joined(separator: " "), rate: rate, pitch: pitch)
+                    return
+                }
                 player = p
                 p.play()
-            } else {
-                speakLocal(clean, rate: rate, pitch: pitch)
+                while p.isPlaying {
+                    try? await Task.sleep(for: .milliseconds(100))
+                    if Task.isCancelled { p.stop(); return }
+                }
             }
         }
+    }
+
+    private var playTask: Task<Void, Never>?
+
+    /// Text in Abschnitte aus ganzen Sätzen teilen (je höchstens ca. 250 Zeichen)
+    static func chunks(_ text: String, max: Int = 250) -> [String] {
+        var out: [String] = [], cur = ""
+        text.enumerateSubstrings(in: text.startIndex..., options: .bySentences) { s, _, _, _ in
+            guard let s = s?.trimmingCharacters(in: .whitespacesAndNewlines), !s.isEmpty else { return }
+            if !cur.isEmpty && cur.count + s.count > max { out.append(cur); cur = "" }
+            cur += (cur.isEmpty ? "" : " ") + s
+        }
+        if !cur.isEmpty { out.append(cur) }
+        return out.isEmpty ? [text] : out
     }
 
     private func speakLocal(_ text: String, rate: Float, pitch: Float) {
@@ -150,6 +175,7 @@ import Speech
     }
 
     func stop() {
+        playTask?.cancel()
         synth.stopSpeaking(at: .immediate)
         player?.stop()
     }
