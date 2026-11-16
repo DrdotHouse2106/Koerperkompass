@@ -41,6 +41,8 @@ func routes() http.Handler {
 	m.HandleFunc("PUT /api/profile", auth(putProfile))
 	m.HandleFunc("GET /api/entries", auth(listEntries))
 	m.HandleFunc("POST /api/entries", auth(putEntries))
+	m.HandleFunc("POST /api/log", auth(postAppLog)) // Testphase, siehe applog.go
+	m.HandleFunc("GET /api/log", auth(getAppLog))
 	m.HandleFunc("GET /api/export", auth(export))
 	m.HandleFunc("POST /api/import", auth(importData))
 	m.HandleFunc("POST /api/ai/photo", auth(aiPhoto))

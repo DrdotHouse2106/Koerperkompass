@@ -33,6 +33,10 @@ Sprach-Coach, Anpassung der nächsten Trainingseinheit und persönliche Motivati
 
 Während der Testphase protokolliert die App die Gespräche mit den Coaches (erkannter Text, Antwort, Stil, verwendetes Modell, Antwortzeit), um sie verbessern zu können. Das Protokoll liegt nur auf deinem iPhone und deinem eigenen Server, ist in den Coach-Ansichten sichtbar gekennzeichnet und lässt sich jederzeit ausschalten und löschen (Einstellungen → Gesprächsprotokoll). Weitergegeben wird es nur, wenn du es selbst teilst.
 
+## Erweitertes Protokoll (Testphase)
+
+Während der Testphase meldet die App Abläufe an **deinen eigenen Server**, damit Fehler gefunden werden können: gewechselte Tabs, angelegte, geänderte und gelöschte Einträge (nur Modul, Kennung, Datum, Zeitstempel – keine Werte), Abgleiche, Server-Aufrufe mit Antwortcode und Dauer sowie Fehlermeldungen. Gesundheitswerte sind nicht enthalten. Der Server behält die letzten 5000 Zeilen und gibt sie nie weiter, auch nicht mit den anonymen Verbesserungsdaten. Abschaltbar unter Einstellungen → Erweitertes Protokoll.
+
 ## Anonyme Verbesserungsdaten (freiwillig)
 
 Nur wenn du in den Einstellungen „Anonyme Daten teilen“ einschaltest und bestätigst, leitet dein Server Angaben zu den Coach-Gesprächen an den Server der Entwickler von Körperkompass weiter: Art des Gesprächs, Coach-Stil, verwendetes Modell, Antwortzeit, ob ein Satz erkannt wurde, App-Version, iOS-Hauptversion, Sprache. **Ohne Nutzerkennung und ohne Gesundheitswerte.** Gesprächstexte werden nur übertragen, wenn du „Gesprächstexte mitsenden“ zusätzlich einschaltest; Namen aus deinem Profil, E-Mail-Adressen, Telefonnummern und Links werden vorher entfernt. Der Server der Entwickler speichert keine IP-Adressen und nutzt die Daten ausschließlich zur Verbesserung der App. Du kannst das jederzeit ausschalten; Server-Betreiber können die Weiterleitung ganz abschalten (`KK_TELEMETRY=off`). Verantwortlich für diese Daten: die Entwickler von Körperkompass (Kontakt über GitHub Issues).
@@ -91,6 +95,10 @@ The voice coach, next-session adjustment and personal motivational messages use 
 ## Conversation log (test phase)
 
 During the test phase the app logs conversations with the coaches (recognised text, reply, style, model used, response time) to improve them. The log is stored only on your iPhone and your own server, is clearly marked in the coach views and can be switched off and deleted at any time (Settings → Conversation log). It is only shared if you share it yourself.
+
+## Extended log (test phase)
+
+During the test phase the app reports activity to **your own server** to help find bugs: tab changes, created, changed and deleted entries (only module, ID, date, timestamp – no values), syncs, server calls with status code and duration, and error messages. No health values are included. The server keeps the last 5000 lines and never forwards them, not even with the anonymous improvement data. Can be switched off under Settings → Extended log.
 
 ## Anonymous improvement data (optional)
 

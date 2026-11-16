@@ -23,6 +23,8 @@ struct SettingsView: View {
     @AppStorage("motivationEvening") private var motivationEvening = false
     @AppStorage("motivationEveningHour") private var motivationEveningHour = 19
 
+    @AppStorage("appLogOn") private var appLogOn = true
+
     var body: some View {
         @Bindable var state = state
         NavigationStack {
@@ -31,6 +33,11 @@ struct SettingsView: View {
                     NavigationLink("Mein Plan") { GoalsView() }
                     NavigationLink("Gesprächsprotokoll (Testphase)") { CoachLogView() }
                     NavigationLink("Profil & Ziele") { SetupView(editing: true) }
+                }
+                Section {
+                    Toggle("Erweitertes Protokoll (Testphase)", isOn: $appLogOn)
+                } footer: {
+                    Text("Meldet Abläufe wie Tippen, Abgleich, Server-Aufrufe und Fehler an deinen eigenen Server, damit Fehler gefunden werden können – nur Kennungen und Zeitstempel, keine Gesundheitswerte. Wird nicht weitergegeben.")
                 }
                 Section {
                     Toggle("Motivierende Erinnerungen", isOn: $motivationOn)

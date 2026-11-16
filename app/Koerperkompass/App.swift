@@ -35,6 +35,8 @@ struct RootView: View {
         }
         .onOpenURL { state.pendingLink = $0 }
         .onChange(of: phase) {
+            AppLog.add("App \(phase == .active ? "aktiv" : phase == .background ? "im Hintergrund" : "inaktiv")")
+            if phase == .background { Task { await AppLog.flush(state.api) } }
             if phase == .active {
                 Task {
                     await state.importHealth(context)
@@ -47,14 +49,15 @@ struct RootView: View {
 }
 
 struct MainView: View {
+    @State private var tab = "heute"
     var body: some View {
-        TabView {
-            DashboardView().tabItem { Label("Heute", systemImage: "square.grid.2x2.fill") }
-            TrainingView().tabItem { Label("Training", systemImage: "dumbbell.fill") }
+        TabView(selection: Binding(get: { tab }, set: { tab = $0; AppLog.add("Tab \($0)") })) {
+            DashboardView().tag("heute").tabItem { Label("Heute", systemImage: "square.grid.2x2.fill") }
+            TrainingView().tag("training").tabItem { Label("Training", systemImage: "dumbbell.fill") }
             NavigationStack { QuestModule().detail([]).navigationTitle("Abenteuer").themed() }
-                .tabItem { Label("Abenteuer", systemImage: "flag.checkered") }
-            CoachView().tabItem { Label("Coach", systemImage: "bubble.left.and.text.bubble.right.fill") }
-            SettingsView().tabItem { Label("Einstellungen", systemImage: "gearshape.fill") }
+                .tabItem { Label("Abenteuer", systemImage: "flag.checkered") }.tag("abenteuer")
+            CoachView().tag("coach").tabItem { Label("Coach", systemImage: "bubble.left.and.text.bubble.right.fill") }
+            SettingsView().tag("einstellungen").tabItem { Label("Einstellungen", systemImage: "gearshape.fill") }
         }
     }
 }

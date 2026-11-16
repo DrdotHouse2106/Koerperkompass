@@ -19,6 +19,7 @@ server/                  Go-Server, eine Binary, SQLite (modernc.org/sqlite, ohn
   auth.go                Kopplungscodes, Tokens, Middleware
   api.go                 REST-Endpunkte, Export/Import, Weboberfläche (index.html)
   ai.go                  Claude API (optional, nur mit ANTHROPIC_API_KEY)
+  applog.go              Erweitertes Protokoll der Testphase (POST/GET /api/log, nie weitergeleitet)
   friends.go             Freundschaften, auch zwischen Servern (Föderation über /api/fed/*)
   modules.go             Modul-Schema + Liste, generische Zusammenfassung
   module_*.go            ein File pro Modul

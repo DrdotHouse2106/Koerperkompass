@@ -1,6 +1,5 @@
 {
   "sourceLanguage": "de",
-  "version": "1.0",
   "strings": {
     "%@ %@ probehören": {
       "localizations": {
@@ -2192,6 +2191,16 @@
         }
       }
     },
+    "Erweitertes Protokoll (Testphase)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Extended log (test phase)"
+          }
+        }
+      }
+    },
     "Espresso": {
       "localizations": {
         "en": {
@@ -4078,6 +4087,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "My exercises"
+          }
+        }
+      }
+    },
+    "Meldet Abläufe wie Tippen, Abgleich, Server-Aufrufe und Fehler an deinen eigenen Server, damit Fehler gefunden werden können – nur Kennungen und Zeitstempel, keine Gesundheitswerte. Wird nicht weitergegeben.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reports activity such as taps, syncs, server calls and errors to your own server so bugs can be found – only IDs and timestamps, no health values. Never shared."
           }
         }
       }
@@ -6782,5 +6801,6 @@
         }
       }
     }
-  }
+  },
+  "version": "1.0"
 }

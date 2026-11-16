@@ -36,6 +36,7 @@ func main() {
 		log.Fatal("Datenbank: ", err)
 	}
 	db.Exec(`ALTER TABLE codes ADD COLUMN name TEXT NOT NULL DEFAULT ''`) // ältere Datenbanken nachrüsten
+	migrateAppLog()
 	if err = migrateFriends(); err != nil {
 		log.Fatal("Datenbank: ", err)
 	}

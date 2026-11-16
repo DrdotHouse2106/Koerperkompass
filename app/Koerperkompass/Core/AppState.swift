@@ -99,11 +99,12 @@ import UIKit
     /// Überträgt geänderte Einträge und holt neue vom Server. Ohne Netz bleibt alles lokal und wird später nachgeholt.
     func sync(_ context: ModelContext) async {
         guard !demo, token != nil else { return }
-        guard !syncing else { syncAgain = true; return }
+        guard !syncing else { syncAgain = true; AppLog.add("Abgleich läuft schon – wird danach wiederholt"); return }
         syncing = true
         defer {
             syncing = false
             if syncAgain { syncAgain = false; Task { await sync(context) } }
+            Task { await AppLog.flush(api) }
         }
         do {
             let status = try await api.status()
@@ -112,6 +113,7 @@ import UIKit
             serverVersion = status.version
 
             let dirty = try context.fetch(FetchDescriptor<Entry>(predicate: #Predicate { $0.dirty }))
+            AppLog.add("Abgleich: \(dirty.count) zu senden, seit rev \(lastRev)" + dirty.prefix(20).map { "\n  ↑ " + AppLog.describe($0) }.joined())
             if !dirty.isEmpty {
                 let sent = dirty.map { ($0, $0.updated) }
                 _ = try await api.call("POST", "/api/entries", json: dirty.map(\.json))
@@ -119,7 +121,11 @@ import UIKit
             }
 
             let data = try await api.call("GET", "/api/entries?since=\(lastRev)")
-            for r in (try JSONSerialization.jsonObject(with: data) as? [[String: Any]]) ?? [] {
+            let pulled = (try JSONSerialization.jsonObject(with: data) as? [[String: Any]]) ?? []
+            AppLog.add("Abgleich: \(pulled.count) vom Server" + pulled.prefix(20).map { r in
+                "\n  ↓ \(r["module"] ?? "")/\(String(describing: r["id"] ?? "").prefix(8)) upd=\(r["updated"] ?? "-") rev=\(r["rev"] ?? "-")\((r["deleted"] as? Bool) == true ? " gelöscht" : "")"
+            }.joined())
+            for r in pulled {
                 guard let id = r["id"] as? String, let module = r["module"] as? String else { continue }
                 let updated = (r["updated"] as? NSNumber)?.int64Value ?? 0
                 lastRev = max(lastRev, (r["rev"] as? NSNumber)?.int64Value ?? 0)
@@ -142,8 +148,10 @@ import UIKit
             await pushCard(context)
             await Telemetry.send(context, api: api, profileName: profile.name)  // nur wenn freiwillig eingeschaltet
             syncError = nil
+            AppLog.add("Abgleich fertig")
         } catch {
             syncError = error.localizedDescription
+            AppLog.add("Abgleich FEHLER: \(error.localizedDescription)")
         }
     }
 
@@ -173,13 +181,16 @@ import UIKit
 
     /// Nach jeder Änderung: lokal speichern und im Hintergrund abgleichen.
     func changed(_ context: ModelContext) {
-        try? context.save()
+        for e in context.insertedModelsArray.compactMap({ $0 as? Entry }) { AppLog.add("neu " + AppLog.describe(e)) }
+        for e in context.changedModelsArray.compactMap({ $0 as? Entry }) { AppLog.add("geändert " + AppLog.describe(e)) }
+        do { try context.save() } catch { AppLog.add("Speichern FEHLER: \(error.localizedDescription)") }
         Task { await sync(context) }
     }
 
     func delete(_ entry: Entry, _ context: ModelContext) {
         entry.deleted = true
         entry.touch()
+        AppLog.add("löschen " + AppLog.describe(entry))
         changed(context)
     }
 

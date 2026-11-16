@@ -30,8 +30,18 @@ struct API {
         req.setValue("application/json", forHTTPHeaderField: "Content-Type")
         if let token { req.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization") }
         if let json { req.httpBody = try JSONSerialization.data(withJSONObject: json) }
-        let (data, resp) = try await URLSession.shared.data(for: req)
+        let started = Date()
+        let result: (Data, URLResponse)
+        do { result = try await URLSession.shared.data(for: req) } catch {
+            if path != "/api/log" { AppLog.add("\(method) \(path) → Netzfehler: \(error.localizedDescription)") }
+            throw error
+        }
+        let (data, resp) = result
         let code = (resp as? HTTPURLResponse)?.statusCode ?? 0
+        if path != "/api/log" {
+            AppLog.add("\(method) \(path.prefix(60)) → \(code) (\(Int(Date().timeIntervalSince(started) * 1000)) ms, \(req.httpBody?.count ?? 0) B)"
+                       + ((200..<300).contains(code) ? "" : ": " + String(decoding: data.prefix(300), as: UTF8.self)))
+        }
         guard (200..<300).contains(code) else {
             let text = String(decoding: data, as: UTF8.self).trimmingCharacters(in: .whitespacesAndNewlines)
             throw Failure(message: text.isEmpty ? "HTTP \(code)" : text)
