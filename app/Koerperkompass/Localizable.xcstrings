@@ -2572,6 +2572,16 @@
         }
       }
     },
+    "Jeden Tag ein anderer Spruch – persönlich mit deinem Namen, deiner Serie und deinem Ziel. Mit Claude auf dem Server (und deiner Zustimmung) schreibt dir dein Coach einmal am Tag eigene Sprüche passend zu deinen Daten. Trinkerinnerung unter Getränke, Coach-Erinnerung im Coach.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A different message every day – personal with your name, streak and goal. With Claude on your server (and your consent), your coach writes you personal messages once a day based on your data. Drink reminder under Drinks, coach reminder in Coach."
+          }
+        }
+      }
+    },
     "Jeden Tag ein anderer Spruch – persönlich mit deinem Namen, deiner Serie und deinem Ziel. Trinkerinnerung unter Getränke, Coach-Erinnerung im Coach.": {
       "localizations": {
         "en": {
@@ -4958,6 +4968,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Adjusted for you by Claude"
+          }
+        }
+      }
+    },
+    "Von deinem Coach 💬": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "From your coach 💬"
           }
         }
       }

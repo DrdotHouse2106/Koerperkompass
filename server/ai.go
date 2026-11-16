@@ -25,18 +25,27 @@ func ask(ctx context.Context, system string, effort anthropic.BetaOutputConfigEf
 
 // askMessages führt ein Gespräch mit mehreren Nachrichten (z. B. für den Coach).
 func askMessages(ctx context.Context, system string, effort anthropic.BetaOutputConfigEffort, messages []anthropic.BetaMessageParam) (string, error) {
+	return askModel(ctx, env("KK_MODEL", "claude-opus-5-5"), system, effort, messages)
+}
+
+// askModel ruft ein bestimmtes Modell auf. Für Opus/Sonnet/Fable ist der serverseitige Fallback bei Ablehnung aktiv;
+// Haiku hat keinen solchen Fallback.
+func askModel(ctx context.Context, model, system string, effort anthropic.BetaOutputConfigEffort, messages []anthropic.BetaMessageParam) (string, error) {
 	client := anthropic.NewClient() // liest ANTHROPIC_API_KEY
 	ctx, cancel := context.WithTimeout(ctx, 5*time.Minute)
 	defer cancel()
-	msg, err := client.Beta.Messages.New(ctx, anthropic.BetaMessageNewParams{
-		Model:        anthropic.Model(env("KK_MODEL", "claude-opus-5-5")),
+	params := anthropic.BetaMessageNewParams{
+		Model:        anthropic.Model(model),
 		MaxTokens:    16000,
 		System:       []anthropic.BetaTextBlockParam{{Text: system}},
 		OutputConfig: anthropic.BetaOutputConfigParam{Effort: effort},
-		Fallbacks:    anthropic.BetaFallbacksParamOfDefault(),
-		Betas:        []anthropic.AnthropicBeta{anthropic.AnthropicBetaServerSideFallback2026_07_01},
 		Messages:     messages,
-	})
+	}
+	if !strings.Contains(model, "haiku") {
+		params.Fallbacks = anthropic.BetaFallbacksParamOfDefault()
+		params.Betas = []anthropic.AnthropicBeta{anthropic.AnthropicBetaServerSideFallback2026_07_01}
+	}
+	msg, err := client.Beta.Messages.New(ctx, params)
 	if err != nil {
 		return "", err
 	}
@@ -235,4 +244,30 @@ Aktuelle Daten der Person (Stand heute):
 		return
 	}
 	writeJSON(w, map[string]string{"text": out})
+}
+
+// aiMotivation erzeugt kurze, persönliche Motivationssprüche für die nächsten Erinnerungen.
+// Bewusst mit dem günstigen kleinen Modell (KK_MODEL_SMALL, Standard Claude Haiku 5.5) und wenig Aufwand.
+func aiMotivation(w http.ResponseWriter, r *http.Request) {
+	var req struct {
+		Context, Lang string
+		Count         int
+	}
+	if !requireAI(w) || !readJSON(w, r, &req) {
+		return
+	}
+	if req.Count < 1 || req.Count > 6 {
+		req.Count = 2
+	}
+	system := `Du schreibst kurze, motivierende Push-Mitteilungen für eine Gesundheits-App. Jede höchstens 140 Zeichen, per Du,
+warm, konkret auf die Daten der Person bezogen (Serie, Ziel, Training, Trinken, Essen), abwechslungsreich, gern mit einem Emoji,
+nie belehrend, keine Diagnosen. Antworte ausschließlich mit JSON: {"messages": ["…", "…"]}. Sprache: ` + langName(req.Lang) + `.`
+	prompt := "Schreibe " + strconv.Itoa(req.Count) + " verschiedene Mitteilungen (morgens zuerst).\n\nDaten:\n" + req.Context
+	out, err := askModel(r.Context(), env("KK_MODEL_SMALL", "claude-haiku-5-5"), system, anthropic.BetaOutputConfigEffortLow,
+		[]anthropic.BetaMessageParam{anthropic.NewBetaUserMessage(anthropic.NewBetaTextBlock(prompt))})
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadGateway)
+		return
+	}
+	writeObject(w, out)
 }

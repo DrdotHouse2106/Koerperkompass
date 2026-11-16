@@ -67,11 +67,29 @@ Danach `http://<server-ip>:8080` im Browser öffnen: Dort steht der Kopplungscod
 |---|---|
 | `ANTHROPIC_API_KEY` | eigener Claude-API-Key ([console.anthropic.com](https://console.anthropic.com)) für Foto-Erkennung und ausführliche Analyse. Ohne Key gibt es nur die lokale Auswertung. |
 | `KK_PUBLIC_URL` | öffentliche Adresse, z. B. `https://kompass.example.de` (für den QR-Code hinter einem Reverse Proxy) |
-| `KK_MODEL` | Claude-Modell (Standard: `claude-opus-5-5`) |
+| `KK_MODEL` | Claude-Modell für Coach, Fotos, Analyse und Training (Standard: `claude-opus-5-5`; günstiger: `claude-sonnet-5-5` oder `claude-haiku-5-5`) |
+| `KK_MODEL_SMALL` | kleines Modell für die täglichen Motivationssprüche (Standard: `claude-haiku-5-5`) |
 | `PORT` | Port (Standard: `8080`) |
 | `KK_DB` | Pfad der SQLite-Datei (im Image: `/data/koerperkompass.db`) |
 
 Anfragen an Claude nutzen den serverseitigen Fallback der API: Lehnt das Modell eine Anfrage ab, beantwortet ein Ersatzmodell sie.
+
+### Was kostet die Claude API?
+
+Abgerechnet wird über dein eigenes Konto bei Anthropic, nach verbrauchten Tokens. Grobe Richtwerte pro Aufruf (Stand November 2026,
+inklusive der Denk-Tokens; tatsächliche Kosten schwanken je nach Datenmenge):
+
+| Funktion | Opus 5.5 (Standard) | Sonnet 5.5 | Haiku 5.5 |
+|---|---|---|---|
+| Coach-Nachricht | ca. 3–6 ct | ca. 1,5–3 ct | ca. 0,1 ct |
+| Foto-Schätzung | ca. 1–2 ct | ca. 0,5–1 ct | < 0,1 ct |
+| Nächste Einheit anpassen / Programm erstellen | ca. 3–10 ct | ca. 1,5–5 ct | ca. 0,2 ct |
+| Analyse (Kompass) | ca. 3–6 ct | ca. 1,5–3 ct | ca. 0,1 ct |
+| Motivationssprüche (1× täglich, immer Haiku) | – | – | ca. 0,05 ct |
+
+Beispiel: 3 Fotos, 5 Coach-Nachrichten und 1 Trainingsanpassung pro Tag ≈ 30 ct/Tag mit Opus (≈ 9 €/Monat),
+≈ 15 ct/Tag mit Sonnet (≈ 4–5 €/Monat), < 1 ct/Tag mit Haiku. Mit `KK_MODEL=claude-sonnet-5-5` halbierst du die Kosten bei
+kaum spürbarem Qualitätsunterschied. In der Anthropic Console kannst du ein monatliches Ausgabenlimit setzen.
 
 ### Auf Proxmox (LXC)
 

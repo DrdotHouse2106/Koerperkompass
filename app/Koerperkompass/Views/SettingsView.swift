@@ -38,7 +38,7 @@ struct SettingsView: View {
                         }
                     }
                 } header: { Text("Erinnerungen") } footer: {
-                    Text("Jeden Tag ein anderer Spruch – persönlich mit deinem Namen, deiner Serie und deinem Ziel. Trinkerinnerung unter Getränke, Coach-Erinnerung im Coach.")
+                    Text("Jeden Tag ein anderer Spruch – persönlich mit deinem Namen, deiner Serie und deinem Ziel. Mit Claude auf dem Server (und deiner Zustimmung) schreibt dir dein Coach einmal am Tag eigene Sprüche passend zu deinen Daten. Trinkerinnerung unter Getränke, Coach-Erinnerung im Coach.")
                 }
                 .onChange(of: [motivationOn ? 1 : 0, motivationHour, motivationEvening ? 1 : 0, motivationEveningHour]) {
                     Task { await refreshMotivation(state, modelContext) }
@@ -268,5 +268,19 @@ struct DevicesView: View {
     guard d.bool(forKey: "motivationOn") else { Motivation.cancel(); return }
     var hours = [d.object(forKey: "motivationHour") as? Int ?? 8]
     if d.bool(forKey: "motivationEvening") { hours.append(d.object(forKey: "motivationEveningHour") as? Int ?? 19) }
-    await Motivation.schedule(hours: hours, profile: state.profile, streak: QuestProgress(context.allEntries(), state.profile).streak)
+    let streak = QuestProgress(context.allEntries(), state.profile).streak
+    // Mit Claude: einmal am Tag persönliche Sprüche für heute und morgen holen (kleines, günstiges Modell)
+    var personal = d.stringArray(forKey: "aiMotivation") ?? []
+    if state.aiAvailable && state.aiConsent && d.string(forKey: "aiMotivationDay") != Day.today {
+        if let r = try? await state.api.object("POST", "/api/ai/motivation", json: [
+            "context": coachContext(context.allEntries(), state.profile, healthUpload: state.healthUpload),
+            "count": hours.count * 2, "lang": Locale.current.language.languageCode?.identifier ?? "de",
+        ]), let list = r["messages"] as? [String], !list.isEmpty {
+            personal = list
+            d.set(list, forKey: "aiMotivation")
+            d.set(Day.today, forKey: "aiMotivationDay")
+        }
+    }
+    if d.string(forKey: "aiMotivationDay") != Day.today { personal = [] }  // alte Sprüche nicht erneut verwenden
+    await Motivation.schedule(hours: hours, profile: state.profile, streak: streak, personal: personal)
 }
