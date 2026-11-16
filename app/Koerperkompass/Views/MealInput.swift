@@ -23,7 +23,7 @@ extension Meal {
 /// Freie Beschreibung → Lebensmittel mit Nährwerten.
 /// Mit Claude (Haiku, mit Zustimmung) über den eigenen Server, sonst mit Apple Intelligence auf dem iPhone.
 enum MealParser {
-    static func parse(_ text: String, state: AppState) async throws -> (Meal?, [ParsedFood]) {
+    @MainActor static func parse(_ text: String, state: AppState) async throws -> (Meal?, [ParsedFood]) {
         if state.aiAvailable && state.aiConsent {
             let r = try await state.api.object("POST", "/api/ai/meal", json: [
                 "text": text, "hint": Meal.now.rawValue, "lang": Locale.current.language.languageCode?.identifier ?? "de",

@@ -33,9 +33,14 @@ enum Meal: String, CaseIterable, Identifiable {
 
 /// Summen eines Tages
 private func totals(_ entries: [Entry], _ day: String) -> (kcal: Double, protein: Double, carbs: Double, fat: Double) {
-    entries.filter { $0.date == day }.reduce((0, 0, 0, 0)) {
-        ($0.0 + ($1.num("kcal") ?? 0), $0.1 + ($1.num("protein") ?? 0), $0.2 + ($1.num("carbs") ?? 0), $0.3 + ($1.num("fat") ?? 0))
+    var kcal = 0.0, protein = 0.0, carbs = 0.0, fat = 0.0
+    for e in entries where e.date == day {
+        kcal += e.num("kcal") ?? 0
+        protein += e.num("protein") ?? 0
+        carbs += e.num("carbs") ?? 0
+        fat += e.num("fat") ?? 0
     }
+    return (kcal, protein, carbs, fat)
 }
 
 private struct MacroRings: View {
