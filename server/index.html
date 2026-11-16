@@ -20,6 +20,10 @@
   <p>Oder gib von Hand ein:<br>Server: <b>{{.Server}}</b><br>Kopplungscode: <code>{{.Code}}</code></p>
   <p><small>Der Code ist einmalig und 24 Stunden gültig. Nach der ersten Kopplung verschwindet er von dieser Seite.
   Weitere Familienmitglieder lädst du in der App ein (Einstellungen → Server → Einladen).</small></p>
+{{else if not .Local}}
+  <p>Der Server läuft. Den Kopplungscode zeigt diese Seite aus Sicherheitsgründen nur im Heimnetz
+  (direkt über die IP-Adresse des Servers, z. B. <code style="font-size:1rem">http://192.168.x.x:8080</code>) oder im Server-Log.
+  Weitere Geräte und Personen lädst du in der App ein (Einstellungen → Server).</p>
 {{else}}
   <p>Der Server läuft. Neue Geräte und Familienmitglieder lädst du in der App ein
   (Einstellungen → Server → Einladen) oder mit <code style="font-size:1rem">koerperkompass invite</code> auf dem Server.</p>

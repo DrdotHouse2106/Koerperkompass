@@ -5,6 +5,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"html/template"
+	"net"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -249,10 +250,32 @@ func importData(w http.ResponseWriter, r *http.Request) {
 var files embed.FS
 var tmpl = template.Must(template.ParseFS(files, "index.html"))
 
-// page zeigt die kleine Weboberfläche; den QR-Code nur, solange noch niemand gekoppelt ist.
+// isLocal: Aufruf direkt aus dem Heimnetz – nicht über den Reverse Proxy und nicht über die öffentliche Adresse.
+// Nur dann zeigt die Weboberfläche den Kopplungscode, damit ihn niemand aus dem Internet abgreifen kann.
+func isLocal(r *http.Request) bool {
+	for _, h := range []string{"X-Forwarded-For", "X-Real-Ip", "Forwarded", "X-Forwarded-Proto", "X-Forwarded-Host"} {
+		if r.Header.Get(h) != "" {
+			return false
+		}
+	}
+	if pub, err := url.Parse(selfURL()); err == nil && pub.Host != "" && strings.EqualFold(pub.Hostname(), hostOnly(r.Host)) {
+		return false
+	}
+	ip := net.ParseIP(hostOnly(r.RemoteAddr))
+	return ip != nil && (ip.IsLoopback() || ip.IsPrivate())
+}
+
+func hostOnly(hostport string) string {
+	if h, _, err := net.SplitHostPort(hostport); err == nil {
+		return h
+	}
+	return hostport
+}
+
+// page zeigt die kleine Weboberfläche; den QR-Code nur im Heimnetz und nur, solange noch niemand gekoppelt ist.
 func page(w http.ResponseWriter, r *http.Request) {
-	data := map[string]any{"Version": version, "AI": aiEnabled()}
-	if code := firstStartCode(); code != "" {
+	data := map[string]any{"Version": version, "AI": aiEnabled(), "Local": isLocal(r)}
+	if code := firstStartCode(); code != "" && isLocal(r) {
 		base := env("KK_PUBLIC_URL", "")
 		if base == "" {
 			scheme := "http"
