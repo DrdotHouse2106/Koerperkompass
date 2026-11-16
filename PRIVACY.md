@@ -25,6 +25,10 @@ Ist auf deinem Server ein eigener Claude-API-Key hinterlegt, kannst du Fotos von
 
 Wenn du Freundschaften schließt, gibt dein Server deine **Spielerkarte** an die Server deiner Freunde weiter: Name, Level, Rang, Klasse, Serie, Anzahl der Erfolge und Workouts sowie Wochenwerte der Challenge. **Gesundheitsdaten werden nie geteilt.** Deine Freunde siehst nur du – außer du schaltest „Meine Freunde meinen Freunden zeigen“ ein; Freunde von Freunden erscheinen nur, wenn diese selbst zugestimmt haben. Beendest du eine Freundschaft, löschen beide Server die gespeicherten Werte.
 
+## Apple Intelligence (auf dem Gerät)
+
+Sprach-Coach, Anpassung der nächsten Trainingseinheit und persönliche Motivationssprüche nutzen – wenn verfügbar – das Sprachmodell von Apple Intelligence **direkt auf deinem iPhone**. Dabei werden keine Daten an deinen Server, an Anthropic oder an Apple übertragen. Für den Sprach-Coach verwendet die App Mikrofon und Spracherkennung (nach Möglichkeit ebenfalls auf dem Gerät).
+
 ## Speicherung und Löschung
 
 - Lokal: SwiftData-Zwischenspeicher auf dem iPhone. „Verbindung trennen“ bzw. Löschen der App entfernt ihn.
@@ -71,6 +75,10 @@ If your server is configured with its own Claude API key, you can have meal phot
 ## Friends (optional)
 
 If you make friends, your server shares your **player card** with your friends’ servers: name, level, rank, class, streak, number of achievements and workouts, and weekly challenge values. **Health data is never shared.** Only you see your friends – unless you turn on “Show my friends to my friends”; friends of friends only appear if they agreed themselves. Ending a friendship deletes the stored values on both servers.
+
+## Apple Intelligence (on device)
+
+The voice coach, next-session adjustment and personal motivational messages use – when available – the Apple Intelligence language model **directly on your iPhone**. No data is sent to your server, to Anthropic or to Apple. The voice coach uses the microphone and speech recognition (on device whenever possible).
 
 ## Storage and deletion
 

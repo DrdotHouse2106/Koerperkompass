@@ -87,8 +87,9 @@ struct CoachButton: View {
 
     var body: some View {
         Group {
-            Button(busy ? LocalizedStringKey("Claude plant deine Einheit …") : "Einheit mit Claude anpassen", systemImage: "sparkles") {
-                if state.aiConsent { run() } else { askConsent = true }
+            Button(busy ? LocalizedStringKey("Dein Coach plant die Einheit …") : "Einheit für mich anpassen", systemImage: "sparkles") {
+                // Auf dem iPhone (Apple Intelligence) ohne Datenweitergabe, sonst Claude mit Zustimmung
+                if OnDevice.available || state.aiConsent { run() } else { askConsent = true }
             }
             .disabled(busy)
             if let error { Text(error).font(.caption).foregroundStyle(.red) }
@@ -106,6 +107,13 @@ struct CoachButton: View {
         error = nil
         Task {
             defer { busy = false }
+            if OnDevice.available {
+                if let s = await OnDevice.nextSession(session, history: trainingHistory(entries), profile: state.profile.aiText) {
+                    state.profile.suggestion = s
+                    return
+                }
+                if !state.aiAvailable { error = String(localized: "Anpassung gerade nicht möglich – versuch es gleich noch einmal."); return }
+            }
             do {
                 let r = try await state.api.object("POST", "/api/ai/next", json: [
                     "profile": state.profile.aiText, "plan": state.profile.plan?.name ?? "",

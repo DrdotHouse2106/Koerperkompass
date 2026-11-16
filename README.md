@@ -29,6 +29,7 @@ Es gibt keinen zentralen Dienst: Die Entwickler betreiben keinen Server und sehe
 | 💧 **Getränke** | Wasser, Kaffee, Tee, Bier, Wein, Softdrinks … mit einem Tipp; Trinkziel, Koffein, Alkohol, Kalorien zählen in die Ernährung; **Trinkerinnerung**, direkt in der Mitteilung abhakbar |
 | 🏋️ **Training** | eigener Tab: heutige Einheit, Empfehlungen passend zu Ziel und Aktivität, neun fertige Programme. **Rückmeldung nach jeder Einheit** (zu leicht / genau richtig / zu schwer) passt die nächste Einheit an – mit Claude konkret auf Basis von Verlauf und eingetragenen Sätzen |
 | 🔔 **Erinnerungen** | Motivierende Sprüche morgens (und optional abends) – jeden Tag ein anderer, persönlich mit Name, Serie und Ziel; Trinkerinnerung mit wechselnden Texten; tägliche Coach-Erinnerung |
+| 🎙 **Sprach-Coach** | Im Training sprechen („10 Wiederholungen mit 60 Kilo, war schwer“): Satz wird eingetragen, Antwort vorgelesen, Pause runtergezählt – mit Apple Intelligence auf dem iPhone, kostenlos und offline. Dazu Siri: „Wasser in Körperkompass eintragen“ |
 | 💬 **Coach** | Persönlicher Gesundheitscoach (Claude) im Chat: kennt Profil, Ziele, Essen, Getränke, Gewicht und Training, gibt ein Tagesbriefing und konkrete nächste Schritte. Tägliche Erinnerung, Verlauf bleibt auf dem iPhone. Braucht `ANTHROPIC_API_KEY` |
 | 🧭 **Kompass** | Auswertung über 7/30/90 Tage: Durchschnitte, Trends, Zielerreichung, Zusammenhänge (z. B. Schlaf ↔ Kalorien). Optional ausführliche Auswertung mit Claude |
 | 🤝 **Freunde (dezentral)** | Freundschaften mit Nutzern auf deinem oder **anderen Körperkompass-Servern** – ohne zentralen Dienst. Freundesliste mit Spielerkarten, Wochen-Challenge mit Bestenliste, optional Freunde von Freunden. Geteilt werden nur Spielwerte, nie Gesundheitsdaten |
@@ -73,6 +74,17 @@ Danach `http://<server-ip>:8080` im Browser öffnen: Dort steht der Kopplungscod
 | `KK_DB` | Pfad der SQLite-Datei (im Image: `/data/koerperkompass.db`) |
 
 Anfragen an Claude nutzen den serverseitigen Fallback der API: Lehnt das Modell eine Anfrage ab, beantwortet ein Ersatzmodell sie.
+
+### Apple Intelligence und Claude – wer macht was?
+
+| Funktion | Läuft mit | Kosten |
+|---|---|---|
+| Sprach-Coach im Training, „Einheit für mich anpassen“, tägliche persönliche Sprüche | 🍏 Apple Intelligence **auf dem iPhone** (iOS 26, iPhone 15 Pro oder neuer) – offline, Daten verlassen das Gerät nicht | 0 € |
+| Siri: „Wasser in Körperkompass eintragen“ | 🍏 Kurzbefehle | 0 € |
+| Coach-Chat, Auswertungen, neue Trainingsprogramme, Foto-Nährwerte | ☁️ Claude über deinen Server (`ANTHROPIC_API_KEY`) | siehe unten |
+
+Ohne Apple Intelligence (ältere iPhones) übernimmt Claude die Anpassung und die Sprüche (Haiku, Bruchteile eines Cents),
+der Sprach-Coach erkennt dann nur Wiederholungen und Gewicht.
 
 ### Was kostet die Claude API?
 

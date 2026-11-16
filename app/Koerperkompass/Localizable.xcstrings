@@ -202,6 +202,16 @@
         }
       }
     },
+    "%lld s": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld s"
+          }
+        }
+      }
+    },
     "%lld × pro Woche. Die übrigen Tage sind Ruhetage.": {
       "localizations": {
         "en": {
@@ -752,6 +762,16 @@
         }
       }
     },
+    "Anpassung gerade nicht möglich – versuch es gleich noch einmal.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adjustment not possible right now – try again shortly."
+          }
+        }
+      }
+    },
     "Antwort nicht verwertbar": {
       "localizations": {
         "en": {
@@ -1022,6 +1042,16 @@
         }
       }
     },
+    "Bitte erlaube Mikrofon und Spracherkennung in den iOS-Einstellungen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Please allow microphone and speech recognition in iOS Settings."
+          }
+        }
+      }
+    },
     "Bizeps-Curls – 3 × 10–12": {
       "localizations": {
         "en": {
@@ -1162,6 +1192,16 @@
         }
       }
     },
+    "Das kenne ich leider nicht.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sorry, I don’t know that one."
+          }
+        }
+      }
+    },
     "Datei konnte nicht gelesen werden": {
       "localizations": {
         "en": {
@@ -1248,6 +1288,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Your coach is thinking …"
+          }
+        }
+      }
+    },
+    "Dein Coach plant die Einheit …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your coach is planning the session …"
           }
         }
       }
@@ -1578,6 +1628,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Session done ✓"
+          }
+        }
+      }
+    },
+    "Einheit für mich anpassen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adjust session for me"
           }
         }
       }
@@ -2252,6 +2312,26 @@
         }
       }
     },
+    "Getränk": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drink"
+          }
+        }
+      }
+    },
+    "Getränk eintragen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Log drink"
+          }
+        }
+      }
+    },
     "Getränke": {
       "localizations": {
         "en": {
@@ -2518,6 +2598,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Me"
+          }
+        }
+      }
+    },
+    "Ich hab dich gehört! Sag mir einfach Wiederholungen und Gewicht, zum Beispiel: zehn Wiederholungen mit sechzig Kilo.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I heard you! Just tell me reps and weight, for example: ten reps with sixty kilos."
           }
         }
       }
@@ -3332,6 +3422,16 @@
         }
       }
     },
+    "Los geht’s! Heute: %@. Sag mir nach jedem Satz, wie viele Wiederholungen mit welchem Gewicht – und wie es sich angefühlt hat.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Let’s go! Today: %@. After each set, tell me how many reps with what weight – and how it felt."
+          }
+        }
+      }
+    },
     "Max. Gewicht": {
       "localizations": {
         "en": {
@@ -3672,6 +3772,16 @@
         }
       }
     },
+    "Noch zehn Sekunden.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ten seconds left."
+          }
+        }
+      }
+    },
     "Normal": {
       "localizations": {
         "en": {
@@ -3742,6 +3852,16 @@
         }
       }
     },
+    "Ohne Apple Intelligence erkennt der Coach nur Wiederholungen und Gewicht.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Without Apple Intelligence the coach only recognises reps and weight."
+          }
+        }
+      }
+    },
     "Ohne Fehltag": {
       "localizations": {
         "en": {
@@ -3788,6 +3908,36 @@
           "stringUnit": {
             "state": "translated",
             "value": "Matching your goal and activity. After each session you give feedback – the next session is adjusted accordingly."
+          }
+        }
+      }
+    },
+    "Pause": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rest"
+          }
+        }
+      }
+    },
+    "Pause vorbei – auf zum nächsten Satz! 💪": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rest is over – on to the next set! 💪"
+          }
+        }
+      }
+    },
+    "Pause überspringen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Skip rest"
           }
         }
       }
@@ -4132,6 +4282,16 @@
         }
       }
     },
+    "Sauber, eingetragen! 90 Sekunden Pause, dann weiter.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clean, logged! 90 seconds rest, then keep going."
+          }
+        }
+      }
+    },
     "Scanner nicht verfügbar": {
       "localizations": {
         "en": {
@@ -4452,6 +4612,46 @@
         }
       }
     },
+    "Sprach-Coach": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voice coach"
+          }
+        }
+      }
+    },
+    "Sprach-Coach starten": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start voice coach"
+          }
+        }
+      }
+    },
+    "Sprich jetzt – tippen zum Beenden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Speak now – tap to finish"
+          }
+        }
+      }
+    },
+    "Stark gekämpft! Gönn dir zwei Minuten Pause – beim nächsten Satz ruhig etwas leichter.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Great fight! Take a two-minute rest – go a bit lighter on the next set."
+          }
+        }
+      }
+    },
     "Strafpunkte bei verpasstem Training": {
       "localizations": {
         "en": {
@@ -4612,6 +4812,16 @@
         }
       }
     },
+    "Tippen und sprechen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tap and speak"
+          }
+        }
+      }
+    },
     "Training": {
       "localizations": {
         "en": {
@@ -4728,6 +4938,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Triceps pushdown – 3 × 12"
+          }
+        }
+      }
+    },
+    "Trägt ein Getränk in Körperkompass ein.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Logs a drink in Körperkompass."
           }
         }
       }
@@ -4968,6 +5188,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Adjusted for you by Claude"
+          }
+        }
+      }
+    },
+    "Von deinem Coach angepasst": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adjusted by your coach"
           }
         }
       }
@@ -5578,6 +5808,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "☕️ %@ mg"
+          }
+        }
+      }
+    },
+    "🍏 Läuft mit Apple Intelligence auf deinem iPhone – kostenlos und offline.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🍏 Runs with Apple Intelligence on your iPhone – free and offline."
           }
         }
       }

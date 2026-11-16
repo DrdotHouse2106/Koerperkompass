@@ -269,13 +269,20 @@ struct DevicesView: View {
     var hours = [d.object(forKey: "motivationHour") as? Int ?? 8]
     if d.bool(forKey: "motivationEvening") { hours.append(d.object(forKey: "motivationEveningHour") as? Int ?? 19) }
     let streak = QuestProgress(context.allEntries(), state.profile).streak
-    // Mit Claude: einmal am Tag persönliche Sprüche für heute und morgen holen (kleines, günstiges Modell)
+    // Einmal am Tag persönliche Sprüche für heute und morgen: auf dem iPhone mit Apple Intelligence (kostenlos),
+    // sonst – mit Key und Zustimmung – Claude Haiku über den Server
     var personal = d.stringArray(forKey: "aiMotivation") ?? []
-    if state.aiAvailable && state.aiConsent && d.string(forKey: "aiMotivationDay") != Day.today {
-        if let r = try? await state.api.object("POST", "/api/ai/motivation", json: [
-            "context": coachContext(context.allEntries(), state.profile, healthUpload: state.healthUpload),
-            "count": hours.count * 2, "lang": Locale.current.language.languageCode?.identifier ?? "de",
-        ]), let list = r["messages"] as? [String], !list.isEmpty {
+    if d.string(forKey: "aiMotivationDay") != Day.today {
+        let ctx = coachContext(context.allEntries(), state.profile, healthUpload: true)  // bleibt bei Apple Intelligence auf dem Gerät
+        var list = await OnDevice.motivation(count: hours.count * 2, context: ctx) ?? []
+        if list.isEmpty && state.aiAvailable && state.aiConsent,
+           let r = try? await state.api.object("POST", "/api/ai/motivation", json: [
+               "context": coachContext(context.allEntries(), state.profile, healthUpload: state.healthUpload),
+               "count": hours.count * 2, "lang": Locale.current.language.languageCode?.identifier ?? "de",
+           ]) {
+            list = r["messages"] as? [String] ?? []
+        }
+        if !list.isEmpty {
             personal = list
             d.set(list, forKey: "aiMotivation")
             d.set(Day.today, forKey: "aiMotivationDay")

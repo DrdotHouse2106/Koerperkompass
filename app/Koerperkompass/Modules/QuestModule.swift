@@ -402,7 +402,7 @@ struct TodayCard: View {
                 let day = suggestion?.session ?? planned
                 Text(day.title).font(.headline)
                 if let suggestion {
-                    Label("Von Claude für dich angepasst", systemImage: "sparkles").font(.caption.bold()).foregroundStyle(.orange)
+                    Label("Von deinem Coach angepasst", systemImage: "sparkles").font(.caption.bold()).foregroundStyle(.orange)
                     if !suggestion.note.isEmpty { Text(suggestion.note).font(.caption).foregroundStyle(.secondary) }
                 } else if let hint = localHint(entries) {
                     Label { Text(hint) } icon: { Image(systemName: "arrow.up.right.circle") }.font(.caption).foregroundStyle(.secondary)
@@ -418,7 +418,10 @@ struct TodayCard: View {
                         state.changed(context)
                     }
                     .buttonStyle(.borderedProminent).tint(.orange)
-                    if state.aiAvailable && suggestion == nil { CoachButton(session: planned, entries: entries) }
+                    NavigationLink { VoiceCoachView(plan: day) } label: {
+                        Label("Sprach-Coach starten", systemImage: "mic.circle.fill").foregroundStyle(.purple)
+                    }
+                    if (OnDevice.available || state.aiAvailable) && suggestion == nil { CoachButton(session: planned, entries: entries) }
                 }
                 if state.profile.modules.contains("exercises") {
                     NavigationLink("Sätze eintragen") {
