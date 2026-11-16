@@ -26,6 +26,7 @@ struct CoachView: View {
     private var messages: [Message] { (try? JSONDecoder().decode([Message].self, from: stored)) ?? [] }
 
     private let prompts: [LocalizedStringResource] = [
+        "Lern mich kennen: Stell mir ein paar Fragen.",
         "Mein Tag: Gib mir ein kurzes Briefing mit einem Tipp für heute.",
         "Was soll ich heute noch essen?",
         "Wie war meine Woche?",
@@ -190,12 +191,22 @@ struct CoachView: View {
                     "context": coachContext(entries, state.profile, healthUpload: state.healthUpload),
                     "lang": Locale.current.language.languageCode?.identifier ?? "de",
                 ])
-                let reply = r["text"] as? String ?? ""
+                var reply = r["text"] as? String ?? ""
+                // Was der Coach über dich gelernt hat, ins Profil übernehmen (sichtbar unter Einstellungen → Über mich)
+                var p = state.profile, notes: [String] = []
+                if let learn = r["learn"] as? [String], !learn.isEmpty { p.learn(learn); notes += learn }
+                if let eq = r["equipment"] as? [String] {
+                    p.equipment = eq.filter { id in Profile.equipmentOptions.contains { $0.id == id } }
+                    notes.append(String(localized: "Geräte: \(p.equipmentText)"))
+                }
+                if p != state.profile { state.profile = p }
+                let spoken = reply
+                if !notes.isEmpty { reply += "\n\n_📝 Gemerkt: " + notes.joined(separator: "; ") + "_" }
                 CoachLog.add(kind: "gesundheit", heard: text, reply: reply, source: "claude", ms: Int(Date().timeIntervalSince(started) * 1000))
                 save(list + [Message(role: "assistant", text: reply)])
                 if speakReplies {
                     speaker.api = state.ttsAvailable ? state.api : nil
-                    speaker.speak(reply)
+                    speaker.speak(spoken)
                 }
             } catch {
                 self.error = error.localizedDescription

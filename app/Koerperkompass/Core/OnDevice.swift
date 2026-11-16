@@ -50,7 +50,7 @@ enum OnDevice {
         #if canImport(FoundationModels)
         if #available(iOS 26.0, *), available {
             let s = LanguageModelSession(instructions:
-                "Du bist ein vorsichtiger Trainer. Passe die geplante Einheit an: nach „zu leicht“ moderat steigern, nach „zu schwer“ reduzieren, nach „genau richtig“ minimal steigern. Nutze eingetragene Gewichte und Wiederholungen. Behalte den Charakter der Einheit bei. Antworte auf Deutsch.")
+                "Du bist ein vorsichtiger Trainer. Passe die geplante Einheit an: nach „zu leicht“ moderat steigern, nach „zu schwer“ reduzieren, nach „genau richtig“ minimal steigern. Nutze eingetragene Gewichte und Wiederholungen. Behalte den Charakter der Einheit bei. Nutze nur Geräte, die laut Profil vorhanden sind, und beachte, was über die Person bekannt ist. Antworte auf Deutsch.")
             let prompt = "Profil: \(profile)\nGeplante Einheit: \(session.title): \(session.exercises.joined(separator: "; "))\n\n"
                 + String(history.suffix(2500))
             if let r = try? await s.respond(to: prompt, generating: GenSession.self), !r.content.exercises.isEmpty {

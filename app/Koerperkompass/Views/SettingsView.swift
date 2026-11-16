@@ -31,6 +31,7 @@ struct SettingsView: View {
             Form {
                 Section {
                     NavigationLink("Mein Plan") { GoalsView() }
+                    NavigationLink("Über mich – Geräte und was dein Coach weiß") { AboutMeView() }
                     NavigationLink("Gesprächsprotokoll (Testphase)") { CoachLogView() }
                     NavigationLink("Profil & Ziele") { SetupView(editing: true) }
                 }

@@ -27,6 +27,16 @@ struct Profile: Codable, Equatable {
     var penalties: Bool? = nil        // XP-Abzug für verpasste Trainingstage
     var showFriends: Bool? = nil      // meine Freunde meinen Freunden zeigen
     var visible: Bool? = nil          // für Freunde meiner Freunde sichtbar sein
+    var equipment: [String]? = nil    // vorhandene Trainingsgeräte (nil = unbekannt, leer = keine)
+    var facts: [String]? = nil        // was der Coach im Gespräch über die Person erfahren hat
+
+    struct Equipment: Identifiable { let id: String; let name: LocalizedStringResource }
+    static let equipmentOptions: [Equipment] = [
+        .init(id: "dumbbells", name: "Kurzhanteln"), .init(id: "barbell", name: "Langhantel"), .init(id: "kettlebell", name: "Kettlebell"),
+        .init(id: "bands", name: "Widerstandsbänder"), .init(id: "pullupbar", name: "Klimmzugstange"), .init(id: "bench", name: "Hantelbank"),
+        .init(id: "bike", name: "Fahrrad / Ergometer"), .init(id: "treadmill", name: "Laufband"), .init(id: "rope", name: "Springseil"),
+        .init(id: "gym", name: "Fitnessstudio"),
+    ]
 
     static let defaultHabits = [String(localized: "Gesund essen"), String(localized: "Lesen"), String(localized: "Meditieren")]
     var habitList: [String] { habits ?? Self.defaultHabits }
@@ -63,7 +73,23 @@ struct Profile: Codable, Equatable {
     var aiText: String {
         "Ziel: \(goal.rawValue), Geschlecht: \(sex.rawValue), Alter: \(age), Größe: \(height.whole) cm, " +
         "Startgewicht: \(weight.short) kg, Wunschgewicht: \(targetWeight.short) kg, " +
-        "Tagesziel: \(kcal.whole) kcal, Eiweiß \(protein.whole) g, Kohlenhydrate \(carbs.whole) g, Fett \(fat.whole) g"
+        "Tagesziel: \(kcal.whole) kcal, Eiweiß \(protein.whole) g, Kohlenhydrate \(carbs.whole) g, Fett \(fat.whole) g, " +
+        "Trainingsgeräte: \(equipmentText)" +
+        ((facts ?? []).isEmpty ? "" : "\nBekannt über die Person: " + (facts ?? []).joined(separator: "; "))
+    }
+
+    /// Geräte als Text für die KI (deutsche Namen)
+    var equipmentText: String {
+        guard let equipment else { return "unbekannt" }
+        if equipment.isEmpty { return "keine (nur Körpergewicht)" }
+        return Self.equipmentOptions.filter { equipment.contains($0.id) }.map { String(localized: $0.name) }.joined(separator: ", ")
+    }
+
+    /// Neue Tatsachen aus dem Coach-Gespräch übernehmen (ohne Doppelte, höchstens 40)
+    mutating func learn(_ new: [String]) {
+        var list = facts ?? []
+        for f in new where !list.contains(where: { $0.caseInsensitiveCompare(f) == .orderedSame }) { list.append(f) }
+        facts = Array(list.suffix(40))
     }
 }
 

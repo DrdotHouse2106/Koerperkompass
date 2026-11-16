@@ -119,6 +119,7 @@ func aiPlan(w http.ResponseWriter, r *http.Request) {
 	}
 	system := `Du bist ein erfahrener, vorsichtiger Trainer. Erstelle ein 4-Wochen-Trainingsprogramm mit 2 bis 4 unterschiedlichen
 Trainingstagen, die reihum absolviert werden. Passe Umfang und Übungen an Profil und Wunsch an, sicher und realistisch.
+Nutze nur Geräte, die laut Profil vorhanden sind (bei „keine“ nur Übungen mit dem eigenen Körpergewicht) und beachte, was über die Person bekannt ist (z. B. Beschwerden, Zeit, Vorlieben).
 Antworte ausschließlich mit JSON:
 {"name": "kurzer Programmname", "days": [{"title": "Name des Trainingstags", "exercises": ["Übung – Sätze × Wiederholungen", ...]}]}
 Sprache: ` + langName(req.Lang) + `.`
@@ -188,7 +189,8 @@ func aiNext(w http.ResponseWriter, r *http.Request) {
 	system := `Du bist ein erfahrener, vorsichtiger Trainer. Passe die geplante nächste Trainingseinheit an den Verlauf an:
 War die letzte Einheit „zu leicht“, steigere moderat (mehr Gewicht, Wiederholungen oder Sätze); bei „zu schwer“ reduziere;
 bei „genau richtig“ steigere minimal. Nutze eingetragene Gewichte und Wiederholungen für konkrete Zahlen.
-Behalte den Charakter der Einheit bei. Antworte ausschließlich mit JSON:
+Behalte den Charakter der Einheit bei. Nutze nur Geräte, die laut Profil vorhanden sind (bei „keine“ nur Übungen mit dem eigenen Körpergewicht) und beachte, was über die Person bekannt ist (z. B. Beschwerden, Zeit, Vorlieben).
+Antworte ausschließlich mit JSON:
 {"title": "Name der Einheit", "exercises": ["Übung – Sätze × Wiederholungen (ggf. Gewicht)", ...], "note": "ein kurzer Satz, warum so"}
 Sprache: ` + langName(req.Lang) + `.`
 	prompt := "Profil: " + req.Profile + "\nProgramm: " + req.Plan + "\nGeplante Einheit: " + req.Session + "\n\n" + req.History
@@ -237,6 +239,14 @@ Du kennst die aktuellen Daten der Person (unten). Beziehe dich darauf mit konkre
 knappe Liste), in Markdown, auf ` + langName(req.Lang) + `, per Du.
 Grenzen: keine Diagnosen, keine Medikamente oder Nahrungsergänzungs-Dosierungen, keine Crash-Diäten. Bei Schmerzen, Schwindel,
 Essstörungs-Anzeichen oder auffälligen Werten empfiehl freundlich ärztlichen Rat. Du ersetzt keine ärztliche Beratung.
+Empfiehl nur Geräte, die laut Profil vorhanden sind (bei „keine“ nur Körpergewicht).
+
+Lerne die Person kennen: Fehlt dir etwas Wichtiges für gute Empfehlungen (z. B. Trainingsgeräte, Beschwerden oder Verletzungen,
+verfügbare Zeit, Vorlieben, Alltag), stell gelegentlich genau eine kurze Frage dazu – nicht in jeder Antwort.
+Erfährst du etwas Dauerhaftes, das für Training oder Ernährung wichtig ist und noch nicht bekannt ist, hänge ganz am Ende eigene Zeilen an:
+MERKEN: kurze Tatsache in der dritten Person; weitere Tatsache
+GERÄTE: vollständige Liste aus dumbbells, barbell, kettlebell, bands, pullupbar, bench, bike, treadmill, rope, gym – oder keine
+Die GERÄTE-Zeile nur, wenn sich am Gerätebestand etwas geändert hat. Nichts Gesundheitliches erfinden oder deuten, nur Gesagtes merken.
 
 Aktuelle Daten der Person (Stand heute):
 ` + req.Context
@@ -245,7 +255,35 @@ Aktuelle Daten der Person (Stand heute):
 		http.Error(w, err.Error(), http.StatusBadGateway)
 		return
 	}
-	writeJSON(w, map[string]string{"text": out})
+	// MERKEN-/GERÄTE-Zeilen herauslösen – die App speichert sie im Profil
+	res := map[string]any{}
+	var text, learn []string
+	for _, line := range strings.Split(out, "\n") {
+		t := strings.TrimSpace(strings.Trim(strings.TrimSpace(line), "*_"))
+		switch {
+		case strings.HasPrefix(t, "MERKEN:"):
+			for _, f := range strings.Split(strings.TrimPrefix(t, "MERKEN:"), ";") {
+				if f = strings.TrimSpace(f); f != "" {
+					learn = append(learn, f)
+				}
+			}
+		case strings.HasPrefix(t, "GERÄTE:"):
+			eq := []string{}
+			for _, g := range strings.Split(strings.TrimPrefix(t, "GERÄTE:"), ",") {
+				if g = strings.ToLower(strings.TrimSpace(g)); g != "" && g != "keine" {
+					eq = append(eq, g)
+				}
+			}
+			res["equipment"] = eq
+		default:
+			text = append(text, line)
+		}
+	}
+	res["text"] = strings.TrimSpace(strings.Join(text, "\n"))
+	if len(learn) > 0 {
+		res["learn"] = learn
+	}
+	writeJSON(w, res)
 }
 
 // aiMotivation erzeugt kurze, persönliche Motivationssprüche für die nächsten Erinnerungen.
