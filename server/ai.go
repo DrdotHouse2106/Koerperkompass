@@ -307,9 +307,10 @@ func aiMeal(w http.ResponseWriter, r *http.Request) {
 	}
 	system := `Du zerlegst Essensbeschreibungen in einzelne Lebensmittel mit realistischen Nährwerten für die genannte bzw. eine übliche Menge
 (deutsche Lebensmittel und Portionsgrößen, z. B. ein Berliner ≈ 70 g ≈ 250 kcal). Getränke mit Kalorien (z. B. Kaffee mit Milch, Saft) gehören dazu.
-Erkenne die Mahlzeit aus dem Text (Frühstück → breakfast, Mittag → lunch, Abend → dinner, Snack/Zwischendurch → snack), sonst nutze den Hinweis.
+Erkenne die Mahlzeit jedes Lebensmittels aus dem Text (Frühstück → breakfast, Mittag → lunch, Abend → dinner, Snack/Zwischendurch → snack),
+sonst nutze den Hinweis. Eine Beschreibung kann mehrere Mahlzeiten enthalten. Saucen und Beilagen sind eigene Einträge.
 Antworte ausschließlich mit JSON:
-{"meal": "breakfast|lunch|dinner|snack", "items": [{"name": "kurze Bezeichnung", "amount": "Menge, z. B. 2 Stück (140 g)", "kcal": Zahl, "protein": g, "carbs": g, "fat": g}]}
+{"items": [{"meal": "breakfast|lunch|dinner|snack", "name": "kurze Bezeichnung", "amount": "Menge, z. B. 2 Stück (140 g)", "kcal": Zahl, "protein": g, "carbs": g, "fat": g}]}
 Bezeichnungen in ` + langName(req.Lang) + `.`
 	prompt := "Hinweis auf die Mahlzeit (nach Uhrzeit): " + req.Hint + "\nBeschreibung: " + req.Text
 	out, err := askModel(r.Context(), env("KK_MODEL_SMALL", "claude-haiku-5-5"), system, anthropic.BetaOutputConfigEffortLow,

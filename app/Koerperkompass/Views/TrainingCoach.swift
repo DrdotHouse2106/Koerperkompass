@@ -92,14 +92,14 @@ struct CoachButton: View {
                 if OnDevice.available || state.aiConsent { run() } else { askConsent = true }
             }
             .disabled(busy)
-            if let error { Text(error).font(.caption).foregroundStyle(.red) }
-        }
             .alert("Daten an Claude senden?", isPresented: $askConsent) {
                 Button("Zustimmen") { state.aiConsent = true; run() }
                 Button("Abbrechen", role: .cancel) {}
             } message: {
                 Text("Dein Profil, die geplante Einheit und dein Trainingsverlauf der letzten 4 Wochen (Einheiten, Rückmeldungen, Sätze) werden über deinen Server an die Claude API (Anthropic, Modell Haiku) gesendet. Mit Apple Intelligence passiert das stattdessen auf dem iPhone.")
             }
+            if let error { Text(error).font(.caption).foregroundStyle(.red) }
+        }
     }
 
     private func run() {

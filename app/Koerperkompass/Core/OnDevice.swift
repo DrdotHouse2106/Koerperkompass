@@ -30,15 +30,15 @@ enum OnDevice {
     }
 
     /// Freie Essensbeschreibung in Lebensmittel mit Nährwerten zerlegen
-    static func parseMeal(_ text: String, hint: String) async -> (Meal?, [ParsedFood])? {
+    static func parseMeal(_ text: String, hint: String) async -> [ParsedFood]? {
         #if canImport(FoundationModels)
         if #available(iOS 26.0, *), available {
-            let s = LanguageModelSession(instructions: "Du zerlegst Essensbeschreibungen in einzelne Lebensmittel mit realistischen Nährwerten für die genannte oder eine übliche deutsche Portionsgröße. Getränke mit Kalorien gehören dazu. Erkenne die Mahlzeit aus dem Text, sonst nimm den Hinweis.")
+            let s = LanguageModelSession(instructions: "Du zerlegst Essensbeschreibungen in einzelne Lebensmittel mit realistischen Nährwerten für die genannte oder eine übliche deutsche Portionsgröße. Getränke mit Kalorien gehören dazu. Erkenne die Mahlzeit jedes Lebensmittels aus dem Text, sonst nimm den Hinweis. Eine Beschreibung kann mehrere Mahlzeiten enthalten.")
             if let r = try? await s.respond(to: "Hinweis Mahlzeit: \(hint)\nBeschreibung: \(text)", generating: GenMeal.self) {
-                let items = r.content.items.map {
-                    ParsedFood(name: $0.name, amount: $0.amount, kcal: $0.kcal, protein: $0.protein, carbs: $0.carbs, fat: $0.fat)
+                return r.content.items.map {
+                    ParsedFood(meal: Meal(rawValue: $0.meal) ?? Meal(rawValue: hint) ?? .snack,
+                               name: $0.name, amount: $0.amount, kcal: $0.kcal, protein: $0.protein, carbs: $0.carbs, fat: $0.fat)
                 }
-                return (Meal(rawValue: r.content.meal), items)
             }
         }
         #endif
@@ -66,6 +66,8 @@ enum OnDevice {
 @available(iOS 26.0, *)
 @Generable
 struct GenFood {
+    @Guide(description: "Mahlzeit: breakfast, lunch, dinner oder snack")
+    var meal: String
     @Guide(description: "Kurze Bezeichnung des Lebensmittels")
     var name: String
     @Guide(description: "Menge, z. B. 2 Stück (140 g)")
@@ -83,8 +85,6 @@ struct GenFood {
 @available(iOS 26.0, *)
 @Generable
 struct GenMeal {
-    @Guide(description: "Mahlzeit: breakfast, lunch, dinner oder snack")
-    var meal: String
     var items: [GenFood]
 }
 
