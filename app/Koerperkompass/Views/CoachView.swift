@@ -14,6 +14,9 @@ struct CoachView: View {
     @State private var askConsent = false
     @State private var pending: String?
     @State private var showCompass = false
+    @State private var speech = SpeechInput()
+    @State private var speaker = Speaker()
+    @AppStorage("coachSpeak") private var speakReplies = true
 
     struct Message: Codable, Hashable {
         let role: String  // "user" oder "assistant"
@@ -59,6 +62,7 @@ struct CoachView: View {
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Menu {
+                        Toggle("Antworten vorlesen", isOn: $speakReplies)
                         Toggle("Tägliche Erinnerung", isOn: $reminder)
                         Picker("Uhrzeit", selection: $hour) {
                             ForEach(6..<22) { Text("\($0):00 Uhr").tag($0) }
@@ -97,6 +101,8 @@ struct CoachView: View {
                      : "Damit der Coach antworten kann, muss auf deinem Server ein Claude-API-Key eingetragen sein (ANTHROPIC_API_KEY, siehe Anleitung).")
                     .font(.callout).foregroundStyle(.orange)
             }
+            Text("Tipp: Tippe aufs Mikrofon und sprich mit deinem Coach – er liest seine Antwort vor (abschaltbar im Menü oben rechts).")
+                .font(.caption).foregroundStyle(.secondary)
             Text("Keine ärztliche Beratung – bei Beschwerden bitte ärztlich abklären lassen.").font(.caption2).foregroundStyle(.secondary)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -133,7 +139,21 @@ struct CoachView: View {
                 .padding(.horizontal)
             }
             HStack {
-                TextField("Frag deinen Coach …", text: $input, axis: .vertical)
+                Button {
+                    Task {
+                        if speech.listening {
+                            let text = await speech.stop()
+                            if !text.isEmpty { send(text) }
+                        } else {
+                            speaker.stop()
+                            await speech.start()
+                        }
+                    }
+                } label: {
+                    Image(systemName: speech.listening ? "stop.circle.fill" : "mic.circle.fill")
+                        .font(.title).foregroundStyle(speech.listening ? .red : Theme.orange)
+                }
+                TextField(speech.listening ? LocalizedStringKey("Ich höre zu …") : "Frag deinen Coach …", text: $input, axis: .vertical)
                     .lineLimit(1...4)
                     .padding(10)
                     .background(Color.white.opacity(0.08), in: RoundedRectangle(cornerRadius: 16))
@@ -144,6 +164,7 @@ struct CoachView: View {
         }
         .padding(.vertical, 8)
         .background(.ultraThinMaterial)
+        .onChange(of: speech.heard) { if speech.listening { input = speech.heard } }
         .disabled(!state.aiAvailable)
     }
 
@@ -166,7 +187,9 @@ struct CoachView: View {
                     "context": coachContext(entries, state.profile, healthUpload: state.healthUpload),
                     "lang": Locale.current.language.languageCode?.identifier ?? "de",
                 ])
-                save(list + [Message(role: "assistant", text: r["text"] as? String ?? "")])
+                let reply = r["text"] as? String ?? ""
+                save(list + [Message(role: "assistant", text: reply)])
+                if speakReplies { speaker.speak(reply) }
             } catch {
                 self.error = error.localizedDescription
             }

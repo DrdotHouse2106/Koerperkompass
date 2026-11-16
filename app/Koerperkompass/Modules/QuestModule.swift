@@ -419,7 +419,7 @@ struct TodayCard: View {
                     }
                     .buttonStyle(.borderedProminent).tint(.orange)
                     NavigationLink { VoiceCoachView(plan: day) } label: {
-                        Label("Sprach-Coach starten", systemImage: "mic.circle.fill").foregroundStyle(.purple)
+                        Label("Trainings-Coach (Sprache) starten", systemImage: "mic.circle.fill").foregroundStyle(.purple)
                     }
                     if (OnDevice.available || state.aiAvailable) && suggestion == nil { CoachButton(session: planned, entries: entries) }
                 }

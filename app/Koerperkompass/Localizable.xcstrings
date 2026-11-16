@@ -782,6 +782,16 @@
         }
       }
     },
+    "Antworten vorlesen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Read replies aloud"
+          }
+        }
+      }
+    },
     "Apfel und Nüsse": {
       "localizations": {
         "en": {
@@ -828,6 +838,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Attributes"
+          }
+        }
+      }
+    },
+    "Aufgeben ist keine Option! Drück!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quitting is not an option! Push!"
           }
         }
       }
@@ -1108,6 +1128,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Cappuccino"
+          }
+        }
+      }
+    },
+    "Cheerleader": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cheerleader"
           }
         }
       }
@@ -1432,6 +1462,16 @@
         }
       }
     },
+    "Die Pause ist vorbei. Nächster Satz, wenn du bereit bist.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rest is over. Next set when you’re ready."
+          }
+        }
+      }
+    },
     "Die Person bekommt ein eigenes Konto. Ihre Daten bleiben getrennt von deinen.": {
       "localizations": {
         "en": {
@@ -1508,6 +1548,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Log three main meals"
+          }
+        }
+      }
+    },
+    "Drill Sergeant": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drill sergeant"
+          }
+        }
+      }
+    },
+    "Du bist kein Zuschauer – du bist Soldat! Weiter!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You’re no spectator – you’re a soldier! Go!"
           }
         }
       }
@@ -1608,6 +1668,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Invited people get their own account with their own access on your server and only see their own data."
+          }
+        }
+      }
+    },
+    "Eingetragen! 90 Sekunden Pause.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Logged! 90 seconds rest."
           }
         }
       }
@@ -2382,6 +2452,16 @@
         }
       }
     },
+    "Gleichmäßiges Tempo, du machst das gut.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Steady tempo, you’re doing well."
+          }
+        }
+      }
+    },
     "Glückwunsch – %lld Einheiten geschafft. Such dir ein neues Programm aus.": {
       "localizations": {
         "en": {
@@ -2602,12 +2682,32 @@
         }
       }
     },
+    "Ich bin mitten im Satz – feuer mich mit einem kurzen Satz an!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I’m in the middle of a set – fire me up with one short sentence!"
+          }
+        }
+      }
+    },
     "Ich hab dich gehört! Sag mir einfach Wiederholungen und Gewicht, zum Beispiel: zehn Wiederholungen mit sechzig Kilo.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "I heard you! Just tell me reps and weight, for example: ten reps with sixty kilos."
+          }
+        }
+      }
+    },
+    "Ich höre zu …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I’m listening …"
           }
         }
       }
@@ -2648,6 +2748,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Intervals"
+          }
+        }
+      }
+    },
+    "Jaaa! Noch eine! Ich glaub an dich!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yesss! One more! I believe in you!"
           }
         }
       }
@@ -2982,6 +3092,16 @@
         }
       }
     },
+    "Komm, du packst das! Noch ein paar!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Come on, you’ve got this! A few more!"
+          }
+        }
+      }
+    },
     "Kompass": {
       "localizations": {
         "en": {
@@ -2998,6 +3118,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Account"
+          }
+        }
+      }
+    },
+    "Kontrolliert weiter, Spannung halten.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stay controlled, keep tension."
           }
         }
       }
@@ -3068,6 +3198,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Deadlift – 3 × 5"
+          }
+        }
+      }
+    },
+    "Kumpel": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Buddy"
           }
         }
       }
@@ -3432,6 +3572,16 @@
         }
       }
     },
+    "Läuft bei dir! Dranbleiben!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You’re on fire! Keep at it!"
+          }
+        }
+      }
+    },
     "Max. Gewicht": {
       "localizations": {
         "en": {
@@ -3782,6 +3932,16 @@
         }
       }
     },
+    "Noch zwei! Ich will Schweiß sehen!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Two more! I want to see sweat!"
+          }
+        }
+      }
+    },
     "Normal": {
       "localizations": {
         "en": {
@@ -3928,6 +4088,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Rest is over – on to the next set! 💪"
+          }
+        }
+      }
+    },
+    "Pause vorbei! Hoch mit dir, nächster Satz – sofort!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rest is over! Up you get, next set – now!"
+          }
+        }
+      }
+    },
+    "Pause vorbei! Zeit zu glänzen – nächster Satz!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rest over! Time to shine – next set!"
           }
         }
       }
@@ -4208,6 +4388,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Rest day"
+          }
+        }
+      }
+    },
+    "Ruhig & sachlich": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calm & factual"
+          }
+        }
+      }
+    },
+    "Ruhig atmen, saubere Bewegung.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Breathe calmly, clean movement."
           }
         }
       }
@@ -4582,6 +4782,16 @@
         }
       }
     },
+    "So, Pause rum – auf geht’s, nächster Satz!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Right, rest is over – let’s go, next set!"
+          }
+        }
+      }
+    },
     "Softdrink": {
       "localizations": {
         "en": {
@@ -4648,6 +4858,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Great fight! Take a two-minute rest – go a bit lighter on the next set."
+          }
+        }
+      }
+    },
+    "Stark, Alter! Noch einer geht immer!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Strong, mate! There’s always one more!"
           }
         }
       }
@@ -4812,6 +5032,16 @@
         }
       }
     },
+    "Tipp: Tippe aufs Mikrofon und sprich mit deinem Coach – er liest seine Antwort vor (abschaltbar im Menü oben rechts).": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tip: tap the microphone and talk to your coach – it reads its reply aloud (switch off in the menu top right)."
+          }
+        }
+      }
+    },
     "Tippen und sprechen": {
       "localizations": {
         "en": {
@@ -4838,6 +5068,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Complete a workout"
+          }
+        }
+      }
+    },
+    "Trainings-Coach": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Training coach"
+          }
+        }
+      }
+    },
+    "Trainings-Coach (Sprache) starten": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start training coach (voice)"
           }
         }
       }
@@ -4968,6 +5218,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Time"
+          }
+        }
+      }
+    },
+    "Unglaublich! Du rockst das!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unbelievable! You rock!"
           }
         }
       }
@@ -5322,6 +5582,16 @@
         }
       }
     },
+    "Weiter! Schmerz ist nur Schwäche, die den Körper verlässt!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep going! Pain is just weakness leaving the body!"
+          }
+        }
+      }
+    },
     "Weitere Person einladen": {
       "localizations": {
         "en": {
@@ -5448,6 +5718,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Workouts per week"
+          }
+        }
+      }
+    },
+    "Wow! Du bist der Wahnsinn! Weiter so!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wow! You’re amazing! Keep going!"
           }
         }
       }
@@ -5652,6 +5932,16 @@
         }
       }
     },
+    "Zwei Minuten Pause, nächster Satz etwas leichter.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Two minutes rest, next set a bit lighter."
+          }
+        }
+      }
+    },
     "Zügiger Spaziergang": {
       "localizations": {
         "en": {
@@ -5848,6 +6138,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "🔥 %lld"
+          }
+        }
+      }
+    },
+    "🔥 Feuer mich an!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🔥 Fire me up!"
           }
         }
       }
