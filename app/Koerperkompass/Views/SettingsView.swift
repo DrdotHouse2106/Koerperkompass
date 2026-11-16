@@ -47,6 +47,11 @@ struct SettingsView: View {
                 .onChange(of: [motivationOn ? 1 : 0, motivationHour, motivationEvening ? 1 : 0, motivationEveningHour]) {
                     Task { await refreshMotivation(state, modelContext) }
                 }
+                Section {
+                    NavigationLink { VoiceSettingsView() } label: {
+                        LabeledContent("Stimme der Coaches", value: Speaker.voice().map { "\($0.name) (\(Speaker.qualityName($0)))" } ?? "–")
+                    }
+                }
                 Section("Module") {
                     ForEach(allModules, id: \.id) { m in
                         Toggle(isOn: Binding(
@@ -310,4 +315,31 @@ struct DevicesView: View {
     }
     if d.string(forKey: "aiMotivationDay") != Day.today { personal = [] }  // alte Sprüche nicht erneut verwenden
     await Motivation.schedule(hours: hours, profile: state.profile, streak: streak, personal: personal)
+}
+
+/// Stimme der Coaches wählen und probehören
+struct VoiceSettingsView: View {
+    @AppStorage("voiceID") private var voiceID = ""
+    @State private var speaker = Speaker()
+
+    var body: some View {
+        List {
+            Section {
+                Picker("Stimme", selection: $voiceID) {
+                    Text("Automatisch (beste installierte)").tag("")
+                    ForEach(Speaker.voices, id: \.identifier) { v in
+                        Text("\(v.name) · \(Speaker.qualityName(v))").tag(v.identifier)
+                    }
+                }
+                .pickerStyle(.inline)
+                Button("Probehören", systemImage: "speaker.wave.2.fill") {
+                    speaker.speak(String(localized: "Hallo! Ich bin dein Coach. Auf geht’s – noch zwei Wiederholungen, du schaffst das!"))
+                }
+            } footer: {
+                Text("Bessere Stimmen klingen deutlich natürlicher. So lädst du sie: iOS-Einstellungen → Bedienungshilfen → Gesprochene Inhalte → Stimmen → Deutsch → eine Stimme mit „Premium“ oder „Erweitert“ wählen und laden (z. B. Anna, Petra, Markus oder Yannick). Danach hier auswählen. Die Siri-Stimme selbst steht Apps leider nicht zur Verfügung.")
+            }
+        }
+        .themed()
+        .navigationTitle("Stimme")
+    }
 }

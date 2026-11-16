@@ -972,6 +972,16 @@
         }
       }
     },
+    "Automatisch (beste installierte)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatic (best installed)"
+          }
+        }
+      }
+    },
     "Automatisch aus Körpergewicht (%@ ml)": {
       "localizations": {
         "en": {
@@ -1058,6 +1068,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Leg press – 3 × 10–12"
+          }
+        }
+      }
+    },
+    "Bessere Stimmen klingen deutlich natürlicher. So lädst du sie: iOS-Einstellungen → Bedienungshilfen → Gesprochene Inhalte → Stimmen → Deutsch → eine Stimme mit „Premium“ oder „Erweitert“ wählen und laden (z. B. Anna, Petra, Markus oder Yannick). Danach hier auswählen. Die Siri-Stimme selbst steht Apps leider nicht zur Verfügung.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Better voices sound much more natural. To download them: iOS Settings → Accessibility → Spoken Content → Voices → English → choose and download a “Premium” or “Enhanced” voice. Then select it here. The Siri voice itself is not available to apps."
           }
         }
       }
@@ -2082,6 +2102,16 @@
         }
       }
     },
+    "Erweitert": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enhanced"
+          }
+        }
+      }
+    },
     "Espresso": {
       "localizations": {
         "en": {
@@ -2728,6 +2758,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hello"
+          }
+        }
+      }
+    },
+    "Hallo! Ich bin dein Coach. Auf geht’s – noch zwei Wiederholungen, du schaffst das!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hi! I’m your coach. Let’s go – two more reps, you’ve got this!"
           }
         }
       }
@@ -4452,12 +4492,32 @@
         }
       }
     },
+    "Premium": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Premium"
+          }
+        }
+      }
+    },
     "Privatsphäre": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Privacy"
+          }
+        }
+      }
+    },
+    "Probehören": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Preview"
           }
         }
       }
@@ -5162,6 +5222,16 @@
         }
       }
     },
+    "Standard": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Default"
+          }
+        }
+      }
+    },
     "Stark gekämpft! Gönn dir zwei Minuten Pause – beim nächsten Satz ruhig etwas leichter.": {
       "localizations": {
         "en": {
@@ -5178,6 +5248,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Strong, mate! There’s always one more!"
+          }
+        }
+      }
+    },
+    "Stimme": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voice"
+          }
+        }
+      }
+    },
+    "Stimme der Coaches": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Coach voice"
           }
         }
       }

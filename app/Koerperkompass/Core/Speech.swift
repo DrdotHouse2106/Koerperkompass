@@ -76,13 +76,37 @@ import Speech
         let clean = text.replacingOccurrences(of: "**", with: "").replacingOccurrences(of: "#", with: "")
             .replacingOccurrences(of: "- ", with: "").replacingOccurrences(of: "*", with: "")
         let u = AVSpeechUtterance(string: clean)
-        u.voice = AVSpeechSynthesisVoice(language: Locale.current.language.languageCode?.identifier == "en" ? "en-US" : "de-DE")
+        u.voice = Self.voice()
         u.rate = rate
         u.pitchMultiplier = pitch
         synth.speak(u)
     }
 
     func stop() { synth.stopSpeaking(at: .immediate) }
+
+    /// Sprache der App (de/en)
+    static var languagePrefix: String { Locale.current.language.languageCode?.identifier == "en" ? "en" : "de" }
+
+    /// Installierte Stimmen der App-Sprache, beste zuerst (Premium > Erweitert > Standard)
+    static var voices: [AVSpeechSynthesisVoice] {
+        AVSpeechSynthesisVoice.speechVoices()
+            .filter { $0.language.hasPrefix(languagePrefix) && !$0.voiceTraits.contains(.isNoveltyVoice) }
+            .sorted { ($0.quality.rawValue, $0.name) > ($1.quality.rawValue, $1.name) }
+    }
+
+    /// Gewählte Stimme (Einstellungen) oder automatisch die beste installierte
+    static func voice() -> AVSpeechSynthesisVoice? {
+        if let id = UserDefaults.standard.string(forKey: "voiceID"), let v = AVSpeechSynthesisVoice(identifier: id) { return v }
+        return voices.first ?? AVSpeechSynthesisVoice(language: languagePrefix == "en" ? "en-US" : "de-DE")
+    }
+
+    static func qualityName(_ v: AVSpeechSynthesisVoice) -> String {
+        switch v.quality {
+        case .premium: String(localized: "Premium")
+        case .enhanced: String(localized: "Erweitert")
+        default: String(localized: "Standard")
+        }
+    }
 
     static func deactivate() {
         try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
