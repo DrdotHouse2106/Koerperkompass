@@ -17,8 +17,10 @@ python3 -m venv /opt/piper && /opt/piper/bin/pip install "piper-tts[http]"
 /opt/piper/bin/python -m piper.http_server --data-dir /opt/piper/stimmen -m de_DE-thorsten-high --host 127.0.0.1 --port 5000
 ```
 
-Körperkompass-Server: `KK_TTS_URL=http://127.0.0.1:5000`. Stimme je Coach-Stil: siehe `defaultVoices` in `server/tts.go`,
-anpassbar mit `KK_TTS_VOICES` (JSON). Prüfen, ob die installierte Piper-Version die Felder `voice`, `speaker` und `length_scale` annimmt.
+Körperkompass-Server: `KK_TTS_URL=http://127.0.0.1:5000/synthesize` (Piper 1.8 nimmt POST nur unter `/synthesize` an).
+Felder: `text`, `voice` (Dateiname ohne `.onnx`), `speaker` (bei Thorsten emotional: amused, angry, disgusted, drunk,
+neutral, sleepy, surprised, whisper), `length_scale`. Stimme je Coach-Stil: siehe `defaultVoices` in `server/tts.go`,
+anpassbar mit `KK_TTS_VOICES` (JSON). Rechenzeit auf einem i3-8109U: etwa 0,1–0,6 s pro Satz.
 
 ## Kartoffelbox (sehr natürlich, Grafikkarte empfohlen)
 
@@ -34,7 +36,7 @@ python3 -m venv /opt/kartoffelbox && /opt/kartoffelbox/bin/pip install chatterbo
 - Ältere Karten (z. B. GTX 1060, Pascal): eine PyTorch-Version mit Unterstützung für diese Generation verwenden.
 - Optional Referenzstimmen je Stil in `stimmen/<stil>.wav` (5–15 s). Nur eigene Aufnahmen oder freie Sprachspenden –
   keine Stimmen echter Personen ohne deren Einverständnis.
-- Körperkompass-Server: `KK_TTS_URL=http://<kartoffelbox>:5100,http://127.0.0.1:5000` (Kartoffelbox vor Piper).
+- Körperkompass-Server: `KK_TTS_URL=http://<kartoffelbox>:5100,http://127.0.0.1:5000/synthesize` (Kartoffelbox vor Piper).
 
 ## Feste Sprüche vorab rendern
 
