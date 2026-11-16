@@ -36,6 +36,9 @@ func main() {
 		log.Fatal("Datenbank: ", err)
 	}
 	db.Exec(`ALTER TABLE codes ADD COLUMN name TEXT NOT NULL DEFAULT ''`) // ältere Datenbanken nachrüsten
+	if err = migrateFriends(); err != nil {
+		log.Fatal("Datenbank: ", err)
+	}
 
 	// „koerperkompass invite [Name]“ erzeugt einen Kopplungscode für einen neuen Nutzer
 	if len(os.Args) > 1 && os.Args[1] == "invite" {
@@ -59,7 +62,8 @@ func main() {
 
 	addr := ":" + env("PORT", "8080")
 	log.Printf("Körperkompass-Server %s lauscht auf %s", version, addr)
-	log.Fatal(http.ListenAndServe(addr, routes()))
+	handler = routes()
+	log.Fatal(http.ListenAndServe(addr, handler))
 }
 
 const schema = `

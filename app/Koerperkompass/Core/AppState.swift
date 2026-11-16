@@ -131,10 +131,25 @@ import UIKit
             }
             try context.save()
             await pushProfile()
+            await pushCard(context)
             syncError = nil
         } catch {
             syncError = error.localizedDescription
         }
+    }
+
+    /// Spielerkarte für Freunde hochladen – nur Spielwerte, keine Gesundheitsdaten
+    func pushCard(_ context: ModelContext) async {
+        guard !demo, token != nil else { return }
+        let p = QuestProgress(context.allEntries(), profile)
+        let card: [String: Any] = [
+            "name": profile.name ?? "", "level": p.level, "xp": p.xp, "streak": p.streak,
+            "rank": String(localized: p.rank), "class": String(localized: p.characterClass),
+            "workouts": p.workouts, "badges": p.badges(profile).filter(\.unlocked).count,
+            "week": ["start": Day.weekStart, "quests": p.weekQuests, "xp": p.weekXP],
+            "showFriends": profile.showFriends == true, "visible": profile.visible == true,
+        ]
+        _ = try? await api.call("PUT", "/api/card", json: card)
     }
 
     private func pushProfile() async {

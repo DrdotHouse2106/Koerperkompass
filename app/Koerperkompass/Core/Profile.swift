@@ -23,6 +23,8 @@ struct Profile: Codable, Equatable {
     var plan: TrainingPlan?           // aktives Trainingsprogramm
     var habits: [String]? = nil       // eigene tägliche Quests (z. B. „Ein Buch lesen“)
     var penalties: Bool? = nil        // XP-Abzug für verpasste Trainingstage
+    var showFriends: Bool? = nil      // meine Freunde meinen Freunden zeigen
+    var visible: Bool? = nil          // für Freunde meiner Freunde sichtbar sein
 
     static let defaultHabits = [String(localized: "Gesund essen"), String(localized: "Lesen"), String(localized: "Meditieren")]
     var habitList: [String] { habits ?? Self.defaultHabits }

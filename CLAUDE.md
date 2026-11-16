@@ -19,6 +19,7 @@ server/                  Go-Server, eine Binary, SQLite (modernc.org/sqlite, ohn
   auth.go                Kopplungscodes, Tokens, Middleware
   api.go                 REST-Endpunkte, Export/Import, Weboberfläche (index.html)
   ai.go                  Claude API (optional, nur mit ANTHROPIC_API_KEY)
+  friends.go             Freundschaften, auch zwischen Servern (Föderation über /api/fed/*)
   modules.go             Modul-Schema + Liste, generische Zusammenfassung
   module_*.go            ein File pro Modul
 .github/workflows/       server.yml (Docker → ghcr.io), testflight.yml (iOS → TestFlight)
@@ -79,6 +80,7 @@ Kompass-Analyse, Abgleich, Export/Import und die Claude-Auswertung funktionieren
 - In der App sind deutsche Texte die Schlüssel im String Catalog (`sourceLanguage: de`).
 - **Keine persönlichen Daten oder Zugangsdaten** im Repository: Team-ID in `app/Local.xcconfig`, Apple-/API-Schlüssel nur als GitHub-Secrets bzw. Umgebungsvariablen.
 - Gesundheitsdaten: Health-Daten gehen nur mit Zustimmung (`healthUpload`) an den Server, Daten an Claude nur mit Zustimmung (`aiConsent`). Neue Funktionen müssen diese beiden Schalter respektieren.
+- Freundschaften/Föderation: Über `/api/fed/*` gehen **nur** Werte der Spielerkarte (`PUT /api/card`) hinaus, nie Einträge oder Profil. Neue geteilte Werte nur mit Bedacht und Hinweis in PRIVACY.md.
 - Hinweis „keine ärztliche Beratung“ überall dort, wo Werte bewertet werden.
 - Profil-Felder neu immer optional anlegen (ältere gespeicherte Profile bleiben lesbar).
 

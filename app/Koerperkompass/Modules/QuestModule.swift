@@ -121,6 +121,8 @@ struct QuestProgress {
     var workouts = 0
     var meals = 0
     var exerciseSets = 0
+    var weekQuests = 0      // Wochen-Challenge: geschaffte Quests seit Montag
+    var weekXP = 0
 
     /// Level-Kurve: Level n beginnt bei 50·(n−1)² XP – anfangs schnell, später langsamer
     var level: Int { Int((Double(xp) / 50).squareRoot()) + 1 }
@@ -145,6 +147,10 @@ struct QuestProgress {
         for (day, es) in days {
             let quests = Quest.list(day, profile)
             let done = quests.filter { $0.done(es, profile) }
+            if day >= Day.weekStart {
+                weekQuests += done.count
+                weekXP += done.reduce(0) { $0 + $1.xp }
+            }
             for q in done {
                 xp += q.xp
                 attributes[q.attribute, default: 0] += q.xp
@@ -255,6 +261,12 @@ private struct QuestDetail: View {
             }
 
             TodayCard(progress: p)
+
+            Section {
+                NavigationLink { FriendsView() } label: {
+                    Label("Freunde & Wochen-Challenge", systemImage: "person.2.fill")
+                }
+            }
 
             Section {
                 ForEach(p.today, id: \.quest.id) { item in

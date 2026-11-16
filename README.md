@@ -28,6 +28,7 @@ Es gibt keinen zentralen Dienst: Die Entwickler betreiben keinen Server und sehe
 | 🏋️ **Trainingsprogramme** | 4-Wochen-Programme mit Trainings- und Ruhetagen, XP pro Einheit, Vorlagen oder persönlich von Claude erstellt; optional Strafpunkte für verpasste Einheiten |
 | 💧 **Wasser**, 🏋️ **Training** | einfache Beispielmodule – Vorlage für eigene Module |
 | 🧭 **Kompass** | Auswertung über 7/30/90 Tage: Durchschnitte, Trends, Zielerreichung, Zusammenhänge (z. B. Schlaf ↔ Kalorien). Optional ausführliche Auswertung mit Claude |
+| 🤝 **Freunde (dezentral)** | Freundschaften mit Nutzern auf deinem oder **anderen Körperkompass-Servern** – ohne zentralen Dienst. Freundesliste mit Spielerkarten, Wochen-Challenge mit Bestenliste, optional Freunde von Freunden. Geteilt werden nur Spielwerte, nie Gesundheitsdaten |
 | 👥 **Mehrere Nutzer** | weitere Personen einladen – jede mit eigenem Konto, eigenen Zugängen und eigenen Daten |
 | ✈️ **Offline** | lokaler Zwischenspeicher, Abgleich sobald der Server erreichbar ist |
 | 🎮 **Demo-Modus** | mit Beispieldaten, ganz ohne Server |
@@ -222,6 +223,17 @@ Alle Endpunkte außer `status`, `modules` und `pair` brauchen `Authorization: Be
 | POST | `/api/entries` | Einträge anlegen/ändern/löschen (`deleted: true`) |
 | GET/POST | `/api/export`, `/api/import` | alles als JSON |
 | POST | `/api/ai/photo`, `/api/ai/analysis`, `/api/ai/plan` | nur mit `ANTHROPIC_API_KEY` |
+| PUT | `/api/card` | eigene Spielerkarte (nur Spielwerte) |
+| POST/GET/DELETE | `/api/friends/link`, `/api/friends`, `/api/friends/{id}` | Freundschaftslink, Freund hinzufügen, Freunde abrufen, beenden |
+| POST/GET | `/api/fed/accept`, `/api/fed/card`, `/api/fed/remove` | **Server-zu-Server** (Föderation), abgesichert mit einem Schlüssel pro Freundschaft |
+
+### Freundschaften zwischen Servern
+
+Damit Freundschaften funktionieren, muss `KK_PUBLIC_URL` gesetzt und der Server **per HTTPS** von außen erreichbar sein.
+Beim Annehmen eines Freundschaftslinks tauschen die beiden Server einen gemeinsamen Schlüssel aus; danach holt jeder Server
+die Spielerkarte des Freundes direkt beim anderen Server ab. Es werden nur Spielwerte übertragen (Name, Level, Rang, Klasse,
+Serie, Anzahl Erfolge/Workouts, Wochenwerte). Freunde von Freunden erscheinen nur, wenn der Freund „Meine Freunde zeigen“
+und die dritte Person „Für Freunde meiner Freunde sichtbar“ eingeschaltet hat.
 
 ---
 

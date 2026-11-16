@@ -142,6 +142,16 @@
         }
       }
     },
+    "%lld Quests · %lld XP": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld quests · %lld XP"
+          }
+        }
+      }
+    },
     "%lld Sätze eingetragen": {
       "localizations": {
         "en": {
@@ -722,12 +732,32 @@
         }
       }
     },
+    "Beenden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "End"
+          }
+        }
+      }
+    },
     "Bei gesundem Tempo voraussichtlich erreicht: %@": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "At a healthy pace, expected by: %@"
+          }
+        }
+      }
+    },
+    "Beide Server löschen die gegenseitig gespeicherten Spielwerte.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Both servers delete the game values they stored about each other."
           }
         }
       }
@@ -992,6 +1022,16 @@
         }
       }
     },
+    "Diese Woche": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This week"
+          }
+        }
+      }
+    },
     "Dieses Gerät": {
       "localizations": {
         "en": {
@@ -1202,6 +1242,16 @@
         }
       }
     },
+    "Erfolge": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Achievements"
+          }
+        }
+      }
+    },
     "Erfolge – %lld/%lld freigeschaltet": {
       "localizations": {
         "en": {
@@ -1392,6 +1442,86 @@
         }
       }
     },
+    "Freund hinzufügen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add friend"
+          }
+        }
+      }
+    },
+    "Freunde": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Friends"
+          }
+        }
+      }
+    },
+    "Freunde & Wochen-Challenge": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Friends & weekly challenge"
+          }
+        }
+      }
+    },
+    "Freunde gibt es nur mit eigenem Server – im Demo-Modus nicht verfügbar.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Friends require your own server – not available in demo mode."
+          }
+        }
+      }
+    },
+    "Freunde von %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Friends of %@"
+          }
+        }
+      }
+    },
+    "Freundschaft beenden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "End friendship"
+          }
+        }
+      }
+    },
+    "Freundschaft beenden?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "End friendship?"
+          }
+        }
+      }
+    },
+    "Freundschaftslink erstellen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create friend link"
+          }
+        }
+      }
+    },
     "Frühstück": {
       "localizations": {
         "en": {
@@ -1402,12 +1532,32 @@
         }
       }
     },
+    "Funktioniert mit Freunden auf deinem Server und auf anderen Körperkompass-Servern. Ein Link gilt einmal und 7 Tage.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Works with friends on your server and on other Körperkompass servers. A link works once and for 7 days."
+          }
+        }
+      }
+    },
     "Fährtenleser": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Tracker"
+          }
+        }
+      }
+    },
+    "Für Freunde meiner Freunde sichtbar sein": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Visible to friends of my friends"
           }
         }
       }
@@ -1468,6 +1618,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Eat healthy"
+          }
+        }
+      }
+    },
+    "Geteilt werden nur Name, Level, Rang, Klasse, Serie, Erfolge und Wochenwerte – keine Gesundheitsdaten. Freunde von Freunden siehst du nur, wenn beide zugestimmt haben.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Only name, level, rank, class, streak, achievements and weekly values are shared – no health data. You only see friends of friends if both have agreed."
           }
         }
       }
@@ -1642,6 +1802,16 @@
         }
       }
     },
+    "Ich": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Me"
+          }
+        }
+      }
+    },
     "Import (JSON)": {
       "localizations": {
         "en": {
@@ -1768,6 +1938,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "No values"
+          }
+        }
+      }
+    },
+    "Keine sichtbaren Freunde": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No visible friends"
           }
         }
       }
@@ -2022,12 +2202,32 @@
         }
       }
     },
+    "Level": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Level"
+          }
+        }
+      }
+    },
     "Level %lld": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Level %lld"
+          }
+        }
+      }
+    },
+    "Level %lld · %@ · 🔥 %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Level %lld · %@ · 🔥 %lld"
           }
         }
       }
@@ -2088,6 +2288,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Push-ups (knees allowed) – 3 × 8–12"
+          }
+        }
+      }
+    },
+    "Link eines Freundes einfügen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paste a friend’s link"
           }
         }
       }
@@ -2178,6 +2388,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "My program"
+          }
+        }
+      }
+    },
+    "Meine Freunde meinen Freunden zeigen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show my friends to my friends"
           }
         }
       }
@@ -2282,6 +2502,16 @@
         }
       }
     },
+    "Möchtest du dich mit jemandem davon befreunden, bitte %@ um einen Kontakt – oder tauscht direkt einen Freundschaftslink aus.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "To befriend one of them, ask %@ to introduce you – or exchange a friend link directly."
+          }
+        }
+      }
+    },
     "Name": {
       "localizations": {
         "en": {
@@ -2358,6 +2588,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@ kg to go to your target weight"
+          }
+        }
+      }
+    },
+    "Noch keine Freunde – lade jemanden mit einem Freundschaftslink ein.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No friends yet – invite someone with a friend link."
           }
         }
       }
@@ -2442,6 +2682,16 @@
         }
       }
     },
+    "Ohne Namen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No name"
+          }
+        }
+      }
+    },
     "Ohne Zustimmung bleiben Health-Daten nur auf diesem Gerät. Einzelne Freigaben änderst du in der Health-App.": {
       "localizations": {
         "en": {
@@ -2498,6 +2748,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Platinum"
+          }
+        }
+      }
+    },
+    "Privatsphäre": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Privacy"
           }
         }
       }
@@ -2578,6 +2838,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Creating program …"
+          }
+        }
+      }
+    },
+    "QR": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "QR"
           }
         }
       }
@@ -2688,6 +2958,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Scanner not available"
+          }
+        }
+      }
+    },
+    "Schick diesen Link einem Freund. Er fügt ihn in Körperkompass unter Abenteuer → Freunde ein. Einmalig, 7 Tage gültig.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send this link to a friend. They paste it in Körperkompass under Adventure → Friends. Works once, valid for 7 days."
           }
         }
       }
@@ -2818,6 +3098,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Server"
+          }
+        }
+      }
+    },
+    "Server gerade nicht erreichbar – letzter bekannter Stand.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Server currently unreachable – last known state."
           }
         }
       }
@@ -3342,6 +3632,16 @@
         }
       }
     },
+    "Wer schafft von Montag bis Sonntag die meisten Quests? Gleichstand entscheidet die XP.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Who completes the most quests from Monday to Sunday? Ties are decided by XP."
+          }
+        }
+      }
+    },
     "Wert": {
       "localizations": {
         "en": {
@@ -3368,6 +3668,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Welcome to Körperkompass"
+          }
+        }
+      }
+    },
+    "Wochen-Challenge": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Weekly challenge"
           }
         }
       }

@@ -79,6 +79,13 @@ enum Day {
     static func date(_ s: String) -> Date { formatter.date(from: s) ?? Date() }
     static var today: String { string(Date()) }
 
+    /// Montag der aktuellen Woche
+    static var weekStart: String {
+        var cal = Calendar.current
+        cal.firstWeekday = 2
+        return string(cal.dateInterval(of: .weekOfYear, for: Date())?.start ?? Date())
+    }
+
     /// Die letzten n Tage inklusive heute, ältester zuerst
     static func last(_ n: Int) -> [String] {
         (0..<n).reversed().map { string(Calendar.current.date(byAdding: .day, value: -$0, to: Date())!) }

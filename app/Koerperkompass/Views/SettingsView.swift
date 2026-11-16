@@ -168,6 +168,7 @@ struct Invite: Identifiable {
 /// Zeigt einen Kopplungslink als QR-Code
 struct InviteView: View {
     let link: String
+    var note: LocalizedStringKey = "Mit der Kamera oder in der Körperkompass-App scannen. Der Code ist einmalig und 24 Stunden gültig."
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
@@ -176,7 +177,7 @@ struct InviteView: View {
                 if let image = qr(link) {
                     Image(uiImage: image).interpolation(.none).resizable().scaledToFit().frame(width: 260, height: 260)
                 }
-                Text("Mit der Kamera oder in der Körperkompass-App scannen. Der Code ist einmalig und 24 Stunden gültig.")
+                Text(note)
                     .multilineTextAlignment(.center).foregroundStyle(.secondary)
                 ShareLink("Link teilen", item: link)
             }

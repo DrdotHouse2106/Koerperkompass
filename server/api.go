@@ -45,6 +45,16 @@ func routes() http.Handler {
 	m.HandleFunc("POST /api/ai/photo", auth(aiPhoto))
 	m.HandleFunc("POST /api/ai/analysis", auth(aiAnalysis))
 	m.HandleFunc("POST /api/ai/plan", auth(aiPlan))
+	// Freundschaften (auch zwischen Servern), siehe friends.go
+	m.HandleFunc("PUT /api/card", auth(putCard))
+	m.HandleFunc("POST /api/friends/link", auth(friendLink))
+	m.HandleFunc("POST /api/friends", auth(addFriend))
+	m.HandleFunc("GET /api/friends", auth(listFriends))
+	m.HandleFunc("DELETE /api/friends/{id}", auth(removeFriend))
+	m.HandleFunc("POST /api/fed/accept", fedAccept)
+	m.HandleFunc("GET /api/fed/card", fedCard)
+	m.HandleFunc("POST /api/fed/remove", fedRemove)
+	m.HandleFunc("GET /f/{code}", friendPage)
 	return http.MaxBytesHandler(m, 20<<20)
 }
 
