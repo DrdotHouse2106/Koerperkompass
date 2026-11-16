@@ -192,6 +192,8 @@ import Speech
         .init(id: "coach", name: "Thorsten – normal"), .init(id: "calm", name: "Thorsten – ruhig"), .init(id: "cheer", name: "Thorsten – fröhlich"),
         .init(id: "neutral", name: "Thorsten – sachlich"), .init(id: "drill", name: "Thorsten – streng"), .init(id: "sarge", name: "Thorsten – wütend"),
         .init(id: "surprised", name: "Thorsten – überrascht"), .init(id: "whisper", name: "Thorsten – flüsternd"),
+        .init(id: "kerstin", name: "Kerstin"), .init(id: "ramona", name: "Ramona"),
+        .init(id: "karlsson", name: "Karlsson"), .init(id: "pavoque", name: "Pavoque"),
     ]
 
     /// Sprache der App (de/en)

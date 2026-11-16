@@ -13,7 +13,8 @@ Der Körperkompass-Server (`POST /api/tts`, siehe `server/tts.go`) liefert:
 
 ```bash
 python3 -m venv /opt/piper && /opt/piper/bin/pip install "piper-tts[http]"
-/opt/piper/bin/python -m piper.download_voices --data-dir /opt/piper/stimmen de_DE-thorsten-high de_DE-thorsten_emotional-medium
+/opt/piper/bin/python -m piper.download_voices --data-dir /opt/piper/stimmen de_DE-thorsten-high de_DE-thorsten_emotional-medium \
+  de_DE-kerstin-medium de_DE-ramona-low de_DE-karlsson-low de_DE-pavoque-low   # weitere Stimmen, in der App wählbar
 /opt/piper/bin/python -m piper.http_server --data-dir /opt/piper/stimmen -m de_DE-thorsten-high --host 127.0.0.1 --port 5000
 ```
 

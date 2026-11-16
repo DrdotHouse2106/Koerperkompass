@@ -48,6 +48,10 @@ var defaultVoices = map[string]ttsVoice{
 	"neutral":   {"de_DE-thorsten_emotional-medium", "neutral", 1.0},
 	"whisper":   {"de_DE-thorsten_emotional-medium", "whisper", 1.0},
 	"surprised": {"de_DE-thorsten_emotional-medium", "surprised", 1.0},
+	"kerstin":   {"de_DE-kerstin-medium", "", 1.0},
+	"ramona":    {"de_DE-ramona-low", "", 1.0},
+	"karlsson":  {"de_DE-karlsson-low", "", 1.0},
+	"pavoque":   {"de_DE-pavoque-low", "", 1.0},
 }
 
 func ttsVoices() map[string]ttsVoice {
