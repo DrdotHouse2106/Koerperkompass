@@ -8,17 +8,22 @@ import SwiftData
     var module: String
     var date: String        // JJJJ-MM-TT
     var data: Data          // JSON-Objekt mit den Feldern
-    var updated: Int64      // Änderungszeit in ms – neuere gewinnt beim Abgleich
-    var deleted: Bool
+    // Gespeichert als „stamp“/„removed“: „updated“ und „deleted“ sind in Core Data (unter SwiftData) reserviert
+    // und lieferten beim Lesen immer 0/false – Löschungen und Zeitstempel gingen so verloren.
+    var stamp: Int64 = 0    // Änderungszeit in ms – neuere gewinnt beim Abgleich
+    var removed: Bool = false
     var dirty: Bool         // noch nicht zum Server übertragen
+
+    var updated: Int64 { get { stamp } set { stamp = newValue } }
+    var deleted: Bool { get { removed } set { removed = newValue } }
 
     init(id: String = UUID().uuidString, module: String, date: String = Day.today, values: [String: Any], dirty: Bool = true) {
         self.id = id
         self.module = module
         self.date = date
         self.data = (try? JSONSerialization.data(withJSONObject: values)) ?? Data("{}".utf8)
-        self.updated = Int64(Date().timeIntervalSince1970 * 1000)
-        self.deleted = false
+        self.stamp = Int64(Date().timeIntervalSince1970 * 1000)
+        self.removed = false
         self.dirty = dirty
     }
 

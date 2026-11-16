@@ -53,7 +53,7 @@ struct CoachLogView: View {
     @Environment(AppState.self) private var state
     @Environment(\.modelContext) private var context
     @AppStorage("coachLogOn") private var on = true
-    @Query(filter: #Predicate<Entry> { $0.module == "coachlog" && !$0.deleted }, sort: \Entry.date, order: .reverse) private var entries: [Entry]
+    @Query(filter: #Predicate<Entry> { $0.module == "coachlog" && !$0.removed }, sort: \Entry.date, order: .reverse) private var entries: [Entry]
 
     var body: some View {
         List {
