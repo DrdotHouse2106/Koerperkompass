@@ -41,9 +41,10 @@ enum Telemetry {
                 "lang": Locale.current.language.languageCode?.identifier ?? "", "onDevice": OnDevice.available,
             ]
             if withTexts {
-                it["heard"] = scrub(e.text("heard") ?? "", name: profileName)
-                it["reply"] = scrub(e.text("reply") ?? "", name: profileName)
-                it["exercise"] = e.text("exercise") ?? ""
+                // Längen wie vom Hauptserver erlaubt (sonst wird der Eintrag verworfen)
+                it["heard"] = String(scrub(e.text("heard") ?? "", name: profileName).prefix(900))
+                it["reply"] = String(scrub(e.text("reply") ?? "", name: profileName).prefix(2800))
+                it["exercise"] = String((e.text("exercise") ?? "").prefix(70))
             }
             return it
         }

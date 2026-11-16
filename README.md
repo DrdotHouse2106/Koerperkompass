@@ -73,6 +73,7 @@ Danach `http://<server-ip>:8080` im Browser öffnen: Dort steht der Kopplungscod
 | `KK_TELEMETRY` | `off` schaltet das Weiterleiten anonymer Verbesserungsdaten an die Entwickler ab (nur relevant, wenn Nutzer es in der App freiwillig einschalten) |
 | `KK_TELEMETRY_URL` | Ziel für anonyme Verbesserungsdaten (Standard: Hauptserver des Projekts) |
 | `KK_COLLECT`, `KK_COLLECT_TOKEN` | nur für den Hauptserver: `KK_COLLECT=1` nimmt anonyme Daten an, Abruf mit `GET /api/collect` und `Authorization: Bearer <KK_COLLECT_TOKEN>` |
+| `KK_TRUSTED_PROXY`, `KK_COLLECT_LIMIT` | Hauptserver: IP des eigenen Reverse Proxys (dann zählt dessen `X-Forwarded-For`) und Anfragen pro Absender-IP und Stunde für `/api/collect` (Standard 30). Zusätzlich: höchstens 1 MB pro Anfrage, nur bekannte Felder |
 | `PORT` | Port (Standard: `8080`) |
 | `KK_DB` | Pfad der SQLite-Datei (im Image: `/data/koerperkompass.db`) |
 
