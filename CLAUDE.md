@@ -81,6 +81,7 @@ Kompass-Analyse, Abgleich, Export/Import und die Claude-Auswertung funktionieren
 - **Keine persönlichen Daten oder Zugangsdaten** im Repository: Team-ID in `app/Local.xcconfig`, Apple-/API-Schlüssel nur als GitHub-Secrets bzw. Umgebungsvariablen.
 - Gesundheitsdaten: Health-Daten gehen nur mit Zustimmung (`healthUpload`) an den Server, Daten an Claude nur mit Zustimmung (`aiConsent`). Neue Funktionen müssen diese beiden Schalter respektieren.
 - Freundschaften/Föderation: Über `/api/fed/*` gehen **nur** Werte der Spielerkarte (`PUT /api/card`) hinaus, nie Einträge oder Profil. Neue geteilte Werte nur mit Bedacht und Hinweis in PRIVACY.md.
+- Anonyme Verbesserungsdaten (`Core/Telemetry.swift`, `server/telemetry.go`): nur Felder aus dem Gesprächsprotokoll, nie Gesundheitswerte oder Kennungen; standardmäßig aus, nur nach Zustimmung. Neue Felder nur mit Hinweis in PRIVACY.md.
 - Hinweis „keine ärztliche Beratung“ überall dort, wo Werte bewertet werden.
 - Profil-Felder neu immer optional anlegen (ältere gespeicherte Profile bleiben lesbar).
 

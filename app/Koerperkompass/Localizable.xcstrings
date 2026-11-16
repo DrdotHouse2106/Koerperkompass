@@ -762,6 +762,26 @@
         }
       }
     },
+    "Anonyme Daten teilen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Share anonymous data"
+          }
+        }
+      }
+    },
+    "Anonyme Daten teilen?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Share anonymous data?"
+          }
+        }
+      }
+    },
     "Anpassung gerade nicht möglich – versuch es gleich noch einmal.": {
       "localizations": {
         "en": {
@@ -798,6 +818,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Apple and nuts"
+          }
+        }
+      }
+    },
+    "App verbessern (freiwillig)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Improve the app (optional)"
           }
         }
       }
@@ -1398,6 +1428,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Your profile, the planned session and your training history of the last 4 weeks (sessions, feedback, sets) are sent via your server to the Claude API (Anthropic, Haiku model). With Apple Intelligence this happens on your iPhone instead."
+          }
+        }
+      }
+    },
+    "Dein Server leitet anonyme Angaben zu den Coach-Gesprächen an die Entwickler von Körperkompass weiter, damit die App besser wird. Es werden keine Gesundheitswerte und keine Kennung übertragen. Du kannst das jederzeit wieder ausschalten.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your server forwards anonymous information about coach conversations to the Körperkompass developers to improve the app. No health values and no identifier are transmitted. You can turn this off at any time."
           }
         }
       }
@@ -2482,6 +2522,16 @@
         }
       }
     },
+    "Gesprächstexte mitsenden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Include conversation texts"
+          }
+        }
+      }
+    },
     "Gesund essen": {
       "localizations": {
         "en": {
@@ -2908,6 +2958,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Yes, I can take it"
+          }
+        }
+      }
+    },
+    "Ja, teilen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yes, share"
           }
         }
       }
@@ -4748,6 +4808,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Send this link to a friend. They paste it in Körperkompass under Adventure → Friends. Works once, valid for 7 days."
+          }
+        }
+      }
+    },
+    "Schickt anonym, wie gut die Coaches funktionieren (Stil, Modell, Antwortzeit, ob ein Satz erkannt wurde) über deinen Server an die Entwickler. Keine Kennung, keine Gesundheitswerte. Gesprächstexte nur, wenn du sie zusätzlich freigibst – Namen, E-Mail-Adressen, Telefonnummern und Links werden vorher entfernt.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anonymously sends how well the coaches work (style, model, response time, whether a set was recognised) via your server to the developers. No identifier, no health values. Conversation texts only if you also allow them – names, email addresses, phone numbers and links are removed first."
           }
         }
       }

@@ -33,6 +33,10 @@ Sprach-Coach, Anpassung der nächsten Trainingseinheit und persönliche Motivati
 
 Während der Testphase protokolliert die App die Gespräche mit den Coaches (erkannter Text, Antwort, Stil, verwendetes Modell, Antwortzeit), um sie verbessern zu können. Das Protokoll liegt nur auf deinem iPhone und deinem eigenen Server, ist in den Coach-Ansichten sichtbar gekennzeichnet und lässt sich jederzeit ausschalten und löschen (Einstellungen → Gesprächsprotokoll). Weitergegeben wird es nur, wenn du es selbst teilst.
 
+## Anonyme Verbesserungsdaten (freiwillig)
+
+Nur wenn du in den Einstellungen „Anonyme Daten teilen“ einschaltest und bestätigst, leitet dein Server Angaben zu den Coach-Gesprächen an den Server der Entwickler von Körperkompass weiter: Art des Gesprächs, Coach-Stil, verwendetes Modell, Antwortzeit, ob ein Satz erkannt wurde, App-Version, iOS-Hauptversion, Sprache. **Ohne Nutzerkennung und ohne Gesundheitswerte.** Gesprächstexte werden nur übertragen, wenn du „Gesprächstexte mitsenden“ zusätzlich einschaltest; Namen aus deinem Profil, E-Mail-Adressen, Telefonnummern und Links werden vorher entfernt. Der Server der Entwickler speichert keine IP-Adressen und nutzt die Daten ausschließlich zur Verbesserung der App. Du kannst das jederzeit ausschalten; Server-Betreiber können die Weiterleitung ganz abschalten (`KK_TELEMETRY=off`). Verantwortlich für diese Daten: die Entwickler von Körperkompass (Kontakt über GitHub Issues).
+
 ## Speicherung und Löschung
 
 - Lokal: SwiftData-Zwischenspeicher auf dem iPhone. „Verbindung trennen“ bzw. Löschen der App entfernt ihn.
@@ -87,6 +91,10 @@ The voice coach, next-session adjustment and personal motivational messages use 
 ## Conversation log (test phase)
 
 During the test phase the app logs conversations with the coaches (recognised text, reply, style, model used, response time) to improve them. The log is stored only on your iPhone and your own server, is clearly marked in the coach views and can be switched off and deleted at any time (Settings → Conversation log). It is only shared if you share it yourself.
+
+## Anonymous improvement data (optional)
+
+Only if you turn on “Share anonymous data” in Settings and confirm it, your server forwards information about coach conversations to the Körperkompass developers’ server: type of conversation, coach style, model used, response time, whether a set was recognised, app version, major iOS version, language. **No user identifier and no health values.** Conversation texts are only sent if you also enable “Include conversation texts”; names from your profile, email addresses, phone numbers and links are removed first. The developers’ server stores no IP addresses and uses the data solely to improve the app. You can turn this off at any time; server operators can disable forwarding entirely (`KK_TELEMETRY=off`). Responsible for this data: the Körperkompass developers (contact via GitHub Issues).
 
 ## Storage and deletion
 

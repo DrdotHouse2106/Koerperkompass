@@ -60,6 +60,10 @@ func routes() http.Handler {
 	m.HandleFunc("GET /api/fed/card", fedCard)
 	m.HandleFunc("POST /api/fed/remove", fedRemove)
 	m.HandleFunc("GET /f/{code}", friendPage)
+	// Anonyme Verbesserungsdaten (freiwillig), siehe telemetry.go
+	m.HandleFunc("POST /api/telemetry", auth(telemetry))
+	m.HandleFunc("POST /api/collect", collect)
+	m.HandleFunc("GET /api/collect", collectExport)
 	return http.MaxBytesHandler(m, 20<<20)
 }
 

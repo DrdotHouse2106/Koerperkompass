@@ -70,6 +70,9 @@ Danach `http://<server-ip>:8080` im Browser öffnen: Dort steht der Kopplungscod
 | `KK_PUBLIC_URL` | öffentliche Adresse, z. B. `https://kompass.example.de` (für den QR-Code hinter einem Reverse Proxy) |
 | `KK_MODEL` | Claude-Modell für Coach, Fotos, Analyse und Training (Standard: `claude-opus-5-5`; günstiger: `claude-sonnet-5-5` oder `claude-haiku-5-5`) |
 | `KK_MODEL_SMALL` | kleines Modell für die täglichen Motivationssprüche (Standard: `claude-haiku-5-5`) |
+| `KK_TELEMETRY` | `off` schaltet das Weiterleiten anonymer Verbesserungsdaten an die Entwickler ab (nur relevant, wenn Nutzer es in der App freiwillig einschalten) |
+| `KK_TELEMETRY_URL` | Ziel für anonyme Verbesserungsdaten (Standard: Hauptserver des Projekts) |
+| `KK_COLLECT`, `KK_COLLECT_TOKEN` | nur für den Hauptserver: `KK_COLLECT=1` nimmt anonyme Daten an, Abruf mit `GET /api/collect` und `Authorization: Bearer <KK_COLLECT_TOKEN>` |
 | `PORT` | Port (Standard: `8080`) |
 | `KK_DB` | Pfad der SQLite-Datei (im Image: `/data/koerperkompass.db`) |
 
@@ -245,6 +248,7 @@ Module lassen sich in den Einstellungen ein- und ausschalten. Ein neues Modul is
 
 - Alle Daten liegen **nur auf deinem eigenen Server** und lokal auf deinem iPhone. Es gibt keine Analyse-, Werbe- oder Tracking-Dienste.
 - **Apple Health:** Die App liest Health-Daten nur nach deiner Freigabe. An deinen Server gehen sie erst nach einer **ausdrücklichen Zustimmung** in der App.
+- **Anonyme Verbesserungsdaten (freiwillig, standardmäßig aus):** Nur nach Zustimmung leitet dein Server anonyme Angaben zu Coach-Gesprächen (Stil, Modell, Antwortzeit; Texte nur mit zusätzlicher Freigabe und bereinigt) an die Entwickler weiter – ohne Kennung und ohne Gesundheitswerte.
 - **Claude API (optional):** Nur wenn auf deinem Server ein eigener API-Key hinterlegt ist **und** du in der App **zugestimmt** hast, werden Fotos bzw. zusammengefasste Werte über deinen Server an Anthropic gesendet.
 - Ausführlich: [PRIVACY.md](PRIVACY.md)
 

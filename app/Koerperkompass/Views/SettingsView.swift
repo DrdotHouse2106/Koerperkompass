@@ -15,6 +15,9 @@ struct SettingsView: View {
     @State private var askName = false
     @State private var memberName = ""
     @Environment(\.modelContext) private var modelContext
+    @AppStorage("anonShare") private var anonShare = false
+    @AppStorage("anonTexts") private var anonTexts = false
+    @State private var askAnon = false
     @AppStorage("motivationOn") private var motivationOn = false
     @AppStorage("motivationHour") private var motivationHour = 8
     @AppStorage("motivationEvening") private var motivationEvening = false
@@ -89,6 +92,16 @@ struct SettingsView: View {
                         Text("Eingeladene Personen bekommen ein eigenes Konto mit eigenem Zugang auf deinem Server und sehen nur ihre eigenen Daten.")
                     }
                 }
+                if !state.demo {
+                    Section {
+                        Toggle("Anonyme Daten teilen", isOn: Binding(get: { anonShare }, set: { if $0 { askAnon = true } else { anonShare = false; anonTexts = false } }))
+                        if anonShare {
+                            Toggle("Gesprächstexte mitsenden", isOn: $anonTexts)
+                        }
+                    } header: { Text("App verbessern (freiwillig)") } footer: {
+                        Text("Schickt anonym, wie gut die Coaches funktionieren (Stil, Modell, Antwortzeit, ob ein Satz erkannt wurde) über deinen Server an die Entwickler. Keine Kennung, keine Gesundheitswerte. Gesprächstexte nur, wenn du sie zusätzlich freigibst – Namen, E-Mail-Adressen, Telefonnummern und Links werden vorher entfernt.")
+                    }
+                }
                 Section("Daten") {
                     Button("Export erstellen (JSON)", systemImage: "square.and.arrow.up") { exportFile = makeExport() }
                     if let exportFile { ShareLink("Export teilen", item: exportFile) }
@@ -107,6 +120,12 @@ struct SettingsView: View {
             }
             .themed()
             .navigationTitle("Einstellungen")
+            .alert("Anonyme Daten teilen?", isPresented: $askAnon) {
+                Button("Ja, teilen") { anonShare = true }
+                Button("Abbrechen", role: .cancel) {}
+            } message: {
+                Text("Dein Server leitet anonyme Angaben zu den Coach-Gesprächen an die Entwickler von Körperkompass weiter, damit die App besser wird. Es werden keine Gesundheitswerte und keine Kennung übertragen. Du kannst das jederzeit wieder ausschalten.")
+            }
             .alert("Health-Daten hochladen?", isPresented: $askHealthUpload) {
                 Button("Zustimmen") { state.setHealthUpload(true, context) }
                 Button("Abbrechen", role: .cancel) {}

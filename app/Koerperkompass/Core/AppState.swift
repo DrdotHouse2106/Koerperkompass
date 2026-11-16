@@ -132,6 +132,7 @@ import UIKit
             try context.save()
             await pushProfile()
             await pushCard(context)
+            await Telemetry.send(context, api: api, profileName: profile.name)  // nur wenn freiwillig eingeschaltet
             syncError = nil
         } catch {
             syncError = error.localizedDescription
