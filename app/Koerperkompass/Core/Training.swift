@@ -79,3 +79,15 @@ let planTemplates: [TrainingPlan] = [
 func levelColor(_ level: String) -> Color {
     level == String(localized: "Fortgeschritten") ? .orange : level == String(localized: "Einsteiger") ? .green : Theme.petrol
 }
+
+/// Programme passend zu Ziel und Aktivität (Indizes in planTemplates)
+func recommendedPlans(_ p: Profile) -> [TrainingPlan] {
+    var idx: [Int]
+    switch p.goal {
+    case .lose: idx = p.activity >= 2 ? [6, 7, 2] : [0, 7, 2]
+    case .gain: idx = p.activity >= 2 ? [3, 4, 5] : [2, 3]
+    case .maintain: idx = p.activity >= 3 ? [5, 4, 8] : [2, 0, 8]
+    }
+    if p.activity == 0 && !idx.contains(0) { idx.insert(0, at: 0) }
+    return idx.filter { planTemplates.indices.contains($0) }.map { planTemplates[$0] }
+}

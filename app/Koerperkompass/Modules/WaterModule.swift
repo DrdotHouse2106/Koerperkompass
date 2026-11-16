@@ -68,7 +68,7 @@ private struct WaterTile: View {
     let entries: [Entry]
     @Environment(AppState.self) private var state
     var body: some View {
-        let goal = state.profile.water ?? 2000, ml = hydration(entries)
+        let goal = state.profile.waterGoal, ml = hydration(entries)
         TileCard(module: WaterModule()) {
             HStack {
                 Ring(progress: ml / goal, color: .cyan, size: 44)
@@ -122,7 +122,7 @@ private struct WaterDetail: View {
     @State private var denied = false
 
     var body: some View {
-        let goal = state.profile.water ?? 2000, ml = hydration(entries)
+        let goal = state.profile.waterGoal, ml = hydration(entries)
         List {
             Section {
                 HStack(spacing: 18) {
@@ -181,11 +181,14 @@ private struct WaterDetail: View {
                     Stepper("Ab \(from):00 Uhr", value: $from, in: 5...(to - 1))
                     Stepper("Bis \(to):00 Uhr", value: $to, in: (from + 1)...23)
                 }
-                Stepper("Trinkziel: \((state.profile.water ?? 2000).whole) ml", value: Binding(
-                    get: { state.profile.water ?? 2000 }, set: { state.profile.water = $0 }), in: 1000...5000, step: 250)
+                Stepper("Trinkziel: \(state.profile.waterGoal.whole) ml", value: Binding(
+                    get: { state.profile.waterGoal }, set: { state.profile.water = $0; state.profile.waterCustom = true }), in: 1000...5000, step: 250)
+                if state.profile.waterCustom == true {
+                    Button("Automatisch aus Körpergewicht (\(state.profile.autoWater.whole) ml)") { state.profile.waterCustom = nil }
+                }
                 if denied { Text("Mitteilungen sind für Körperkompass ausgeschaltet – bitte in den iOS-Einstellungen erlauben.").foregroundStyle(.red) }
             } header: { Text("Erinnerung & Ziel") } footer: {
-                Text("Die Erinnerung kannst du direkt in der Mitteilung abhaken (gedrückt halten): Wasser, Kaffee oder Tee. Alkohol zählt nicht zum Trinkziel.")
+                Text("Das Trinkziel berechnet sich aus deinem Körpergewicht (rund 35 ml je kg, mehr bei viel Bewegung). Die Erinnerung kannst du direkt in der Mitteilung abhaken (gedrückt halten): Wasser, Kaffee oder Tee. Alkohol zählt nicht zum Trinkziel.")
             }
         }
         .onChange(of: [reminderOn ? 1 : 0, every, from, to]) { update() }

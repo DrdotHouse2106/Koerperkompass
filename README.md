@@ -27,7 +27,7 @@ Es gibt keinen zentralen Dienst: Die Entwickler betreiben keinen Server und sehe
 | 📈 **Übungen** | Sätze mit Wiederholungen und Gewicht, Verlauf pro Übung, Stufen Bronze → Silber → Gold → Platin |
 | 🏋️ **Trainingsprogramme** | 4-Wochen-Programme mit Trainings- und Ruhetagen, XP pro Einheit, Vorlagen oder persönlich von Claude erstellt; optional Strafpunkte für verpasste Einheiten |
 | 💧 **Getränke** | Wasser, Kaffee, Tee, Bier, Wein, Softdrinks … mit einem Tipp; Trinkziel, Koffein, Alkohol, Kalorien zählen in die Ernährung; **Trinkerinnerung**, direkt in der Mitteilung abhakbar |
-| 🏋️ **Training** | eigener Tab: heutige Einheit, neun fertige Programme als Karten (Einsteiger bis Fortgeschritten), Trainingsverlauf |
+| 🏋️ **Training** | eigener Tab: heutige Einheit, Empfehlungen passend zu Ziel und Aktivität, neun fertige Programme. **Rückmeldung nach jeder Einheit** (zu leicht / genau richtig / zu schwer) passt die nächste Einheit an – mit Claude konkret auf Basis von Verlauf und eingetragenen Sätzen |
 | 🧭 **Kompass** | Auswertung über 7/30/90 Tage: Durchschnitte, Trends, Zielerreichung, Zusammenhänge (z. B. Schlaf ↔ Kalorien). Optional ausführliche Auswertung mit Claude |
 | 🤝 **Freunde (dezentral)** | Freundschaften mit Nutzern auf deinem oder **anderen Körperkompass-Servern** – ohne zentralen Dienst. Freundesliste mit Spielerkarten, Wochen-Challenge mit Bestenliste, optional Freunde von Freunden. Geteilt werden nur Spielwerte, nie Gesundheitsdaten |
 | 👥 **Mehrere Nutzer** | weitere Personen einladen – jede mit eigenem Konto, eigenen Zugängen und eigenen Daten |
@@ -232,7 +232,7 @@ Alle Endpunkte außer `status`, `modules` und `pair` brauchen `Authorization: Be
 | GET | `/api/entries?since=<rev>` | Einträge seit Revision (Abgleich) |
 | POST | `/api/entries` | Einträge anlegen/ändern/löschen (`deleted: true`) |
 | GET/POST | `/api/export`, `/api/import` | alles als JSON |
-| POST | `/api/ai/photo`, `/api/ai/analysis`, `/api/ai/plan` | nur mit `ANTHROPIC_API_KEY` |
+| POST | `/api/ai/photo`, `/api/ai/analysis`, `/api/ai/plan`, `/api/ai/next` | nur mit `ANTHROPIC_API_KEY` |
 | PUT | `/api/card` | eigene Spielerkarte (nur Spielwerte) |
 | POST/GET/DELETE | `/api/friends/link`, `/api/friends`, `/api/friends/{id}` | Freundschaftslink, Freund hinzufügen, Freunde abrufen, beenden |
 | POST/GET | `/api/fed/accept`, `/api/fed/card`, `/api/fed/remove` | **Server-zu-Server** (Föderation), abgesichert mit einem Schlüssel pro Freundschaft |

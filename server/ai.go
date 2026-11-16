@@ -94,8 +94,8 @@ func writeObject(w http.ResponseWriter, out string) {
 // aiPlan erstellt ein Trainingsprogramm mit einigen Trainingstagen, die im Wechsel absolviert werden.
 func aiPlan(w http.ResponseWriter, r *http.Request) {
 	var req struct {
-		Wish, Profile, Lang string
-		Days                int
+		Wish, Profile, Lang, History string
+		Days                         int
 	}
 	if !requireAI(w) || !readJSON(w, r, &req) {
 		return
@@ -108,7 +108,8 @@ Trainingstagen, die reihum absolviert werden. Passe Umfang und Übungen an Profi
 Antworte ausschließlich mit JSON:
 {"name": "kurzer Programmname", "days": [{"title": "Name des Trainingstags", "exercises": ["Übung – Sätze × Wiederholungen", ...]}]}
 Sprache: ` + langName(req.Lang) + `.`
-	prompt := "Trainingstage pro Woche: " + strconv.Itoa(req.Days) + "\nWunsch: " + req.Wish + "\nProfil: " + req.Profile
+	prompt := "Trainingstage pro Woche: " + strconv.Itoa(req.Days) + "\nWunsch: " + req.Wish + "\nProfil: " + req.Profile +
+		"\n\nBisheriger Trainingsverlauf mit Rückmeldungen (zu leicht/genau richtig/zu schwer) – Belastung daran anpassen:\n" + req.History
 	out, err := ask(r.Context(), system, anthropic.BetaOutputConfigEffortMedium, anthropic.NewBetaTextBlock(prompt))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadGateway)
@@ -162,4 +163,25 @@ func langName(l string) string {
 		return "Englisch"
 	}
 	return "Deutsch"
+}
+
+// aiNext passt die nächste Trainingseinheit an Verlauf und Rückmeldungen an (progressive Steigerung).
+func aiNext(w http.ResponseWriter, r *http.Request) {
+	var req struct{ Profile, Plan, Session, History, Lang string }
+	if !requireAI(w) || !readJSON(w, r, &req) {
+		return
+	}
+	system := `Du bist ein erfahrener, vorsichtiger Trainer. Passe die geplante nächste Trainingseinheit an den Verlauf an:
+War die letzte Einheit „zu leicht“, steigere moderat (mehr Gewicht, Wiederholungen oder Sätze); bei „zu schwer“ reduziere;
+bei „genau richtig“ steigere minimal. Nutze eingetragene Gewichte und Wiederholungen für konkrete Zahlen.
+Behalte den Charakter der Einheit bei. Antworte ausschließlich mit JSON:
+{"title": "Name der Einheit", "exercises": ["Übung – Sätze × Wiederholungen (ggf. Gewicht)", ...], "note": "ein kurzer Satz, warum so"}
+Sprache: ` + langName(req.Lang) + `.`
+	prompt := "Profil: " + req.Profile + "\nProgramm: " + req.Plan + "\nGeplante Einheit: " + req.Session + "\n\n" + req.History
+	out, err := ask(r.Context(), system, anthropic.BetaOutputConfigEffortMedium, anthropic.NewBetaTextBlock(prompt))
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadGateway)
+		return
+	}
+	writeObject(w, out)
 }

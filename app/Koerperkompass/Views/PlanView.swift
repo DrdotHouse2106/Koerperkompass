@@ -29,6 +29,21 @@ struct TrainingView: View {
                 Section {
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 14) {
+                            ForEach(recommendedPlans(state.profile), id: \.name) { t in
+                                NavigationLink { PlanDetail(plan: t) } label: { PlanCard(plan: t) }.buttonStyle(.plain)
+                            }
+                        }
+                        .padding(.vertical, 4)
+                    }
+                    .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+                    .listRowBackground(Color.clear)
+                } header: { Text("Empfohlen für dich") } footer: {
+                    Text("Passend zu deinem Ziel und deiner Aktivität. Nach jeder Einheit gibst du Rückmeldung – daraus wird die nächste Einheit angepasst.")
+                }
+
+                Section {
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 14) {
                             ForEach(planTemplates, id: \.name) { t in
                                 NavigationLink { PlanDetail(plan: t) } label: { PlanCard(plan: t) }.buttonStyle(.plain)
                             }
@@ -37,7 +52,7 @@ struct TrainingView: View {
                     }
                     .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
                     .listRowBackground(Color.clear)
-                } header: { Text("Fertige Programme") }
+                } header: { Text("Alle Programme") }
 
                 Section {
                     NavigationLink { PlanView() } label: { Label("Persönliches Programm mit Claude", systemImage: "sparkles") }
@@ -155,6 +170,7 @@ struct PlanDetail: View {
 /// Aktuelles Programm verwalten und ein persönliches Programm mit Claude erstellen
 struct PlanView: View {
     @Environment(AppState.self) private var state
+    @Query private var entries: [Entry]
     @State private var weekdays: Set<Int> = [2, 4, 6]
     @State private var wish = ""
     @State private var generated: TrainingPlan?
@@ -186,7 +202,7 @@ struct PlanView: View {
                         NavigationLink { PlanDetail(plan: generated) } label: { Label(generated.name, systemImage: "sparkles") }
                     }
                 } header: { Text("Persönliches Programm") } footer: {
-                    Text("Claude erstellt ein 4-Wochen-Programm aus deinem Wunsch und deinem Profil. Keine ärztliche Beratung – bei Beschwerden bitte abklären lassen.")
+                    Text("Claude erstellt ein 4-Wochen-Programm aus deinem Wunsch, deinem Profil und deinen bisherigen Rückmeldungen. Keine ärztliche Beratung – bei Beschwerden bitte abklären lassen.")
                 }
             } else {
                 Section {
@@ -202,7 +218,7 @@ struct PlanView: View {
             Button("Zustimmen") { state.aiConsent = true; generate() }
             Button("Abbrechen", role: .cancel) {}
         } message: {
-            Text("Dein Wunsch und dein Profil (Ziel, Alter, Größe, Gewicht) werden über deinen Server an die Claude API (Anthropic) gesendet.")
+            Text("Dein Wunsch, dein Profil (Ziel, Alter, Größe, Gewicht) und dein Trainingsverlauf (Einheiten, Rückmeldungen, Sätze) werden über deinen Server an die Claude API (Anthropic) gesendet.")
         }
     }
 
@@ -213,7 +229,7 @@ struct PlanView: View {
             defer { busy = false }
             do {
                 let r = try await state.api.object("POST", "/api/ai/plan", json: [
-                    "wish": wish, "days": max(weekdays.count, 1), "profile": state.profile.aiText,
+                    "wish": wish, "days": max(weekdays.count, 1), "profile": state.profile.aiText, "history": trainingHistory(entries),
                     "lang": Locale.current.language.languageCode?.identifier ?? "de",
                 ])
                 let days = (r["days"] as? [[String: Any]] ?? []).map {

@@ -66,7 +66,7 @@ struct Quest {
             sum(e, "activity", "sleepHours") >= 7
         },
         Quest(id: "water", title: "Wasserziel erreichen", symbol: "drop", module: "water", xp: 20, attribute: .recovery) { e, p in
-            hydration(e, e.first?.date ?? Day.today) >= (p.water ?? 2000)
+            hydration(e, e.first?.date ?? Day.today) >= p.waterGoal
         },
         Quest(id: "training", title: "Training absolvieren", symbol: "dumbbell", module: "training", xp: 40, attribute: .strength) { e, _ in
             e.contains { $0.module == "training" } || sum(e, "activity", "workoutMinutes") >= 20
@@ -397,18 +397,32 @@ struct TodayCard: View {
             if let plan, plan.finished {
                 Label("Programm abgeschlossen!", systemImage: "trophy.fill").font(.headline).foregroundStyle(.orange)
                 Text("Glückwunsch – \(progress.planDone) Einheiten geschafft. Such dir ein neues Programm aus.")
-            } else if let plan, plan.isTrainingDay(Day.today), let day = plan.next(done: progress.planDone - (doneToday ? 1 : 0)) {
+            } else if let plan, plan.isTrainingDay(Day.today), let planned = plan.next(done: progress.planDone - (doneToday ? 1 : 0)) {
+                let suggestion = state.profile.suggestion?.day == Day.today ? state.profile.suggestion : nil
+                let day = suggestion?.session ?? planned
                 Text(day.title).font(.headline)
-                ForEach(day.exercises, id: \.self) { Label($0, systemImage: "checkmark.circle").font(.subheadline) }
-                Button(doneToday ? LocalizedStringKey("Einheit erledigt ✓") : "Einheit abschließen (+\(planXP) XP)") {
-                    context.upsert(id: "plan-" + Day.today, module: "training", date: Day.today,
-                                   values: ["name": day.title, "minutes": 45], dirty: !state.demo)
-                    state.changed(context)
+                if let suggestion {
+                    Label("Von Claude für dich angepasst", systemImage: "sparkles").font(.caption.bold()).foregroundStyle(.orange)
+                    if !suggestion.note.isEmpty { Text(suggestion.note).font(.caption).foregroundStyle(.secondary) }
+                } else if let hint = localHint(entries) {
+                    Label { Text(hint) } icon: { Image(systemName: "arrow.up.right.circle") }.font(.caption).foregroundStyle(.secondary)
                 }
-                .buttonStyle(.borderedProminent).tint(.orange).disabled(doneToday)
+                ForEach(day.exercises, id: \.self) { Label($0, systemImage: "checkmark.circle").font(.subheadline) }
+                if let done = entries.first(where: { $0.id == "plan-" + Day.today && !$0.deleted }) {
+                    Label("Einheit erledigt ✓", systemImage: "checkmark.seal.fill").foregroundStyle(.green)
+                    FeedbackButtons(entry: done)
+                } else {
+                    Button("Einheit abschließen (+\(planXP) XP)") {
+                        context.upsert(id: "plan-" + Day.today, module: "training", date: Day.today,
+                                       values: ["name": day.title, "minutes": 45], dirty: !state.demo)
+                        state.changed(context)
+                    }
+                    .buttonStyle(.borderedProminent).tint(.orange)
+                    if state.aiAvailable && suggestion == nil { CoachButton(session: planned, entries: entries) }
+                }
                 if state.profile.modules.contains("exercises") {
                     NavigationLink("Sätze eintragen") {
-                        ExerciseModule().detail(entries.filter { $0.module == "exercises" && !$0.deleted }).navigationTitle(Text("Übungen"))
+                        ExerciseModule().detail(entries.filter { $0.module == "exercises" && !$0.deleted }).navigationTitle(Text("Übungen")).themed()
                     }
                 }
             } else if plan != nil {

@@ -45,12 +45,14 @@ struct GoalsView: View {
                     .font(.caption).foregroundStyle(.secondary)
             } header: { Text("BMI") }
 
-            Section("Tagesziele") {
+            Section {
                 LabeledContent("Kalorien", value: "\(p.kcal.whole) kcal")
                 LabeledContent("Eiweiß", value: "\(p.protein.whole) g")
                 LabeledContent("Kohlenhydrate", value: "\(p.carbs.whole) g")
                 LabeledContent("Fett", value: "\(p.fat.whole) g")
-                LabeledContent("Wasser", value: "\((p.water ?? 2000).whole) ml (≈ \(((p.water ?? 2000) / 250).short) Gläser)")
+                LabeledContent("Wasser", value: "\(p.waterGoal.whole) ml (≈ \((p.waterGoal / 250).short) Gläser)")
+            } header: { Text("Tagesziele – für dich berechnet") } footer: {
+                Text("Grundumsatz \(p.bmr.whole) kcal (Mifflin-St-Jeor aus Gewicht \(p.weight.short) kg, Größe \(p.height.whole) cm, Alter \(p.age)) × Aktivität, dazu dein Ziel. Eiweiß \(p.goal == .maintain ? "1,6" : "1,8") g je kg. Wasser rund 35 ml je kg. Neu berechnen unter „Ziele anpassen“.")
             }
 
             Section("Training") {

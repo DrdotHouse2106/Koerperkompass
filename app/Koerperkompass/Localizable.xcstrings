@@ -652,6 +652,16 @@
         }
       }
     },
+    "Alle Programme": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All programs"
+          }
+        }
+      }
+    },
     "Alle Quests eines Tages geschafft: +%lld XP Bonus. Eigene Quests hakst du durch Antippen ab.": {
       "localizations": {
         "en": {
@@ -838,6 +848,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Analysing …"
+          }
+        }
+      }
+    },
+    "Automatisch aus Körpergewicht (%@ ml)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatic from body weight (%@ ml)"
           }
         }
       }
@@ -1042,12 +1062,42 @@
         }
       }
     },
+    "Claude erstellt ein 4-Wochen-Programm aus deinem Wunsch, deinem Profil und deinen bisherigen Rückmeldungen. Keine ärztliche Beratung – bei Beschwerden bitte abklären lassen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Claude creates a 4-week program from your wish, your profile and your past feedback. Not medical advice – please get any complaints checked."
+          }
+        }
+      }
+    },
+    "Claude plant deine Einheit …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Claude is planning your session …"
+          }
+        }
+      }
+    },
     "Das Foto wird über deinen Server an die Claude API (Anthropic) gesendet, um die Nährwerte zu schätzen. Du kannst die Zustimmung in den Einstellungen widerrufen.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "The photo is sent via your server to the Claude API (Anthropic) to estimate its nutrients. You can withdraw your consent in Settings."
+          }
+        }
+      }
+    },
+    "Das Trinkziel berechnet sich aus deinem Körpergewicht (rund 35 ml je kg, mehr bei viel Bewegung). Die Erinnerung kannst du direkt in der Mitteilung abhaken (gedrückt halten): Wasser, Kaffee oder Tee. Alkohol zählt nicht zum Trinkziel.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your drinking goal is calculated from your body weight (about 35 ml per kg, more if you are very active). You can tick off the reminder right in the notification (press and hold): water, coffee or tea. Alcohol doesn’t count towards the goal."
           }
         }
       }
@@ -1132,12 +1182,32 @@
         }
       }
     },
+    "Dein Profil, die geplante Einheit und dein Trainingsverlauf der letzten 4 Wochen (Einheiten, Rückmeldungen, Sätze) werden über deinen Server an die Claude API (Anthropic) gesendet.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your profile, the planned session and your training history of the last 4 weeks (sessions, feedback, sets) are sent via your server to the Claude API (Anthropic)."
+          }
+        }
+      }
+    },
     "Dein Wunsch und dein Profil (Ziel, Alter, Größe, Gewicht) werden über deinen Server an die Claude API (Anthropic) gesendet.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Your wish and your profile (goal, age, height, weight) are sent via your server to the Claude API (Anthropic)."
+          }
+        }
+      }
+    },
+    "Dein Wunsch, dein Profil (Ziel, Alter, Größe, Gewicht) und dein Trainingsverlauf (Einheiten, Rückmeldungen, Sätze) werden über deinen Server an die Claude API (Anthropic) gesendet.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your wish, your profile (goal, age, height, weight) and your training history (sessions, feedback, sets) are sent via your server to the Claude API (Anthropic)."
           }
         }
       }
@@ -1382,6 +1452,16 @@
         }
       }
     },
+    "Einheit mit Claude anpassen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adjust session with Claude"
+          }
+        }
+      }
+    },
     "Einladen": {
       "localizations": {
         "en": {
@@ -1478,6 +1558,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Reach protein goal"
+          }
+        }
+      }
+    },
+    "Empfohlen für dich": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recommended for you"
           }
         }
       }
@@ -1952,6 +2042,16 @@
         }
       }
     },
+    "Genau richtig": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Just right"
+          }
+        }
+      }
+    },
     "Geschlecht": {
       "localizations": {
         "en": {
@@ -2058,6 +2158,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Gold"
+          }
+        }
+      }
+    },
+    "Grundumsatz %@ kcal (Mifflin-St-Jeor aus Gewicht %@ kg, Größe %@ cm, Alter %lld) × Aktivität, dazu dein Ziel. Eiweiß %@ g je kg. Wasser rund 35 ml je kg. Neu berechnen unter „Ziele anpassen“.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Basal metabolic rate %@ kcal (Mifflin-St Jeor from weight %@ kg, height %@ cm, age %lld) × activity, plus your goal. Protein %@ g per kg. Water about 35 ml per kg. Recalculate under “Adjust goals”."
           }
         }
       }
@@ -2802,6 +2912,36 @@
         }
       }
     },
+    "Letztes Mal genau richtig: Gleiche Belastung – versuch bei jeder Übung 1 Wiederholung mehr.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Last time just right: same load – try 1 more rep per exercise."
+          }
+        }
+      }
+    },
+    "Letztes Mal zu leicht: Nimm heute etwas mehr Gewicht (z. B. +2,5 kg) oder mach 2 Wiederholungen bzw. einen Satz mehr.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Last time too easy: use a bit more weight today (e.g. +2.5 kg) or do 2 more reps or one more set."
+          }
+        }
+      }
+    },
+    "Letztes Mal zu schwer: Heute etwas weniger Gewicht oder einen Satz weniger und längere Pausen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Last time too hard: a bit less weight or one set less today, and longer rests."
+          }
+        }
+      }
+    },
     "Level": {
       "localizations": {
         "en": {
@@ -3368,6 +3508,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Optional. Active energy from Health improves the calculation. Health data stays on the device until you agree to upload it."
+          }
+        }
+      }
+    },
+    "Passend zu deinem Ziel und deiner Aktivität. Nach jeder Einheit gibst du Rückmeldung – daraus wird die nächste Einheit angepasst.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Matching your goal and activity. After each session you give feedback – the next session is adjusted accordingly."
           }
         }
       }
@@ -4142,6 +4292,16 @@
         }
       }
     },
+    "Tagesziele – für dich berechnet": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Daily goals – calculated for you"
+          }
+        }
+      }
+    },
     "Taille": {
       "localizations": {
         "en": {
@@ -4482,6 +4642,16 @@
         }
       }
     },
+    "Von Claude für dich angepasst": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adjusted for you by Claude"
+          }
+        }
+      }
+    },
     "Vorlagen": {
       "localizations": {
         "en": {
@@ -4608,6 +4778,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Value"
+          }
+        }
+      }
+    },
+    "Wie war das Training?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How was the workout?"
           }
         }
       }
@@ -4758,6 +4938,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Goal achievement"
+          }
+        }
+      }
+    },
+    "Zu leicht": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Too easy"
+          }
+        }
+      }
+    },
+    "Zu schwer": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Too hard"
           }
         }
       }

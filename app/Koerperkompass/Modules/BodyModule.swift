@@ -83,6 +83,7 @@ private struct BodyDetail: View {
         context.insert(Entry(module: "body", values: values))
         if let kg = values["weight"] {
             if state.healthEnabled { Health.saveWeight(kg) }
+            state.profile.weight = kg  // aktuelles Gewicht für Trinkziel und Neuberechnung der Ziele
         }
         values = [:]
         state.changed(context)

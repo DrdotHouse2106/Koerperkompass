@@ -18,7 +18,9 @@ struct Profile: Codable, Equatable {
     var protein = 0.0
     var carbs = 0.0
     var fat = 0.0
-    var water: Double? = 2000
+    var water: Double? = 2000         // nur genutzt, wenn waterCustom = true
+    var waterCustom: Bool? = nil      // Trinkziel von Hand festgelegt
+    var suggestion: Suggestion? = nil // von Claude angepasste nächste Einheit
     var name: String?                 // Anzeigename (Spielerkarte)
     var plan: TrainingPlan?           // aktives Trainingsprogramm
     var habits: [String]? = nil       // eigene tägliche Quests (z. B. „Ein Buch lesen“)
@@ -30,6 +32,13 @@ struct Profile: Codable, Equatable {
     var habitList: [String] { habits ?? Self.defaultHabits }
 
     var isSetUp: Bool { kcal > 0 }
+
+    /// Trinkziel: rund 35 ml je kg Körpergewicht, mehr bei viel Bewegung (auf 250 ml gerundet, 1,5–4 l)
+    var autoWater: Double {
+        let ml = weight * 35 + (activity >= 3 ? 500 : activity == 2 ? 250 : 0)
+        return min(max((ml / 250).rounded() * 250, 1500), 4000)
+    }
+    var waterGoal: Double { waterCustom == true ? (water ?? autoWater) : autoWater }
 
     static let activityFactors = [1.2, 1.375, 1.55, 1.725, 1.9]
     static let activityNames: [LocalizedStringResource] = ["Kaum Bewegung", "Leicht aktiv", "Mäßig aktiv", "Sehr aktiv", "Extrem aktiv"]
@@ -70,4 +79,11 @@ extension Profile.Goal {
 
 extension Profile.Sex {
     var title: LocalizedStringResource { self == .female ? "Weiblich" : "Männlich" }
+}
+
+/// Vorschlag für die nächste Trainingseinheit (z. B. von Claude angepasst)
+struct Suggestion: Codable, Equatable {
+    var day: String       // gilt für diesen Tag
+    var session: PlanDay
+    var note: String
 }
