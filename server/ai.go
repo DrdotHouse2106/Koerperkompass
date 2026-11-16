@@ -192,7 +192,9 @@ Behalte den Charakter der Einheit bei. Antworte ausschließlich mit JSON:
 {"title": "Name der Einheit", "exercises": ["Übung – Sätze × Wiederholungen (ggf. Gewicht)", ...], "note": "ein kurzer Satz, warum so"}
 Sprache: ` + langName(req.Lang) + `.`
 	prompt := "Profil: " + req.Profile + "\nProgramm: " + req.Plan + "\nGeplante Einheit: " + req.Session + "\n\n" + req.History
-	out, err := ask(r.Context(), system, anthropic.BetaOutputConfigEffortMedium, anthropic.NewBetaTextBlock(prompt))
+	// kleines Modell: Ersatz für Apple Intelligence auf älteren iPhones, kostet Bruchteile eines Cents
+	out, err := askModel(r.Context(), env("KK_MODEL_SMALL", "claude-haiku-5-5"), system, anthropic.BetaOutputConfigEffortLow,
+		[]anthropic.BetaMessageParam{anthropic.NewBetaUserMessage(anthropic.NewBetaTextBlock(prompt))})
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadGateway)
 		return
@@ -263,6 +265,26 @@ func aiMotivation(w http.ResponseWriter, r *http.Request) {
 warm, konkret auf die Daten der Person bezogen (Serie, Ziel, Training, Trinken, Essen), abwechslungsreich, gern mit einem Emoji,
 nie belehrend, keine Diagnosen. Antworte ausschließlich mit JSON: {"messages": ["…", "…"]}. Sprache: ` + langName(req.Lang) + `.`
 	prompt := "Schreibe " + strconv.Itoa(req.Count) + " verschiedene Mitteilungen (morgens zuerst).\n\nDaten:\n" + req.Context
+	out, err := askModel(r.Context(), env("KK_MODEL_SMALL", "claude-haiku-5-5"), system, anthropic.BetaOutputConfigEffortLow,
+		[]anthropic.BetaMessageParam{anthropic.NewBetaUserMessage(anthropic.NewBetaTextBlock(prompt))})
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadGateway)
+		return
+	}
+	writeObject(w, out)
+}
+
+// aiVoice: ein Wortwechsel mit dem Trainings-Coach (Ersatz für Apple Intelligence auf älteren iPhones, kleines Modell).
+func aiVoice(w http.ResponseWriter, r *http.Request) {
+	var req struct{ Style, Plan, Profile, History, Text string }
+	if !requireAI(w) || !readJSON(w, r, &req) {
+		return
+	}
+	system := req.Style + ` Du begleitest ein Training per Sprache. Antworte sehr kurz (1–2 Sätze, wird vorgelesen), per Du, auf Deutsch,
+ohne Emojis. Erkenne aus der Meldung Übung, Wiederholungen und Gewicht und empfiehl die Pause (60–180 Sekunden). Bei Schmerzen: abbrechen lassen.
+Heutige Einheit: ` + req.Plan + `. Profil: ` + req.Profile + `
+Antworte ausschließlich mit JSON: {"reply": "…", "exercise": "Übung oder leer", "reps": Zahl, "weight": kg oder 0, "restSeconds": Zahl oder 0}`
+	prompt := "Bisher:\n" + req.History + "\n\nNeue Meldung: " + req.Text
 	out, err := askModel(r.Context(), env("KK_MODEL_SMALL", "claude-haiku-5-5"), system, anthropic.BetaOutputConfigEffortLow,
 		[]anthropic.BetaMessageParam{anthropic.NewBetaUserMessage(anthropic.NewBetaTextBlock(prompt))})
 	if err != nil {

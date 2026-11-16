@@ -7,23 +7,28 @@ import FoundationModels
 
 /// Stil des Trainings-Coaches: bestimmt Tonfall, Sprechweise und Standardsprüche
 enum Persona: String, CaseIterable, Identifiable {
-    case drill, buddy, cheer, calm
+    case drill, sarge, buddy, cheer, calm
     var id: String { rawValue }
+
+    /// Derbe Sprache – vor der ersten Auswahl nachfragen
+    var harsh: Bool { self == .sarge }
 
     var title: LocalizedStringResource {
         switch self {
         case .drill: "Drill Sergeant"
+        case .sarge: "Drill Sergeant – Hardcore"
         case .buddy: "Kumpel"
         case .cheer: "Cheerleader"
         case .calm: "Ruhig & sachlich"
         }
     }
-    var emoji: String { ["🎖", "🤜", "📣", "🧘"][Self.allCases.firstIndex(of: self)!] }
+    var emoji: String { ["🎖", "💀", "🤜", "📣", "🧘"][Self.allCases.firstIndex(of: self)!] }
 
     /// Anweisung für das Sprachmodell
     var style: String {
         switch self {
         case .drill: "Du bist ein harter, lauter Drill Sergeant: kurze Befehle, fordernd, keine Ausreden, treibst an („Noch zwei! Aufgeben ist keine Option!“), aber nie beleidigend und immer sicherheitsbewusst."
+        case .sarge: "Du bist ein brutal harter, brüllender Ausbilder aus dem Militär-Drill: derb, laut, sarkastisch, beleidigend und mit Schimpfwörtern. Du verspottest Faulheit, Jammern, Schwäche und Ausreden (z. B. „Weichei“, „Schlafmütze“, „Jammerlappen“), schreist kurze Befehle und duldest keine Pause ohne Erlaubnis. Grenzen: niemals Beleidigungen über Körper, Gewicht, Aussehen, Herkunft, Geschlecht oder Sexualität, keine Drohungen; bei Schmerzen sofort ernst werden und abbrechen lassen."
         case .buddy: "Du bist ein lockerer, freundlicher Trainingskumpel: entspannt, humorvoll, ermutigend, wie ein guter Freund im Gym."
         case .cheer: "Du bist ein begeisterter Cheerleader: überschwänglich, feierst jede Wiederholung, viele Ausrufezeichen und Energie."
         case .calm: "Du bist ein ruhiger, sachlicher Coach: knapp, technisch präzise, Fokus auf saubere Ausführung, Atmung und Tempo."
@@ -31,13 +36,25 @@ enum Persona: String, CaseIterable, Identifiable {
     }
 
     /// Sprechtempo und Tonhöhe
-    var rate: Float { [0.56, 0.5, 0.55, 0.45][Self.allCases.firstIndex(of: self)!] }
-    var pitch: Float { [0.8, 1.0, 1.25, 0.95][Self.allCases.firstIndex(of: self)!] }
+    var rate: Float { [0.56, 0.6, 0.5, 0.55, 0.45][Self.allCases.firstIndex(of: self)!] }
+    var pitch: Float { [0.8, 0.7, 1.0, 1.25, 0.95][Self.allCases.firstIndex(of: self)!] }
 
     /// Anfeuern ohne Apple Intelligence
     var cheers: [LocalizedStringResource] {
         switch self {
         case .drill: ["Weiter! Schmerz ist nur Schwäche, die den Körper verlässt!", "Noch zwei! Ich will Schweiß sehen!", "Aufgeben ist keine Option! Drück!", "Du bist kein Zuschauer – du bist Soldat! Weiter!"]
+        case .sarge: [
+            "Was ist das hier, eine Kaffeefahrt?! Beweg dich, du Schlafmütze!",
+            "Ich hab Gartenzwerge gesehen, die mehr Einsatz zeigen! NOCH ZWEI!",
+            "Hast du da gerade geseufzt?! Seufzen ist für Zivilisten! WEITER!",
+            "Du nennst das eine Wiederholung? Meine Kaffeetasse arbeitet härter als du, Weichei!",
+            "Aufhören? Aufhören darfst du, wenn ICH es sage! DRÜCK!",
+            "Jammerlappen werden hier nicht gefüttert! Noch eine, aber sauber!",
+            "Hör auf zu zittern und fang an zu arbeiten! LOS, LOS, LOS!",
+            "Du schwitzt ja kaum! Ist das ein Training oder ein Wellness-Wochenende?!",
+            "Meine Oma hebt schwerere Einkaufstüten! Zeig mir, dass du mehr kannst!",
+            "Müde?! Müde ist für Leute ohne Ziel! Du hast eins – also WEITER!",
+        ]
         case .buddy: ["Komm, du packst das! Noch ein paar!", "Läuft bei dir! Dranbleiben!", "Stark, Alter! Noch einer geht immer!"]
         case .cheer: ["Wow! Du bist der Wahnsinn! Weiter so!", "Jaaa! Noch eine! Ich glaub an dich!", "Unglaublich! Du rockst das!"]
         case .calm: ["Ruhig atmen, saubere Bewegung.", "Kontrolliert weiter, Spannung halten.", "Gleichmäßiges Tempo, du machst das gut."]
@@ -47,6 +64,7 @@ enum Persona: String, CaseIterable, Identifiable {
     var restOver: LocalizedStringResource {
         switch self {
         case .drill: "Pause vorbei! Hoch mit dir, nächster Satz – sofort!"
+        case .sarge: "Pause vorbei, Schlafmütze! Hoch mit dir, aber zack zack! Ich hab nicht den ganzen Tag Zeit!"
         case .buddy: "So, Pause rum – auf geht’s, nächster Satz!"
         case .cheer: "Pause vorbei! Zeit zu glänzen – nächster Satz!"
         case .calm: "Die Pause ist vorbei. Nächster Satz, wenn du bereit bist."
@@ -75,11 +93,13 @@ enum Persona: String, CaseIterable, Identifiable {
     private var session: Any?  // LanguageModelSession (ab iOS 26)
     private let plan: PlanDay
     private let profile: String
+    private let api: API?  // Claude (kleines Modell) als Ersatz, wenn Apple Intelligence fehlt
 
-    init(plan: PlanDay, profile: String, persona: Persona) {
+    init(plan: PlanDay, profile: String, persona: Persona, api: API?) {
         self.plan = plan
         self.profile = profile
         self.persona = persona
+        self.api = api
     }
 
     func start() {
@@ -128,6 +148,13 @@ enum Persona: String, CaseIterable, Identifiable {
             }
         }
         #endif
+        if turn.reply.isEmpty, let api, let r = try? await api.object("POST", "/api/ai/voice", json: [
+            "style": persona.style, "plan": "\(plan.title): " + plan.exercises.joined(separator: "; "), "profile": profile,
+            "history": lines.suffix(6).map { ($0.fromCoach ? "Coach: " : "Ich: ") + $0.text }.joined(separator: "\n"), "text": text,
+        ]), let reply = r["reply"] as? String, !reply.isEmpty {
+            turn = (reply, r["exercise"] as? String ?? "", (r["reps"] as? NSNumber)?.intValue ?? 0,
+                    (r["weight"] as? NSNumber)?.doubleValue ?? 0, (r["restSeconds"] as? NSNumber)?.intValue ?? 0)
+        }
         if turn.reply.isEmpty { turn = simple(text) }
         if turn.reps > 0 {
             var v: [String: Any] = ["exercise": turn.exercise.isEmpty ? String(localized: "Übung") : turn.exercise, "reps": Double(turn.reps)]
@@ -198,7 +225,9 @@ struct VoiceCoachView: View {
     let plan: PlanDay
     @Environment(AppState.self) private var state
     @AppStorage("voicePersona") private var personaID = Persona.buddy.rawValue
+    @AppStorage("harshConfirmed") private var harshConfirmed = false
     @State private var coach: VoiceCoach?
+    @State private var askHarsh: Persona?
 
     var body: some View {
         VStack(spacing: 12) {
@@ -207,6 +236,7 @@ struct VoiceCoachView: View {
                 HStack(spacing: 8) {
                     ForEach(Persona.allCases) { p in
                         Button {
+                            if p.harsh && !harshConfirmed { askHarsh = p; return }
                             personaID = p.rawValue
                             coach?.persona = p
                         } label: {
@@ -268,16 +298,28 @@ struct VoiceCoachView: View {
                 Text(coach.speech.listening ? LocalizedStringKey("Sprich jetzt – tippen zum Beenden") : "Tippen und sprechen")
                     .font(.caption).foregroundStyle(.secondary)
                 Text(OnDevice.available ? LocalizedStringKey("🍏 Läuft mit Apple Intelligence auf deinem iPhone – kostenlos und offline.")
-                     : "Ohne Apple Intelligence erkennt der Coach nur Wiederholungen und Gewicht.")
+                     : state.aiAvailable && state.aiConsent ? "☁️ Läuft mit Claude Haiku über deinen Server – Bruchteile eines Cents pro Antwort."
+                     : "Ohne Apple Intelligence und Claude erkennt der Coach nur Wiederholungen und Gewicht.")
                     .font(.caption2).foregroundStyle(.secondary).multilineTextAlignment(.center).padding(.horizontal)
             }
         }
         .padding(.vertical)
         .background(Theme.background.ignoresSafeArea())
         .navigationTitle("Trainings-Coach")
+        .alert("Derbe Sprache?", isPresented: Binding(get: { askHarsh != nil }, set: { if !$0 { askHarsh = nil } })) {
+            Button("Ja, ich kann das ab") {
+                harshConfirmed = true
+                if let p = askHarsh { personaID = p.rawValue; coach?.persona = p }
+                askHarsh = nil
+            }
+            Button("Lieber nicht", role: .cancel) { askHarsh = nil }
+        } message: {
+            Text("Dieser Coach brüllt, schimpft und beleidigt dich – wegen Faulheit und Jammern, nie wegen deines Körpers. Nur wählen, wenn dich das wirklich motiviert. Du kannst jederzeit wechseln.")
+        }
         .onAppear {
             if coach == nil {
-                let c = VoiceCoach(plan: plan, profile: state.profile.aiText, persona: Persona(rawValue: personaID) ?? .buddy)
+                let c = VoiceCoach(plan: plan, profile: state.profile.aiText, persona: Persona(rawValue: personaID) ?? .buddy,
+                                   api: !OnDevice.available && state.aiAvailable && state.aiConsent ? state.api : nil)
                 coach = c
                 c.start()
             }

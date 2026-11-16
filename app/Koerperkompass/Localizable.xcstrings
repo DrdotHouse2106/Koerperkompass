@@ -852,6 +852,16 @@
         }
       }
     },
+    "Aufhören? Aufhören darfst du, wenn ICH es sage! DRÜCK!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stop? You stop when I SAY so! PUSH!"
+          }
+        }
+      }
+    },
     "Ausdauer": {
       "localizations": {
         "en": {
@@ -1372,6 +1382,16 @@
         }
       }
     },
+    "Dein Profil, die geplante Einheit und dein Trainingsverlauf der letzten 4 Wochen (Einheiten, Rückmeldungen, Sätze) werden über deinen Server an die Claude API (Anthropic, Modell Haiku) gesendet. Mit Apple Intelligence passiert das stattdessen auf dem iPhone.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your profile, the planned session and your training history of the last 4 weeks (sessions, feedback, sets) are sent via your server to the Claude API (Anthropic, Haiku model). With Apple Intelligence this happens on your iPhone instead."
+          }
+        }
+      }
+    },
     "Dein Wunsch und dein Profil (Ziel, Alter, Größe, Gewicht) werden über deinen Server an die Claude API (Anthropic) gesendet.": {
       "localizations": {
         "en": {
@@ -1438,6 +1458,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "BMI is only a rough guide – it ignores muscle mass and build."
+          }
+        }
+      }
+    },
+    "Derbe Sprache?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Harsh language?"
           }
         }
       }
@@ -1522,6 +1552,16 @@
         }
       }
     },
+    "Dieser Coach brüllt, schimpft und beleidigt dich – wegen Faulheit und Jammern, nie wegen deines Körpers. Nur wählen, wenn dich das wirklich motiviert. Du kannst jederzeit wechseln.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This coach yells, curses and insults you – for laziness and whining, never for your body. Only choose it if it really motivates you. You can switch any time."
+          }
+        }
+      }
+    },
     "Dieses Gerät": {
       "localizations": {
         "en": {
@@ -1562,6 +1602,16 @@
         }
       }
     },
+    "Drill Sergeant – Hardcore": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drill sergeant – hardcore"
+          }
+        }
+      }
+    },
     "Du bist kein Zuschauer – du bist Soldat! Weiter!": {
       "localizations": {
         "en": {
@@ -1578,6 +1628,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "You reached level %lld – %@."
+          }
+        }
+      }
+    },
+    "Du nennst das eine Wiederholung? Meine Kaffeetasse arbeitet härter als du, Weichei!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You call that a rep? My coffee mug works harder than you, softie!"
+          }
+        }
+      }
+    },
+    "Du schwitzt ja kaum! Ist das ein Training oder ein Wellness-Wochenende?!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You’re barely sweating! Is this a workout or a spa weekend?!"
           }
         }
       }
@@ -2592,6 +2662,16 @@
         }
       }
     },
+    "Hast du da gerade geseufzt?! Seufzen ist für Zivilisten! WEITER!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Did you just sigh?! Sighing is for civilians! KEEP GOING!"
+          }
+        }
+      }
+    },
     "Health-Daten an meinen Server senden": {
       "localizations": {
         "en": {
@@ -2662,6 +2742,16 @@
         }
       }
     },
+    "Hör auf zu zittern und fang an zu arbeiten! LOS, LOS, LOS!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stop shaking and start working! GO, GO, GO!"
+          }
+        }
+      }
+    },
     "Hüfte": {
       "localizations": {
         "en": {
@@ -2688,6 +2778,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "I’m in the middle of a set – fire me up with one short sentence!"
+          }
+        }
+      }
+    },
+    "Ich hab Gartenzwerge gesehen, die mehr Einsatz zeigen! NOCH ZWEI!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I’ve seen garden gnomes with more effort! TWO MORE!"
           }
         }
       }
@@ -2752,12 +2852,32 @@
         }
       }
     },
+    "Ja, ich kann das ab": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yes, I can take it"
+          }
+        }
+      }
+    },
     "Jaaa! Noch eine! Ich glaub an dich!": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Yesss! One more! I believe in you!"
+          }
+        }
+      }
+    },
+    "Jammerlappen werden hier nicht gefüttert! Noch eine, aber sauber!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "We don’t feed whiners here! One more, and clean!"
           }
         }
       }
@@ -3482,6 +3602,16 @@
         }
       }
     },
+    "Lieber nicht": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rather not"
+          }
+        }
+      }
+    },
     "Liegestütze": {
       "localizations": {
         "en": {
@@ -3672,6 +3802,16 @@
         }
       }
     },
+    "Meine Oma hebt schwerere Einkaufstüten! Zeig mir, dass du mehr kannst!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "My grandma lifts heavier shopping bags! Show me you can do more!"
+          }
+        }
+      }
+    },
     "Meine Übungen": {
       "localizations": {
         "en": {
@@ -3808,6 +3948,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "To befriend one of them, ask %@ to introduce you – or exchange a friend link directly."
+          }
+        }
+      }
+    },
+    "Müde?! Müde ist für Leute ohne Ziel! Du hast eins – also WEITER!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tired?! Tired is for people without a goal! You have one – so KEEP GOING!"
           }
         }
       }
@@ -4022,6 +4172,16 @@
         }
       }
     },
+    "Ohne Apple Intelligence und Claude erkennt der Coach nur Wiederholungen und Gewicht.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Without Apple Intelligence and Claude the coach only recognises reps and weight."
+          }
+        }
+      }
+    },
     "Ohne Fehltag": {
       "localizations": {
         "en": {
@@ -4108,6 +4268,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Rest over! Time to shine – next set!"
+          }
+        }
+      }
+    },
+    "Pause vorbei, Schlafmütze! Hoch mit dir, aber zack zack! Ich hab nicht den ganzen Tag Zeit!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rest is over, sleepyhead! Up, chop chop! I don’t have all day!"
           }
         }
       }
@@ -5512,6 +5682,16 @@
         }
       }
     },
+    "Was ist das hier, eine Kaffeefahrt?! Beweg dich, du Schlafmütze!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What is this, a coach trip?! Move it, sleepyhead!"
+          }
+        }
+      }
+    },
     "Was soll ich heute noch essen?": {
       "localizations": {
         "en": {
@@ -6088,6 +6268,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Exercises & sets"
+          }
+        }
+      }
+    },
+    "☁️ Läuft mit Claude Haiku über deinen Server – Bruchteile eines Cents pro Antwort.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "☁️ Runs with Claude Haiku via your server – fractions of a cent per reply."
           }
         }
       }

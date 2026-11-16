@@ -98,7 +98,7 @@ struct CoachButton: View {
                 Button("Zustimmen") { state.aiConsent = true; run() }
                 Button("Abbrechen", role: .cancel) {}
             } message: {
-                Text("Dein Profil, die geplante Einheit und dein Trainingsverlauf der letzten 4 Wochen (Einheiten, Rückmeldungen, Sätze) werden über deinen Server an die Claude API (Anthropic) gesendet.")
+                Text("Dein Profil, die geplante Einheit und dein Trainingsverlauf der letzten 4 Wochen (Einheiten, Rückmeldungen, Sätze) werden über deinen Server an die Claude API (Anthropic, Modell Haiku) gesendet. Mit Apple Intelligence passiert das stattdessen auf dem iPhone.")
             }
     }
 
