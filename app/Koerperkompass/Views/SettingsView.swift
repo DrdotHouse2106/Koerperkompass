@@ -329,6 +329,7 @@ struct VoiceSettingsView: View {
     @Environment(AppState.self) private var state
     @AppStorage("voiceID") private var voiceID = ""
     @AppStorage("serverVoice") private var serverVoice = true
+    @AppStorage("serverVoicePreset") private var preset = ""
     @State private var speaker = Speaker()
 
     var body: some View {
@@ -337,11 +338,17 @@ struct VoiceSettingsView: View {
                 Section {
                     Toggle("Stimme von meinem Server", isOn: $serverVoice)
                     if serverVoice {
-                        ForEach(Persona.allCases) { p in
-                            Button("\(p.emoji) \(String(localized: p.title)) probehören") {
-                                speaker.api = state.api
-                                speaker.persona = p.rawValue
-                                speaker.speak(String(localized: p.cheers.first!))
+                        Picker("Stimme vom Server", selection: $preset) {
+                            Text("Passend zum Coach-Stil").tag("")
+                            ForEach(Speaker.serverVoices) { Text($0.name).tag($0.id) }
+                        }
+                        .pickerStyle(.inline)
+                        .onChange(of: preset) {
+                            if !preset.isEmpty { probe(preset, String(localized: "Hallo! Ich bin dein Coach. Auf geht’s – noch zwei Wiederholungen, du schaffst das!")) }
+                        }
+                        if preset.isEmpty {
+                            ForEach(Persona.allCases) { p in
+                                Button("\(p.emoji) \(String(localized: p.title)) probehören") { probe(p.rawValue, String(localized: p.cheers.first!)) }
                             }
                         }
                     }
@@ -367,5 +374,11 @@ struct VoiceSettingsView: View {
         }
         .themed()
         .navigationTitle("Stimme")
+    }
+
+    private func probe(_ persona: String, _ text: String) {
+        speaker.api = state.api
+        speaker.persona = persona
+        speaker.speak(text)
     }
 }

@@ -109,7 +109,9 @@ import Speech
             .replacingOccurrences(of: "- ", with: "").replacingOccurrences(of: "*", with: "")
         let useServer = api != nil && (UserDefaults.standard.object(forKey: "serverVoice") as? Bool ?? true)
         guard useServer, let api else { speakLocal(clean, rate: rate, pitch: pitch); return }
-        let persona = persona
+        // Fest gewählte Server-Stimme (Einstellungen → Stimme), sonst passend zum Coach-Stil
+        let fixed = UserDefaults.standard.string(forKey: "serverVoicePreset") ?? ""
+        let persona = fixed.isEmpty ? persona : fixed
         Task {
             if let data = await Self.audio(clean, persona: persona, api: api), let p = try? AVAudioPlayer(data: data) {
                 synth.stopSpeaking(at: .immediate)
@@ -157,6 +159,14 @@ import Speech
         guard let r = try? await api.object("POST", "/api/tts/wake") else { return true }
         return r["ready"] as? Bool ?? true
     }
+
+    /// Stimmen auf dem eigenen Server (Schlüssel wie in server/tts.go)
+    struct ServerVoice: Identifiable { let id: String; let name: LocalizedStringResource }
+    static let serverVoices: [ServerVoice] = [
+        .init(id: "coach", name: "Thorsten – normal"), .init(id: "calm", name: "Thorsten – ruhig"), .init(id: "cheer", name: "Thorsten – fröhlich"),
+        .init(id: "neutral", name: "Thorsten – sachlich"), .init(id: "drill", name: "Thorsten – streng"), .init(id: "sarge", name: "Thorsten – wütend"),
+        .init(id: "surprised", name: "Thorsten – überrascht"), .init(id: "whisper", name: "Thorsten – flüsternd"),
+    ]
 
     /// Sprache der App (de/en)
     static var languagePrefix: String { Locale.current.language.languageCode?.identifier == "en" ? "en" : "de" }

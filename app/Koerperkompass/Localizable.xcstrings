@@ -4521,6 +4521,16 @@
         }
       }
     },
+    "Passend zum Coach-Stil": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Matching the coach style"
+          }
+        }
+      }
+    },
     "Pause": {
       "localizations": {
         "en": {
@@ -5421,6 +5431,16 @@
         }
       }
     },
+    "Stimme vom Server": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voice from server"
+          }
+        }
+      }
+    },
     "Stimme von meinem Server": {
       "localizations": {
         "en": {
@@ -5597,6 +5617,86 @@
           "stringUnit": {
             "state": "translated",
             "value": "Share"
+          }
+        }
+      }
+    },
+    "Thorsten – flüsternd": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Thorsten – whispering"
+          }
+        }
+      }
+    },
+    "Thorsten – fröhlich": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Thorsten – cheerful"
+          }
+        }
+      }
+    },
+    "Thorsten – normal": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Thorsten – normal"
+          }
+        }
+      }
+    },
+    "Thorsten – ruhig": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Thorsten – calm"
+          }
+        }
+      }
+    },
+    "Thorsten – sachlich": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Thorsten – matter-of-fact"
+          }
+        }
+      }
+    },
+    "Thorsten – streng": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Thorsten – strict"
+          }
+        }
+      }
+    },
+    "Thorsten – wütend": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Thorsten – angry"
+          }
+        }
+      }
+    },
+    "Thorsten – überrascht": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Thorsten – surprised"
           }
         }
       }
