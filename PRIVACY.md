@@ -25,6 +25,10 @@ Ist auf deinem Server ein eigener Claude-API-Key hinterlegt, kannst du Fotos von
 
 Wenn du Freundschaften schließt, gibt dein Server deine **Spielerkarte** an die Server deiner Freunde weiter: Name, Level, Rang, Klasse, Serie, Anzahl der Erfolge und Workouts sowie Wochenwerte der Challenge. **Gesundheitsdaten werden nie geteilt.** Deine Freunde siehst nur du – außer du schaltest „Meine Freunde meinen Freunden zeigen“ ein; Freunde von Freunden erscheinen nur, wenn diese selbst zugestimmt haben. Beendest du eine Freundschaft, löschen beide Server die gespeicherten Werte.
 
+## Über mich: Geräte und was der Coach weiß
+
+Deine Trainingsgeräte und die Tatsachen, die sich der Gesundheitscoach im Gespräch merkt (z. B. Beschwerden, verfügbare Zeit, Vorlieben), stehen in deinem Profil – auf deinem iPhone und deinem eigenen Server. An Claude gehen sie nur mit deiner Zustimmung, als Teil des Profils. Du siehst und löschst sie unter Einstellungen → Über mich.
+
 ## Apple Intelligence (auf dem Gerät)
 
 Sprach-Coach, Anpassung der nächsten Trainingseinheit und persönliche Motivationssprüche nutzen – wenn verfügbar – das Sprachmodell von Apple Intelligence **direkt auf deinem iPhone**. Dabei werden keine Daten an deinen Server, an Anthropic oder an Apple übertragen. Für den Sprach-Coach verwendet die App Mikrofon und Spracherkennung (nach Möglichkeit ebenfalls auf dem Gerät).
@@ -87,6 +91,10 @@ If your server is configured with its own Claude API key, you can have meal phot
 ## Friends (optional)
 
 If you make friends, your server shares your **player card** with your friends’ servers: name, level, rank, class, streak, number of achievements and workouts, and weekly challenge values. **Health data is never shared.** Only you see your friends – unless you turn on “Show my friends to my friends”; friends of friends only appear if they agreed themselves. Ending a friendship deletes the stored values on both servers.
+
+## About me: equipment and what the coach knows
+
+Your training equipment and the facts the health coach remembers from conversations (e.g. complaints, available time, preferences) are stored in your profile – on your iPhone and your own server. They are only sent to Claude with your consent, as part of the profile. You can view and delete them under Settings → About me.
 
 ## Apple Intelligence (on device)
 
