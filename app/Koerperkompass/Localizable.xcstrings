@@ -3272,6 +3272,16 @@
         }
       }
     },
+    "Kleinen Moment, die Stimme wird geladen …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "One moment, the voice is loading …"
+          }
+        }
+      }
+    },
     "Klimmzüge oder Latziehen – 3 × 6–10": {
       "localizations": {
         "en": {

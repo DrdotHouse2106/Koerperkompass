@@ -19,6 +19,11 @@ struct API {
     }
 
     func call(_ method: String = "GET", _ path: String, json: Any? = nil) async throws -> Data {
+        try await response(method, path, json: json).0
+    }
+
+    /// Wie call, liefert zusätzlich die Antwort (z. B. für Kopfzeilen)
+    func response(_ method: String = "GET", _ path: String, json: Any? = nil) async throws -> (Data, HTTPURLResponse?) {
         guard let url = URL(string: server + path) else { throw Failure(message: String(localized: "Ungültige Server-Adresse")) }
         var req = URLRequest(url: url, timeoutInterval: path.hasPrefix("/api/ai") ? 300 : 15)
         req.httpMethod = method
@@ -31,7 +36,7 @@ struct API {
             let text = String(decoding: data, as: UTF8.self).trimmingCharacters(in: .whitespacesAndNewlines)
             throw Failure(message: text.isEmpty ? "HTTP \(code)" : text)
         }
-        return data
+        return (data, resp as? HTTPURLResponse)
     }
 
     func object(_ method: String = "GET", _ path: String, json: Any? = nil) async throws -> [String: Any] {

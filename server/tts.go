@@ -19,11 +19,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"net"
 	"net/http"
 	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
+	"sync"
 	"time"
 )
 
@@ -65,7 +67,30 @@ func ttsKey(persona, text string) string {
 	return hex.EncodeToString(h[:])
 }
 
-var ttsClient = &http.Client{Timeout: 60 * time.Second}
+// Kurzer Verbindungsaufbau (schlafender PC fällt schnell durch), aber genug Zeit zum Erzeugen
+var ttsClient = &http.Client{Timeout: 60 * time.Second, Transport: &http.Transport{DialContext: (&net.Dialer{Timeout: 2 * time.Second}).DialContext}}
+
+// Dienste, die gerade nicht antworten, werden nur kurz übersprungen – nie dauerhaft
+var (
+	ttsMu   sync.Mutex
+	ttsDown = map[string]time.Time{}
+)
+
+func ttsSkip(url string) bool {
+	ttsMu.Lock()
+	defer ttsMu.Unlock()
+	return time.Now().Before(ttsDown[url])
+}
+
+func ttsMark(url string, ok bool) {
+	ttsMu.Lock()
+	defer ttsMu.Unlock()
+	if ok {
+		delete(ttsDown, url)
+	} else {
+		ttsDown[url] = time.Now().Add(15 * time.Second)
+	}
+}
 
 func tts(w http.ResponseWriter, r *http.Request) {
 	var req struct{ Text, Persona string }
@@ -83,6 +108,7 @@ func tts(w http.ResponseWriter, r *http.Request) {
 	file := filepath.Join(ttsDir(), ttsKey(req.Persona, req.Text)+".wav")
 	if data, err := os.ReadFile(file); err == nil {
 		w.Header().Set("Content-Type", "audio/wav")
+		w.Header().Set("X-KK-TTS-Final", "1") // endgültige Fassung – darf auf dem iPhone zwischengespeichert werden
 		w.Write(data)
 		return
 	}
@@ -99,10 +125,16 @@ func tts(w http.ResponseWriter, r *http.Request) {
 	b, _ := json.Marshal(body)
 	var data []byte
 	var errs []string
-	for _, url := range services {
+	best := false // Ergebnis vom ersten (bevorzugten) Dienst?
+	for i, url := range services {
+		if i < len(services)-1 && ttsSkip(url) {
+			errs = append(errs, url+" schläft gerade")
+			continue
+		}
 		d, err := ttsCall(url, b)
+		ttsMark(url, err == nil)
 		if err == nil {
-			data = d
+			data, best = d, i == 0
 			break
 		}
 		errs = append(errs, err.Error())
@@ -111,8 +143,12 @@ func tts(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Sprachausgabe fehlgeschlagen: "+strings.Join(errs, "; "), http.StatusBadGateway)
 		return
 	}
-	if os.MkdirAll(ttsDir(), 0o750) == nil {
-		os.WriteFile(file, data, 0o640) // für das nächste Mal zwischenspeichern
+	// Nur die bevorzugte Stimme dauerhaft speichern – Rückfall-Töne (z. B. Piper, solange Kartoffelbox schläft) nicht
+	if best {
+		if os.MkdirAll(ttsDir(), 0o750) == nil {
+			os.WriteFile(file, data, 0o640)
+		}
+		w.Header().Set("X-KK-TTS-Final", "1")
 	}
 	w.Header().Set("Content-Type", "audio/wav")
 	w.Write(data)
@@ -130,4 +166,62 @@ func ttsCall(url string, body []byte) ([]byte, error) {
 		return nil, fmt.Errorf("%s: Fehler %s", url, strconv.Itoa(resp.StatusCode))
 	}
 	return data, nil
+}
+
+// ttsWake weckt den Sprach-PC per Wake-on-LAN (KK_TTS_WAKE_MAC, Ziel KK_TTS_WAKE_ADDR, Standard 255.255.255.255:9)
+// und meldet, ob der bevorzugte Sprachdienst schon antwortet.
+var lastWake time.Time
+
+func ttsWake(w http.ResponseWriter, r *http.Request) {
+	services := strings.FieldsFunc(env("KK_TTS_URL", ""), func(c rune) bool { return c == ',' || c == ' ' })
+	ready := len(services) > 0 && ttsReachable(services[0])
+	sent := false
+	if mac := env("KK_TTS_WAKE_MAC", ""); mac != "" && !ready {
+		ttsMu.Lock()
+		due := time.Since(lastWake) > 20*time.Second
+		if due {
+			lastWake = time.Now()
+		}
+		ttsMu.Unlock()
+		if due {
+			sent = sendMagicPacket(mac, env("KK_TTS_WAKE_ADDR", "255.255.255.255:9")) == nil
+		}
+	}
+	if ready {
+		ttsMark(services[0], true)
+	}
+	writeJSON(w, map[string]bool{"ready": ready || len(services) < 2, "sent": sent})
+}
+
+// ttsReachable: antwortet der Dienst (TCP-Verbindung in 1 Sekunde)?
+func ttsReachable(url string) bool {
+	host := strings.TrimPrefix(strings.TrimPrefix(url, "http://"), "https://")
+	if i := strings.Index(host, "/"); i >= 0 {
+		host = host[:i]
+	}
+	c, err := net.DialTimeout("tcp", host, time.Second)
+	if err != nil {
+		return false
+	}
+	c.Close()
+	return true
+}
+
+// sendMagicPacket: 6 × 0xFF, dann 16 × die MAC-Adresse, per UDP-Broadcast
+func sendMagicPacket(mac, addr string) error {
+	hw, err := net.ParseMAC(mac)
+	if err != nil {
+		return err
+	}
+	packet := bytes.Repeat([]byte{0xFF}, 6)
+	for i := 0; i < 16; i++ {
+		packet = append(packet, hw...)
+	}
+	conn, err := net.Dial("udp", addr)
+	if err != nil {
+		return err
+	}
+	defer conn.Close()
+	_, err = conn.Write(packet)
+	return err
 }

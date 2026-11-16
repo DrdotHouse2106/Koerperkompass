@@ -112,16 +112,26 @@ import Speech
         let dir = URL.cachesDirectory.appendingPathComponent("tts", isDirectory: true)
         let file = dir.appendingPathComponent(key + ".wav")
         if let data = try? Data(contentsOf: file) { return data }
-        guard let data = try? await api.call("POST", "/api/tts", json: ["text": text, "persona": persona]),
-              data.count > 44, data.prefix(4) == Data("RIFF".utf8) else { return nil }
-        try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
-        try? data.write(to: file)
+        guard let result = try? await api.response("POST", "/api/tts", json: ["text": text, "persona": persona]) else { return nil }
+        let (data, resp) = result
+        guard data.count > 44, data.prefix(4) == Data("RIFF".utf8) else { return nil }
+        // Nur die endgültige Fassung speichern – Rückfall-Töne (z. B. Piper, solange Kartoffelbox geweckt wird) nicht
+        if resp?.value(forHTTPHeaderField: "X-KK-TTS-Final") == "1" {
+            try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+            try? data.write(to: file)
+        }
         return data
     }
 
     func stop() {
         synth.stopSpeaking(at: .immediate)
         player?.stop()
+    }
+
+    /// Sprach-PC wecken (Wake-on-LAN über den eigenen Server); true, sobald die beste Stimme bereit ist
+    static func wake(_ api: API) async -> Bool {
+        guard let r = try? await api.object("POST", "/api/tts/wake") else { return true }
+        return r["ready"] as? Bool ?? true
     }
 
     /// Sprache der App (de/en)

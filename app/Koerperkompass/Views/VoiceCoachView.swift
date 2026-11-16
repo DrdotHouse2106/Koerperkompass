@@ -84,6 +84,7 @@ enum Persona: String, CaseIterable, Identifiable {
 
     var lines: [Line] = []
     var thinking = false
+    var voiceLoading = false  // Sprach-PC wird geweckt
     var rest = 0
     var persona: Persona { didSet { session = nil; speaker.persona = persona.rawValue } }
     let speech = SpeechInput()
@@ -104,7 +105,21 @@ enum Persona: String, CaseIterable, Identifiable {
         speaker.persona = persona.rawValue
     }
 
+    /// Sprach-PC wecken und warten, bis die beste Stimme bereit ist (bis dahin vorgerenderte Sätze bzw. Piper)
+    func wakeVoice() {
+        guard let api = speaker.api else { return }
+        Task {
+            for _ in 0..<24 {  // höchstens ca. 3 Minuten
+                if await Speaker.wake(api) { break }
+                voiceLoading = true
+                try? await Task.sleep(for: .seconds(8))
+            }
+            voiceLoading = false
+        }
+    }
+
     func start() {
+        wakeVoice()
         say(String(localized: "Los geht’s! Heute: \(plan.title). Sag mir nach jedem Satz, wie viele Wiederholungen mit welchem Gewicht – und wie es sich angefühlt hat."))
     }
 
@@ -245,6 +260,9 @@ struct VoiceCoachView: View {
     var body: some View {
         VStack(spacing: 12) {
             CoachLogBanner()
+            if coach?.voiceLoading == true {
+                Label("Kleinen Moment, die Stimme wird geladen …", systemImage: "hourglass").font(.caption).foregroundStyle(.secondary)
+            }
             // Stil wählen
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 8) {

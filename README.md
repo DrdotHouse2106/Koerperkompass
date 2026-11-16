@@ -70,6 +70,7 @@ Danach `http://<server-ip>:8080` im Browser öffnen: Dort steht der Kopplungscod
 | `KK_PUBLIC_URL` | öffentliche Adresse, z. B. `https://kompass.example.de` (für den QR-Code hinter einem Reverse Proxy) |
 | `KK_MODEL` | Claude-Modell für Coach, Fotos, Analyse und Training (Standard: `claude-opus-5-5`; günstiger: `claude-sonnet-5-5` oder `claude-haiku-5-5`) |
 | `KK_MODEL_SMALL` | kleines Modell für die täglichen Motivationssprüche (Standard: `claude-haiku-5-5`) |
+| `KK_TTS_WAKE_MAC`, `KK_TTS_WAKE_ADDR` | Sprach-PC per Wake-on-LAN wecken, wenn ein Coach startet (MAC-Adresse und Broadcast-Ziel, z. B. `192.168.72.255:9`) |
 | `KK_TTS_URL`, `KK_TTS_DIR`, `KK_TTS_VOICES` | Sprachdienste (Piper/Kartoffelbox, durch Komma getrennt, der Reihe nach), Ordner für vorab gerenderte und zwischengespeicherte Sätze, Stimme je Coach-Stil (siehe `tools/tts/LIESMICH.md`) |
 | `KK_TELEMETRY` | `off` schaltet das Weiterleiten anonymer Verbesserungsdaten an die Entwickler ab (nur relevant, wenn Nutzer es in der App freiwillig einschalten) |
 | `KK_TELEMETRY_URL` | Ziel für anonyme Verbesserungsdaten (Standard: Hauptserver des Projekts) |

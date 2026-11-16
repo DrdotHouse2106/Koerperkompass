@@ -62,6 +62,7 @@ func routes() http.Handler {
 	m.HandleFunc("GET /f/{code}", friendPage)
 	// Anonyme Verbesserungsdaten (freiwillig), siehe telemetry.go
 	m.HandleFunc("POST /api/tts", auth(tts)) // Sprachausgabe vom eigenen Server, siehe tts.go
+	m.HandleFunc("POST /api/tts/wake", auth(ttsWake))
 	m.HandleFunc("POST /api/telemetry", auth(telemetry))
 	m.HandleFunc("POST /api/collect", collect)
 	m.HandleFunc("GET /api/collect", collectExport)

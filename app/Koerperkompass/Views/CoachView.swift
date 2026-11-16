@@ -73,6 +73,7 @@ struct CoachView: View {
                 }
             }
             .sheet(isPresented: $showCompass) { CompassView() }
+            .task { if speakReplies && state.ttsAvailable { _ = await Speaker.wake(state.api) } }  // Sprach-PC vorsorglich wecken
             .onChange(of: [reminder ? 1 : 0, hour]) {
                 Task {
                     if reminder { await Reminders.scheduleCoach(hour: hour) } else { Reminders.cancelCoach() }
