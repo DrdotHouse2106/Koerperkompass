@@ -98,9 +98,17 @@ private struct NutritionDetail: View {
                 }
                 .frame(height: 180)
             }
+            let drinks = entries.filter { $0.module == "water" && $0.date == day }
+            if !drinks.isEmpty {
+                Section("Getränke") {
+                    ForEach(drinks) { e in
+                        Text("\(e.text("name") ?? "") · \((e.num("kcal") ?? 0).whole) kcal")
+                    }
+                }
+            }
             ForEach(Meal.allCases) { meal in
                 Section {
-                    EntryRows(entries: entries.filter { $0.date == day && $0.text("meal") == meal.rawValue }) { e in
+                    EntryRows(entries: entries.filter { $0.module == "nutrition" && $0.date == day && $0.text("meal") == meal.rawValue }) { e in
                         "\(e.text("name") ?? "–") · \((e.num("kcal") ?? 0).whole) kcal"
                     }
                     Button("Hinzufügen", systemImage: "plus") { adding = meal }

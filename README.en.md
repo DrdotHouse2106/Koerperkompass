@@ -22,7 +22,8 @@ There is no central service: the developers run no server and never see any data
 - 🏁 **Adventure** – gamification: character card, shareable player card with your own photo, achievements, week strip and 🔥 streak, daily and custom quests, XP, levels, ranks, attributes
 - 📈 **Exercises** – log sets with reps and weight, progress chart per exercise, tiers bronze → silver → gold → platinum
 - 🏋️ **Training programs** – 4-week programs with training and rest days, XP per session, templates or created by Claude; optional penalties for missed sessions
-- 💧 **Water**, 🏋️ **Training** – simple sample modules, templates for your own modules
+- 💧 **Drinks** – water, coffee, tea, beer, wine … with one tap; drinking goal, caffeine, alcohol; drink reminders you can tick off in the notification
+- 🏋️ **Training** – own tab with today’s session and nine ready-made programs
 - 🧭 **Compass** – 7/30/90-day analysis: averages, trends, goal achievement, correlations (e.g. sleep ↔ calories). Optional detailed analysis with Claude
 - 🤝 **Friends (decentralised)** – friendships with users on your own or **other Körperkompass servers**, no central service: friend list with player cards, weekly challenge leaderboard, optionally friends of friends. Only game values are shared, never health data (requires `KK_PUBLIC_URL` and HTTPS)
 - 👥 **Multiple users** – invite other people, each with their own account, own access and own data

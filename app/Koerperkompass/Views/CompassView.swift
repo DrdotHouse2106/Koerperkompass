@@ -70,6 +70,7 @@ struct CompassView: View {
                     Text("Alle Werte sind Schätzungen. Der Körperkompass ersetzt keine ärztliche Beratung.")
                 }
             }
+            .themed()
             .navigationTitle("Kompass")
             .alert("Daten an Claude senden?", isPresented: $askConsent) {
                 Button("Zustimmen") { state.aiConsent = true; analyse() }

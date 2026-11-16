@@ -78,7 +78,8 @@ struct FriendsView: View {
                 }
             }
         }
-        .navigationTitle("Freunde")
+        .themed()
+            .navigationTitle("Freunde")
         .refreshable { await load() }
         .task { await state.pushCard(context); await load() }
         .sheet(item: $link) { InviteView(link: $0.link, note: "Schick diesen Link einem Freund. Er fügt ihn in Körperkompass unter Abenteuer → Freunde ein. Einmalig, 7 Tage gültig.") }

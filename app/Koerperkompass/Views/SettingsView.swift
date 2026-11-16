@@ -83,6 +83,7 @@ struct SettingsView: View {
                     Text("Version \(appVersion) · Alle Werte sind Schätzungen und keine ärztliche Beratung.")
                 }
             }
+            .themed()
             .navigationTitle("Einstellungen")
             .alert("Health-Daten hochladen?", isPresented: $askHealthUpload) {
                 Button("Zustimmen") { state.setHealthUpload(true, context) }

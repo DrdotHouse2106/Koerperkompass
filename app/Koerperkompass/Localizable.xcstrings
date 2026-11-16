@@ -72,6 +72,16 @@
         }
       }
     },
+    "%@ ml": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ ml"
+          }
+        }
+      }
+    },
     "%@ ml heute": {
       "localizations": {
         "en": {
@@ -122,12 +132,32 @@
         }
       }
     },
+    "%lld %%": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld %%"
+          }
+        }
+      }
+    },
     "%lld Einheiten": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "%lld sessions"
+          }
+        }
+      }
+    },
+    "%lld Einheiten · bis %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld sessions · until %@"
           }
         }
       }
@@ -182,6 +212,16 @@
         }
       }
     },
+    "%lld × pro Woche. Die übrigen Tage sind Ruhetage. Die Trainingstage kommen reihum dran.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld × per week. The other days are rest days. Training days rotate."
+          }
+        }
+      }
+    },
     "%lld Übungen": {
       "localizations": {
         "en": {
@@ -202,6 +242,16 @@
         }
       }
     },
+    "+%@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "+%@"
+          }
+        }
+      }
+    },
     "+%@ ml": {
       "localizations": {
         "en": {
@@ -218,6 +268,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "+%lld XP"
+          }
+        }
+      }
+    },
+    "1 Stunde": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 hour"
           }
         }
       }
@@ -262,6 +322,26 @@
         }
       }
     },
+    "100er-Challenge": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "100 challenge"
+          }
+        }
+      }
+    },
+    "2 Stunden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2 hours"
+          }
+        }
+      }
+    },
     "20 Minuten Dehnen und Mobilisieren": {
       "localizations": {
         "en": {
@@ -278,6 +358,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "25–30 minutes at an easy pace"
+          }
+        }
+      }
+    },
+    "3 Stunden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3 hours"
           }
         }
       }
@@ -312,12 +402,32 @@
         }
       }
     },
+    "4 Runden: 40 s Belastung / 20 s Pause": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "4 rounds: 40 s work / 20 s rest"
+          }
+        }
+      }
+    },
     "40–45 Minuten ruhig": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "40–45 minutes easy"
+          }
+        }
+      }
+    },
+    "4× pro Woche, ausgewogen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "4× per week, balanced"
           }
         }
       }
@@ -378,6 +488,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "90 days"
+          }
+        }
+      }
+    },
+    "Ab %lld:00 Uhr": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "From %lld:00"
           }
         }
       }
@@ -492,12 +612,32 @@
         }
       }
     },
+    "Alkohol": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alcohol"
+          }
+        }
+      }
+    },
+    "Alkoholfreies Bier": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alcohol-free beer"
+          }
+        }
+      }
+    },
     "Alle": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "All"
+            "value": "Every"
           }
         }
       }
@@ -762,6 +902,26 @@
         }
       }
     },
+    "Beine": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Legs"
+          }
+        }
+      }
+    },
+    "Beinpresse – 3 × 10–12": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Leg press – 3 × 10–12"
+          }
+        }
+      }
+    },
     "Bezeichnung": {
       "localizations": {
         "en": {
@@ -772,12 +932,52 @@
         }
       }
     },
+    "Bier": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beer"
+          }
+        }
+      }
+    },
+    "Bis %lld:00 Uhr": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Until %lld:00"
+          }
+        }
+      }
+    },
     "Bitte Adresse und Code von Hand eingeben.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Please enter address and code manually."
+          }
+        }
+      }
+    },
+    "Bizeps-Curls – 3 × 10–12": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Biceps curls – 3 × 10–12"
+          }
+        }
+      }
+    },
+    "Bizeps-Curls – 3 × 12": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Biceps curls – 3 × 12"
           }
         }
       }
@@ -798,6 +998,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Chest"
+          }
+        }
+      }
+    },
+    "Burpees": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Burpees"
+          }
+        }
+      }
+    },
+    "Cappuccino": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cappuccino"
           }
         }
       }
@@ -982,6 +1202,16 @@
         }
       }
     },
+    "Die Erinnerung kannst du direkt in der Mitteilung abhaken (gedrückt halten): Wasser, Kaffee oder Tee. Alkohol zählt nicht zum Trinkziel.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You can tick off the reminder right in the notification (press and hold): water, coffee or tea. Alcohol doesn’t count towards the drinking goal."
+          }
+        }
+      }
+    },
     "Die Person bekommt ein eigenes Konto. Ihre Daten bleiben getrennt von deinen.": {
       "localizations": {
         "en": {
@@ -1092,12 +1322,32 @@
         }
       }
     },
+    "Ein laufendes Programm wird ersetzt.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A running program will be replaced."
+          }
+        }
+      }
+    },
     "Ein paar Angaben, damit der Körperkompass passende Tagesziele vorschlagen kann.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "A few details so Körperkompass can suggest suitable daily goals."
+          }
+        }
+      }
+    },
+    "Einarmiges Rudern – 3 × 10 je Seite": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "One-arm row – 3 × 10 per side"
           }
         }
       }
@@ -1172,6 +1422,16 @@
         }
       }
     },
+    "Eintragen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Log"
+          }
+        }
+      }
+    },
     "Eiweiß": {
       "localizations": {
         "en": {
@@ -1232,6 +1492,16 @@
         }
       }
     },
+    "Energy-Drink": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Energy drink"
+          }
+        }
+      }
+    },
     "Entdecker": {
       "localizations": {
         "en": {
@@ -1262,6 +1532,16 @@
         }
       }
     },
+    "Ergänzung für Rücken und Haltung – 2× pro Woche": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "For back and posture – 2× per week"
+          }
+        }
+      }
+    },
     "Erholung": {
       "localizations": {
         "en": {
@@ -1278,6 +1558,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Recovery is part of training. Today your own quests count – sleep, food, balance."
+          }
+        }
+      }
+    },
+    "Erinnerung & Ziel": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reminder & goal"
           }
         }
       }
@@ -1312,6 +1602,16 @@
         }
       }
     },
+    "Espresso": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Espresso"
+          }
+        }
+      }
+    },
     "Export erstellen (JSON)": {
       "localizations": {
         "en": {
@@ -1342,12 +1642,32 @@
         }
       }
     },
+    "Face Pulls – 3 × 15": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Face pulls – 3 × 15"
+          }
+        }
+      }
+    },
     "Fertig": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Done"
+          }
+        }
+      }
+    },
+    "Fertige Programme": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ready-made programs"
           }
         }
       }
@@ -1368,6 +1688,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Fat (g)"
+          }
+        }
+      }
+    },
+    "Flasche Wasser": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bottle of water"
+          }
+        }
+      }
+    },
+    "Flüssigkeit": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fluids"
           }
         }
       }
@@ -1582,6 +1922,16 @@
         }
       }
     },
+    "Für persönliche Programme kann auf deinem Server ein Claude-API-Key hinterlegt werden. Bis dahin findest du fertige Programme im Tab „Training“.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "For personal programs, a Claude API key can be set on your server. Until then, ready-made programs are in the “Training” tab."
+          }
+        }
+      }
+    },
     "Ganzkörper ohne Geräte": {
       "localizations": {
         "en": {
@@ -1628,6 +1978,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Only name, level, rank, class, streak, achievements and weekly values are shared – no health data. You only see friends of friends if both have agreed."
+          }
+        }
+      }
+    },
+    "Getränke": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drinks"
           }
         }
       }
@@ -1682,6 +2042,16 @@
         }
       }
     },
+    "Goblet Squats – 3 × 12": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Goblet squats – 3 × 12"
+          }
+        }
+      }
+    },
     "Gold": {
       "localizations": {
         "en": {
@@ -1702,6 +2072,36 @@
         }
       }
     },
+    "Guten Abend": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Good evening"
+          }
+        }
+      }
+    },
+    "Guten Morgen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Good morning"
+          }
+        }
+      }
+    },
+    "HIIT 20 Minuten": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HIIT 20 minutes"
+          }
+        }
+      }
+    },
     "Haferflocken mit Beeren": {
       "localizations": {
         "en": {
@@ -1712,12 +2112,42 @@
         }
       }
     },
+    "Hallo": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hello"
+          }
+        }
+      }
+    },
+    "Halte die Mitteilung gedrückt und hake ab, was du getrunken hast.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Press and hold the notification and tick off what you drank."
+          }
+        }
+      }
+    },
     "Halten": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Maintain"
+          }
+        }
+      }
+    },
+    "Hampelmänner": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jumping jacks"
           }
         }
       }
@@ -1822,6 +2252,16 @@
         }
       }
     },
+    "Intervall-Zirkel": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Interval circuit"
+          }
+        }
+      }
+    },
     "Intervalle": {
       "localizations": {
         "en": {
@@ -1832,12 +2272,32 @@
         }
       }
     },
+    "Jeden Tag 100 Liegestütze, Sit-ups und Kniebeugen plus 3 km – steigere dich langsam": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "100 push-ups, sit-ups and squats plus 3 km every day – build up slowly"
+          }
+        }
+      }
+    },
     "Jetzt abgleichen": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Sync now"
+          }
+        }
+      }
+    },
+    "Kaffee": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Coffee"
           }
         }
       }
@@ -1858,6 +2318,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Calories (kcal)"
+          }
+        }
+      }
+    },
+    "Kalorien aus Getränken": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calories from drinks"
           }
         }
       }
@@ -1962,6 +2432,16 @@
         }
       }
     },
+    "Klassischer Split fürs Studio": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Classic gym split"
+          }
+        }
+      }
+    },
     "Klimmzüge oder Latziehen – 3 × 6–10": {
       "localizations": {
         "en": {
@@ -1972,12 +2452,32 @@
         }
       }
     },
+    "Klimmzüge oder Latziehen – 4 × 6–10": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pull-ups or lat pulldown – 4 × 6–10"
+          }
+        }
+      }
+    },
     "Kniebeugen": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Squats"
+          }
+        }
+      }
+    },
+    "Kniebeugen – 100 (in Sätzen)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Squats – 100 (in sets)"
           }
         }
       }
@@ -1998,6 +2498,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Squats – 4 × 6–8"
+          }
+        }
+      }
+    },
+    "Kniebeugen-Sprünge": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jump squats"
+          }
+        }
+      }
+    },
+    "Koffein": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Caffeine"
           }
         }
       }
@@ -2122,6 +2642,36 @@
         }
       }
     },
+    "Kurz und intensiv, ohne Geräte": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Short and intense, no equipment"
+          }
+        }
+      }
+    },
+    "Kurzhantel-Bankdrücken (Boden) – 3 × 10": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dumbbell floor press – 3 × 10"
+          }
+        }
+      }
+    },
+    "Kurzhanteln zu Hause": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dumbbells at home"
+          }
+        }
+      }
+    },
     "Körperfett": {
       "localizations": {
         "en": {
@@ -2152,12 +2702,62 @@
         }
       }
     },
+    "Langhantel-Grundübungen im Wechsel": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alternating barbell basics"
+          }
+        }
+      }
+    },
+    "Langhantelrudern – 3 × 8": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Barbell row – 3 × 8"
+          }
+        }
+      }
+    },
+    "Latziehen – 3 × 10": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lat pulldown – 3 × 10"
+          }
+        }
+      }
+    },
     "Laufen": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Running"
+          }
+        }
+      }
+    },
+    "Laufen in drei Varianten": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Running in three variants"
+          }
+        }
+      }
+    },
+    "Laufen – 3 km": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Running – 3 km"
           }
         }
       }
@@ -2288,6 +2888,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Push-ups (knees allowed) – 3 × 8–12"
+          }
+        }
+      }
+    },
+    "Liegestütze – 100 (in Sätzen)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Push-ups – 100 (in sets)"
+          }
+        }
+      }
+    },
+    "Light/Zero": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Light/Zero"
           }
         }
       }
@@ -2462,6 +3082,16 @@
         }
       }
     },
+    "Mitteilungen sind für Körperkompass ausgeschaltet – bitte in den iOS-Einstellungen erlauben.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notifications are turned off for Körperkompass – please allow them in iOS Settings."
+          }
+        }
+      }
+    },
     "Mobilität": {
       "localizations": {
         "en": {
@@ -2478,6 +3108,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Modules"
+          }
+        }
+      }
+    },
+    "Mountain Climbers": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mountain climbers"
           }
         }
       }
@@ -2662,6 +3302,26 @@
         }
       }
     },
+    "Oberkörper": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Upper body"
+          }
+        }
+      }
+    },
+    "Oberkörper / Unterkörper": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Upper / lower body"
+          }
+        }
+      }
+    },
     "Offline – Änderungen werden später übertragen (%@)": {
       "localizations": {
         "en": {
@@ -2728,6 +3388,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Personal program"
+          }
+        }
+      }
+    },
+    "Persönliches Programm mit Claude": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Personal program with Claude"
           }
         }
       }
@@ -2832,12 +3502,52 @@
         }
       }
     },
+    "Programm verwalten": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Manage program"
+          }
+        }
+      }
+    },
     "Programm wird erstellt …": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Creating program …"
+          }
+        }
+      }
+    },
+    "Pull – Ziehen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pull"
+          }
+        }
+      }
+    },
+    "Push / Pull / Beine": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Push / Pull / Legs"
+          }
+        }
+      }
+    },
+    "Push – Drücken": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Push"
           }
         }
       }
@@ -2892,6 +3602,16 @@
         }
       }
     },
+    "Rudern – 4 × 8": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rows – 4 × 8"
+          }
+        }
+      }
+    },
     "Ruhepol": {
       "localizations": {
         "en": {
@@ -2938,6 +3658,46 @@
           "stringUnit": {
             "state": "translated",
             "value": "Core & mobility"
+          }
+        }
+      }
+    },
+    "Rumänisches Kreuzheben – 3 × 10": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Romanian deadlift – 3 × 10"
+          }
+        }
+      }
+    },
+    "Rumänisches Kreuzheben – 3 × 8": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Romanian deadlift – 3 × 8"
+          }
+        }
+      }
+    },
+    "Saft": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Juice"
+          }
+        }
+      }
+    },
+    "Sanfter Start ohne Geräte – 3× pro Woche": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gentle start without equipment – 3× per week"
           }
         }
       }
@@ -3012,6 +3772,26 @@
         }
       }
     },
+    "Schnaps": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spirits"
+          }
+        }
+      }
+    },
+    "Schnell eintragen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick log"
+          }
+        }
+      }
+    },
     "Schritte": {
       "localizations": {
         "en": {
@@ -3052,6 +3832,36 @@
         }
       }
     },
+    "Schrägbankdrücken Kurzhantel – 3 × 10": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Incline dumbbell press – 3 × 10"
+          }
+        }
+      }
+    },
+    "Schulterdrücken – 3 × 10": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shoulder press – 3 × 10"
+          }
+        }
+      }
+    },
+    "Schulterdrücken – 3 × 8–10": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shoulder press – 3 × 8–10"
+          }
+        }
+      }
+    },
     "Schätze …": {
       "localizations": {
         "en": {
@@ -3068,6 +3878,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Very active"
+          }
+        }
+      }
+    },
+    "Seitheben – 3 × 12–15": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lateral raises – 3 × 12–15"
           }
         }
       }
@@ -3142,6 +3962,16 @@
         }
       }
     },
+    "Sit-ups – 100 (in Sätzen)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sit-ups – 100 (in sets)"
+          }
+        }
+      }
+    },
     "Sit-ups – 3 × 15": {
       "localizations": {
         "en": {
@@ -3158,6 +3988,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Snack"
+          }
+        }
+      }
+    },
+    "Softdrink": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Soft drink"
           }
         }
       }
@@ -3272,6 +4112,16 @@
         }
       }
     },
+    "Tagesration": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Daily dose"
+          }
+        }
+      }
+    },
     "Tagesziele": {
       "localizations": {
         "en": {
@@ -3298,6 +4148,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Waist"
+          }
+        }
+      }
+    },
+    "Tee": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tea"
           }
         }
       }
@@ -3362,12 +4222,52 @@
         }
       }
     },
+    "Trainingsverlauf": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Training history"
+          }
+        }
+      }
+    },
     "Trennen und lokale Daten löschen": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Disconnect and delete local data"
+          }
+        }
+      }
+    },
+    "Trinkerinnerung": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drink reminder"
+          }
+        }
+      }
+    },
+    "Trinkziel: %@ ml": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drinking goal: %@ ml"
+          }
+        }
+      }
+    },
+    "Trizepsdrücken – 3 × 12": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Triceps pushdown – 3 × 12"
           }
         }
       }
@@ -3402,12 +4302,32 @@
         }
       }
     },
+    "Unterarmstütz": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Plank"
+          }
+        }
+      }
+    },
     "Unterarmstütz – 3 × 30 s": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Plank – 3 × 30 s"
+          }
+        }
+      }
+    },
+    "Unterarmstütz – 3 × 40 s": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Plank – 3 × 40 s"
           }
         }
       }
@@ -3428,6 +4348,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Underweight"
+          }
+        }
+      }
+    },
+    "Unterkörper": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lower body"
+          }
+        }
+      }
+    },
+    "Unterkörper & Rumpf": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lower body & core"
           }
         }
       }
@@ -3552,6 +4492,16 @@
         }
       }
     },
+    "Wadenheben – 4 × 15": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calf raises – 4 × 15"
+          }
+        }
+      }
+    },
     "Wanderer": {
       "localizations": {
         "en": {
@@ -3598,6 +4548,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Female"
+          }
+        }
+      }
+    },
+    "Wein": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wine"
           }
         }
       }
@@ -3742,6 +4702,16 @@
         }
       }
     },
+    "Zeit für ein Glas Wasser 💧": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Time for a glass of water 💧"
+          }
+        }
+      }
+    },
     "Zeitraum": {
       "localizations": {
         "en": {
@@ -3852,6 +4822,16 @@
         }
       }
     },
+    "Zwei Kurzhanteln reichen – 3× pro Woche": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Two dumbbells are enough – 3× per week"
+          }
+        }
+      }
+    },
     "Zügiger Spaziergang": {
       "localizations": {
         "en": {
@@ -3922,6 +4902,26 @@
         }
       }
     },
+    "von %@ ml": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "of %@ ml"
+          }
+        }
+      }
+    },
+    "von %@ ml Trinkziel": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "of %@ ml drinking goal"
+          }
+        }
+      }
+    },
     "Über": {
       "localizations": {
         "en": {
@@ -3968,6 +4968,46 @@
           "stringUnit": {
             "state": "translated",
             "value": "Exercises"
+          }
+        }
+      }
+    },
+    "Übungen & Sätze": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exercises & sets"
+          }
+        }
+      }
+    },
+    "☕️ %@ mg": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "☕️ %@ mg"
+          }
+        }
+      }
+    },
+    "🍺 %@ g": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🍺 %@ g"
+          }
+        }
+      }
+    },
+    "🔥 %@ kcal": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🔥 %@ kcal"
           }
         }
       }

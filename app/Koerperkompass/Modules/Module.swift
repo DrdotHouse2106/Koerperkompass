@@ -83,16 +83,21 @@ struct TileCard<Content: View>: View {
     let module: any AppModule
     @ViewBuilder let content: Content
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Label { Text(module.name) } icon: { Image(systemName: module.symbol) }
-                .font(.subheadline.bold())
-                .foregroundStyle(.tint)
+        let tint = Theme.color(module.id)
+        VStack(alignment: .leading, spacing: 10) {
+            HStack {
+                IconBadge(symbol: module.symbol, module: module.id, size: 34)
+                Text(module.name).font(.subheadline.bold()).foregroundStyle(.secondary)
+            }
             content
             Spacer(minLength: 0)
         }
         .padding()
-        .frame(maxWidth: .infinity, minHeight: 150, alignment: .topLeading)
-        .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 16))
+        .frame(maxWidth: .infinity, minHeight: 160, alignment: .topLeading)
+        .background(
+            LinearGradient(colors: [tint.opacity(0.22), Theme.card], startPoint: .topLeading, endPoint: .bottomTrailing),
+            in: RoundedRectangle(cornerRadius: 22))
+        .overlay(RoundedRectangle(cornerRadius: 22).stroke(tint.opacity(0.4), lineWidth: 1))
     }
 }
 

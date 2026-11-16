@@ -76,6 +76,7 @@ struct SetupView: View {
                 .bold()
             }
         }
+        .themed()
         .navigationTitle(editing ? LocalizedStringKey("Profil & Ziele") : "Einrichtung")
         .onAppear {
             if !loaded { p = state.profile; loaded = true }

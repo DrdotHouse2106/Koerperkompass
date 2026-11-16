@@ -26,7 +26,8 @@ Es gibt keinen zentralen Dienst: Die Entwickler betreiben keinen Server und sehe
 | 🏁 **Abenteuer** | Gamification: Charakterkarte (Level, Workouts, Serie, Klasse, Rang), teilbare Spielerkarte mit eigenem Foto, Erfolge, Wochenleiste und 🔥-Serie, tägliche Quests, eigene Quests (z. B. Lesen, Meditieren), XP, Level, Ränge (Wanderer → Legende), Attribute (Kraft, Ausdauer, Erholung, Disziplin, Balance) |
 | 📈 **Übungen** | Sätze mit Wiederholungen und Gewicht, Verlauf pro Übung, Stufen Bronze → Silber → Gold → Platin |
 | 🏋️ **Trainingsprogramme** | 4-Wochen-Programme mit Trainings- und Ruhetagen, XP pro Einheit, Vorlagen oder persönlich von Claude erstellt; optional Strafpunkte für verpasste Einheiten |
-| 💧 **Wasser**, 🏋️ **Training** | einfache Beispielmodule – Vorlage für eigene Module |
+| 💧 **Getränke** | Wasser, Kaffee, Tee, Bier, Wein, Softdrinks … mit einem Tipp; Trinkziel, Koffein, Alkohol, Kalorien zählen in die Ernährung; **Trinkerinnerung**, direkt in der Mitteilung abhakbar |
+| 🏋️ **Training** | eigener Tab: heutige Einheit, neun fertige Programme als Karten (Einsteiger bis Fortgeschritten), Trainingsverlauf |
 | 🧭 **Kompass** | Auswertung über 7/30/90 Tage: Durchschnitte, Trends, Zielerreichung, Zusammenhänge (z. B. Schlaf ↔ Kalorien). Optional ausführliche Auswertung mit Claude |
 | 🤝 **Freunde (dezentral)** | Freundschaften mit Nutzern auf deinem oder **anderen Körperkompass-Servern** – ohne zentralen Dienst. Freundesliste mit Spielerkarten, Wochen-Challenge mit Bestenliste, optional Freunde von Freunden. Geteilt werden nur Spielwerte, nie Gesundheitsdaten |
 | 👥 **Mehrere Nutzer** | weitere Personen einladen – jede mit eigenem Konto, eigenen Zugängen und eigenen Daten |
@@ -201,7 +202,7 @@ Team-ID in `app/Local.xcconfig` eintragen, oben das iPhone als Ziel wählen und 
 | Gewicht & Maße | `body` | weight, bodyFat, waist, hip, chest | Eingabe, Apple Health (Gewicht) |
 | Aktivität & Schlaf | `activity` | steps, activeEnergy, sleepHours, restingHR, workoutMinutes | Apple Health |
 | Übungen | `exercises` | reps, weight (+ exercise) | Eingabe |
-| Wasser | `water` | ml | Eingabe (Beispielmodul) |
+| Getränke | `water` | hydration, kcal, caffeine, alcohol (+ drink, name, ml) | Eingabe, Schnell-Buttons, Trinkerinnerung |
 | Training | `training` | minutes (+ name) | Eingabe (Beispielmodul) |
 
 Module lassen sich in den Einstellungen ein- und ausschalten. Ein neues Modul ist eine neue Datei in App und Server plus ein Listeneintrag – siehe [CLAUDE.md](CLAUDE.md).

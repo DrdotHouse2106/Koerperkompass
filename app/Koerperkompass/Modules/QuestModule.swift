@@ -66,7 +66,7 @@ struct Quest {
             sum(e, "activity", "sleepHours") >= 7
         },
         Quest(id: "water", title: "Wasserziel erreichen", symbol: "drop", module: "water", xp: 20, attribute: .recovery) { e, p in
-            sum(e, "water", "ml") >= (p.water ?? 2000)
+            hydration(e, e.first?.date ?? Day.today) >= (p.water ?? 2000)
         },
         Quest(id: "training", title: "Training absolvieren", symbol: "dumbbell", module: "training", xp: 40, attribute: .strength) { e, _ in
             e.contains { $0.module == "training" } || sum(e, "activity", "workoutMinutes") >= 20
@@ -384,7 +384,7 @@ private struct WeekStrip: View {
 }
 
 /// Heute: fällige Trainingseinheit oder Ruhetag – plus Zugang zu den Programmen
-private struct TodayCard: View {
+struct TodayCard: View {
     let progress: QuestProgress
     @Environment(AppState.self) private var state
     @Environment(\.modelContext) private var context
@@ -426,7 +426,7 @@ private struct TodayCard: View {
                     Text("Verpasste Einheiten: \(progress.missed)").font(.caption).foregroundStyle(.secondary)
                 }
             }
-            NavigationLink("Trainingsprogramme") { PlanView() }
+            NavigationLink("Programm verwalten") { PlanView() }
         } header: { Text(state.profile.plan?.name ?? String(localized: "Training")) }
     }
 }

@@ -66,7 +66,8 @@ struct GoalsView: View {
                 Text("Alle Werte sind Schätzungen und ersetzen keine ärztliche oder ernährungsfachliche Beratung.")
             }
         }
-        .navigationTitle("Mein Plan")
+        .themed()
+            .navigationTitle("Mein Plan")
     }
 
     /// Gewichtsverlauf bei 0,5 kg pro Woche (Abnehmen) bzw. 0,25 kg pro Woche (Zunehmen)

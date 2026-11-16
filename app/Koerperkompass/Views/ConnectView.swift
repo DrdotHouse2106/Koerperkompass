@@ -43,6 +43,7 @@ struct ConnectView: View {
                     Text("Mit Beispieldaten, ganz ohne Server. Es werden keine Daten übertragen.")
                 }
             }
+            .themed()
             .navigationTitle("Körperkompass")
             .sheet(isPresented: $scanning) {
                 if DataScannerViewController.isSupported && DataScannerViewController.isAvailable {
