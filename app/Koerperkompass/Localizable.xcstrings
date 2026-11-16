@@ -862,6 +862,16 @@
         }
       }
     },
+    "Aus": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Off"
+          }
+        }
+      }
+    },
     "Ausdauer": {
       "localizations": {
         "en": {
@@ -2362,6 +2372,16 @@
         }
       }
     },
+    "Für die Testphase: Teile das Protokoll (z. B. mit Claude im Chat), um Antworten, Stile und Erkennung zu verbessern. Gespeichert wird nur auf deinem iPhone und deinem Server.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "For the test phase: share the log (e.g. with Claude in a chat) to improve replies, styles and recognition. Stored only on your iPhone and your server."
+          }
+        }
+      }
+    },
     "Für eine ausführliche Auswertung mit Mustern und Vorschlägen kann auf deinem Server ein Claude-API-Key hinterlegt werden.": {
       "localizations": {
         "en": {
@@ -2428,6 +2448,36 @@
           "stringUnit": {
             "state": "translated",
             "value": "Delete conversation"
+          }
+        }
+      }
+    },
+    "Gespräche protokollieren": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Log conversations"
+          }
+        }
+      }
+    },
+    "Gesprächsprotokoll": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Conversation log"
+          }
+        }
+      }
+    },
+    "Gesprächsprotokoll (Testphase)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Conversation log (test phase)"
           }
         }
       }
@@ -4442,6 +4492,26 @@
         }
       }
     },
+    "Protokoll löschen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete log"
+          }
+        }
+      }
+    },
+    "Protokoll teilen (%lld Einträge)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Share log (%lld entries)"
+          }
+        }
+      }
+    },
     "Pull – Ziehen": {
       "localizations": {
         "en": {
@@ -6338,6 +6408,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "🔥 Fire me up!"
+          }
+        }
+      }
+    },
+    "🧪 Testphase: Gespräche werden protokolliert (nur auf deinem iPhone und Server).": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🧪 Test phase: conversations are logged (only on your iPhone and server)."
           }
         }
       }

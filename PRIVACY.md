@@ -29,6 +29,10 @@ Wenn du Freundschaften schließt, gibt dein Server deine **Spielerkarte** an die
 
 Sprach-Coach, Anpassung der nächsten Trainingseinheit und persönliche Motivationssprüche nutzen – wenn verfügbar – das Sprachmodell von Apple Intelligence **direkt auf deinem iPhone**. Dabei werden keine Daten an deinen Server, an Anthropic oder an Apple übertragen. Für den Sprach-Coach verwendet die App Mikrofon und Spracherkennung (nach Möglichkeit ebenfalls auf dem Gerät).
 
+## Gesprächsprotokoll (Testphase)
+
+Während der Testphase protokolliert die App die Gespräche mit den Coaches (erkannter Text, Antwort, Stil, verwendetes Modell, Antwortzeit), um sie verbessern zu können. Das Protokoll liegt nur auf deinem iPhone und deinem eigenen Server, ist in den Coach-Ansichten sichtbar gekennzeichnet und lässt sich jederzeit ausschalten und löschen (Einstellungen → Gesprächsprotokoll). Weitergegeben wird es nur, wenn du es selbst teilst.
+
 ## Speicherung und Löschung
 
 - Lokal: SwiftData-Zwischenspeicher auf dem iPhone. „Verbindung trennen“ bzw. Löschen der App entfernt ihn.
@@ -79,6 +83,10 @@ If you make friends, your server shares your **player card** with your friends�
 ## Apple Intelligence (on device)
 
 The voice coach, next-session adjustment and personal motivational messages use – when available – the Apple Intelligence language model **directly on your iPhone**. No data is sent to your server, to Anthropic or to Apple. The voice coach uses the microphone and speech recognition (on device whenever possible).
+
+## Conversation log (test phase)
+
+During the test phase the app logs conversations with the coaches (recognised text, reply, style, model used, response time) to improve them. The log is stored only on your iPhone and your own server, is clearly marked in the coach views and can be switched off and deleted at any time (Settings → Conversation log). It is only shared if you share it yourself.
 
 ## Storage and deletion
 

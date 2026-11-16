@@ -123,26 +123,33 @@ enum Persona: String, CaseIterable, Identifiable {
 
     /// Mitten im Satz anfeuern
     func cheer() async {
+        let started = Date()
         #if canImport(FoundationModels)
         if #available(iOS 26.0, *), OnDevice.available, let s = activeSession(),
            let r = try? await s.respond(to: String(localized: "Ich bin mitten im Satz – feuer mich mit einem kurzen Satz an!")) {
             say(r.content)
+            CoachLog.add(kind: "anfeuern", persona: persona.rawValue, heard: "🔥", reply: r.content, source: "apple", ms: Int(Date().timeIntervalSince(started) * 1000))
             return
         }
         #endif
-        say(String(localized: persona.cheers.randomElement()!))
+        let line = String(localized: persona.cheers.randomElement()!)
+        say(line)
+        CoachLog.add(kind: "anfeuern", persona: persona.rawValue, heard: "🔥", reply: line, source: "regel", ms: 0)
     }
 
     private func handle(_ text: String) async {
         lines.append(Line(fromCoach: false, text: text))
         thinking = true
         defer { thinking = false }
+        let started = Date()
+        var source = "regel"
         var turn = (reply: "", exercise: "", reps: 0, weight: 0.0, rest: 0)
         #if canImport(FoundationModels)
         if #available(iOS 26.0, *), OnDevice.available, let s = activeSession() {
             if let r = try? await s.respond(to: text, generating: GenTurn.self) {
                 let c = r.content
                 turn = (c.reply, c.exercise, c.reps, c.weight, c.restSeconds)
+                source = "apple"
             } else {
                 session = nil  // z. B. Gespräch zu lang – beim nächsten Mal frisch starten
             }
@@ -154,6 +161,7 @@ enum Persona: String, CaseIterable, Identifiable {
         ]), let reply = r["reply"] as? String, !reply.isEmpty {
             turn = (reply, r["exercise"] as? String ?? "", (r["reps"] as? NSNumber)?.intValue ?? 0,
                     (r["weight"] as? NSNumber)?.doubleValue ?? 0, (r["restSeconds"] as? NSNumber)?.intValue ?? 0)
+            source = "haiku"
         }
         if turn.reply.isEmpty { turn = simple(text) }
         if turn.reps > 0 {
@@ -165,6 +173,9 @@ enum Persona: String, CaseIterable, Identifiable {
         }
         say(turn.reply)
         if turn.rest > 0 { startRest(turn.rest) }
+        CoachLog.add(kind: "training", persona: persona.rawValue, heard: text, reply: turn.reply, source: source,
+                     ms: Int(Date().timeIntervalSince(started) * 1000),
+                     extra: ["exercise": turn.exercise, "reps": turn.reps, "weight": turn.weight, "rest": turn.rest])
     }
 
     #if canImport(FoundationModels)
@@ -231,6 +242,7 @@ struct VoiceCoachView: View {
 
     var body: some View {
         VStack(spacing: 12) {
+            CoachLogBanner()
             // Stil wählen
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 8) {

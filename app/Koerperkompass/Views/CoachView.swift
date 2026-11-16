@@ -38,6 +38,7 @@ struct CoachView: View {
             ScrollViewReader { proxy in
                 ScrollView {
                     VStack(spacing: 12) {
+                        CoachLogBanner()
                         intro
                         ForEach(Array(messages.enumerated()), id: \.offset) { i, m in
                             bubble(m).id(i)
@@ -179,6 +180,7 @@ struct CoachView: View {
         let list = messages + [Message(role: "user", text: text)]
         save(list)
         busy = true
+        let started = Date()
         Task {
             defer { busy = false }
             do {
@@ -188,6 +190,7 @@ struct CoachView: View {
                     "lang": Locale.current.language.languageCode?.identifier ?? "de",
                 ])
                 let reply = r["text"] as? String ?? ""
+                CoachLog.add(kind: "gesundheit", heard: text, reply: reply, source: "claude", ms: Int(Date().timeIntervalSince(started) * 1000))
                 save(list + [Message(role: "assistant", text: reply)])
                 if speakReplies { speaker.speak(reply) }
             } catch {
