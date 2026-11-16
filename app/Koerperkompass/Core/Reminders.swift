@@ -31,8 +31,17 @@ enum Reminders {
         cancel()
         for hour in stride(from: from, through: to, by: max(every, 1)) {
             let content = UNMutableNotificationContent()
-            content.title = String(localized: "Zeit für ein Glas Wasser 💧")
-            content.body = String(localized: "Halte die Mitteilung gedrückt und hake ab, was du getrunken hast.")
+            let texts: [(LocalizedStringResource, LocalizedStringResource)] = [
+                ("Zeit für ein Glas Wasser 💧", "Halte die Mitteilung gedrückt und hake ab, was du getrunken hast."),
+                ("Schluck für Schluck 🚰", "Dein Körper besteht zu rund 60 Prozent aus Wasser – füll nach!"),
+                ("Trinkpause! 💦", "Ein Glas jetzt, und dein Kopf bleibt klar."),
+                ("Durst ist schon zu spät 😉", "Trink ein Glas, bevor du es merkst – und hak es direkt hier ab."),
+                ("Wasser marsch! 🌊", "Ein kleiner Schritt Richtung Trinkziel."),
+                ("Kurz trinken? ☕️💧", "Kaffee, Tee oder Wasser – alles zählt (nur Alkohol nicht)."),
+            ]
+            let t = texts[hour % texts.count]
+            content.title = String(localized: t.0)
+            content.body = String(localized: t.1)
             content.sound = .default
             content.categoryIdentifier = category
             let trigger = UNCalendarNotificationTrigger(dateMatching: DateComponents(hour: hour, minute: 0), repeats: true)

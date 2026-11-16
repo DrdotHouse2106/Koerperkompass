@@ -532,6 +532,16 @@
         }
       }
     },
+    "Abends um %lld Uhr": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Evenings at %lld:00"
+          }
+        }
+      }
+    },
     "Abenteuer": {
       "localizations": {
         "en": {
@@ -1262,6 +1272,16 @@
         }
       }
     },
+    "Dein Körper besteht zu rund 60 Prozent aus Wasser – füll nach!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your body is about 60 percent water – top it up!"
+          }
+        }
+      }
+    },
     "Dein Profil, die geplante Einheit und dein Trainingsverlauf der letzten 4 Wochen (Einheiten, Rückmeldungen, Sätze) werden über deinen Server an die Claude API (Anthropic) gesendet.": {
       "localizations": {
         "en": {
@@ -1452,6 +1472,16 @@
         }
       }
     },
+    "Durst ist schon zu spät 😉": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Thirst is already too late 😉"
+          }
+        }
+      }
+    },
     "Eigene Quests": {
       "localizations": {
         "en": {
@@ -1468,6 +1498,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Your own server"
+          }
+        }
+      }
+    },
+    "Ein Glas jetzt, und dein Kopf bleibt klar.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "One glass now keeps your head clear."
+          }
+        }
+      }
+    },
+    "Ein kleiner Schritt Richtung Trinkziel.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A small step towards your drinking goal."
           }
         }
       }
@@ -1738,6 +1788,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Reminder & goal"
+          }
+        }
+      }
+    },
+    "Erinnerungen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reminders"
           }
         }
       }
@@ -2512,6 +2572,16 @@
         }
       }
     },
+    "Jeden Tag ein anderer Spruch – persönlich mit deinem Namen, deiner Serie und deinem Ziel. Trinkerinnerung unter Getränke, Coach-Erinnerung im Coach.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A different message every day – personal with your name, streak and goal. Drink reminder under Drinks, coach reminder in Coach."
+          }
+        }
+      }
+    },
     "Jetzt abgleichen": {
       "localizations": {
         "en": {
@@ -2528,6 +2598,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Coffee"
+          }
+        }
+      }
+    },
+    "Kaffee, Tee oder Wasser – alles zählt (nur Alkohol nicht).": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Coffee, tea or water – it all counts (except alcohol)."
           }
         }
       }
@@ -2888,6 +2968,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Deadlift – 3 × 5"
+          }
+        }
+      }
+    },
+    "Kurz trinken? ☕️💧": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick drink? ☕️💧"
           }
         }
       }
@@ -3398,6 +3488,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Modules"
+          }
+        }
+      }
+    },
+    "Morgens um %lld Uhr": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mornings at %lld:00"
+          }
+        }
+      }
+    },
+    "Motivierende Erinnerungen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Motivational reminders"
           }
         }
       }
@@ -4072,6 +4182,16 @@
         }
       }
     },
+    "Schluck für Schluck 🚰": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sip by sip 🚰"
+          }
+        }
+      }
+    },
     "Schnaps": {
       "localizations": {
         "en": {
@@ -4552,12 +4672,32 @@
         }
       }
     },
+    "Trink ein Glas, bevor du es merkst – und hak es direkt hier ab.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drink a glass before you notice – and tick it off right here."
+          }
+        }
+      }
+    },
     "Trinkerinnerung": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Drink reminder"
+          }
+        }
+      }
+    },
+    "Trinkpause! 💦": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drink break! 💦"
           }
         }
       }
@@ -4878,6 +5018,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Water"
+          }
+        }
+      }
+    },
+    "Wasser marsch! 🌊": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Water time! 🌊"
           }
         }
       }
@@ -5228,6 +5378,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Agree"
+          }
+        }
+      }
+    },
+    "Zusätzlich abends": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Also in the evening"
           }
         }
       }

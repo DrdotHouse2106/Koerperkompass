@@ -1,3 +1,4 @@
+import SwiftData
 import CoreImage.CIFilterBuiltins
 import SwiftUI
 import UniformTypeIdentifiers
@@ -13,6 +14,11 @@ struct SettingsView: View {
     @State private var message: String?
     @State private var askName = false
     @State private var memberName = ""
+    @Environment(\.modelContext) private var modelContext
+    @AppStorage("motivationOn") private var motivationOn = false
+    @AppStorage("motivationHour") private var motivationHour = 8
+    @AppStorage("motivationEvening") private var motivationEvening = false
+    @AppStorage("motivationEveningHour") private var motivationEveningHour = 19
 
     var body: some View {
         @Bindable var state = state
@@ -21,6 +27,21 @@ struct SettingsView: View {
                 Section {
                     NavigationLink("Mein Plan") { GoalsView() }
                     NavigationLink("Profil & Ziele") { SetupView(editing: true) }
+                }
+                Section {
+                    Toggle("Motivierende Erinnerungen", isOn: $motivationOn)
+                    if motivationOn {
+                        Stepper("Morgens um \(motivationHour) Uhr", value: $motivationHour, in: 5...12)
+                        Toggle("Zusätzlich abends", isOn: $motivationEvening)
+                        if motivationEvening {
+                            Stepper("Abends um \(motivationEveningHour) Uhr", value: $motivationEveningHour, in: 16...22)
+                        }
+                    }
+                } header: { Text("Erinnerungen") } footer: {
+                    Text("Jeden Tag ein anderer Spruch – persönlich mit deinem Namen, deiner Serie und deinem Ziel. Trinkerinnerung unter Getränke, Coach-Erinnerung im Coach.")
+                }
+                .onChange(of: [motivationOn ? 1 : 0, motivationHour, motivationEvening ? 1 : 0, motivationEveningHour]) {
+                    Task { await refreshMotivation(state, modelContext) }
                 }
                 Section("Module") {
                     ForEach(allModules, id: \.id) { m in
@@ -239,4 +260,13 @@ struct DevicesView: View {
             await load()
         }
     }
+}
+
+/// Motivierende Erinnerungen nach den gespeicherten Einstellungen neu planen (auch beim Öffnen der App)
+@MainActor func refreshMotivation(_ state: AppState, _ context: ModelContext) async {
+    let d = UserDefaults.standard
+    guard d.bool(forKey: "motivationOn") else { Motivation.cancel(); return }
+    var hours = [d.object(forKey: "motivationHour") as? Int ?? 8]
+    if d.bool(forKey: "motivationEvening") { hours.append(d.object(forKey: "motivationEveningHour") as? Int ?? 19) }
+    await Motivation.schedule(hours: hours, profile: state.profile, streak: QuestProgress(context.allEntries(), state.profile).streak)
 }
