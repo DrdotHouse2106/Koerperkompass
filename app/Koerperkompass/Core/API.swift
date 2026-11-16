@@ -32,7 +32,13 @@ struct API {
         if let json { req.httpBody = try JSONSerialization.data(withJSONObject: json) }
         let started = Date()
         let result: (Data, URLResponse)
-        do { result = try await URLSession.shared.data(for: req) } catch {
+        do {
+            do { result = try await URLSession.shared.data(for: req) } catch URLError.networkConnectionLost {
+                // Kurz abgerissene Verbindung (z. B. WLAN ↔ Mobilfunk): einmal wiederholen
+                AppLog.add("\(method) \(path) → Verbindung unterbrochen, neuer Versuch")
+                result = try await URLSession.shared.data(for: req)
+            }
+        } catch {
             if path != "/api/log" { AppLog.add("\(method) \(path) → Netzfehler: \(error.localizedDescription)") }
             throw error
         }

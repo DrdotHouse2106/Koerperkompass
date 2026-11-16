@@ -104,9 +104,7 @@ import Speech
 
     func speak(_ text: String, rate: Float = AVSpeechUtteranceDefaultSpeechRate, pitch: Float = 1) {
         try? Self.activateSession()
-        // Markdown-Zeichen nicht mitsprechen
-        let clean = text.replacingOccurrences(of: "**", with: "").replacingOccurrences(of: "#", with: "")
-            .replacingOccurrences(of: "- ", with: "").replacingOccurrences(of: "*", with: "")
+        let clean = Self.speakable(text)
         let useServer = api != nil && (UserDefaults.standard.object(forKey: "serverVoice") as? Bool ?? true)
         guard useServer, let api else { speakLocal(clean, rate: rate, pitch: pitch); return }
         // Fest gewählte Server-Stimme (Einstellungen → Stimme), sonst passend zum Coach-Stil
@@ -136,6 +134,24 @@ import Speech
     }
 
     private var playTask: Task<Void, Never>?
+
+    /// Text zum Vorlesen: Markdown, Emojis und Sonderzeichen entfernen, Pfeile in Worte fassen
+    static func speakable(_ text: String) -> String {
+        var t = text
+        for (a, b) in [("→", " auf "), ("->", " auf "), ("≈", " etwa "), ("ca.", "circa"), ("**", ""), ("__", ""), ("#", ""), ("*", ""), ("_", ""), ("`", "")] {
+            t = t.replacingOccurrences(of: a, with: b)
+        }
+        // Emojis (und Variations-/Verbindungszeichen) weglassen – sonst liest die Stimme „zwei erhobene Handflächen“ vor
+        t = String(String.UnicodeScalarView(t.unicodeScalars.filter {
+            !($0.properties.isEmojiPresentation || ($0.properties.isEmoji && $0.value > 0x238C) || $0.value == 0xFE0F || $0.value == 0x200D)
+        }))
+        // Aufzählungszeichen am Zeilenanfang
+        return t.split(separator: "\n").map { line in
+            var l = line.trimmingCharacters(in: .whitespaces)
+            if l.hasPrefix("- ") || l.hasPrefix("• ") { l.removeFirst(2) }
+            return l
+        }.joined(separator: "\n")
+    }
 
     /// Text in Abschnitte aus ganzen Sätzen teilen (je höchstens ca. 250 Zeichen)
     static func chunks(_ text: String, max: Int = 250) -> [String] {

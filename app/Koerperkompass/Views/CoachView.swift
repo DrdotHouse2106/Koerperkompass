@@ -177,6 +177,8 @@ struct CoachView: View {
         let text = text.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !text.isEmpty, !busy else { return }
         guard state.aiConsent else { pending = text; askConsent = true; return }
+        // Beim Absenden das Mikrofon beenden – sonst nimmt es die vorgelesene Antwort mit auf
+        if speech.listening { Task { _ = await speech.stop() } }
         input = ""
         error = nil
         let list = messages + [Message(role: "user", text: text)]
