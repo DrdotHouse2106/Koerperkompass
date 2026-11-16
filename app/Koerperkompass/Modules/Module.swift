@@ -128,13 +128,15 @@ struct EntryRows: View {
     @Environment(AppState.self) private var state
     @Environment(\.modelContext) private var context
     var body: some View {
-        ForEach(entries) { e in
+        // Gelöschte Einträge selbst ausblenden – die Liste aktualisiert sich so sofort nach dem Wischen
+        let visible = entries.filter { !$0.deleted }
+        ForEach(visible) { e in
             HStack {
                 Text(row(e))
                 Spacer()
                 Text(Day.date(e.date), format: .dateTime.day().month()).foregroundStyle(.secondary)
             }
         }
-        .onDelete { idx in idx.forEach { state.delete(entries[$0], context) } }
+        .onDelete { idx in idx.map { visible[$0] }.forEach { state.delete($0, context) } }
     }
 }

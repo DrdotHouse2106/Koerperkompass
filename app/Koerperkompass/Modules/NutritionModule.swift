@@ -104,12 +104,10 @@ private struct NutritionDetail: View {
                 }
                 .frame(height: 180)
             }
-            let drinks = entries.filter { $0.module == "water" && $0.date == day }
+            let drinks = entries.filter { $0.module == "water" && $0.date == day && !$0.deleted }
             if !drinks.isEmpty {
                 Section("Getränke") {
-                    ForEach(drinks) { e in
-                        Text("\(e.text("name") ?? "") · \((e.num("kcal") ?? 0).whole) kcal")
-                    }
+                    EntryRows(entries: drinks) { e in "\(e.text("name") ?? "") · \((e.num("kcal") ?? 0).whole) kcal" }
                 }
             }
             ForEach(Meal.allCases) { meal in
