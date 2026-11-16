@@ -192,7 +192,10 @@ struct CoachView: View {
                 let reply = r["text"] as? String ?? ""
                 CoachLog.add(kind: "gesundheit", heard: text, reply: reply, source: "claude", ms: Int(Date().timeIntervalSince(started) * 1000))
                 save(list + [Message(role: "assistant", text: reply)])
-                if speakReplies { speaker.speak(reply) }
+                if speakReplies {
+                    speaker.api = state.ttsAvailable ? state.api : nil
+                    speaker.speak(reply)
+                }
             } catch {
                 self.error = error.localizedDescription
             }

@@ -15,6 +15,7 @@ struct API {
         let name: String
         let version: String
         let ai: Bool
+        var tts: Bool? = nil  // Sprachausgabe auf dem Server eingerichtet
     }
 
     func call(_ method: String = "GET", _ path: String, json: Any? = nil) async throws -> Data {

@@ -85,7 +85,7 @@ enum Persona: String, CaseIterable, Identifiable {
     var lines: [Line] = []
     var thinking = false
     var rest = 0
-    var persona: Persona { didSet { session = nil } }
+    var persona: Persona { didSet { session = nil; speaker.persona = persona.rawValue } }
     let speech = SpeechInput()
 
     private let speaker = Speaker()
@@ -95,11 +95,13 @@ enum Persona: String, CaseIterable, Identifiable {
     private let profile: String
     private let api: API?  // Claude (kleines Modell) als Ersatz, wenn Apple Intelligence fehlt
 
-    init(plan: PlanDay, profile: String, persona: Persona, api: API?) {
+    init(plan: PlanDay, profile: String, persona: Persona, api: API?, voiceServer: API?) {
         self.plan = plan
         self.profile = profile
         self.persona = persona
         self.api = api
+        speaker.api = voiceServer
+        speaker.persona = persona.rawValue
     }
 
     func start() {
@@ -331,7 +333,8 @@ struct VoiceCoachView: View {
         .onAppear {
             if coach == nil {
                 let c = VoiceCoach(plan: plan, profile: state.profile.aiText, persona: Persona(rawValue: personaID) ?? .buddy,
-                                   api: !OnDevice.available && state.aiAvailable && state.aiConsent ? state.api : nil)
+                                   api: !OnDevice.available && state.aiAvailable && state.aiConsent ? state.api : nil,
+                                   voiceServer: state.ttsAvailable && !state.demo ? state.api : nil)
                 coach = c
                 c.start()
             }

@@ -1,0 +1,45 @@
+{
+  "drill": [
+    "Weiter! Schmerz ist nur Schwäche, die den Körper verlässt!",
+    "Noch zwei! Ich will Schweiß sehen!",
+    "Aufgeben ist keine Option! Drück!",
+    "Du bist kein Zuschauer – du bist Soldat! Weiter!",
+    "Pause vorbei! Hoch mit dir, nächster Satz – sofort!",
+    "Noch zehn Sekunden."
+  ],
+  "sarge": [
+    "Was ist das hier, eine Kaffeefahrt?! Beweg dich, du Schlafmütze!",
+    "Ich hab Gartenzwerge gesehen, die mehr Einsatz zeigen! NOCH ZWEI!",
+    "Hast du da gerade geseufzt?! Seufzen ist für Zivilisten! WEITER!",
+    "Du nennst das eine Wiederholung? Meine Kaffeetasse arbeitet härter als du, Weichei!",
+    "Aufhören? Aufhören darfst du, wenn ICH es sage! DRÜCK!",
+    "Jammerlappen werden hier nicht gefüttert! Noch eine, aber sauber!",
+    "Hör auf zu zittern und fang an zu arbeiten! LOS, LOS, LOS!",
+    "Du schwitzt ja kaum! Ist das ein Training oder ein Wellness-Wochenende?!",
+    "Meine Oma hebt schwerere Einkaufstüten! Zeig mir, dass du mehr kannst!",
+    "Müde?! Müde ist für Leute ohne Ziel! Du hast eins – also WEITER!",
+    "Pause vorbei, Schlafmütze! Hoch mit dir, aber zack zack! Ich hab nicht den ganzen Tag Zeit!",
+    "Noch zehn Sekunden."
+  ],
+  "buddy": [
+    "Komm, du packst das! Noch ein paar!",
+    "Läuft bei dir! Dranbleiben!",
+    "Stark, Alter! Noch einer geht immer!",
+    "So, Pause rum – auf geht’s, nächster Satz!",
+    "Noch zehn Sekunden."
+  ],
+  "cheer": [
+    "Wow! Du bist der Wahnsinn! Weiter so!",
+    "Jaaa! Noch eine! Ich glaub an dich!",
+    "Unglaublich! Du rockst das!",
+    "Pause vorbei! Zeit zu glänzen – nächster Satz!",
+    "Noch zehn Sekunden."
+  ],
+  "calm": [
+    "Ruhig atmen, saubere Bewegung.",
+    "Kontrolliert weiter, Spannung halten.",
+    "Gleichmäßiges Tempo, du machst das gut.",
+    "Die Pause ist vorbei. Nächster Satz, wenn du bereit bist.",
+    "Noch zehn Sekunden."
+  ]
+}

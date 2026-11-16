@@ -24,6 +24,7 @@ import UIKit
     var healthEnabled: Bool { didSet { defaults.set(healthEnabled, forKey: "healthEnabled") } }
 
     var aiAvailable = false
+    var ttsAvailable = false
     var serverVersion = ""
     var syncError: String?
     var pendingLink: URL?
@@ -59,6 +60,7 @@ import UIKit
         self.server = api.server
         self.token = token
         aiAvailable = status.ai
+            ttsAvailable = status.tts ?? false
         serverVersion = status.version
         if let data = try? await self.api.call("GET", "/api/profile"), let p = try? JSONDecoder().decode(Profile.self, from: data) {
             syncing = true
@@ -101,6 +103,7 @@ import UIKit
         do {
             let status = try await api.status()
             aiAvailable = status.ai
+            ttsAvailable = status.tts ?? false
             serverVersion = status.version
 
             let dirty = try context.fetch(FetchDescriptor<Entry>(predicate: #Predicate { $0.dirty }))

@@ -319,13 +319,31 @@ struct DevicesView: View {
 
 /// Stimme der Coaches wählen und probehören
 struct VoiceSettingsView: View {
+    @Environment(AppState.self) private var state
     @AppStorage("voiceID") private var voiceID = ""
+    @AppStorage("serverVoice") private var serverVoice = true
     @State private var speaker = Speaker()
 
     var body: some View {
         List {
+            if state.ttsAvailable {
+                Section {
+                    Toggle("Stimme von meinem Server", isOn: $serverVoice)
+                    if serverVoice {
+                        ForEach(Persona.allCases) { p in
+                            Button("\(p.emoji) \(String(localized: p.title)) probehören") {
+                                speaker.api = state.api
+                                speaker.persona = p.rawValue
+                                speaker.speak(String(localized: p.cheers.first!))
+                            }
+                        }
+                    }
+                } footer: {
+                    Text("Dein Server erzeugt natürlichere Stimmen (Kartoffelbox bzw. Piper) – je Coach-Stil mit eigenem Tonfall. Ohne Verbindung spricht die iPhone-Stimme unten.")
+                }
+            }
             Section {
-                Picker("Stimme", selection: $voiceID) {
+                Picker("iPhone-Stimme", selection: $voiceID) {
                     Text("Automatisch (beste installierte)").tag("")
                     ForEach(Speaker.voices, id: \.identifier) { v in
                         Text("\(v.name) · \(Speaker.qualityName(v))").tag(v.identifier)
@@ -333,6 +351,7 @@ struct VoiceSettingsView: View {
                 }
                 .pickerStyle(.inline)
                 Button("Probehören", systemImage: "speaker.wave.2.fill") {
+                    speaker.api = nil
                     speaker.speak(String(localized: "Hallo! Ich bin dein Coach. Auf geht’s – noch zwei Wiederholungen, du schaffst das!"))
                 }
             } footer: {

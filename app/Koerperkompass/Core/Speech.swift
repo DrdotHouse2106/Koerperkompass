@@ -1,4 +1,5 @@
 import AVFoundation
+import CryptoKit
 import Speech
 
 /// Spracheingabe (nach Möglichkeit auf dem iPhone): start() hört zu, stop() liefert den erkannten Text.
@@ -61,8 +62,15 @@ import Speech
 }
 
 /// Sprachausgabe mit einstellbarem Tempo und Tonhöhe (je nach Coach-Stil)
+/// Stimme vom eigenen Server (Kartoffelbox/Piper, falls eingerichtet), auf dem iPhone zwischengespeichert;
+/// sonst – oder ohne Verbindung – die iPhone-Stimme.
 @MainActor final class Speaker {
     private let synth = AVSpeechSynthesizer()
+    private var player: AVAudioPlayer?
+    /// Server für die Sprachausgabe (nil = nur iPhone-Stimme)
+    var api: API?
+    /// Coach-Stil: bestimmt die Stimme auf dem Server
+    var persona = "coach"
 
     static func activateSession() throws {
         let audio = AVAudioSession.sharedInstance()
@@ -75,14 +83,46 @@ import Speech
         // Markdown-Zeichen nicht mitsprechen
         let clean = text.replacingOccurrences(of: "**", with: "").replacingOccurrences(of: "#", with: "")
             .replacingOccurrences(of: "- ", with: "").replacingOccurrences(of: "*", with: "")
-        let u = AVSpeechUtterance(string: clean)
+        let useServer = api != nil && (UserDefaults.standard.object(forKey: "serverVoice") as? Bool ?? true)
+        guard useServer, let api else { speakLocal(clean, rate: rate, pitch: pitch); return }
+        let persona = persona
+        Task {
+            if let data = await Self.audio(clean, persona: persona, api: api), let p = try? AVAudioPlayer(data: data) {
+                synth.stopSpeaking(at: .immediate)
+                player?.stop()
+                player = p
+                p.play()
+            } else {
+                speakLocal(clean, rate: rate, pitch: pitch)
+            }
+        }
+    }
+
+    private func speakLocal(_ text: String, rate: Float, pitch: Float) {
+        let u = AVSpeechUtterance(string: text)
         u.voice = Self.voice()
         u.rate = rate
         u.pitchMultiplier = pitch
         synth.speak(u)
     }
 
-    func stop() { synth.stopSpeaking(at: .immediate) }
+    /// Ton vom Server, auf dem iPhone zwischengespeichert (gleicher Schlüssel wie auf dem Server)
+    private static func audio(_ text: String, persona: String, api: API) async -> Data? {
+        let key = SHA256.hash(data: Data("\(persona)|\(text)".utf8)).map { String(format: "%02x", $0) }.joined()
+        let dir = URL.cachesDirectory.appendingPathComponent("tts", isDirectory: true)
+        let file = dir.appendingPathComponent(key + ".wav")
+        if let data = try? Data(contentsOf: file) { return data }
+        guard let data = try? await api.call("POST", "/api/tts", json: ["text": text, "persona": persona]),
+              data.count > 44, data.prefix(4) == Data("RIFF".utf8) else { return nil }
+        try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        try? data.write(to: file)
+        return data
+    }
+
+    func stop() {
+        synth.stopSpeaking(at: .immediate)
+        player?.stop()
+    }
 
     /// Sprache der App (de/en)
     static var languagePrefix: String { Locale.current.language.languageCode?.identifier == "en" ? "en" : "de" }

@@ -70,6 +70,7 @@ Danach `http://<server-ip>:8080` im Browser öffnen: Dort steht der Kopplungscod
 | `KK_PUBLIC_URL` | öffentliche Adresse, z. B. `https://kompass.example.de` (für den QR-Code hinter einem Reverse Proxy) |
 | `KK_MODEL` | Claude-Modell für Coach, Fotos, Analyse und Training (Standard: `claude-opus-5-5`; günstiger: `claude-sonnet-5-5` oder `claude-haiku-5-5`) |
 | `KK_MODEL_SMALL` | kleines Modell für die täglichen Motivationssprüche (Standard: `claude-haiku-5-5`) |
+| `KK_TTS_URL`, `KK_TTS_DIR`, `KK_TTS_VOICES` | Sprachdienste (Piper/Kartoffelbox, durch Komma getrennt, der Reihe nach), Ordner für vorab gerenderte und zwischengespeicherte Sätze, Stimme je Coach-Stil (siehe `tools/tts/LIESMICH.md`) |
 | `KK_TELEMETRY` | `off` schaltet das Weiterleiten anonymer Verbesserungsdaten an die Entwickler ab (nur relevant, wenn Nutzer es in der App freiwillig einschalten) |
 | `KK_TELEMETRY_URL` | Ziel für anonyme Verbesserungsdaten (Standard: Hauptserver des Projekts) |
 | `KK_COLLECT`, `KK_COLLECT_TOKEN` | nur für den Hauptserver: `KK_COLLECT=1` nimmt anonyme Daten an, Abruf mit `GET /api/collect` und `Authorization: Bearer <KK_COLLECT_TOKEN>` |
@@ -89,6 +90,12 @@ Anfragen an Claude nutzen den serverseitigen Fallback der API: Lehnt das Modell 
 
 Ohne Apple Intelligence (ältere iPhones) übernimmt **Claude Haiku** (`KK_MODEL_SMALL`) alles rund ums Training – Trainings-Coach,
 Einheit anpassen, Sprüche – für Bruchteile eines Cents pro Antwort. Ohne Claude-Key erkennt der Trainings-Coach nur Wiederholungen und Gewicht.
+
+### Natürliche Stimmen vom eigenen Server (optional)
+
+Statt der iPhone-Stimme kann dein Server die Coaches sprechen lassen – mit **Piper** (schnell, jede CPU) und/oder
+**Kartoffelbox** (sehr natürlich, Grafikkarte empfohlen), je Coach-Stil mit eigenem Tonfall. Feste Sprüche lassen sich vorab
+rendern. Alles bleibt im Heimnetz, keine laufenden Kosten. Anleitung: [tools/tts/LIESMICH.md](tools/tts/LIESMICH.md).
 
 ### Was kostet die Claude API?
 

@@ -2,6 +2,16 @@
   "sourceLanguage": "de",
   "version": "1.0",
   "strings": {
+    "%@ %@ probehören": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Preview %@ %@"
+          }
+        }
+      }
+    },
     "%@ / %@ kcal": {
       "localizations": {
         "en": {
@@ -1448,6 +1458,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Your profile, the planned session and your training history of the last 4 weeks (sessions, feedback, sets) are sent via your server to the Claude API (Anthropic, Haiku model). With Apple Intelligence this happens on your iPhone instead."
+          }
+        }
+      }
+    },
+    "Dein Server erzeugt natürlichere Stimmen (Kartoffelbox bzw. Piper) – je Coach-Stil mit eigenem Tonfall. Ohne Verbindung spricht die iPhone-Stimme unten.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your server generates more natural voices (Kartoffelbox or Piper) – with its own tone for each coach style. Without a connection the iPhone voice below speaks."
           }
         }
       }
@@ -5272,6 +5292,16 @@
         }
       }
     },
+    "Stimme von meinem Server": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voice from my server"
+          }
+        }
+      }
+    },
     "Strafpunkte bei verpasstem Training": {
       "localizations": {
         "en": {
@@ -6398,6 +6428,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "a moderate positive correlation"
+          }
+        }
+      }
+    },
+    "iPhone-Stimme": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iPhone voice"
           }
         }
       }

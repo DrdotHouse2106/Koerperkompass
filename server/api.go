@@ -30,7 +30,7 @@ func routes() http.Handler {
 	m := http.NewServeMux()
 	m.HandleFunc("GET /{$}", page)
 	m.HandleFunc("GET /api/status", func(w http.ResponseWriter, r *http.Request) {
-		writeJSON(w, map[string]any{"name": "koerperkompass", "version": version, "ai": aiEnabled()})
+		writeJSON(w, map[string]any{"name": "koerperkompass", "version": version, "ai": aiEnabled(), "tts": env("KK_TTS_URL", "") != ""})
 	})
 	m.HandleFunc("GET /api/modules", func(w http.ResponseWriter, r *http.Request) { writeJSON(w, modules) })
 	m.HandleFunc("POST /api/pair", pairHandler)
@@ -61,6 +61,7 @@ func routes() http.Handler {
 	m.HandleFunc("POST /api/fed/remove", fedRemove)
 	m.HandleFunc("GET /f/{code}", friendPage)
 	// Anonyme Verbesserungsdaten (freiwillig), siehe telemetry.go
+	m.HandleFunc("POST /api/tts", auth(tts)) // Sprachausgabe vom eigenen Server, siehe tts.go
 	m.HandleFunc("POST /api/telemetry", auth(telemetry))
 	m.HandleFunc("POST /api/collect", collect)
 	m.HandleFunc("GET /api/collect", collectExport)
