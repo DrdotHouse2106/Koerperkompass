@@ -59,6 +59,7 @@ Then open `http://<server-ip>:8080` – the pairing code is shown there as a QR 
 ### Proxmox (LXC)
 
 Create a Debian 12 container. Either install Docker (enable *nesting*) and use Docker Compose, or build the binary with Go and run it via systemd – see the German [README](README.md#auf-proxmox-lxc) for the exact commands.
+Building needs about 2.5 GB RAM; in small LXC containers (where `/tmp` is a RAM tmpfs) set `GOCACHE=/var/tmp/go-cache GOTMPDIR=/var/tmp GOMAXPROCS=1` and build with `-p 1`.
 
 ### HTTPS via reverse proxy
 

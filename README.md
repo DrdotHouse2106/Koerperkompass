@@ -85,7 +85,10 @@ und weiter wie bei Docker Compose.
 ```bash
 apt update && apt install -y golang git
 git clone https://github.com/DrdotHouse2106/Koerperkompass.git /opt/kk-src
-cd /opt/kk-src/server && CGO_ENABLED=0 go build -o /usr/local/bin/koerperkompass .
+cd /opt/kk-src/server
+# Wenig RAM (z. B. LXC mit 4 GB, /tmp im RAM): Zwischendateien auf die Platte legen und nur einen Kern nutzen
+export GOCACHE=/var/tmp/go-cache GOTMPDIR=/var/tmp GOMAXPROCS=1
+CGO_ENABLED=0 go build -p 1 -trimpath -ldflags "-s -w -X main.version=$(git rev-parse --short=7 HEAD)" -o /usr/local/bin/koerperkompass .
 mkdir -p /var/lib/koerperkompass
 cat > /etc/systemd/system/koerperkompass.service <<'EOF'
 [Unit]
@@ -106,6 +109,12 @@ journalctl -u koerperkompass   # Kopplungscode
 ```
 
 > Braucht der Server eine neuere Go-Version als Debian mitbringt, Go von [go.dev/dl](https://go.dev/dl/) installieren.
+>
+> **Häufiges Problem – Build bricht ab („killed“/OOM):** Der Compiler braucht für das Claude-SDK etwa 2,5 GB RAM, und im LXC liegt `/tmp`
+> oft als tmpfs im Arbeitsspeicher. Deshalb oben `GOCACHE`/`GOTMPDIR` auf die Platte legen und mit `GOMAXPROCS=1` bzw. `-p 1` bauen –
+> oder dem Container vorübergehend mehr RAM geben bzw. die Docker-Variante nutzen.
+>
+> **Update:** `cd /opt/kk-src && git pull`, Build-Befehl wiederholen, `systemctl restart koerperkompass`. Die Datenbank wird beim Start automatisch ergänzt.
 
 ### HTTPS über Reverse Proxy
 
