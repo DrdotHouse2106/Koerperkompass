@@ -20,6 +20,11 @@ const disclaimer = "Hinweis: Dies ist eine automatische Auswertung und keine är
 // ask schickt eine Anfrage an Claude und gibt den Text der Antwort zurück.
 // Lehnt das Modell ab, beantwortet ein Ersatzmodell die Anfrage (server-seitiger Fallback).
 func ask(ctx context.Context, system string, effort anthropic.BetaOutputConfigEffort, content ...anthropic.BetaContentBlockParamUnion) (string, error) {
+	return askMessages(ctx, system, effort, []anthropic.BetaMessageParam{anthropic.NewBetaUserMessage(content...)})
+}
+
+// askMessages führt ein Gespräch mit mehreren Nachrichten (z. B. für den Coach).
+func askMessages(ctx context.Context, system string, effort anthropic.BetaOutputConfigEffort, messages []anthropic.BetaMessageParam) (string, error) {
 	client := anthropic.NewClient() // liest ANTHROPIC_API_KEY
 	ctx, cancel := context.WithTimeout(ctx, 5*time.Minute)
 	defer cancel()
@@ -30,7 +35,7 @@ func ask(ctx context.Context, system string, effort anthropic.BetaOutputConfigEf
 		OutputConfig: anthropic.BetaOutputConfigParam{Effort: effort},
 		Fallbacks:    anthropic.BetaFallbacksParamOfDefault(),
 		Betas:        []anthropic.AnthropicBeta{anthropic.AnthropicBetaServerSideFallback2026_07_01},
-		Messages:     []anthropic.BetaMessageParam{anthropic.NewBetaUserMessage(content...)},
+		Messages:     messages,
 	})
 	if err != nil {
 		return "", err
@@ -184,4 +189,50 @@ Sprache: ` + langName(req.Lang) + `.`
 		return
 	}
 	writeObject(w, out)
+}
+
+// aiCoach: Gesundheitscoach im Gespräch. „context“ ist die von der App erstellte Zusammenfassung der eigenen Daten.
+func aiCoach(w http.ResponseWriter, r *http.Request) {
+	var req struct {
+		Messages []struct{ Role, Content string }
+		Context  string
+		Lang     string
+	}
+	if !requireAI(w) || !readJSON(w, r, &req) {
+		return
+	}
+	if len(req.Messages) > 30 {
+		req.Messages = req.Messages[len(req.Messages)-30:]
+	}
+	var msgs []anthropic.BetaMessageParam
+	for _, m := range req.Messages {
+		block := anthropic.NewBetaTextBlock(m.Content)
+		if m.Role == "assistant" {
+			if len(msgs) == 0 {
+				continue // Gespräch muss mit dem Nutzer beginnen
+			}
+			msgs = append(msgs, anthropic.BetaMessageParam{OfAssistant: &anthropic.BetaAssistantMessageParam{Content: []anthropic.BetaContentBlockParamUnion{block}}})
+		} else {
+			msgs = append(msgs, anthropic.NewBetaUserMessage(block))
+		}
+	}
+	if len(msgs) == 0 {
+		http.Error(w, "keine Nachricht", http.StatusBadRequest)
+		return
+	}
+	system := `Du bist der persönliche Gesundheitscoach in der App „Körperkompass“: warmherzig, motivierend, ehrlich und konkret.
+Du kennst die aktuellen Daten der Person (unten). Beziehe dich darauf mit konkreten Zahlen, gib praktische, kleine nächste Schritte
+(Essen, Trinken, Bewegung, Training, Schlaf, Erholung) und frag nach, wenn etwas unklar ist. Antworte kurz (meist 3–8 Sätze oder eine
+knappe Liste), in Markdown, auf ` + langName(req.Lang) + `, per Du.
+Grenzen: keine Diagnosen, keine Medikamente oder Nahrungsergänzungs-Dosierungen, keine Crash-Diäten. Bei Schmerzen, Schwindel,
+Essstörungs-Anzeichen oder auffälligen Werten empfiehl freundlich ärztlichen Rat. Du ersetzt keine ärztliche Beratung.
+
+Aktuelle Daten der Person (Stand heute):
+` + req.Context
+	out, err := askMessages(r.Context(), system, anthropic.BetaOutputConfigEffortMedium, msgs)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadGateway)
+		return
+	}
+	writeJSON(w, map[string]string{"text": out})
 }

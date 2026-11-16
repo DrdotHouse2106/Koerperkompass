@@ -242,6 +242,16 @@
         }
       }
     },
+    "%lld:00 Uhr": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld:00"
+          }
+        }
+      }
+    },
     "+%@": {
       "localizations": {
         "en": {
@@ -842,6 +852,16 @@
         }
       }
     },
+    "Auswertung": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Analysis"
+          }
+        }
+      }
+    },
     "Auswertung läuft …": {
       "localizations": {
         "en": {
@@ -958,6 +978,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Beer"
+          }
+        }
+      }
+    },
+    "Bin müde – trainieren oder lieber Pause?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I’m tired – train or rest?"
           }
         }
       }
@@ -1082,6 +1112,26 @@
         }
       }
     },
+    "Coach": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Coach"
+          }
+        }
+      }
+    },
+    "Damit der Coach antworten kann, muss auf deinem Server ein Claude-API-Key eingetragen sein (ANTHROPIC_API_KEY, siehe Anleitung).": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "For the coach to answer, a Claude API key must be set on your server (ANTHROPIC_API_KEY, see guide)."
+          }
+        }
+      }
+    },
     "Das Foto wird über deinen Server an die Claude API (Anthropic) gesendet, um die Nährwerte zu schätzen. Du kannst die Zustimmung in den Einstellungen widerrufen.": {
       "localizations": {
         "en": {
@@ -1178,6 +1228,36 @@
           "stringUnit": {
             "state": "translated",
             "value": "Duration (min)"
+          }
+        }
+      }
+    },
+    "Dein Coach denkt nach …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your coach is thinking …"
+          }
+        }
+      }
+    },
+    "Dein Coach 💬": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your coach 💬"
+          }
+        }
+      }
+    },
+    "Dein Gesundheitscoach": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your health coach"
           }
         }
       }
@@ -1872,6 +1952,16 @@
         }
       }
     },
+    "Frag deinen Coach …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ask your coach …"
+          }
+        }
+      }
+    },
     "Freund hinzufügen": {
       "localizations": {
         "en": {
@@ -1992,6 +2082,16 @@
         }
       }
     },
+    "Für das Gespräch werden deine Nachricht, dein Profil und eine Zusammenfassung deiner Daten (Ernährung, Getränke, Gewicht, Training; Schlaf und Schritte nur mit Health-Zustimmung) über deinen Server an die Claude API (Anthropic) gesendet. Der Gesprächsverlauf bleibt auf deinem iPhone.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "For the conversation, your message, your profile and a summary of your data (nutrition, drinks, weight, training; sleep and steps only with Health consent) are sent via your server to the Claude API (Anthropic). The conversation history stays on your iPhone."
+          }
+        }
+      }
+    },
     "Für die Auswertung werden Profil und zusammengefasste Werte der aktiven Module über deinen Server an die Claude API (Anthropic) gesendet. Health-Daten nur, wenn du ihrem Hochladen zugestimmt hast. Du kannst die Zustimmung in den Einstellungen widerrufen.": {
       "localizations": {
         "en": {
@@ -2058,6 +2158,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Sex"
+          }
+        }
+      }
+    },
+    "Gespräch löschen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete conversation"
           }
         }
       }
@@ -2352,6 +2462,16 @@
         }
       }
     },
+    "Im Demo-Modus ist der Coach nicht verfügbar – er braucht deinen eigenen Server mit Claude-API-Key.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The coach isn’t available in demo mode – it needs your own server with a Claude API key."
+          }
+        }
+      }
+    },
     "Import (JSON)": {
       "localizations": {
         "en": {
@@ -2528,6 +2648,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "No visible friends"
+          }
+        }
+      }
+    },
+    "Keine ärztliche Beratung – bei Beschwerden bitte ärztlich abklären lassen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not medical advice – please see a doctor about any complaints."
+          }
+        }
+      }
+    },
+    "Kennt deine Ziele, dein Essen, Trinken und Training.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Knows your goals, food, drinks and training."
           }
         }
       }
@@ -3148,6 +3288,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "My program"
+          }
+        }
+      }
+    },
+    "Mein Tag: Gib mir ein kurzes Briefing mit einem Tipp für heute.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "My day: give me a short briefing with one tip for today."
           }
         }
       }
@@ -4432,6 +4582,26 @@
         }
       }
     },
+    "Tägliche Erinnerung": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Daily reminder"
+          }
+        }
+      }
+    },
+    "Uhrzeit": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Time"
+          }
+        }
+      }
+    },
     "Ungültige Server-Adresse": {
       "localizations": {
         "en": {
@@ -4692,6 +4862,16 @@
         }
       }
     },
+    "Was soll ich heute noch essen?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What should I still eat today?"
+          }
+        }
+      }
+    },
     "Wasser": {
       "localizations": {
         "en": {
@@ -4782,12 +4962,42 @@
         }
       }
     },
+    "Wie geht’s dir heute? Hol dir dein Tagesbriefing im Coach.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How are you today? Get your daily briefing from the coach."
+          }
+        }
+      }
+    },
+    "Wie komme ich schneller zu meinem Ziel?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How do I reach my goal faster?"
+          }
+        }
+      }
+    },
     "Wie war das Training?": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "How was the workout?"
+          }
+        }
+      }
+    },
+    "Wie war meine Woche?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How was my week?"
           }
         }
       }

@@ -52,7 +52,7 @@ struct MainView: View {
             TrainingView().tabItem { Label("Training", systemImage: "dumbbell.fill") }
             NavigationStack { QuestModule().detail([]).navigationTitle("Abenteuer").themed() }
                 .tabItem { Label("Abenteuer", systemImage: "flag.checkered") }
-            CompassView().tabItem { Label("Kompass", systemImage: "safari.fill") }
+            CoachView().tabItem { Label("Coach", systemImage: "bubble.left.and.text.bubble.right.fill") }
             SettingsView().tabItem { Label("Einstellungen", systemImage: "gearshape.fill") }
         }
     }

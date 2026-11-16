@@ -47,6 +47,7 @@ func routes() http.Handler {
 	m.HandleFunc("POST /api/ai/analysis", auth(aiAnalysis))
 	m.HandleFunc("POST /api/ai/plan", auth(aiPlan))
 	m.HandleFunc("POST /api/ai/next", auth(aiNext))
+	m.HandleFunc("POST /api/ai/coach", auth(aiCoach))
 	// Freundschaften (auch zwischen Servern), siehe friends.go
 	m.HandleFunc("PUT /api/card", auth(putCard))
 	m.HandleFunc("POST /api/friends/link", auth(friendLink))

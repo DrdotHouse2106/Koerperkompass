@@ -41,6 +41,20 @@ enum Reminders {
         return true
     }
 
+    /// Tägliche Coach-Erinnerung
+    static func scheduleCoach(hour: Int) async {
+        let center = UNUserNotificationCenter.current()
+        guard (try? await center.requestAuthorization(options: [.alert, .sound])) == true else { return }
+        let content = UNMutableNotificationContent()
+        content.title = String(localized: "Dein Coach 💬")
+        content.body = String(localized: "Wie geht’s dir heute? Hol dir dein Tagesbriefing im Coach.")
+        content.sound = .default
+        try? await center.add(UNNotificationRequest(identifier: "coach-daily", content: content,
+                                                    trigger: UNCalendarNotificationTrigger(dateMatching: DateComponents(hour: hour, minute: 0), repeats: true)))
+    }
+
+    static func cancelCoach() { UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["coach-daily"]) }
+
     static func cancel() {
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: (0..<24).map { prefix + "\($0)" })
     }

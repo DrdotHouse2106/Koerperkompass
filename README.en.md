@@ -24,6 +24,7 @@ There is no central service: the developers run no server and never see any data
 - 🏋️ **Training programs** – 4-week programs with training and rest days, XP per session, templates or created by Claude; optional penalties for missed sessions
 - 💧 **Drinks** – water, coffee, tea, beer, wine … with one tap; drinking goal, caffeine, alcohol; drink reminders you can tick off in the notification
 - 🏋️ **Training** – own tab with today’s session and nine ready-made programs
+- 💬 **Coach** – personal health coach (Claude) in a chat that knows your goals, food, drinks, weight and training; daily briefing and reminder (needs `ANTHROPIC_API_KEY`)
 - 🧭 **Compass** – 7/30/90-day analysis: averages, trends, goal achievement, correlations (e.g. sleep ↔ calories). Optional detailed analysis with Claude
 - 🤝 **Friends (decentralised)** – friendships with users on your own or **other Körperkompass servers**, no central service: friend list with player cards, weekly challenge leaderboard, optionally friends of friends. Only game values are shared, never health data (requires `KK_PUBLIC_URL` and HTTPS)
 - 👥 **Multiple users** – invite other people, each with their own account, own access and own data

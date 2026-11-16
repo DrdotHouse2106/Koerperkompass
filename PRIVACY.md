@@ -19,7 +19,7 @@ Die App ist eine Software, die sich mit einem **von dir selbst betriebenen Serve
 
 ## Claude API (optional)
 
-Ist auf deinem Server ein eigener Claude-API-Key hinterlegt, kannst du Fotos von Mahlzeiten schätzen lassen und eine ausführliche Auswertung erstellen. **Erst nach deiner ausdrücklichen Zustimmung** in der App sendet dein Server dafür das Foto bzw. dein Profil und zusammengefasste Werte (Durchschnitte, Trends) an die Claude API der Anthropic PBC. Health-Daten werden dabei nur einbezogen, wenn du auch ihrem Hochladen zugestimmt hast. Es gelten die Bedingungen des API-Kontos des Server-Betreibers bei Anthropic ([anthropic.com/legal/privacy](https://www.anthropic.com/legal/privacy)). Die Zustimmung kann jederzeit in den Einstellungen widerrufen werden.
+Ist auf deinem Server ein eigener Claude-API-Key hinterlegt, kannst du Fotos von Mahlzeiten schätzen lassen und eine ausführliche Auswertung erstellen. **Erst nach deiner ausdrücklichen Zustimmung** in der App sendet dein Server dafür das Foto bzw. dein Profil und zusammengefasste Werte (Durchschnitte, Trends) an die Claude API der Anthropic PBC. Health-Daten werden dabei nur einbezogen, wenn du auch ihrem Hochladen zugestimmt hast. Für den **Coach** gehen deine Nachrichten und eine Zusammenfassung deiner Daten (Ernährung, Getränke, Gewicht, Training) auf demselben Weg an Claude; der Gesprächsverlauf wird nur auf deinem iPhone gespeichert. Es gelten die Bedingungen des API-Kontos des Server-Betreibers bei Anthropic ([anthropic.com/legal/privacy](https://www.anthropic.com/legal/privacy)). Die Zustimmung kann jederzeit in den Einstellungen widerrufen werden.
 
 ## Freunde (optional)
 
@@ -66,7 +66,7 @@ The app is software that connects to a **server operated by you**. You (or whoev
 
 ## Claude API (optional)
 
-If your server is configured with its own Claude API key, you can have meal photos estimated and get a detailed analysis. **Only after your explicit consent** in the app does your server send the photo, or your profile and summarised values (averages, trends), to the Claude API of Anthropic PBC. Health data is only included if you also agreed to upload it. The terms of the server operator's Anthropic API account apply ([anthropic.com/legal/privacy](https://www.anthropic.com/legal/privacy)). You can withdraw consent in Settings at any time.
+If your server is configured with its own Claude API key, you can have meal photos estimated and get a detailed analysis. **Only after your explicit consent** in the app does your server send the photo, or your profile and summarised values (averages, trends), to the Claude API of Anthropic PBC. Health data is only included if you also agreed to upload it. For the **coach**, your messages and a summary of your data (nutrition, drinks, weight, training) are sent the same way; the conversation history is stored only on your iPhone. The terms of the server operator's Anthropic API account apply ([anthropic.com/legal/privacy](https://www.anthropic.com/legal/privacy)). You can withdraw consent in Settings at any time.
 
 ## Friends (optional)
 
