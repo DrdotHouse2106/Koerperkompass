@@ -293,3 +293,30 @@ Antworte ausschließlich mit JSON: {"reply": "…", "exercise": "Übung oder lee
 	}
 	writeObject(w, out)
 }
+
+// aiMeal zerlegt eine freie Beschreibung („Mein Frühstück waren 2 Berliner“) in Lebensmittel mit Nährwerten.
+// Kleines, günstiges Modell (KK_MODEL_SMALL, Standard Claude Haiku 5.5).
+func aiMeal(w http.ResponseWriter, r *http.Request) {
+	var req struct{ Text, Lang, Hint string }
+	if !requireAI(w) || !readJSON(w, r, &req) {
+		return
+	}
+	if strings.TrimSpace(req.Text) == "" || len(req.Text) > 2000 {
+		http.Error(w, "Beschreibung fehlt oder ist zu lang", http.StatusBadRequest)
+		return
+	}
+	system := `Du zerlegst Essensbeschreibungen in einzelne Lebensmittel mit realistischen Nährwerten für die genannte bzw. eine übliche Menge
+(deutsche Lebensmittel und Portionsgrößen, z. B. ein Berliner ≈ 70 g ≈ 250 kcal). Getränke mit Kalorien (z. B. Kaffee mit Milch, Saft) gehören dazu.
+Erkenne die Mahlzeit aus dem Text (Frühstück → breakfast, Mittag → lunch, Abend → dinner, Snack/Zwischendurch → snack), sonst nutze den Hinweis.
+Antworte ausschließlich mit JSON:
+{"meal": "breakfast|lunch|dinner|snack", "items": [{"name": "kurze Bezeichnung", "amount": "Menge, z. B. 2 Stück (140 g)", "kcal": Zahl, "protein": g, "carbs": g, "fat": g}]}
+Bezeichnungen in ` + langName(req.Lang) + `.`
+	prompt := "Hinweis auf die Mahlzeit (nach Uhrzeit): " + req.Hint + "\nBeschreibung: " + req.Text
+	out, err := askModel(r.Context(), env("KK_MODEL_SMALL", "claude-haiku-5-5"), system, anthropic.BetaOutputConfigEffortLow,
+		[]anthropic.BetaMessageParam{anthropic.NewBetaUserMessage(anthropic.NewBetaTextBlock(prompt))})
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadGateway)
+		return
+	}
+	writeObject(w, out)
+}

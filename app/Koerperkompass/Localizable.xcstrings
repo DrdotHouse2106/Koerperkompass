@@ -272,6 +272,16 @@
         }
       }
     },
+    "+ %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "+ %@"
+          }
+        }
+      }
+    },
     "+%@": {
       "localizations": {
         "en": {
@@ -298,6 +308,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "+%lld XP"
+          }
+        }
+      }
+    },
+    "0": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "0"
           }
         }
       }
@@ -1082,6 +1102,16 @@
         }
       }
     },
+    "Beschreibung an Claude senden?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send description to Claude?"
+          }
+        }
+      }
+    },
     "Bessere Stimmen klingen deutlich natürlicher. So lädst du sie: iOS-Einstellungen → Bedienungshilfen → Gesprochene Inhalte → Stimmen → Deutsch → eine Stimme mit „Premium“ oder „Erweitert“ wählen und laden (z. B. Anna, Petra, Markus oder Yannick). Danach hier auswählen. Die Siri-Stimme selbst steht Apps leider nicht zur Verfügung.": {
       "localizations": {
         "en": {
@@ -1268,6 +1298,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Coach"
+          }
+        }
+      }
+    },
+    "Dafür braucht es Claude auf deinem Server (mit Zustimmung) oder Apple Intelligence.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This needs Claude on your server (with consent) or Apple Intelligence."
           }
         }
       }
@@ -1498,6 +1538,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Your wish, your profile (goal, age, height, weight) and your training history (sessions, feedback, sets) are sent via your server to the Claude API (Anthropic)."
+          }
+        }
+      }
+    },
+    "Deine Beschreibung wird über deinen Server an die Claude API (Anthropic, Modell Haiku) gesendet, um die Nährwerte zu schätzen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your description is sent via your server to the Claude API (Anthropic, Haiku model) to estimate nutrients."
           }
         }
       }
@@ -1818,6 +1868,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "One-arm row – 3 × 10 per side"
+          }
+        }
+      }
+    },
+    "Einfach beschreiben oder sprechen – die Nährwerte werden geschätzt und du prüfst sie vor dem Speichern. Häufige Lebensmittel trägst du mit einem Tipp in die aktuelle Mahlzeit ein.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Just describe or say it – nutrients are estimated and you check them before saving. Log frequent foods into the current meal with one tap."
           }
         }
       }
@@ -2528,6 +2588,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Sex"
+          }
+        }
+      }
+    },
+    "Geschätzte Werte – bitte prüfen. Zum Entfernen nach links wischen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Estimated values – please check. Swipe left to remove."
           }
         }
       }
@@ -3892,6 +3962,16 @@
         }
       }
     },
+    "Mahlzeit": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meal"
+          }
+        }
+      }
+    },
     "Max. Gewicht": {
       "localizations": {
         "en": {
@@ -4208,6 +4288,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Newcomer"
+          }
+        }
+      }
+    },
+    "Nichts erkannt – beschreib es etwas genauer.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing recognised – describe it in a bit more detail."
           }
         }
       }
@@ -4658,6 +4748,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Share log (%lld entries)"
+          }
+        }
+      }
+    },
+    "Prüfen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Check"
           }
         }
       }
@@ -5342,6 +5442,16 @@
         }
       }
     },
+    "Summe: %@ kcal": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Total: %@ kcal"
+          }
+        }
+      }
+    },
     "Sätze": {
       "localizations": {
         "en": {
@@ -5942,6 +6052,16 @@
         }
       }
     },
+    "Was hast du gegessen?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What did you eat?"
+          }
+        }
+      }
+    },
     "Was hast du trainiert?": {
       "localizations": {
         "en": {
@@ -6138,6 +6258,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Welcome to Körperkompass"
+          }
+        }
+      }
+    },
+    "Wird erkannt …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recognising …"
           }
         }
       }
@@ -6472,6 +6602,16 @@
         }
       }
     },
+    "kcal": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "kcal"
+          }
+        }
+      }
+    },
     "von %@ ml": {
       "localizations": {
         "en": {
@@ -6488,6 +6628,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "of %@ ml drinking goal"
+          }
+        }
+      }
+    },
+    "z. B. „Zum Frühstück 2 Berliner und ein Kaffee mit Milch“": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "e.g. “2 doughnuts and a coffee with milk for breakfast”"
           }
         }
       }

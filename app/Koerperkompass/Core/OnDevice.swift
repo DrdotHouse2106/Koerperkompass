@@ -29,6 +29,22 @@ enum OnDevice {
         return nil
     }
 
+    /// Freie Essensbeschreibung in Lebensmittel mit Nährwerten zerlegen
+    static func parseMeal(_ text: String, hint: String) async -> (Meal?, [ParsedFood])? {
+        #if canImport(FoundationModels)
+        if #available(iOS 26.0, *), available {
+            let s = LanguageModelSession(instructions: "Du zerlegst Essensbeschreibungen in einzelne Lebensmittel mit realistischen Nährwerten für die genannte oder eine übliche deutsche Portionsgröße. Getränke mit Kalorien gehören dazu. Erkenne die Mahlzeit aus dem Text, sonst nimm den Hinweis.")
+            if let r = try? await s.respond(to: "Hinweis Mahlzeit: \(hint)\nBeschreibung: \(text)", generating: GenMeal.self) {
+                let items = r.content.items.map {
+                    ParsedFood(name: $0.name, amount: $0.amount, kcal: $0.kcal, protein: $0.protein, carbs: $0.carbs, fat: $0.fat)
+                }
+                return (Meal(rawValue: r.content.meal), items)
+            }
+        }
+        #endif
+        return nil
+    }
+
     /// Nächste Trainingseinheit an Rückmeldungen und Verlauf anpassen
     static func nextSession(_ session: PlanDay, history: String, profile: String) async -> Suggestion? {
         #if canImport(FoundationModels)
@@ -47,6 +63,31 @@ enum OnDevice {
 }
 
 #if canImport(FoundationModels)
+@available(iOS 26.0, *)
+@Generable
+struct GenFood {
+    @Guide(description: "Kurze Bezeichnung des Lebensmittels")
+    var name: String
+    @Guide(description: "Menge, z. B. 2 Stück (140 g)")
+    var amount: String
+    @Guide(description: "Kilokalorien für diese Menge")
+    var kcal: Double
+    @Guide(description: "Eiweiß in Gramm")
+    var protein: Double
+    @Guide(description: "Kohlenhydrate in Gramm")
+    var carbs: Double
+    @Guide(description: "Fett in Gramm")
+    var fat: Double
+}
+
+@available(iOS 26.0, *)
+@Generable
+struct GenMeal {
+    @Guide(description: "Mahlzeit: breakfast, lunch, dinner oder snack")
+    var meal: String
+    var items: [GenFood]
+}
+
 @available(iOS 26.0, *)
 @Generable
 struct GenMessages {

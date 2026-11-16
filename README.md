@@ -19,7 +19,7 @@ Es gibt keinen zentralen Dienst: Die Entwickler betreiben keinen Server und sehe
 
 | | |
 |---|---|
-| 🍽 **Ernährung** | Tagesziele, Ringe für Eiweiß/Kohlenhydrate/Fett, 7-Tage-Diagramm, Tagebuch (Frühstück, Mittag, Abend, Snack), optional Foto-Eintrag mit Nährwert-Schätzung |
+| 🍽 **Ernährung** | Tagesziele, Ringe für Eiweiß/Kohlenhydrate/Fett, 7-Tage-Diagramm, Tagebuch (Frühstück, Mittag, Abend, Snack). **Frei beschreiben oder sprechen** („Zum Frühstück 2 Berliner“) – Claude Haiku bzw. Apple Intelligence schätzt die Nährwerte, du prüfst vor dem Speichern; häufige Lebensmittel mit einem Tipp; optional Foto-Eintrag |
 | ⚖️ **Gewicht & Maße** | Gewicht, Körperfett, Taille, Hüfte, Brust – mit Verlauf und Wunschgewicht |
 | 🚶 **Aktivität & Schlaf** | Schritte, aktive Energie, Schlaf, Ruhepuls und Trainings aus Apple Health |
 | 🗺 **Mein Plan** | Überblick: Gewichtsverlauf bis zum Ziel, BMI-Skala, Tagesziele, Wasser und Training |
@@ -277,7 +277,7 @@ Alle Endpunkte außer `status`, `modules` und `pair` brauchen `Authorization: Be
 | GET | `/api/entries?since=<rev>` | Einträge seit Revision (Abgleich) |
 | POST | `/api/entries` | Einträge anlegen/ändern/löschen (`deleted: true`) |
 | GET/POST | `/api/export`, `/api/import` | alles als JSON |
-| POST | `/api/ai/photo`, `/api/ai/analysis`, `/api/ai/plan`, `/api/ai/next`, `/api/ai/coach`, `/api/ai/motivation`, `/api/ai/voice` | nur mit `ANTHROPIC_API_KEY` |
+| POST | `/api/ai/photo`, `/api/ai/analysis`, `/api/ai/plan`, `/api/ai/next`, `/api/ai/coach`, `/api/ai/motivation`, `/api/ai/voice`, `/api/ai/meal` | nur mit `ANTHROPIC_API_KEY` |
 | PUT | `/api/card` | eigene Spielerkarte (nur Spielwerte) |
 | POST/GET/DELETE | `/api/friends/link`, `/api/friends`, `/api/friends/{id}` | Freundschaftslink, Freund hinzufügen, Freunde abrufen, beenden |
 | POST/GET | `/api/fed/accept`, `/api/fed/card`, `/api/fed/remove` | **Server-zu-Server** (Föderation), abgesichert mit einem Schlüssel pro Freundschaft |

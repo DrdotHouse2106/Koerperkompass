@@ -84,6 +84,7 @@ private struct NutritionDetail: View {
                 }
                 .frame(maxWidth: .infinity)
             }
+            MealInputSection(day: day, entries: entries)
             Section {
                 NavigationLink("Mein Plan – Ziele, BMI und Makros") { GoalsView() }
             }
