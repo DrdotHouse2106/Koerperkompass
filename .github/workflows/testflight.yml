@@ -24,11 +24,19 @@ concurrency:
 jobs:
   ios:
     name: Bauen und zu TestFlight hochladen
-    # Mit älteren Runnern lehnt Apple den Upload ab (zu altes SDK)
-    runs-on: macos-26
+    # macos-15 ist bei GitHub gut verfügbar (macos-26 hatte lange Wartezeiten). Apple verlangt ein aktuelles SDK
+    # und Apple Intelligence braucht das iOS-26-SDK – deshalb wird unten ausdrücklich Xcode 26 gewählt.
+    runs-on: macos-15
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
+
+      - name: Xcode 26 auswählen
+        run: |
+          XCODE=$(ls -d /Applications/Xcode_26*.app 2>/dev/null | sort -V | tail -1)
+          if [ -z "$XCODE" ]; then echo "::error::Kein Xcode 26 auf diesem Runner gefunden"; ls -d /Applications/Xcode*.app; exit 1; fi
+          sudo xcode-select -s "$XCODE/Contents/Developer"
+          xcodebuild -version
 
       - name: Xcode-Projekt erzeugen (XcodeGen)
         working-directory: app
