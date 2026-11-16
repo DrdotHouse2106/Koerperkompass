@@ -13,6 +13,26 @@ import Speech
     private let engine = AVAudioEngine()
     private var request: SFSpeechAudioBufferRecognitionRequest?
     private var task: SFSpeechRecognitionTask?
+    // Nach einer Sprechpause beginnt iOS einen neuen Abschnitt und liefert nur noch dessen Text –
+    // abgeschlossene Abschnitte werden hier gesammelt, damit nichts verloren geht.
+    private var done = ""
+    private var current = ""
+
+    private func update(_ text: String, segmentEnded: Bool) {
+        // Liefert iOS doch den ganzen bisherigen Text (Erkennung über Apple-Server), nicht doppelt anhängen
+        var text = text
+        if !done.isEmpty, text.hasPrefix(done) { text = text.dropFirst(done.count).trimmingCharacters(in: .whitespaces) }
+        // Neuer Abschnitt ohne Ende-Signal: Text deutlich kürzer und kein Anfang des bisherigen
+        if !current.isEmpty, !text.hasPrefix(String(current.prefix(8))), text.count < current.count / 2 { commit() }
+        current = text
+        if segmentEnded { commit() }
+        heard = [done, current].filter { !$0.isEmpty }.joined(separator: " ")
+    }
+
+    private func commit() {
+        if !current.isEmpty { done = [done, current].filter { !$0.isEmpty }.joined(separator: " ") }
+        current = ""
+    }
 
     func start() async {
         guard !listening else { return }
@@ -31,11 +51,15 @@ import Speech
             engine.prepare()
             try engine.start()
             heard = ""
+            done = ""
+            current = ""
             error = nil
             listening = true
             task = recognizer?.recognitionTask(with: req) { [weak self] result, _ in
-                let text = result?.bestTranscription.formattedString
-                Task { @MainActor in if let text { self?.heard = text } }
+                guard let result else { return }
+                let text = result.bestTranscription.formattedString
+                let ended = result.isFinal || result.speechRecognitionMetadata != nil
+                Task { @MainActor in self?.update(text, segmentEnded: ended) }
             }
         } catch {
             self.error = error.localizedDescription
