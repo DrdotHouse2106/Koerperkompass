@@ -350,12 +350,16 @@ Erkenne die Mahlzeit jedes Lebensmittels aus dem Text (Frühstück → breakfast
 sonst nutze den Hinweis. Eine Beschreibung kann mehrere Mahlzeiten enthalten. Saucen und Beilagen sind eigene Einträge.
 Bezieht sich die Beschreibung auf frühere Mahlzeiten (z. B. „das Gleiche wie gestern“, „wie heute Mittag“, „nochmal den Toast“),
 übernimm die passenden Lebensmittel mit Mengen und Nährwerten aus dem Verlauf und ordne sie der genannten Mahlzeit zu.
+Fehlt dir dafür der Verlauf, antworte nur mit {"needHistory": true}. Ist die Beschreibung so unklar, dass du raten müsstest
+(z. B. welches von mehreren Gerichten gemeint ist), antworte nur mit {"question": "kurze Rückfrage"} – sonst schätze üblich.
 Antworte ausschließlich mit JSON:
 {"items": [{"meal": "breakfast|lunch|dinner|snack", "name": "kurze Bezeichnung", "amount": "Menge, z. B. 2 Stück (140 g)", "kcal": Zahl, "protein": g, "carbs": g, "fat": g}]}
 Bezeichnungen in ` + langName(req.Lang) + `.`
 	prompt := "Hinweis auf die Mahlzeit (nach Uhrzeit): " + req.Hint + "\nBeschreibung: " + req.Text
 	if h := strings.TrimSpace(req.History); h != "" {
 		prompt = "Bisherige Mahlzeiten:\n" + truncate(h, 6000) + "\n\n" + prompt
+	} else {
+		prompt = "(Verlauf nicht mitgeschickt – bei Bedarf mit needHistory anfordern.)\n" + prompt
 	}
 	out, err := askModel(r.Context(), env("KK_MODEL_SMALL", "claude-haiku-5-5"), system, anthropic.BetaOutputConfigEffortLow,
 		[]anthropic.BetaMessageParam{anthropic.NewBetaUserMessage(anthropic.NewBetaTextBlock(prompt))})

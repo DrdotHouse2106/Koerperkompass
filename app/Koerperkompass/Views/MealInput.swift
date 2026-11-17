@@ -36,11 +36,28 @@ enum MealParser {
             .joined(separator: "\n")
     }
 
-    @MainActor static func parse(_ text: String, state: AppState, history: String = "") async throws -> [ParsedFood] {
+    /// Verweist der Text auf frühere Mahlzeiten? Nur dann geht der Verlauf gleich mit.
+    static func refersToHistory(_ text: String) -> Bool {
+        let t = text.lowercased()
+        return ["gestern", "vorgestern", "gleiche", "dasselbe", "selbe", "wie heute", "wie mittag", "wie morgens", "wie immer",
+                "nochmal", "noch mal", "wieder", "wie vorhin", "wie letzt", "yesterday", "same as", "again"].contains { t.contains($0) }
+    }
+
+    /// Verlauf nur bei Bedarf: bei erkennbarem Verweis sofort, sonst wenn Claude ihn anfordert. Unklares → Rückfrage.
+    @MainActor static func parse(_ text: String, state: AppState, entries: [Entry]) async throws -> [ParsedFood] {
+        let full = history(entries)
+        var history = refersToHistory(text) ? full : ""
         if state.aiAvailable && state.aiConsent {
-            let r = try await state.api.object("POST", "/api/ai/meal", json: [
-                "text": text, "hint": Meal.now.rawValue, "history": history, "lang": Locale.current.language.languageCode?.identifier ?? "de",
-            ])
+            var r: [String: Any] = [:]
+            for _ in 0..<2 {
+                r = try await state.api.object("POST", "/api/ai/meal", json: [
+                    "text": text, "hint": Meal.now.rawValue, "history": history, "lang": Locale.current.language.languageCode?.identifier ?? "de",
+                ])
+                guard r["needHistory"] as? Bool == true, history.isEmpty, !full.isEmpty else { break }
+                AppLog.add("Essen: Verlauf nachgefordert")
+                history = full
+            }
+            if let q = r["question"] as? String, !q.isEmpty { throw API.Failure(message: "❓ " + q) }
             let meal = (r["meal"] as? String).flatMap(Meal.init(rawValue:)) ?? Meal.now
             return (r["items"] as? [[String: Any]] ?? []).map {
                 ParsedFood(meal: ($0["meal"] as? String).flatMap(Meal.init(rawValue:)) ?? meal, name: $0["name"] as? String ?? "", amount: $0["amount"] as? String ?? "",
@@ -48,7 +65,7 @@ enum MealParser {
                            carbs: ($0["carbs"] as? NSNumber)?.doubleValue ?? 0, fat: ($0["fat"] as? NSNumber)?.doubleValue ?? 0)
             }
         }
-        if let r = await OnDevice.parseMeal(text, hint: Meal.now.rawValue, history: history) { return r }
+        if let r = await OnDevice.parseMeal(text, hint: Meal.now.rawValue, history: refersToHistory(text) ? full : "") { return r }
         throw API.Failure(message: String(localized: "Dafür braucht es Claude auf deinem Server (mit Zustimmung) oder Apple Intelligence."))
     }
 }
@@ -107,7 +124,8 @@ struct MealInputSection: View {
             } message: {
                 Text("Deine Beschreibung wird über deinen Server an die Claude API (Anthropic, Modell Haiku) gesendet, um die Nährwerte zu schätzen.")
             }
-            if let error { Text(error).font(.caption).foregroundStyle(.red) }
+            // Rückfragen (❓) in Orange: einfach im Textfeld ergänzen und erneut eintragen
+            if let error { Text(error).font(.caption).foregroundStyle(error.hasPrefix("❓") ? .orange : .red) }
             if !favorites.isEmpty {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
@@ -143,7 +161,7 @@ struct MealInputSection: View {
             if speech.listening { text = await speech.stop() }
             let input = text
             do {
-                let items = try await MealParser.parse(input, state: state, history: MealParser.history(entries))
+                let items = try await MealParser.parse(input, state: state, entries: entries)
                 guard !items.isEmpty else { throw API.Failure(message: String(localized: "Nichts erkannt – beschreib es etwas genauer.")) }
                 AppLog.add("Essen erkannt: \(items.count) Lebensmittel")
                 result = MealResult(items: items)
