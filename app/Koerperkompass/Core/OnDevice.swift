@@ -30,11 +30,11 @@ enum OnDevice {
     }
 
     /// Freie Essensbeschreibung in Lebensmittel mit Nährwerten zerlegen
-    static func parseMeal(_ text: String, hint: String) async -> [ParsedFood]? {
+    static func parseMeal(_ text: String, hint: String, history: String = "") async -> [ParsedFood]? {
         #if canImport(FoundationModels)
         if #available(iOS 26.0, *), available {
-            let s = LanguageModelSession(instructions: "Du zerlegst Essensbeschreibungen in einzelne Lebensmittel mit realistischen Nährwerten für die genannte oder eine übliche deutsche Portionsgröße. Getränke mit Kalorien gehören dazu. Erkenne die Mahlzeit jedes Lebensmittels aus dem Text, sonst nimm den Hinweis. Eine Beschreibung kann mehrere Mahlzeiten enthalten.")
-            if let r = try? await s.respond(to: "Hinweis Mahlzeit: \(hint)\nBeschreibung: \(text)", generating: GenMeal.self) {
+            let s = LanguageModelSession(instructions: "Du zerlegst Essensbeschreibungen in einzelne Lebensmittel mit realistischen Nährwerten für die genannte oder eine übliche deutsche Portionsgröße. Getränke mit Kalorien gehören dazu. Erkenne die Mahlzeit jedes Lebensmittels aus dem Text, sonst nimm den Hinweis. Eine Beschreibung kann mehrere Mahlzeiten enthalten. Bezieht sie sich auf frühere Mahlzeiten (z. B. „wie gestern“), übernimm die Lebensmittel mit Nährwerten aus dem Verlauf.")
+            if let r = try? await s.respond(to: (history.isEmpty ? "" : "Bisherige Mahlzeiten:\n\(history.suffix(3000))\n\n") + "Hinweis Mahlzeit: \(hint)\nBeschreibung: \(text)", generating: GenMeal.self) {
                 return r.content.items.map {
                     ParsedFood(meal: Meal(rawValue: $0.meal) ?? Meal(rawValue: hint) ?? .snack,
                                name: $0.name, amount: $0.amount, kcal: $0.kcal, protein: $0.protein, carbs: $0.carbs, fat: $0.fat)

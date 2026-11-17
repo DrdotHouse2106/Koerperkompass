@@ -336,7 +336,7 @@ Antworte ausschließlich mit JSON: {"reply": "…", "exercise": "Übung oder lee
 // aiMeal zerlegt eine freie Beschreibung („Mein Frühstück waren 2 Berliner“) in Lebensmittel mit Nährwerten.
 // Kleines, günstiges Modell (KK_MODEL_SMALL, Standard Claude Haiku 5.5).
 func aiMeal(w http.ResponseWriter, r *http.Request) {
-	var req struct{ Text, Lang, Hint string }
+	var req struct{ Text, Lang, Hint, History string }
 	if !requireAI(w) || !readJSON(w, r, &req) {
 		return
 	}
@@ -348,10 +348,15 @@ func aiMeal(w http.ResponseWriter, r *http.Request) {
 (deutsche Lebensmittel und Portionsgrößen, z. B. ein Berliner ≈ 70 g ≈ 250 kcal). Getränke mit Kalorien (z. B. Kaffee mit Milch, Saft) gehören dazu.
 Erkenne die Mahlzeit jedes Lebensmittels aus dem Text (Frühstück → breakfast, Mittag → lunch, Abend → dinner, Snack/Zwischendurch → snack),
 sonst nutze den Hinweis. Eine Beschreibung kann mehrere Mahlzeiten enthalten. Saucen und Beilagen sind eigene Einträge.
+Bezieht sich die Beschreibung auf frühere Mahlzeiten (z. B. „das Gleiche wie gestern“, „wie heute Mittag“, „nochmal den Toast“),
+übernimm die passenden Lebensmittel mit Mengen und Nährwerten aus dem Verlauf und ordne sie der genannten Mahlzeit zu.
 Antworte ausschließlich mit JSON:
 {"items": [{"meal": "breakfast|lunch|dinner|snack", "name": "kurze Bezeichnung", "amount": "Menge, z. B. 2 Stück (140 g)", "kcal": Zahl, "protein": g, "carbs": g, "fat": g}]}
 Bezeichnungen in ` + langName(req.Lang) + `.`
 	prompt := "Hinweis auf die Mahlzeit (nach Uhrzeit): " + req.Hint + "\nBeschreibung: " + req.Text
+	if h := strings.TrimSpace(req.History); h != "" {
+		prompt = "Bisherige Mahlzeiten:\n" + truncate(h, 6000) + "\n\n" + prompt
+	}
 	out, err := askModel(r.Context(), env("KK_MODEL_SMALL", "claude-haiku-5-5"), system, anthropic.BetaOutputConfigEffortLow,
 		[]anthropic.BetaMessageParam{anthropic.NewBetaUserMessage(anthropic.NewBetaTextBlock(prompt))})
 	if err != nil {

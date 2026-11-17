@@ -24,10 +24,22 @@ extension Meal {
 /// Freie Beschreibung → Lebensmittel mit Nährwerten.
 /// Mit Claude (Haiku, mit Zustimmung) über den eigenen Server, sonst mit Apple Intelligence auf dem iPhone.
 enum MealParser {
-    @MainActor static func parse(_ text: String, state: AppState) async throws -> [ParsedFood] {
+    /// Mahlzeiten der letzten Tage als Text – damit „das Gleiche wie gestern“ funktioniert
+    static func history(_ entries: [Entry]) -> String {
+        let days = Day.last(4), names = [days[3]: "heute", days[2]: "gestern", days[1]: "vorgestern"]
+        return entries.filter { $0.module == "nutrition" && !$0.deleted && days.contains($0.date) }
+            .sorted { ($0.date, $0.updated) < ($1.date, $1.updated) }
+            .map { e in
+                let n = ["kcal", "protein", "carbs", "fat"].map { "\($0) \((e.num($0) ?? 0).whole)" }.joined(separator: ", ")
+                return "\(e.date) (\(names[e.date] ?? "")) \(e.text("meal") ?? ""): \(e.text("name") ?? "") – \(n)"
+            }
+            .joined(separator: "\n")
+    }
+
+    @MainActor static func parse(_ text: String, state: AppState, history: String = "") async throws -> [ParsedFood] {
         if state.aiAvailable && state.aiConsent {
             let r = try await state.api.object("POST", "/api/ai/meal", json: [
-                "text": text, "hint": Meal.now.rawValue, "lang": Locale.current.language.languageCode?.identifier ?? "de",
+                "text": text, "hint": Meal.now.rawValue, "history": history, "lang": Locale.current.language.languageCode?.identifier ?? "de",
             ])
             let meal = (r["meal"] as? String).flatMap(Meal.init(rawValue:)) ?? Meal.now
             return (r["items"] as? [[String: Any]] ?? []).map {
@@ -36,7 +48,7 @@ enum MealParser {
                            carbs: ($0["carbs"] as? NSNumber)?.doubleValue ?? 0, fat: ($0["fat"] as? NSNumber)?.doubleValue ?? 0)
             }
         }
-        if let r = await OnDevice.parseMeal(text, hint: Meal.now.rawValue) { return r }
+        if let r = await OnDevice.parseMeal(text, hint: Meal.now.rawValue, history: history) { return r }
         throw API.Failure(message: String(localized: "Dafür braucht es Claude auf deinem Server (mit Zustimmung) oder Apple Intelligence."))
     }
 }
@@ -125,11 +137,13 @@ struct MealInputSection: View {
     private func parse() {
         busy = true
         error = nil
-        let input = text
         Task {
             defer { busy = false }
+            // Mikrofon beenden – sonst schreibt es weiter, während erkannt wird
+            if speech.listening { text = await speech.stop() }
+            let input = text
             do {
-                let items = try await MealParser.parse(input, state: state)
+                let items = try await MealParser.parse(input, state: state, history: MealParser.history(entries))
                 guard !items.isEmpty else { throw API.Failure(message: String(localized: "Nichts erkannt – beschreib es etwas genauer.")) }
                 AppLog.add("Essen erkannt: \(items.count) Lebensmittel")
                 result = MealResult(items: items)
