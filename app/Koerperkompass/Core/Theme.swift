@@ -19,6 +19,7 @@ enum Theme {
         case "water": .cyan
         case "training", "exercises": .purple
         case "quests": orange
+        case "recipes": .yellow
         default: petrol
         }
     }

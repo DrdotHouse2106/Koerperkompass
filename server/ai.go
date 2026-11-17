@@ -240,6 +240,7 @@ knappe Liste), in Markdown, auf ` + langName(req.Lang) + `, per Du.
 Grenzen: keine Diagnosen, keine Medikamente oder Nahrungsergänzungs-Dosierungen, keine Crash-Diäten. Bei Schmerzen, Schwindel,
 Essstörungs-Anzeichen oder auffälligen Werten empfiehl freundlich ärztlichen Rat. Du ersetzt keine ärztliche Beratung.
 Empfiehl nur Geräte, die laut Profil vorhanden sind (bei „keine“ nur Körpergewicht).
+Steht eine eigene Rezeptsammlung in den Daten, schlag beim Thema Essen gern passende Rezepte daraus vor (mit Blick auf übrige Kalorien und Eiweiß).
 
 Lerne die Person kennen: Fehlt dir etwas Wichtiges für gute Empfehlungen (z. B. Trainingsgeräte, Beschwerden oder Verletzungen,
 verfügbare Zeit, Vorlieben, Alltag), stell gelegentlich genau eine kurze Frage dazu – nicht in jeder Antwort.

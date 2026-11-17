@@ -31,6 +31,16 @@
         }
       }
     },
+    "%@ Portionen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ servings"
+          }
+        }
+      }
+    },
     "%@ Schritte": {
       "localizations": {
         "en": {
@@ -67,6 +77,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@ kcal active"
+          }
+        }
+      }
+    },
+    "%@ kcal · %@ g Eiweiß pro Portion": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ kcal · %@ g protein per serving"
           }
         }
       }
@@ -187,6 +207,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "%lld quests · %lld XP"
+          }
+        }
+      }
+    },
+    "%lld Rezepte": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld recipes"
           }
         }
       }
@@ -951,6 +981,36 @@
         }
       }
     },
+    "Aus Reelkoch": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "From Reelkoch"
+          }
+        }
+      }
+    },
+    "Aus Reelkoch übernehmen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Import from Reelkoch"
+          }
+        }
+      }
+    },
+    "Aus Zwischenablage einfügen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paste from clipboard"
+          }
+        }
+      }
+    },
     "Ausdauer": {
       "localizations": {
         "en": {
@@ -1297,6 +1357,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Claude creates a 4-week program from your wish, your profile and your past feedback. Not medical advice – please get any complaints checked."
+          }
+        }
+      }
+    },
+    "Claude macht daraus ein Rezept mit Zutaten, Schritten und geschätzten Nährwerten pro Portion.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Claude turns it into a recipe with ingredients, steps and estimated nutrition per serving."
           }
         }
       }
@@ -1657,6 +1727,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "BMI is only a rough guide – it ignores muscle mass and build."
+          }
+        }
+      }
+    },
+    "Der Rezepttext wird über deinen Server an die Claude API (Anthropic) gesendet.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The recipe text is sent via your server to the Claude API (Anthropic)."
           }
         }
       }
@@ -2331,6 +2411,16 @@
         }
       }
     },
+    "Erstellen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create"
+          }
+        }
+      }
+    },
     "Erster Schritt": {
       "localizations": {
         "en": {
@@ -2681,6 +2771,16 @@
         }
       }
     },
+    "Füge oben rechts einen Reel-Link (Facebook, Instagram, TikTok) oder einen Rezepttext ein. Dein Coach schlägt dir dann Rezepte aus deiner Sammlung vor, die zu deinem Tag passen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add a reel link (Facebook, Instagram, TikTok) or recipe text at the top right. Your coach will then suggest recipes from your collection that fit your day."
+          }
+        }
+      }
+    },
     "Für Freunde meiner Freunde sichtbar sein": {
       "localizations": {
         "en": {
@@ -2721,6 +2821,16 @@
         }
       }
     },
+    "Für dieses Rezept gibt es keine Nährwerte – es wird nur der Name eingetragen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This recipe has no nutrition values – only its name will be logged."
+          }
+        }
+      }
+    },
     "Für eine ausführliche Auswertung mit Mustern und Vorschlägen kann auf deinem Server ein Claude-API-Key hinterlegt werden.": {
       "localizations": {
         "en": {
@@ -2747,6 +2857,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Full body, no equipment"
+          }
+        }
+      }
+    },
+    "Gegessen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eaten"
           }
         }
       }
@@ -2797,6 +2917,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Estimated values – please check. Swipe left to remove."
+          }
+        }
+      }
+    },
+    "Geschätzte Werte – keine ärztliche Beratung.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Estimated values – not medical advice."
           }
         }
       }
@@ -3177,6 +3307,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Today’s quests"
+          }
+        }
+      }
+    },
+    "Hinweise": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notes"
           }
         }
       }
@@ -4971,6 +5111,16 @@
         }
       }
     },
+    "Original ansehen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "View original"
+          }
+        }
+      }
+    },
     "PAUSE VORBEI, DU LAHME ENTE! Die Couch kriegst du heute nicht zurück! NÄCHSTER SATZ, ABER SOFORT!": {
       "localizations": {
         "en": {
@@ -5147,6 +5297,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Privacy"
+          }
+        }
+      }
+    },
+    "Pro Portion: %@ kcal · Eiweiß %@ g · KH %@ g · Fett %@ g": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Per serving: %@ kcal · protein %@ g · carbs %@ g · fat %@ g"
           }
         }
       }
@@ -5357,6 +5517,86 @@
           "stringUnit": {
             "state": "translated",
             "value": "Rank"
+          }
+        }
+      }
+    },
+    "Reel-Link": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reel link"
+          }
+        }
+      }
+    },
+    "Reel-Link einfügen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paste reel link"
+          }
+        }
+      }
+    },
+    "Reelkoch auf deinem Server lädt das Reel, schreibt den Ton mit und liest das Rezept aus Beschreibung, Ton und Bildern. Das dauert meist 1–2 Minuten – du kannst die App solange schließen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reelkoch on your server downloads the reel, transcribes the audio and reads the recipe from description, audio and images. This usually takes 1–2 minutes – you can close the app meanwhile."
+          }
+        }
+      }
+    },
+    "Rezept konnte nicht erstellt werden: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recipe could not be created: %@"
+          }
+        }
+      }
+    },
+    "Rezept suchen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Search recipes"
+          }
+        }
+      }
+    },
+    "Rezepte": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recipes"
+          }
+        }
+      }
+    },
+    "Rezepttext": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recipe text"
+          }
+        }
+      }
+    },
+    "Rezepttext einfügen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paste recipe text"
           }
         }
       }
@@ -6157,6 +6397,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Share"
+          }
+        }
+      }
+    },
+    "Text an Claude senden?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send text to Claude?"
           }
         }
       }
@@ -7001,6 +7251,26 @@
         }
       }
     },
+    "Wird erstellt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Being created"
+          }
+        }
+      }
+    },
+    "Wird erstellt …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Creating …"
+          }
+        }
+      }
+    },
     "Wirklich ohne Gnade?": {
       "localizations": {
         "en": {
@@ -7171,6 +7441,16 @@
         }
       }
     },
+    "Zubereitung": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Preparation"
+          }
+        }
+      }
+    },
     "Zum Entfernen nach links wischen. Das Gerät muss danach neu gekoppelt werden.": {
       "localizations": {
         "en": {
@@ -7247,6 +7527,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Also in the evening"
+          }
+        }
+      }
+    },
+    "Zutaten": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ingredients"
           }
         }
       }
@@ -7377,6 +7667,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "of %@ ml drinking goal"
+          }
+        }
+      }
+    },
+    "wartet": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "waiting"
           }
         }
       }

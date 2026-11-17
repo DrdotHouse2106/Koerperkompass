@@ -16,6 +16,7 @@ struct API {
         let version: String
         let ai: Bool
         var tts: Bool? = nil  // Sprachausgabe auf dem Server eingerichtet
+        var reelkoch: Bool? = nil  // Rezepte aus Reels (Reelkoch) eingerichtet
     }
 
     func call(_ method: String = "GET", _ path: String, json: Any? = nil) async throws -> Data {

@@ -251,6 +251,8 @@ func coachContext(_ all: [Entry], _ p: Profile, healthUpload: Bool) -> String {
         if !stats.isEmpty { lines.append("\(String(localized: m.name)):\n" + stats.map(\.text).joined(separator: "\n")) }
     }
     lines.append("\nTraining (4 Wochen):\n" + trainingHistory(entries))
+    let recipes = entries.filter { $0.module == "recipes" }.prefix(40).map(\.recipeLine)
+    if !recipes.isEmpty { lines.append("\nEigene Rezeptsammlung (gern passend vorschlagen):\n- " + recipes.joined(separator: "\n- ")) }
     return lines.joined(separator: "\n")
 }
 

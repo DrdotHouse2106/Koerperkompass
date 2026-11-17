@@ -30,7 +30,7 @@ func routes() http.Handler {
 	m := http.NewServeMux()
 	m.HandleFunc("GET /{$}", page)
 	m.HandleFunc("GET /api/status", func(w http.ResponseWriter, r *http.Request) {
-		writeJSON(w, map[string]any{"name": "koerperkompass", "version": version, "ai": aiEnabled(), "tts": env("KK_TTS_URL", "") != ""})
+		writeJSON(w, map[string]any{"name": "koerperkompass", "version": version, "ai": aiEnabled(), "tts": env("KK_TTS_URL", "") != "", "reelkoch": reelkochEnabled()})
 	})
 	m.HandleFunc("GET /api/modules", func(w http.ResponseWriter, r *http.Request) { writeJSON(w, modules) })
 	m.HandleFunc("POST /api/pair", pairHandler)
@@ -54,6 +54,11 @@ func routes() http.Handler {
 	m.HandleFunc("POST /api/ai/motivation", auth(aiMotivation))
 	m.HandleFunc("POST /api/ai/voice", auth(aiVoice))
 	m.HandleFunc("POST /api/ai/meal", auth(aiMeal))
+	m.HandleFunc("POST /api/ai/recipe", auth(aiRecipe))
+	// Rezepte aus Reels über Reelkoch, siehe module_recipes.go
+	m.HandleFunc("POST /api/recipes/reel", auth(recipeReel))
+	m.HandleFunc("GET /api/recipes/reel/{id}", auth(recipeReelStatus))
+	m.HandleFunc("GET /api/recipes/reelkoch", auth(recipeReelList))
 	// Freundschaften (auch zwischen Servern), siehe friends.go
 	m.HandleFunc("PUT /api/card", auth(putCard))
 	m.HandleFunc("POST /api/friends/link", auth(friendLink))

@@ -26,6 +26,7 @@ Es gibt keinen zentralen Dienst: Die Entwickler betreiben keinen Server und sehe
 | 🏁 **Abenteuer** | Gamification: Charakterkarte (Level, Workouts, Serie, Klasse, Rang), teilbare Spielerkarte mit eigenem Foto, Erfolge, Wochenleiste und 🔥-Serie, tägliche Quests, eigene Quests (z. B. Lesen, Meditieren), XP, Level, Ränge (Wanderer → Legende), Attribute (Kraft, Ausdauer, Erholung, Disziplin, Balance) |
 | 📈 **Übungen** | Sätze mit Wiederholungen und Gewicht, Verlauf pro Übung, Stufen Bronze → Silber → Gold → Platin |
 | 🏋️ **Trainingsprogramme** | 4-Wochen-Programme mit Trainings- und Ruhetagen, XP pro Einheit, Vorlagen oder persönlich von Claude erstellt; optional Strafpunkte für verpasste Einheiten |
+| 📖 **Rezepte** | Eigene Rezeptsammlung: **Reel-Link einfügen** (Facebook, Instagram, TikTok) – Reelkoch auf deinem Server macht daraus ein Rezept – oder Rezepttext einfügen. Nährwerte pro Portion, „Gegessen“ trägt Portionen in die Ernährung ein, der Coach schlägt passende Rezepte vor |
 | 💧 **Getränke** | Wasser, Kaffee, Tee, Bier, Wein, Softdrinks … mit einem Tipp; Trinkziel, Koffein, Alkohol, Kalorien zählen in die Ernährung; **Trinkerinnerung**, direkt in der Mitteilung abhakbar |
 | 🏋️ **Training** | eigener Tab: heutige Einheit, Empfehlungen passend zu Ziel und Aktivität, neun fertige Programme. **Rückmeldung nach jeder Einheit** (zu leicht / genau richtig / zu schwer) passt die nächste Einheit an – mit Claude konkret auf Basis von Verlauf und eingetragenen Sätzen |
 | 🔔 **Erinnerungen** | Motivierende Sprüche morgens (und optional abends) – jeden Tag ein anderer, persönlich mit Name, Serie und Ziel; Trinkerinnerung mit wechselnden Texten; tägliche Coach-Erinnerung |
@@ -72,6 +73,7 @@ Danach `http://<server-ip>:8080` im Browser öffnen: Dort steht der Kopplungscod
 | `KK_MODEL` | Claude-Modell für Coach, Fotos, Analyse und Training (Standard: `claude-opus-5-5`; günstiger: `claude-sonnet-5-5` oder `claude-haiku-5-5`) |
 | `KK_MODEL_SMALL` | kleines Modell für die täglichen Motivationssprüche (Standard: `claude-haiku-5-5`) |
 | `KK_TTS_WAKE_MAC`, `KK_TTS_WAKE_ADDR` | Sprach-PC per Wake-on-LAN wecken, wenn ein Coach startet (MAC-Adresse und Broadcast-Ziel, z. B. `192.168.72.255:9`) |
+| `KK_REELKOCH_URL`, `KK_REELKOCH_TOKEN` | optional: Adresse und API-Token von [Reelkoch](https://github.com/DrdotHouse2106/Reelkoch) (Token unter Reelkoch → Konto) – Rezepte aus Reel-Links |
 | `KK_TTS_URL`, `KK_TTS_DIR`, `KK_TTS_VOICES` | Sprachdienste (Piper/Kartoffelbox, durch Komma getrennt, der Reihe nach), Ordner für vorab gerenderte und zwischengespeicherte Sätze, Stimme je Coach-Stil (siehe `tools/tts/LIESMICH.md`) |
 | `KK_TELEMETRY` | `off` schaltet das Weiterleiten anonymer Verbesserungsdaten an die Entwickler ab (nur relevant, wenn Nutzer es in der App freiwillig einschalten) |
 | `KK_TELEMETRY_URL` | Ziel für anonyme Verbesserungsdaten (Standard: Hauptserver des Projekts) |
@@ -249,6 +251,7 @@ Team-ID in `app/Local.xcconfig` eintragen, oben das iPhone als Ziel wählen und 
 | Übungen | `exercises` | reps, weight (+ exercise) | Eingabe |
 | Getränke | `water` | hydration, kcal, caffeine, alcohol (+ drink, name, ml) | Eingabe, Schnell-Buttons, Trinkerinnerung |
 | Training | `training` | minutes (+ name) | Eingabe (Beispielmodul) |
+| Rezepte | `recipes` | – (title, servings, ingredients, steps, notes, source, kcal/protein/carbs/fat pro Portion) | Reel-Link über Reelkoch, Rezepttext über Claude |
 
 Module lassen sich in den Einstellungen ein- und ausschalten. Ein neues Modul ist eine neue Datei in App und Server plus ein Listeneintrag – siehe [CLAUDE.md](CLAUDE.md).
 

@@ -28,6 +28,7 @@ import UIKit
 
     var aiAvailable = false
     var ttsAvailable = false
+    var reelkochAvailable = false
     var serverVersion = ""
     var syncError: String?
     var pendingLink: URL?
@@ -65,7 +66,7 @@ import UIKit
         self.server = api.server
         self.token = token
         aiAvailable = status.ai
-            ttsAvailable = status.tts ?? false
+            ttsAvailable = status.tts ?? false; reelkochAvailable = status.reelkoch ?? false
         serverVersion = status.version
         if let data = try? await self.api.call("GET", "/api/profile"), let p = try? JSONDecoder().decode(Profile.self, from: data) {
             syncing = true
@@ -113,7 +114,7 @@ import UIKit
         do {
             let status = try await api.status()
             aiAvailable = status.ai
-            ttsAvailable = status.tts ?? false
+            ttsAvailable = status.tts ?? false; reelkochAvailable = status.reelkoch ?? false
             serverVersion = status.version
             if localOnly { syncError = nil; return }  // Daten bleiben auf dem iPhone
 

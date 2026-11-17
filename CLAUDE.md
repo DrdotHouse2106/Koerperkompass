@@ -22,7 +22,7 @@ server/                  Go-Server, eine Binary, SQLite (modernc.org/sqlite, ohn
   applog.go              Erweitertes Protokoll der Testphase (POST/GET /api/log, nie weitergeleitet)
   friends.go             Freundschaften, auch zwischen Servern (Föderation über /api/fed/*)
   modules.go             Modul-Schema + Liste, generische Zusammenfassung
-  module_*.go            ein File pro Modul
+  module_*.go            ein File pro Modul (module_recipes.go: Rezepte, Reel-Links über Reelkoch)
 .github/workflows/       server.yml (Docker → ghcr.io), testflight.yml (iOS → TestFlight)
 ```
 

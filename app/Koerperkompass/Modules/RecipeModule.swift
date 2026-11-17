@@ -1,0 +1,371 @@
+import SwiftData
+import SwiftUI
+
+/// Rezepte: eigene Rezeptsammlung – aus Reel-Links (über Reelkoch auf dem eigenen Server) oder eingefügtem Text.
+/// Ein Eintrag je Rezept; „Gegessen“ trägt Portionen mit Nährwerten in die Ernährung ein. Der Coach kennt die Rezepte.
+struct RecipeModule: AppModule {
+    let id = "recipes"
+    let name: LocalizedStringResource = "Rezepte"
+    let symbol = "book.closed.fill"
+    let fields: [Field] = []
+
+    func tile(_ entries: [Entry]) -> AnyView { AnyView(RecipeTile(entries: entries)) }
+    func detail(_ entries: [Entry]) -> AnyView { AnyView(RecipeList(entries: entries)) }
+}
+
+extension Entry {
+    var ingredients: [(amount: String, name: String)] {
+        (values["ingredients"] as? [[String: Any]] ?? []).map { ($0["amount"] as? String ?? "", $0["name"] as? String ?? "") }
+    }
+    var steps: [String] { values["steps"] as? [String] ?? [] }
+    /// Kurzform für den Coach: „Hähnchen-Curry (520 kcal, 45 g Eiweiß pro Portion)“
+    var recipeLine: String {
+        let n = [num("kcal").map { "\($0.whole) kcal" }, num("protein").map { "\($0.whole) g Eiweiß" }].compactMap { $0 }
+        return (text("title") ?? "") + (n.isEmpty ? "" : " (\(n.joined(separator: ", ")) pro Portion)")
+    }
+}
+
+private struct RecipeTile: View {
+    let entries: [Entry]
+    var body: some View {
+        TileCard(module: RecipeModule()) {
+            Text("\(entries.count) Rezepte").font(.headline)
+            if let last = entries.max(by: { $0.updated < $1.updated }) {
+                Text(last.text("title") ?? "").font(.caption).foregroundStyle(.secondary).lineLimit(2)
+            }
+        }
+    }
+}
+
+/// Laufende Reel-Aufträge (Reelkoch-id → Link), überstehen das Schließen der App
+private enum RecipeJobs {
+    static var all: [String: String] {
+        get { (UserDefaults.standard.dictionary(forKey: "recipeJobs") as? [String: String]) ?? [:] }
+        set { UserDefaults.standard.set(newValue, forKey: "recipeJobs") }
+    }
+}
+
+private struct RecipeList: View {
+    let entries: [Entry]
+    @Environment(AppState.self) private var state
+    @Environment(\.modelContext) private var context
+    @State private var search = ""
+    @State private var jobs = RecipeJobs.all
+    @State private var jobStatus: [String: String] = [:]
+    @State private var error: String?
+    @State private var addLink = false
+    @State private var addText = false
+    @State private var fromReelkoch = false
+
+    var body: some View {
+        let list = entries.filter { search.isEmpty || ($0.text("title") ?? "").localizedCaseInsensitiveContains(search) }
+            .sorted { ($0.text("title") ?? "") < ($1.text("title") ?? "") }
+        List {
+            if !jobs.isEmpty {
+                Section("Wird erstellt") {
+                    ForEach(jobs.keys.sorted(), id: \.self) { id in
+                        HStack {
+                            ProgressView()
+                            VStack(alignment: .leading) {
+                                Text(jobs[id] ?? "").font(.caption).lineLimit(1)
+                                Text(jobStatus[id] ?? String(localized: "wartet")).font(.caption2).foregroundStyle(.secondary)
+                            }
+                        }
+                    }
+                    .onDelete { idx in
+                        let keys = jobs.keys.sorted()
+                        for i in idx { jobs[keys[i]] = nil }
+                        RecipeJobs.all = jobs
+                    }
+                }
+            }
+            if let error { Text(error).foregroundStyle(.red).font(.caption) }
+            Section {
+                ForEach(list) { e in
+                    NavigationLink { RecipeView(entry: e) } label: {
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(e.text("title") ?? "–").font(.headline)
+                            if let k = e.num("kcal") {
+                                Text("\(k.whole) kcal · \((e.num("protein") ?? 0).whole) g Eiweiß pro Portion").font(.caption).foregroundStyle(.secondary)
+                            }
+                        }
+                    }
+                }
+                .onDelete { idx in idx.map { list[$0] }.forEach { state.delete($0, context) } }
+            } footer: {
+                if entries.isEmpty {
+                    Text("Füge oben rechts einen Reel-Link (Facebook, Instagram, TikTok) oder einen Rezepttext ein. Dein Coach schlägt dir dann Rezepte aus deiner Sammlung vor, die zu deinem Tag passen.")
+                }
+            }
+        }
+        .searchable(text: $search, prompt: Text("Rezept suchen"))
+        .toolbar {
+            Menu {
+                if state.reelkochAvailable {
+                    Button("Reel-Link einfügen", systemImage: "link") { addLink = true }
+                    Button("Aus Reelkoch übernehmen", systemImage: "square.and.arrow.down") { fromReelkoch = true }
+                }
+                if state.aiAvailable { Button("Rezepttext einfügen", systemImage: "doc.text") { addText = true } }
+            } label: { Image(systemName: "plus") }
+            .disabled(!state.reelkochAvailable && !state.aiAvailable)
+        }
+        .sheet(isPresented: $addLink) { ReelLinkSheet { id, url in jobs[id] = url; RecipeJobs.all = jobs } }
+        .sheet(isPresented: $addText) { RecipeTextSheet() }
+        .sheet(isPresented: $fromReelkoch) { ReelkochSheet { id, url in jobs[id] = url; RecipeJobs.all = jobs } }
+        .task(id: jobs.count) { await poll() }
+    }
+
+    /// Laufende Aufträge alle paar Sekunden abfragen, fertige Rezepte speichern
+    private func poll() async {
+        while !jobs.isEmpty && !Task.isCancelled {
+            for id in jobs.keys.sorted() {
+                do {
+                    let r = try await state.api.object("GET", "/api/recipes/reel/\(id)?nutrition=\(state.aiConsent ? 1 : 0)")
+                    let status = r["status"] as? String ?? ""
+                    if var recipe = r["recipe"] as? [String: Any] {
+                        if recipe["source"] == nil { recipe["source"] = jobs[id] }
+                        context.upsert(id: "reel-\(id)", module: "recipes", date: Day.today, values: recipe, dirty: true)
+                        state.changed(context)
+                        jobs[id] = nil
+                    } else if status == "Fehler" {
+                        error = String(localized: "Rezept konnte nicht erstellt werden: \(r["fehler"] as? String ?? "")")
+                        jobs[id] = nil
+                    } else {
+                        jobStatus[id] = status
+                    }
+                } catch {
+                    self.error = error.localizedDescription
+                }
+            }
+            RecipeJobs.all = jobs
+            try? await Task.sleep(for: .seconds(5))
+        }
+    }
+}
+
+/// Reel-Link einfügen → Auftrag bei Reelkoch
+private struct ReelLinkSheet: View {
+    let added: (String, String) -> Void
+    @Environment(AppState.self) private var state
+    @Environment(\.dismiss) private var dismiss
+    @State private var url = ""
+    @State private var busy = false
+    @State private var error: String?
+
+    var body: some View {
+        NavigationStack {
+            Form {
+                Section {
+                    TextField("https://www.facebook.com/reel/…", text: $url).keyboardType(.URL).textInputAutocapitalization(.never)
+                    Button("Aus Zwischenablage einfügen", systemImage: "doc.on.clipboard") { url = UIPasteboard.general.string ?? url }
+                    if let error { Text(error).foregroundStyle(.red) }
+                } footer: {
+                    Text("Reelkoch auf deinem Server lädt das Reel, schreibt den Ton mit und liest das Rezept aus Beschreibung, Ton und Bildern. Das dauert meist 1–2 Minuten – du kannst die App solange schließen.")
+                }
+            }
+            .navigationTitle("Reel-Link")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) { Button("Abbrechen") { dismiss() } }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Erstellen") { send() }.disabled(busy || !url.lowercased().hasPrefix("http"))
+                }
+            }
+        }
+    }
+
+    private func send() {
+        busy = true
+        Task {
+            defer { busy = false }
+            do {
+                let r = try await state.api.object("POST", "/api/recipes/reel", json: ["url": url.trimmingCharacters(in: .whitespaces)])
+                if let id = r["id"] as? String { added(id, url); dismiss() }
+            } catch { self.error = error.localizedDescription }
+        }
+    }
+}
+
+/// Fertige Rezepte aus Reelkoch übernehmen
+private struct ReelkochSheet: View {
+    let added: (String, String) -> Void
+    @Environment(AppState.self) private var state
+    @Environment(\.dismiss) private var dismiss
+    @Query(filter: #Predicate<Entry> { $0.module == "recipes" }) private var existing: [Entry]
+    @State private var list: [[String: Any]] = []
+    @State private var error: String?
+
+    var body: some View {
+        NavigationStack {
+            List {
+                if let error { Text(error).foregroundStyle(.red) }
+                ForEach(list.indices, id: \.self) { i in
+                    let id = list[i]["id"] as? String ?? "", have = existing.contains { $0.id == "reel-\(id)" && !$0.deleted }
+                    Button {
+                        added(id, list[i]["url"] as? String ?? "")
+                        list.remove(at: i)
+                    } label: {
+                        HStack {
+                            Text(list[i]["title"] as? String ?? "–")
+                            Spacer()
+                            Image(systemName: have ? "checkmark.circle.fill" : "plus.circle").foregroundStyle(have ? .green : .accentColor)
+                        }
+                    }
+                    .disabled(have)
+                }
+            }
+            .navigationTitle("Aus Reelkoch")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Fertig") { dismiss() } } }
+            .task {
+                do {
+                    let data = try await state.api.call("GET", "/api/recipes/reelkoch")
+                    list = (try JSONSerialization.jsonObject(with: data) as? [[String: Any]]) ?? []
+                } catch { self.error = error.localizedDescription }
+            }
+        }
+    }
+}
+
+/// Rezepttext einfügen (z. B. Beschreibung eines Reels) → Claude strukturiert ihn
+private struct RecipeTextSheet: View {
+    @Environment(AppState.self) private var state
+    @Environment(\.modelContext) private var context
+    @Environment(\.dismiss) private var dismiss
+    @State private var text = ""
+    @State private var busy = false
+    @State private var error: String?
+    @State private var askConsent = false
+
+    var body: some View {
+        NavigationStack {
+            Form {
+                Section {
+                    TextEditor(text: $text).frame(minHeight: 200)
+                    Button("Aus Zwischenablage einfügen", systemImage: "doc.on.clipboard") { text = UIPasteboard.general.string ?? text }
+                    if let error { Text(error).foregroundStyle(.red) }
+                } footer: { Text("Claude macht daraus ein Rezept mit Zutaten, Schritten und geschätzten Nährwerten pro Portion.") }
+            }
+            .navigationTitle("Rezepttext")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) { Button("Abbrechen") { dismiss() } }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button(busy ? LocalizedStringKey("Wird erstellt …") : "Erstellen") {
+                        if state.aiConsent { send() } else { askConsent = true }
+                    }
+                    .disabled(busy || text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                }
+            }
+            .alert("Text an Claude senden?", isPresented: $askConsent) {
+                Button("Zustimmen") { state.aiConsent = true; send() }
+                Button("Abbrechen", role: .cancel) {}
+            } message: {
+                Text("Der Rezepttext wird über deinen Server an die Claude API (Anthropic) gesendet.")
+            }
+        }
+    }
+
+    private func send() {
+        busy = true
+        error = nil
+        Task {
+            defer { busy = false }
+            do {
+                let r = try await state.api.object("POST", "/api/ai/recipe", json: ["text": text, "lang": Locale.current.language.languageCode?.identifier ?? "de"])
+                if let e = r["error"] as? String { error = e; return }
+                context.insert(Entry(module: "recipes", values: r))
+                state.changed(context)
+                dismiss()
+            } catch { self.error = error.localizedDescription }
+        }
+    }
+}
+
+/// Rezept ansehen: Nährwerte, Zutaten, Schritte, Quelle – und „Gegessen“
+private struct RecipeView: View {
+    let entry: Entry
+    @State private var eat = false
+
+    var body: some View {
+        List {
+            Section {
+                Text(entry.text("title") ?? "").font(.title2.bold())
+                let info = [entry.text("servings").flatMap { $0.isEmpty ? nil : String(localized: "\($0) Portionen") },
+                            entry.text("time").flatMap { $0.isEmpty ? nil : $0 }].compactMap { $0 }
+                if !info.isEmpty { Text(info.joined(separator: " · ")).foregroundStyle(.secondary) }
+                if let k = entry.num("kcal") {
+                    Text("Pro Portion: \(k.whole) kcal · Eiweiß \((entry.num("protein") ?? 0).whole) g · KH \((entry.num("carbs") ?? 0).whole) g · Fett \((entry.num("fat") ?? 0).whole) g")
+                        .font(.callout)
+                    Text("Geschätzte Werte – keine ärztliche Beratung.").font(.caption2).foregroundStyle(.secondary)
+                }
+                Button("Gegessen", systemImage: "fork.knife") { eat = true }.bold()
+            }
+            Section("Zutaten") {
+                ForEach(Array(entry.ingredients.enumerated()), id: \.offset) { _, z in
+                    HStack(alignment: .top) {
+                        Text(z.amount).bold().frame(minWidth: 70, alignment: .leading)
+                        Text(z.name)
+                    }
+                }
+            }
+            Section("Zubereitung") {
+                ForEach(Array(entry.steps.enumerated()), id: \.offset) { i, s in
+                    HStack(alignment: .top) { Text("\(i + 1).").bold(); Text(s) }
+                }
+            }
+            if let n = entry.text("notes"), !n.isEmpty { Section("Hinweise") { Text(n) } }
+            if let s = entry.text("source"), let url = URL(string: s) {
+                Section { Link("Original ansehen", destination: url) }
+            }
+        }
+        .themed()
+        .navigationTitle(Text(entry.text("title") ?? ""))
+        .navigationBarTitleDisplayMode(.inline)
+        .sheet(isPresented: $eat) { EatSheet(entry: entry) }
+    }
+}
+
+/// Portionen eines Rezepts in die Ernährung eintragen
+private struct EatSheet: View {
+    let entry: Entry
+    @Environment(AppState.self) private var state
+    @Environment(\.modelContext) private var context
+    @Environment(\.dismiss) private var dismiss
+    @State private var portions = 1.0
+    @State private var meal = Meal.now
+
+    var body: some View {
+        NavigationStack {
+            Form {
+                Stepper("\(portions.short) Portionen", value: $portions, in: 0.5...6, step: 0.5)
+                Picker("Mahlzeit", selection: $meal) { ForEach(Meal.allCases) { Text($0.title).tag($0) } }
+                if entry.num("kcal") == nil {
+                    Text("Für dieses Rezept gibt es keine Nährwerte – es wird nur der Name eingetragen.").font(.caption).foregroundStyle(.secondary)
+                } else {
+                    Text("\(((entry.num("kcal") ?? 0) * portions).whole) kcal").bold()
+                }
+            }
+            .navigationTitle("Gegessen")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) { Button("Abbrechen") { dismiss() } }
+                ToolbarItem(placement: .confirmationAction) { Button("Eintragen") { save() } }
+            }
+        }
+        .presentationDetents([.medium])
+    }
+
+    private func save() {
+        let name = (entry.text("title") ?? "") + (portions == 1 ? "" : " (\(portions.short) Portionen)")
+        var v: [String: Any] = ["meal": meal.rawValue, "name": name]
+        for k in ["kcal", "protein", "carbs", "fat"] { if let x = entry.num(k) { v[k] = x * portions } }
+        context.insert(Entry(module: "nutrition", values: v))
+        if state.healthEnabled {
+            Health.saveMeal(name: name, kcal: v["kcal"] as? Double ?? 0, protein: v["protein"] as? Double ?? 0,
+                            carbs: v["carbs"] as? Double ?? 0, fat: v["fat"] as? Double ?? 0)
+        }
+        state.changed(context)
+        dismiss()
+    }
+}
