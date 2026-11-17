@@ -4451,6 +4451,16 @@
         }
       }
     },
+    "Link einfügen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paste link"
+          }
+        }
+      }
+    },
     "Link teilen": {
       "localizations": {
         "en": {
@@ -5517,6 +5527,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Rank"
+          }
+        }
+      }
+    },
+    "Reel oder Video (Facebook, Instagram, TikTok, YouTube): Reelkoch auf deinem Server liest das Rezept aus Beschreibung, Ton und Bildern – meist 1–2 Minuten, du kannst die App solange schließen. Rezeptseite (z. B. Chefkoch): Das Rezept wird direkt übernommen; fehlen dort Rezeptdaten, liest Claude die Seite (nur mit deiner Zustimmung).": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reel or video (Facebook, Instagram, TikTok, YouTube): Reelkoch on your server reads the recipe from description, audio and images – usually 1–2 minutes, you can close the app meanwhile. Recipe website (e.g. Chefkoch): the recipe is taken over directly; if the page has no recipe data, Claude reads the page (only with your consent)."
           }
         }
       }

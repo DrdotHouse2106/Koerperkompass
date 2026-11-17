@@ -101,13 +101,13 @@ private struct RecipeList: View {
         .searchable(text: $search, prompt: Text("Rezept suchen"))
         .toolbar {
             Menu {
+                Button("Link einfügen", systemImage: "link") { addLink = true }
                 if state.reelkochAvailable {
-                    Button("Reel-Link einfügen", systemImage: "link") { addLink = true }
                     Button("Aus Reelkoch übernehmen", systemImage: "square.and.arrow.down") { fromReelkoch = true }
                 }
                 if state.aiAvailable { Button("Rezepttext einfügen", systemImage: "doc.text") { addText = true } }
             } label: { Image(systemName: "plus") }
-            .disabled(!state.reelkochAvailable && !state.aiAvailable)
+            .disabled(state.demo)
         }
         .sheet(isPresented: $addLink) { ReelLinkSheet { id, url in jobs[id] = url; RecipeJobs.all = jobs } }
         .sheet(isPresented: $addText) { RecipeTextSheet() }
@@ -143,10 +143,11 @@ private struct RecipeList: View {
     }
 }
 
-/// Reel-Link einfügen → Auftrag bei Reelkoch
+/// Link einfügen: Reel/Video → Auftrag bei Reelkoch, Rezeptseite → Rezept sofort (eingebettete Rezeptdaten, sonst Claude)
 private struct ReelLinkSheet: View {
     let added: (String, String) -> Void
     @Environment(AppState.self) private var state
+    @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
     @State private var url = ""
     @State private var busy = false
@@ -156,14 +157,14 @@ private struct ReelLinkSheet: View {
         NavigationStack {
             Form {
                 Section {
-                    TextField("https://www.facebook.com/reel/…", text: $url).keyboardType(.URL).textInputAutocapitalization(.never)
+                    TextField("https://…", text: $url).keyboardType(.URL).textInputAutocapitalization(.never)
                     Button("Aus Zwischenablage einfügen", systemImage: "doc.on.clipboard") { url = UIPasteboard.general.string ?? url }
                     if let error { Text(error).foregroundStyle(.red) }
                 } footer: {
-                    Text("Reelkoch auf deinem Server lädt das Reel, schreibt den Ton mit und liest das Rezept aus Beschreibung, Ton und Bildern. Das dauert meist 1–2 Minuten – du kannst die App solange schließen.")
+                    Text("Reel oder Video (Facebook, Instagram, TikTok, YouTube): Reelkoch auf deinem Server liest das Rezept aus Beschreibung, Ton und Bildern – meist 1–2 Minuten, du kannst die App solange schließen. Rezeptseite (z. B. Chefkoch): Das Rezept wird direkt übernommen; fehlen dort Rezeptdaten, liest Claude die Seite (nur mit deiner Zustimmung).")
                 }
             }
-            .navigationTitle("Reel-Link")
+            .navigationTitle("Link einfügen")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) { Button("Abbrechen") { dismiss() } }
@@ -179,8 +180,18 @@ private struct ReelLinkSheet: View {
         Task {
             defer { busy = false }
             do {
-                let r = try await state.api.object("POST", "/api/recipes/reel", json: ["url": url.trimmingCharacters(in: .whitespaces)])
-                if let id = r["id"] as? String { added(id, url); dismiss() }
+                let r = try await state.api.object("POST", "/api/recipes/link", json: [
+                    "url": url.trimmingCharacters(in: .whitespaces), "ai": state.aiConsent,
+                    "lang": Locale.current.language.languageCode?.identifier ?? "de",
+                ])
+                if let recipe = r["recipe"] as? [String: Any] {
+                    context.insert(Entry(module: "recipes", values: recipe))
+                    state.changed(context)
+                    dismiss()
+                } else if let id = r["id"] as? String {
+                    added(id, url)
+                    dismiss()
+                }
             } catch { self.error = error.localizedDescription }
         }
     }
@@ -290,6 +301,10 @@ private struct RecipeView: View {
     var body: some View {
         List {
             Section {
+                if let img = entry.text("image"), let u = URL(string: img) {
+                    AsyncImage(url: u) { $0.resizable().scaledToFill() } placeholder: { Color.clear }
+                        .frame(maxHeight: 220).clipped().listRowInsets(EdgeInsets())
+                }
                 Text(entry.text("title") ?? "").font(.title2.bold())
                 let info = [entry.text("servings").flatMap { $0.isEmpty ? nil : String(localized: "\($0) Portionen") },
                             entry.text("time").flatMap { $0.isEmpty ? nil : $0 }].compactMap { $0 }

@@ -2,11 +2,17 @@ package main
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"io"
+	"net"
 	"net/http"
+	"net/url"
+	"regexp"
+	"strconv"
 	"strings"
+	"syscall"
 	"time"
 
 	"github.com/anthropics/anthropic-sdk-go/v2"
@@ -20,7 +26,9 @@ import (
 // Eingefügter Text (z. B. Beschreibung eines Reels) wird direkt mit Claude strukturiert.
 var recipes = Module{ID: "recipes", Name: "Rezepte", Symbol: "book.closed.fill", Fields: []Field{}}
 
-func reelkochEnabled() bool { return env("KK_REELKOCH_URL", "") != "" && env("KK_REELKOCH_TOKEN", "") != "" }
+func reelkochEnabled() bool {
+	return env("KK_REELKOCH_URL", "") != "" && env("KK_REELKOCH_TOKEN", "") != ""
+}
 
 var reelkochClient = &http.Client{Timeout: 30 * time.Second}
 
@@ -141,11 +149,12 @@ func recipeReelList(w http.ResponseWriter, r *http.Request) {
 
 // recipeNutrition schätzt Nährwerte pro Portion (kleines Modell, Bruchteile eines Cents).
 func recipeNutrition(r *http.Request, recipe map[string]any) (map[string]any, error) {
+	ctx := r.Context()
 	b, _ := json.Marshal(recipe)
 	system := `Schätze realistische Nährwerte pro Portion für dieses Rezept (deutsche Lebensmittel).
 Sind keine Portionen angegeben, nimm eine übliche Anzahl an. Antworte ausschließlich mit JSON:
 {"servings": "Anzahl Portionen als Text", "kcal": Zahl, "protein": g, "carbs": g, "fat": g}`
-	out, err := askModel(r.Context(), env("KK_MODEL_SMALL", "claude-haiku-5-5"), system, anthropic.BetaOutputConfigEffortLow,
+	out, err := askModel(ctx, env("KK_MODEL_SMALL", "claude-haiku-5-5"), system, anthropic.BetaOutputConfigEffortLow,
 		[]anthropic.BetaMessageParam{anthropic.NewBetaUserMessage(anthropic.NewBetaTextBlock(string(b)))})
 	if err != nil {
 		return nil, err
@@ -174,19 +183,24 @@ func aiRecipe(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Text fehlt oder ist zu lang", http.StatusBadRequest)
 		return
 	}
-	system := `Mach aus dem Text ein Rezept. Erfinde nichts: fehlende Mengen bleiben leer oder so, wie genannt („etwas“, „1 Schuss“).
-Schätze zusätzlich realistische Nährwerte pro Portion (deutsche Lebensmittel; ohne Portionsangabe eine übliche Anzahl annehmen).
-Antworte ausschließlich mit JSON:
-{"title": "…", "servings": "…", "time": "… oder leer", "ingredients": [{"amount": "…", "name": "…"}], "steps": ["…"],
- "notes": "kurze Tipps oder leer", "kcal": Zahl, "protein": g, "carbs": g, "fat": g}
-Sprache: ` + langName(req.Lang) + `. Ist kein Rezept erkennbar, gib {"error": "kurze Begründung"} zurück.`
-	out, err := askModel(r.Context(), env("KK_MODEL_SMALL", "claude-haiku-5-5"), system, anthropic.BetaOutputConfigEffortLow,
-		[]anthropic.BetaMessageParam{anthropic.NewBetaUserMessage(anthropic.NewBetaTextBlock(req.Text))})
+	out, err := recipeFromText(r.Context(), req.Text, req.Lang)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadGateway)
 		return
 	}
 	writeObject(w, out)
+}
+
+// recipeFromText lässt Claude (kleines Modell) aus beliebigem Text ein Rezept mit Nährwerten machen.
+func recipeFromText(ctx context.Context, text, lang string) (string, error) {
+	system := `Mach aus dem Text ein Rezept. Erfinde nichts: fehlende Mengen bleiben leer oder so, wie genannt („etwas“, „1 Schuss“).
+Schätze zusätzlich realistische Nährwerte pro Portion (deutsche Lebensmittel; ohne Portionsangabe eine übliche Anzahl annehmen).
+Antworte ausschließlich mit JSON:
+{"title": "…", "servings": "…", "time": "… oder leer", "ingredients": [{"amount": "…", "name": "…"}], "steps": ["…"],
+ "notes": "kurze Tipps oder leer", "kcal": Zahl, "protein": g, "carbs": g, "fat": g}
+Sprache: ` + langName(lang) + `. Ist kein Rezept erkennbar, gib {"error": "kurze Begründung"} zurück.`
+	return askModel(ctx, env("KK_MODEL_SMALL", "claude-haiku-5-5"), system, anthropic.BetaOutputConfigEffortLow,
+		[]anthropic.BetaMessageParam{anthropic.NewBetaUserMessage(anthropic.NewBetaTextBlock(text))})
 }
 
 func deref(s *string) string {
@@ -201,4 +215,275 @@ func firstNonEmpty(a, b string) string {
 		return a
 	}
 	return b
+}
+
+// ---- Beliebiger Link: Video/Reel → Reelkoch, Webseite → eingebettete Rezeptdaten (schema.org), sonst Claude ----
+
+// Hosts, deren Links als Video an Reelkoch gehen (dort ggf. ERLAUBTE_HOSTS passend erweitern)
+func videoHost(u *url.URL) bool {
+	host := strings.ToLower(u.Hostname())
+	for _, h := range strings.Split(env("KK_REELKOCH_HOSTS", "facebook.com,fb.watch,instagram.com,tiktok.com,youtube.com,youtu.be"), ",") {
+		if h = strings.TrimSpace(h); h != "" && (host == h || strings.HasSuffix(host, "."+h)) {
+			return true
+		}
+	}
+	return false
+}
+
+// POST /api/recipes/link {url, ai, lang} → {"kind":"video","id":…} (Auftrag bei Reelkoch) oder {"kind":"web","recipe":{…}}
+func recipeLink(w http.ResponseWriter, r *http.Request) {
+	var req struct {
+		URL  string
+		AI   bool // Zustimmung: Claude darf Seite lesen bzw. Nährwerte schätzen
+		Lang string
+	}
+	if !readJSON(w, r, &req) {
+		return
+	}
+	u, err := url.Parse(strings.TrimSpace(req.URL))
+	if err != nil || (u.Scheme != "https" && u.Scheme != "http") || u.Host == "" {
+		http.Error(w, "Kein gültiger Link", http.StatusBadRequest)
+		return
+	}
+	if videoHost(u) {
+		if !requireReelkoch(w) {
+			return
+		}
+		var res map[string]any
+		if code, err := reelkoch("POST", "/api/rezept", map[string]string{"url": u.String()}, &res); err != nil {
+			http.Error(w, err.Error(), code)
+			return
+		}
+		writeJSON(w, map[string]any{"kind": "video", "id": res["id"], "status": res["status"]})
+		return
+	}
+	page, err := fetchPage(u.String())
+	if err != nil {
+		http.Error(w, "Seite nicht abrufbar: "+err.Error(), http.StatusBadGateway)
+		return
+	}
+	recipe := recipeFromJSONLD(page)
+	if recipe == nil {
+		if !req.AI || !aiEnabled() {
+			http.Error(w, "Auf der Seite sind keine Rezeptdaten eingebettet. Mit Zustimmung zu Claude kann die Seite gelesen werden.", http.StatusUnprocessableEntity)
+			return
+		}
+		out, err := recipeFromText(r.Context(), pageText(page), req.Lang)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadGateway)
+			return
+		}
+		i, j := strings.Index(out, "{"), strings.LastIndex(out, "}")
+		if i < 0 || j < i || json.Unmarshal([]byte(out[i:j+1]), &recipe) != nil {
+			http.Error(w, "Antwort nicht verwertbar", http.StatusBadGateway)
+			return
+		}
+		if e, ok := recipe["error"].(string); ok {
+			http.Error(w, e, http.StatusUnprocessableEntity)
+			return
+		}
+	} else if recipe["kcal"] == nil && req.AI && aiEnabled() {
+		if n, err := recipeNutrition(r, recipe); err == nil {
+			for k, v := range n {
+				recipe[k] = v
+			}
+		}
+	}
+	recipe["source"] = u.String()
+	writeJSON(w, map[string]any{"kind": "web", "recipe": recipe})
+}
+
+// fetchPage lädt eine öffentliche Webseite – nie Adressen im eigenen Netz (Schutz vor Missbrauch des Servers)
+var pageClient = &http.Client{Timeout: 20 * time.Second, Transport: &http.Transport{
+	DialContext: (&net.Dialer{Timeout: 5 * time.Second, Control: func(_, address string, _ syscall.RawConn) error {
+		host, _, _ := net.SplitHostPort(address)
+		if ip := net.ParseIP(host); ip == nil || ip.IsLoopback() || ip.IsPrivate() || ip.IsLinkLocalUnicast() || ip.IsUnspecified() {
+			return fmt.Errorf("Adresse im lokalen Netz nicht erlaubt")
+		}
+		return nil
+	}}).DialContext,
+}}
+
+func fetchPage(u string) (string, error) {
+	req, _ := http.NewRequest("GET", u, nil)
+	req.Header.Set("User-Agent", "Mozilla/5.0 (compatible; Koerperkompass)")
+	req.Header.Set("Accept-Language", "de,en;q=0.5")
+	resp, err := pageClient.Do(req)
+	if err != nil {
+		return "", err
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode >= 300 {
+		return "", fmt.Errorf("HTTP %d", resp.StatusCode)
+	}
+	b, err := io.ReadAll(io.LimitReader(resp.Body, 4<<20))
+	return string(b), err
+}
+
+var (
+	ldRe    = regexp.MustCompile(`(?is)<script[^>]*application/ld\+json[^>]*>(.*?)</script>`)
+	dropRe  = regexp.MustCompile(`(?is)<(script|style|noscript|svg)[^>]*>.*?</(script|style|noscript|svg)>`)
+	tagRe   = regexp.MustCompile(`(?s)<[^>]+>`)
+	spaceRe = regexp.MustCompile(`\s+`)
+	numRe   = regexp.MustCompile(`[\d]+(?:[.,]\d+)?`)
+	// Menge am Anfang einer Zutat: „200 g Mehl“, „1/2 TL Salz“, „2 Eier“
+	amountRe = regexp.MustCompile(`^((?:[\d½¼¾⅓⅔.,/\- ]+)(?:\s*(?:g|kg|mg|ml|l|cl|dl|EL|TL|Msp\.?|Prise[n]?|Pck\.?|Päckchen|Stück|Stk\.?|Dose[n]?|Becher|Bund|Zehe[n]?|Scheibe[n]?|Tasse[n]?|Handvoll|cups?|tbsp|tsp|oz)\b\.?)?)\s+(.+)$`)
+)
+
+// pageText: lesbarer Text einer Seite für Claude (gekürzt)
+func pageText(page string) string {
+	t := spaceRe.ReplaceAllString(tagRe.ReplaceAllString(dropRe.ReplaceAllString(page, " "), " "), " ")
+	if len(t) > 15000 {
+		t = t[:15000]
+	}
+	return strings.TrimSpace(t)
+}
+
+// recipeFromJSONLD liest schema.org/Recipe aus eingebettetem JSON-LD (Chefkoch, Lecker, die meisten Blogs …)
+func recipeFromJSONLD(page string) map[string]any {
+	for _, m := range ldRe.FindAllStringSubmatch(page, -1) {
+		var v any
+		if json.Unmarshal([]byte(strings.TrimSpace(m[1])), &v) != nil {
+			continue
+		}
+		if x := findRecipe(v); x != nil {
+			return mapRecipe(x)
+		}
+	}
+	return nil
+}
+
+func findRecipe(v any) map[string]any {
+	switch t := v.(type) {
+	case []any:
+		for _, x := range t {
+			if r := findRecipe(x); r != nil {
+				return r
+			}
+		}
+	case map[string]any:
+		switch ty := t["@type"].(type) {
+		case string:
+			if ty == "Recipe" {
+				return t
+			}
+		case []any:
+			for _, x := range ty {
+				if x == "Recipe" {
+					return t
+				}
+			}
+		}
+		if g, ok := t["@graph"]; ok {
+			return findRecipe(g)
+		}
+	}
+	return nil
+}
+
+func mapRecipe(x map[string]any) map[string]any {
+	var str func(v any) string
+	str = func(v any) string {
+		switch t := v.(type) {
+		case string:
+			return strings.TrimSpace(htmlText(t))
+		case float64:
+			return strconv.FormatFloat(t, 'f', -1, 64)
+		case []any:
+			if len(t) > 0 {
+				return str(t[0])
+			}
+		}
+		return ""
+	}
+	var ingredients []map[string]string
+	for _, z := range asList(x["recipeIngredient"]) {
+		z := spaceRe.ReplaceAllString(str(z), " ")
+		if m := amountRe.FindStringSubmatch(z); m != nil {
+			ingredients = append(ingredients, map[string]string{"amount": strings.TrimSpace(m[1]), "name": m[2]})
+		} else if z != "" {
+			ingredients = append(ingredients, map[string]string{"amount": "", "name": z})
+		}
+	}
+	var steps []string
+	var addSteps func(v any)
+	addSteps = func(v any) {
+		switch t := v.(type) {
+		case string:
+			for _, s := range strings.Split(htmlText(t), "\n") {
+				if s = strings.TrimSpace(s); s != "" {
+					steps = append(steps, s)
+				}
+			}
+		case []any:
+			for _, s := range t {
+				addSteps(s)
+			}
+		case map[string]any:
+			if l, ok := t["itemListElement"]; ok {
+				addSteps(l)
+			} else {
+				addSteps(t["text"])
+			}
+		}
+	}
+	addSteps(x["recipeInstructions"])
+	r := map[string]any{"title": str(x["name"]), "servings": numRe.FindString(str(x["recipeYield"])),
+		"time": isoDuration(str(x["totalTime"])), "ingredients": ingredients, "steps": steps, "notes": ""}
+	if img := imageURL(x["image"]); img != "" {
+		r["image"] = img
+	}
+	if n, ok := x["nutrition"].(map[string]any); ok {
+		for k, key := range map[string]string{"kcal": "calories", "protein": "proteinContent", "carbs": "carbohydrateContent", "fat": "fatContent"} {
+			if f, err := strconv.ParseFloat(strings.ReplaceAll(numRe.FindString(str(n[key])), ",", "."), 64); err == nil && f > 0 {
+				r[k] = f
+			}
+		}
+	}
+	return r
+}
+
+func asList(v any) []any {
+	if l, ok := v.([]any); ok {
+		return l
+	}
+	if v == nil {
+		return nil
+	}
+	return []any{v}
+}
+
+func imageURL(v any) string {
+	switch t := v.(type) {
+	case string:
+		return t
+	case []any:
+		if len(t) > 0 {
+			return imageURL(t[0])
+		}
+	case map[string]any:
+		return imageURL(t["url"])
+	}
+	return ""
+}
+
+func htmlText(s string) string {
+	s = strings.NewReplacer("<br>", "\n", "<br/>", "\n", "<br />", "\n", "</p>", "\n", "&amp;", "&", "&nbsp;", " ", "&quot;", "\"", "&#39;", "'").Replace(s)
+	return tagRe.ReplaceAllString(s, "")
+}
+
+// isoDuration: „PT1H30M“ → „1 Std. 30 Min.“
+func isoDuration(s string) string {
+	m := regexp.MustCompile(`^P(?:\d+D)?T?(?:(\d+)H)?(?:(\d+)M)?`).FindStringSubmatch(s)
+	if m == nil || (m[1] == "" && m[2] == "") {
+		return ""
+	}
+	var parts []string
+	if m[1] != "" && m[1] != "0" {
+		parts = append(parts, m[1]+" Std.")
+	}
+	if m[2] != "" && m[2] != "0" {
+		parts = append(parts, m[2]+" Min.")
+	}
+	return strings.Join(parts, " ")
 }

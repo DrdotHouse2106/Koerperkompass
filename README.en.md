@@ -20,7 +20,7 @@ There is no central service: the developers run no server and never see any data
 - 🚶 **Activity & sleep** – steps, active energy, sleep, resting heart rate and workouts from Apple Health
 - 🗺 **My plan** – overview: weight path to goal, BMI scale, daily goals, water and training
 - 🏁 **Adventure** – gamification: character card, shareable player card with your own photo, achievements, week strip and 🔥 streak, daily and custom quests, XP, levels, ranks, attributes
-- 📖 **Recipes** – your own recipe collection: paste a reel link (Facebook, Instagram, TikTok) and Reelkoch on your server turns it into a recipe, or paste recipe text. Nutrition per serving, “Eaten” logs servings, the coach suggests matching recipes
+- 📖 **Recipes** – your own recipe collection: paste any link – reels/videos (Facebook, Instagram, TikTok, YouTube) go to Reelkoch on your server, recipe websites are imported directly – or paste recipe text. Nutrition per serving, “Eaten” logs servings, the coach suggests matching recipes
 - 📈 **Exercises** – log sets with reps and weight, progress chart per exercise, tiers bronze → silver → gold → platinum
 - 🏋️ **Training programs** – 4-week programs with training and rest days, XP per session, templates or created by Claude; optional penalties for missed sessions
 - 💧 **Drinks** – water, coffee, tea, beer, wine … with one tap; drinking goal, caffeine, alcohol; drink reminders you can tick off in the notification
