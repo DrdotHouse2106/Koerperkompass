@@ -137,17 +137,34 @@ cd /opt/kk-src/server
 # Wenig RAM (z. B. LXC mit 4 GB, /tmp im RAM): Zwischendateien auf die Platte legen und nur einen Kern nutzen
 export GOCACHE=/var/tmp/go-cache GOTMPDIR=/var/tmp GOMAXPROCS=1
 CGO_ENABLED=0 go build -p 1 -trimpath -ldflags "-s -w -X main.version=$(git rev-parse --short=7 HEAD)" -o /usr/local/bin/koerperkompass .
-mkdir -p /var/lib/koerperkompass
+# Eigener Benutzer statt root; Daten nur für diesen Benutzer lesbar
+useradd --system --home /var/lib/koerperkompass --shell /usr/sbin/nologin koerperkompass
+install -d -m 700 -o koerperkompass -g koerperkompass /var/lib/koerperkompass
+install -m 600 /dev/null /etc/koerperkompass.env   # Schlüssel hier eintragen, z. B. ANTHROPIC_API_KEY=…
 cat > /etc/systemd/system/koerperkompass.service <<'EOF'
 [Unit]
 Description=Körperkompass-Server
 After=network.target
 
 [Service]
+User=koerperkompass
 Environment=KK_DB=/var/lib/koerperkompass/koerperkompass.db
-# Environment=ANTHROPIC_API_KEY=...
+EnvironmentFile=-/etc/koerperkompass.env
 ExecStart=/usr/local/bin/koerperkompass
 Restart=always
+# Abschottung: nur das Datenverzeichnis ist beschreibbar, neue Dateien nur für den Dienst lesbar
+UMask=0077
+NoNewPrivileges=yes
+ProtectSystem=strict
+ReadWritePaths=/var/lib/koerperkompass
+ProtectHome=yes
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
 
 [Install]
 WantedBy=multi-user.target
@@ -256,6 +273,15 @@ Team-ID in `app/Local.xcconfig` eintragen, oben das iPhone als Ziel wählen und 
 Module lassen sich in den Einstellungen ein- und ausschalten. Ein neues Modul ist eine neue Datei in App und Server plus ein Listeneintrag – siehe [CLAUDE.md](CLAUDE.md).
 
 ---
+
+### Daten schützen
+
+Die Datenbank liegt unverschlüsselt im Datenverzeichnis – wer Zugriff auf den Container oder Host hat, kann sie lesen (Tokens sind nur als Hash gespeichert). Darum:
+
+- Dienst **nicht als root** betreiben, Datenverzeichnis `chmod 700` (siehe systemd-Beispiel oben).
+- **Sicherungen verschlüsseln**, besonders wenn sie außer Haus liegen (z. B. Proxmox Backup Server mit Verschlüsselung oder verschlüsselte Archive).
+- Am besten die Platte des Hosts verschlüsseln (Schutz bei Diebstahl).
+- Als Betreiber kannst du technisch die Daten aller Nutzer deines Servers lesen – sag ihnen das. Wer das nicht möchte, nutzt „Nur auf diesem iPhone speichern“.
 
 ## Datenschutz
 

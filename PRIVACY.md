@@ -57,6 +57,7 @@ Unter Einstellungen → Speicherort kannst du „Nur auf diesem iPhone speichern
 
 - Lokal: SwiftData-Zwischenspeicher auf dem iPhone. „Verbindung trennen“ bzw. Löschen der App entfernt ihn.
 - Server: eine SQLite-Datei auf deinem Server. Einträge löschst du in der App; den ganzen Bestand löschst du, indem du die Datei auf dem Server entfernst.
+- Die Datei ist auf dem Server **nicht verschlüsselt**. Wer den Server betreibt oder Zugriff auf ihn hat, kann die Daten aller Nutzer dieses Servers lesen; ebenso Sicherungen des Servers, sofern sie nicht verschlüsselt sind. Nutzt du den Server einer anderen Person, vertraust du ihr deine Daten an – oder du wählst „Nur auf diesem iPhone speichern“.
 - Export und Import als JSON sind jederzeit möglich.
 
 ## Übertragung
@@ -132,6 +133,7 @@ Under Settings → Storage you can turn on “Store only on this iPhone”. Your
 
 - Local: SwiftData cache on the iPhone, removed by “Disconnect” or deleting the app.
 - Server: one SQLite file on your server. Delete entries in the app, or delete the file on the server to remove everything.
+- The file is **not encrypted** on the server. Whoever operates or has access to the server can read the data of all its users, as well as server backups unless they are encrypted. If you use someone else's server, you entrust them with your data – or choose “Store only on this iPhone”.
 - JSON export and import are available at any time.
 
 ## Transmission
