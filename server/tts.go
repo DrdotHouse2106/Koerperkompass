@@ -38,12 +38,13 @@ type ttsVoice struct {
 }
 
 var defaultVoices = map[string]ttsVoice{
-	"sarge": {"de_DE-thorsten_emotional-medium", "angry", 0.85},
-	"drill": {"de_DE-thorsten_emotional-medium", "angry", 0.95},
-	"cheer": {"de_DE-thorsten_emotional-medium", "amused", 0.9},
-	"buddy": {"de_DE-thorsten-high", "", 1.0},
-	"calm":  {"de_DE-thorsten-high", "", 1.15},
-	"coach": {"de_DE-thorsten-high", "", 1.0},
+	"sarge":  {"de_DE-thorsten_emotional-medium", "angry", 0.85},
+	"brutal": {"de_DE-thorsten_emotional-medium", "angry", 0.8},
+	"drill":  {"de_DE-thorsten_emotional-medium", "angry", 0.95},
+	"cheer":  {"de_DE-thorsten_emotional-medium", "amused", 0.9},
+	"buddy":  {"de_DE-thorsten-high", "", 1.0},
+	"calm":   {"de_DE-thorsten-high", "", 1.15},
+	"coach":  {"de_DE-thorsten-high", "", 1.0},
 	// Weitere Stimmen, in der App fest auswählbar (Einstellungen → Stimme)
 	"neutral":   {"de_DE-thorsten_emotional-medium", "neutral", 1.0},
 	"whisper":   {"de_DE-thorsten_emotional-medium", "whisper", 1.0},

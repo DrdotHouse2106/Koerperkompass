@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Kartoffelbox-Sprachdienst für Körperkompass (nur im Heimnetz betreiben).
 
-POST /  {"text": "...", "persona": "sarge|drill|cheer|buddy|calm|coach"}  →  WAV (16 Bit, mono)
+POST /  {"text": "...", "persona": "brutal|sarge|drill|cheer|buddy|calm|coach"}  →  WAV (16 Bit, mono)
 
 Kartoffelbox ist ein deutsches Text-to-Speech-Modell auf Basis von Chatterbox
 (https://huggingface.co/SebastianBodza/Kartoffelbox-v0.1, zugangsbeschränkt: vorher auf Hugging Face anmelden,
@@ -31,6 +31,7 @@ from safetensors.torch import load_file
 # Ausdruck je Coach-Stil: exaggeration = Übertreibung/Emotion, cfg_weight = Tempo/Treue, temperature = Lebendigkeit
 PERSONAS = {
     "sarge": dict(exaggeration=1.2, cfg_weight=0.3, temperature=0.8),  # Drill Sergeant – Hardcore: brüllt
+    "brutal": dict(exaggeration=1.3, cfg_weight=0.3, temperature=0.85),  # Drill Sergeant – Ohne Gnade
     "drill": dict(exaggeration=0.9, cfg_weight=0.3, temperature=0.7),
     "cheer": dict(exaggeration=0.9, cfg_weight=0.4, temperature=0.8),
     "buddy": dict(exaggeration=0.5, cfg_weight=0.4, temperature=0.6),

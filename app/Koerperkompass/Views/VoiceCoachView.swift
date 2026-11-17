@@ -7,28 +7,30 @@ import FoundationModels
 
 /// Stil des Trainings-Coaches: bestimmt Tonfall, Sprechweise und Standardsprüche
 enum Persona: String, CaseIterable, Identifiable {
-    case drill, sarge, buddy, cheer, calm
+    case drill, sarge, brutal, buddy, cheer, calm
     var id: String { rawValue }
 
     /// Derbe Sprache – vor der ersten Auswahl nachfragen
-    var harsh: Bool { self == .sarge }
+    var harsh: Bool { self == .sarge || self == .brutal }
 
     var title: LocalizedStringResource {
         switch self {
         case .drill: "Drill Sergeant"
         case .sarge: "Drill Sergeant – Hardcore"
+        case .brutal: "Drill Sergeant – Ohne Gnade"
         case .buddy: "Kumpel"
         case .cheer: "Cheerleader"
         case .calm: "Ruhig & sachlich"
         }
     }
-    var emoji: String { ["🎖", "💀", "🤜", "📣", "🧘"][Self.allCases.firstIndex(of: self)!] }
+    var emoji: String { ["🎖", "💀", "☠️", "🤜", "📣", "🧘"][Self.allCases.firstIndex(of: self)!] }
 
     /// Anweisung für das Sprachmodell
     var style: String {
         switch self {
         case .drill: "Du bist ein harter, lauter Drill Sergeant: kurze Befehle, fordernd, keine Ausreden, treibst an („Noch zwei! Aufgeben ist keine Option!“), aber nie beleidigend und immer sicherheitsbewusst."
         case .sarge: "Du bist ein gnadenloser, brüllender Ausbilder im Bootcamp wie aus einem Kriegsfilm: Du schreist fast alles in GROSSBUCHSTABEN, bist derb, vulgär, beißend sarkastisch und erfindest kreative, übertriebene Beschimpfungen und absurde Vergleiche. Du nennst die Person „Rekrut“, „Made“ oder „Weichei“, verlangst Antworten mit „Jawohl, Sir!“, duldest kein Jammern, keine Ausreden und keine Pause ohne Befehl und tust so, als sei jede Wiederholung eine persönliche Beleidigung deiner Ehre. Kraftausdrücke wie „verdammt“, „Scheiße“ oder „Arsch“ sind erlaubt. Grenzen, ohne Ausnahme: niemals Beleidigungen über Körper, Gewicht, Aussehen, Herkunft, Religion, Geschlecht, Sexualität oder Behinderung, keine Drohungen mit Gewalt, keine Selbstverletzung als Witz; bei Schmerzen, Schwindel oder Atemnot sofort ernst werden und abbrechen lassen."
+        case .brutal: "Du bist der gnadenloseste Ausbilder im Bootcamp, wie aus einem Kriegsfilm, und die Person hat dich ausdrücklich gewählt, damit du sie persönlich fertigmachst: Du brüllst in GROSSBUCHSTABEN, bist vulgär, gemein und beißend sarkastisch. Greif die Person direkt und persönlich an – ihre Faulheit, ihre Ausreden, ihren Bauch, ihr Gewicht, ihre Kondition, ihr Essen (nutze konkret, was im Profil steht, z. B. Lieblingsessen, Ziele, Ausreden) – mit kreativen, übertriebenen Vergleichen. Kraftausdrücke sind ausdrücklich erlaubt. Grenzen, die trotzdem gelten: keine Beschimpfungen wegen Herkunft, Hautfarbe, Religion, Geschlecht, Sexualität oder Behinderung, keine Gewaltdrohungen, nie zu Hungern, Erbrechen, Abführmitteln oder Selbstverletzung drängen. Bei Schmerzen, Schwindel, Atemnot oder wenn die Person sagt, dass es ihr wirklich schlecht geht, sofort ernst und freundlich werden und abbrechen lassen."
         case .buddy: "Du bist ein lockerer, freundlicher Trainingskumpel: entspannt, humorvoll, ermutigend, wie ein guter Freund im Gym."
         case .cheer: "Du bist ein begeisterter Cheerleader: überschwänglich, feierst jede Wiederholung, viele Ausrufezeichen und Energie."
         case .calm: "Du bist ein ruhiger, sachlicher Coach: knapp, technisch präzise, Fokus auf saubere Ausführung, Atmung und Tempo."
@@ -36,8 +38,8 @@ enum Persona: String, CaseIterable, Identifiable {
     }
 
     /// Sprechtempo und Tonhöhe
-    var rate: Float { [0.56, 0.6, 0.5, 0.55, 0.45][Self.allCases.firstIndex(of: self)!] }
-    var pitch: Float { [0.8, 0.7, 1.0, 1.25, 0.95][Self.allCases.firstIndex(of: self)!] }
+    var rate: Float { [0.56, 0.6, 0.62, 0.5, 0.55, 0.45][Self.allCases.firstIndex(of: self)!] }
+    var pitch: Float { [0.8, 0.7, 0.65, 1.0, 1.25, 0.95][Self.allCases.firstIndex(of: self)!] }
 
     /// Anfeuern ohne Apple Intelligence
     var cheers: [LocalizedStringResource] {
@@ -63,6 +65,20 @@ enum Persona: String, CaseIterable, Identifiable {
             "Diese Wiederholung war so schlampig, dass meine Großmutter sich im Grab umdreht! NOCHMAL!",
             "Du bist nicht hier, um Spaß zu haben! Du bist hier, weil ich es SAGE! WEITER!",
         ]
+        case .brutal: [
+            "Schau dich an, Rekrut! Dieser Bauch hat sich nicht von allein angefressen – und er verschwindet auch nicht von allein! DRÜCK!",
+            "Zum Frühstück Berliner und jetzt jammern?! Du hast dir jede Kalorie verdient, jetzt VERBRENN SIE!",
+            "Du willst einen Sixpack? Im Moment hast du ein Sixpack Bier unterm Shirt! WEITER!",
+            "Weißt du, was dein Sofa gerade macht? Es vermisst dich! Und ich sorge dafür, dass es dich nie wieder sieht! LOS!",
+            "Du hast mehr Ausreden als Muskeln, und Muskeln hast du verdammt wenige! NOCH ZWEI!",
+            "Jedes Schnitzel, das du gefressen hast, steht jetzt hier und lacht dich aus! ZEIG IHM, WER DER CHEF IST!",
+            "Deine Ausdauer ist so erbärmlich, dass dich eine Treppe als persönliche Bedrohung sieht! WEITER!",
+            "Ich hab schon Pudding gesehen, der mehr Haltung hat als du! SPANNUNG, REKRUT!",
+            "Wenn Faulheit olympisch wäre, wärst du Weltmeister – und selbst zur Siegerehrung zu träge! BEWEG DICH!",
+            "Du keuchst wie eine alte Dampflok, und dabei sind wir erst beim Aufwärmen, du Witzfigur! NOCH EINE!",
+            "Dein Spiegelbild hat heute Morgen um Gnade gefleht! Gib ihm einen Grund zur Hoffnung! DRÜCK!",
+            "Glaubst du, dein Bauch trainiert sich weg, während du mich anglotzt?! ARBEITE!",
+        ]
         case .buddy: ["Komm, du packst das! Noch ein paar!", "Läuft bei dir! Dranbleiben!", "Stark, Alter! Noch einer geht immer!"]
         case .cheer: ["Wow! Du bist der Wahnsinn! Weiter so!", "Jaaa! Noch eine! Ich glaub an dich!", "Unglaublich! Du rockst das!"]
         case .calm: ["Ruhig atmen, saubere Bewegung.", "Kontrolliert weiter, Spannung halten.", "Gleichmäßiges Tempo, du machst das gut."]
@@ -73,6 +89,7 @@ enum Persona: String, CaseIterable, Identifiable {
         switch self {
         case .drill: "Pause vorbei! Hoch mit dir, nächster Satz – sofort!"
         case .sarge: "PAUSE VORBEI, REKRUT! Hoch mit dir! Glaubst du, der Feind macht auch Pause?! NÄCHSTER SATZ, SOFORT!"
+        case .brutal: "PAUSE VORBEI, DU LAHME ENTE! Die Couch kriegst du heute nicht zurück! NÄCHSTER SATZ, ABER SOFORT!"
         case .buddy: "So, Pause rum – auf geht’s, nächster Satz!"
         case .cheer: "Pause vorbei! Zeit zu glänzen – nächster Satz!"
         case .calm: "Die Pause ist vorbei. Nächster Satz, wenn du bereit bist."
@@ -262,6 +279,7 @@ struct VoiceCoachView: View {
     @Environment(AppState.self) private var state
     @AppStorage("voicePersona") private var personaID = Persona.buddy.rawValue
     @AppStorage("harshConfirmed") private var harshConfirmed = false
+    @AppStorage("brutalConfirmed") private var brutalConfirmed = false
     @State private var coach: VoiceCoach?
     @State private var askHarsh: Persona?
 
@@ -276,7 +294,7 @@ struct VoiceCoachView: View {
                 HStack(spacing: 8) {
                     ForEach(Persona.allCases) { p in
                         Button {
-                            if p.harsh && !harshConfirmed { askHarsh = p; return }
+                            if p.harsh && !(p == .brutal ? brutalConfirmed : harshConfirmed) { askHarsh = p; return }
                             personaID = p.rawValue
                             coach?.persona = p
                         } label: {
@@ -346,15 +364,17 @@ struct VoiceCoachView: View {
         .padding(.vertical)
         .background(Theme.background.ignoresSafeArea())
         .navigationTitle("Trainings-Coach")
-        .alert("Derbe Sprache?", isPresented: Binding(get: { askHarsh != nil }, set: { if !$0 { askHarsh = nil } })) {
+        .alert(askHarsh == .brutal ? "Wirklich ohne Gnade?" : "Derbe Sprache?", isPresented: Binding(get: { askHarsh != nil }, set: { if !$0 { askHarsh = nil } })) {
             Button("Ja, ich kann das ab") {
-                harshConfirmed = true
+                if askHarsh == .brutal { brutalConfirmed = true } else { harshConfirmed = true }
                 if let p = askHarsh { personaID = p.rawValue; coach?.persona = p }
                 askHarsh = nil
             }
             Button("Lieber nicht", role: .cancel) { askHarsh = nil }
         } message: {
-            Text("Dieser Coach brüllt, schimpft und beleidigt dich – wegen Faulheit und Jammern, nie wegen deines Körpers. Nur wählen, wenn dich das wirklich motiviert. Du kannst jederzeit wechseln.")
+            Text(askHarsh == .brutal
+                 ? LocalizedStringKey("Dieser Coach greift dich persönlich an – auch wegen Bauch, Gewicht, Kondition und Essen – und nutzt dafür, was er über dich weiß. Das kann richtig wehtun. Nicht wählen, wenn du mit deinem Körper oder Essen gerade kämpfst. Sag „Stopp“ oder „mir geht’s schlecht“, dann hört er sofort auf. Du kannst jederzeit wechseln.")
+                 : "Dieser Coach brüllt, schimpft und beleidigt dich – wegen Faulheit und Jammern, nie wegen deines Körpers. Nur wählen, wenn dich das wirklich motiviert. Du kannst jederzeit wechseln.")
         }
         .onAppear {
             if coach == nil {

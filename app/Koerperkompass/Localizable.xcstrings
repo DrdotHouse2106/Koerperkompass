@@ -1541,6 +1541,16 @@
         }
       }
     },
+    "Dein Spiegelbild hat heute Morgen um Gnade gefleht! Gib ihm einen Grund zur Hoffnung! DRÜCK!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your reflection begged for mercy this morning! Give it some hope! PUSH!"
+          }
+        }
+      }
+    },
     "Dein Wunsch und dein Profil (Ziel, Alter, Größe, Gewicht) werden über deinen Server an die Claude API (Anthropic) gesendet.": {
       "localizations": {
         "en": {
@@ -1557,6 +1567,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Your wish, your profile (goal, age, height, weight) and your training history (sessions, feedback, sets) are sent via your server to the Claude API (Anthropic)."
+          }
+        }
+      }
+    },
+    "Deine Ausdauer ist so erbärmlich, dass dich eine Treppe als persönliche Bedrohung sieht! WEITER!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your stamina is so pathetic a staircase sees you as a personal threat! KEEP GOING!"
           }
         }
       }
@@ -1761,6 +1781,16 @@
         }
       }
     },
+    "Dieser Coach greift dich persönlich an – auch wegen Bauch, Gewicht, Kondition und Essen – und nutzt dafür, was er über dich weiß. Das kann richtig wehtun. Nicht wählen, wenn du mit deinem Körper oder Essen gerade kämpfst. Sag „Stopp“ oder „mir geht’s schlecht“, dann hört er sofort auf. Du kannst jederzeit wechseln.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This coach attacks you personally – including your belly, weight, fitness and food – using what he knows about you. It can really hurt. Don't choose it if you're currently struggling with your body or eating. Say “stop” or “I feel bad” and he stops immediately. You can switch at any time."
+          }
+        }
+      }
+    },
     "Dieses Gerät": {
       "localizations": {
         "en": {
@@ -1811,6 +1841,16 @@
         }
       }
     },
+    "Drill Sergeant – Ohne Gnade": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drill Sergeant – No Mercy"
+          }
+        }
+      }
+    },
     "Du bewegst dich wie ein Faultier auf Valium! Zack, zack, ZACK!": {
       "localizations": {
         "en": {
@@ -1851,6 +1891,26 @@
         }
       }
     },
+    "Du hast mehr Ausreden als Muskeln, und Muskeln hast du verdammt wenige! NOCH ZWEI!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You've got more excuses than muscles, and you've got damn few muscles! TWO MORE!"
+          }
+        }
+      }
+    },
+    "Du keuchst wie eine alte Dampflok, und dabei sind wir erst beim Aufwärmen, du Witzfigur! NOCH EINE!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You're wheezing like an old steam engine and we're barely warmed up, you clown! ONE MORE!"
+          }
+        }
+      }
+    },
     "Du nennst das eine Wiederholung? Meine Kaffeetasse arbeitet härter als du, Weichei!": {
       "localizations": {
         "en": {
@@ -1867,6 +1927,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "You’re barely sweating! Is this a workout or a spa weekend?!"
+          }
+        }
+      }
+    },
+    "Du willst einen Sixpack? Im Moment hast du ein Sixpack Bier unterm Shirt! WEITER!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You want a six-pack? Right now you've got a six-pack of beer under your shirt! KEEP GOING!"
           }
         }
       }
@@ -2871,6 +2941,16 @@
         }
       }
     },
+    "Glaubst du, dein Bauch trainiert sich weg, während du mich anglotzt?! ARBEITE!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You think that belly trains itself away while you stare at me?! WORK!"
+          }
+        }
+      }
+    },
     "Gleichmäßiges Tempo, du machst das gut.": {
       "localizations": {
         "en": {
@@ -3201,6 +3281,16 @@
         }
       }
     },
+    "Ich hab schon Pudding gesehen, der mehr Haltung hat als du! SPANNUNG, REKRUT!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I've seen pudding with better posture than you! TIGHTEN UP, RECRUIT!"
+          }
+        }
+      }
+    },
     "Ich hab schon Schnecken gesehen, die schneller beschleunigen als du! BEWEG DEINEN ARSCH!": {
       "localizations": {
         "en": {
@@ -3357,6 +3447,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "A different message every day – personal with your name, streak and goal. Drink reminder under Drinks, coach reminder in Coach."
+          }
+        }
+      }
+    },
+    "Jedes Schnitzel, das du gefressen hast, steht jetzt hier und lacht dich aus! ZEIG IHM, WER DER CHEF IST!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Every schnitzel you ever wolfed down is standing here laughing at you! SHOW IT WHO'S BOSS!"
           }
         }
       }
@@ -4871,6 +4971,16 @@
         }
       }
     },
+    "PAUSE VORBEI, DU LAHME ENTE! Die Couch kriegst du heute nicht zurück! NÄCHSTER SATZ, ABER SOFORT!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BREAK'S OVER, YOU LAME DUCK! You're not getting the couch back today! NEXT SET, RIGHT NOW!"
+          }
+        }
+      }
+    },
     "PAUSE VORBEI, REKRUT! Hoch mit dir! Glaubst du, der Feind macht auch Pause?! NÄCHSTER SATZ, SOFORT!": {
       "localizations": {
         "en": {
@@ -5407,6 +5517,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Scanner not available"
+          }
+        }
+      }
+    },
+    "Schau dich an, Rekrut! Dieser Bauch hat sich nicht von allein angefressen – und er verschwindet auch nicht von allein! DRÜCK!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Look at yourself, recruit! That belly didn't grow by itself – and it won't vanish by itself either! PUSH!"
           }
         }
       }
@@ -6751,6 +6871,26 @@
         }
       }
     },
+    "Weißt du, was dein Sofa gerade macht? Es vermisst dich! Und ich sorge dafür, dass es dich nie wieder sieht! LOS!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You know what your couch is doing right now? It misses you! And I'll make sure it never sees you again! GO!"
+          }
+        }
+      }
+    },
+    "Wenn Faulheit olympisch wäre, wärst du Weltmeister – und selbst zur Siegerehrung zu träge! BEWEG DICH!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "If laziness were an Olympic sport you'd be world champion – and too lazy to collect the medal! MOVE!"
+          }
+        }
+      }
+    },
     "Wer hat dir erlaubt zu atmen, als wäre Urlaub?! Atme, wenn du drückst! WEITER!": {
       "localizations": {
         "en": {
@@ -6857,6 +6997,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Recognising …"
+          }
+        }
+      }
+    },
+    "Wirklich ohne Gnade?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Really no mercy?"
           }
         }
       }
@@ -7027,6 +7177,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Swipe left to remove. The device then has to be paired again."
+          }
+        }
+      }
+    },
+    "Zum Frühstück Berliner und jetzt jammern?! Du hast dir jede Kalorie verdient, jetzt VERBRENN SIE!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Doughnuts for breakfast and now you're whining?! You earned every calorie, now BURN THEM!"
           }
         }
       }
