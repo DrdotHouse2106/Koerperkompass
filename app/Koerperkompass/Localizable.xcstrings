@@ -751,12 +751,12 @@
         }
       }
     },
-    "Alle auf deinem Server gespeicherten Einträge, dein Profil, deine Spielerkarte und das Protokoll werden dort gelöscht. Danach bleibt alles nur auf diesem iPhone. Geht das iPhone verloren, sind die Daten weg – außer in einem iPhone-Backup oder einem Export. Freunde sehen deine Spielerkarte nicht mehr. Du kannst es jederzeit wieder ausschalten; dann wird alles erneut hochgeladen.": {
+    "Alle auf deinem Server gespeicherten Einträge, dein Profil, deine Spielerkarte und das Protokoll werden dort gelöscht. In Sicherungen des Servers (falls vorhanden) bleiben sie, bis diese überschrieben werden. Danach bleibt alles nur auf diesem iPhone. Geht das iPhone verloren, sind die Daten weg – außer in einem iPhone-Backup oder einem Export. Freunde sehen deine Spielerkarte nicht mehr. Du kannst es jederzeit wieder ausschalten; dann wird alles erneut hochgeladen.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "All entries, your profile, your player card and the log stored on your server will be deleted there. Afterwards everything stays only on this iPhone. If you lose the iPhone, the data is gone – unless it is in an iPhone backup or an export. Friends no longer see your player card. You can turn this off at any time; everything will then be uploaded again."
+            "value": "All entries, your profile, your player card and the log stored on your server will be deleted there. Server backups (if any) keep them until they are overwritten. Afterwards everything stays only on this iPhone. If you lose the iPhone, the data is gone – unless it is in an iPhone backup or an export. Friends no longer see your player card. You can turn this off at any time; everything will then be uploaded again."
           }
         }
       }

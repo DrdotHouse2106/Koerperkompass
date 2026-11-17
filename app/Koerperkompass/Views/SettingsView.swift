@@ -163,7 +163,7 @@ struct SettingsView: View {
                 }
                 Button("Abbrechen", role: .cancel) {}
             } message: {
-                Text("Alle auf deinem Server gespeicherten Einträge, dein Profil, deine Spielerkarte und das Protokoll werden dort gelöscht. Danach bleibt alles nur auf diesem iPhone. Geht das iPhone verloren, sind die Daten weg – außer in einem iPhone-Backup oder einem Export. Freunde sehen deine Spielerkarte nicht mehr. Du kannst es jederzeit wieder ausschalten; dann wird alles erneut hochgeladen.")
+                Text("Alle auf deinem Server gespeicherten Einträge, dein Profil, deine Spielerkarte und das Protokoll werden dort gelöscht. In Sicherungen des Servers (falls vorhanden) bleiben sie, bis diese überschrieben werden. Danach bleibt alles nur auf diesem iPhone. Geht das iPhone verloren, sind die Daten weg – außer in einem iPhone-Backup oder einem Export. Freunde sehen deine Spielerkarte nicht mehr. Du kannst es jederzeit wieder ausschalten; dann wird alles erneut hochgeladen.")
             }
             .alert("Health-Daten hochladen?", isPresented: $askHealthUpload) {
                 Button("Zustimmen") { state.setHealthUpload(true, context) }
