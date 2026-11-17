@@ -43,6 +43,7 @@ func routes() http.Handler {
 	m.HandleFunc("POST /api/entries", auth(putEntries))
 	m.HandleFunc("POST /api/log", auth(postAppLog)) // Testphase, siehe applog.go
 	m.HandleFunc("GET /api/log", auth(getAppLog))
+	m.HandleFunc("DELETE /api/data", auth(deleteData)) // „Nur auf dem iPhone“: gespeicherte Daten löschen
 	m.HandleFunc("GET /api/export", auth(export))
 	m.HandleFunc("POST /api/import", auth(importData))
 	m.HandleFunc("POST /api/ai/photo", auth(aiPhoto))
@@ -158,6 +159,20 @@ func putProfile(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	db.Exec(`UPDATE users SET profile=? WHERE id=?`, string(p), uid(r))
+	w.WriteHeader(http.StatusNoContent)
+}
+
+// deleteData löscht alle gespeicherten Daten des Nutzers (Einträge, Profil, Spielerkarte, Protokoll).
+// Konto, Geräte und Freundschaften bleiben – die App nutzt den Server danach nur noch als Durchgang (Claude, Stimme).
+func deleteData(w http.ResponseWriter, r *http.Request) {
+	u := uid(r)
+	for _, q := range []string{`DELETE FROM entries WHERE user_id=?`, `DELETE FROM applog WHERE user_id=?`,
+		`UPDATE users SET profile='{}', card='{}' WHERE id=?`} {
+		if _, err := db.Exec(q, u); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+	}
 	w.WriteHeader(http.StatusNoContent)
 }
 

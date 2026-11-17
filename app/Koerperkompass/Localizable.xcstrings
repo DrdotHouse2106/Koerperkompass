@@ -751,6 +751,16 @@
         }
       }
     },
+    "Alle auf deinem Server gespeicherten Einträge, dein Profil, deine Spielerkarte und das Protokoll werden dort gelöscht. Danach bleibt alles nur auf diesem iPhone. Geht das iPhone verloren, sind die Daten weg – außer in einem iPhone-Backup oder einem Export. Freunde sehen deine Spielerkarte nicht mehr. Du kannst es jederzeit wieder ausschalten; dann wird alles erneut hochgeladen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All entries, your profile, your player card and the log stored on your server will be deleted there. Afterwards everything stays only on this iPhone. If you lose the iPhone, the data is gone – unless it is in an iPhone backup or an export. Friends no longer see your player card. You can turn this off at any time; everything will then be uploaded again."
+          }
+        }
+      }
+    },
     "Allrounder": {
       "localizations": {
         "en": {
@@ -1557,6 +1567,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Your data lives on your own server. Start it (see the guide on GitHub) and pair the app using the code from the server log or web page."
+          }
+        }
+      }
+    },
+    "Deine Daten liegen nur auf diesem iPhone. Dein Server leitet nur noch Anfragen an Claude und die Stimme weiter und speichert nichts. Sichere deine Daten ab und zu über „Export erstellen“.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your data is stored only on this iPhone. Your server only forwards requests to Claude and speech output and stores nothing. Back up your data now and then via “Create export”."
+          }
+        }
+      }
+    },
+    "Deine Daten werden auf deinem eigenen Server gespeichert und abgeglichen – so bleiben sie auch bei Verlust des iPhones erhalten und sind auf weiteren Geräten verfügbar.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your data is stored and synced on your own server – so it survives losing your iPhone and is available on other devices."
           }
         }
       }
@@ -4551,6 +4581,26 @@
         }
       }
     },
+    "Nur auf diesem iPhone speichern": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Store only on this iPhone"
+          }
+        }
+      }
+    },
+    "Nur auf diesem iPhone speichern?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Store only on this iPhone?"
+          }
+        }
+      }
+    },
     "Nächster Rang ab Level %lld: %@": {
       "localizations": {
         "en": {
@@ -5421,6 +5471,16 @@
         }
       }
     },
+    "Server-Daten löschen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete server data"
+          }
+        }
+      }
+    },
     "Sichern": {
       "localizations": {
         "en": {
@@ -5507,6 +5567,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Save"
+          }
+        }
+      }
+    },
+    "Speicherort": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Storage"
           }
         }
       }

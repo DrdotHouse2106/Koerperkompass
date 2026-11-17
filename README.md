@@ -33,6 +33,7 @@ Es gibt keinen zentralen Dienst: Die Entwickler betreiben keinen Server und sehe
 | 💬 **Gesundheitscoach** | Persönlicher Coach (Claude) im Chat **oder per Sprache** (Mikrofon, Antworten werden vorgelesen): kennt Profil, Ziele, Essen, Getränke, Gewicht und Training, gibt ein Tagesbriefing und konkrete nächste Schritte. Tägliche Erinnerung, Verlauf bleibt auf dem iPhone. Braucht `ANTHROPIC_API_KEY` |
 | 🧭 **Kompass** | Auswertung über 7/30/90 Tage: Durchschnitte, Trends, Zielerreichung, Zusammenhänge (z. B. Schlaf ↔ Kalorien). Optional ausführliche Auswertung mit Claude |
 | 🤝 **Freunde (dezentral)** | Freundschaften mit Nutzern auf deinem oder **anderen Körperkompass-Servern** – ohne zentralen Dienst. Freundesliste mit Spielerkarten, Wochen-Challenge mit Bestenliste, optional Freunde von Freunden. Geteilt werden nur Spielwerte, nie Gesundheitsdaten |
+| 📱 **Nur auf dem iPhone** | Auf Wunsch bleiben alle Daten nur auf dem iPhone: Der Server löscht seine Kopie und leitet nur noch an Claude und die Sprachausgabe weiter (Einstellungen → Speicherort) |
 | 👥 **Mehrere Nutzer** | weitere Personen einladen – jede mit eigenem Konto, eigenen Zugängen und eigenen Daten |
 | ✈️ **Offline** | lokaler Zwischenspeicher, Abgleich sobald der Server erreichbar ist |
 | 🎮 **Demo-Modus** | mit Beispieldaten, ganz ohne Server |

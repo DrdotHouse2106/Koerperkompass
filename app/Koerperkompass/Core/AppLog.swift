@@ -4,7 +4,9 @@ import Foundation
 /// eigenen Server (`POST /api/log`) – nur Kennungen und Zeitstempel, keine Gesundheitswerte. Nie weitergeleitet.
 /// Abschaltbar in den Einstellungen.
 enum AppLog {
-    static var enabled: Bool { UserDefaults.standard.object(forKey: "appLogOn") as? Bool ?? true }
+    static var enabled: Bool {
+        (UserDefaults.standard.object(forKey: "appLogOn") as? Bool ?? true) && !UserDefaults.standard.bool(forKey: "localOnly")
+    }
     private static var buffer: [[String: Any]] = []
     private static let lock = NSLock()
 

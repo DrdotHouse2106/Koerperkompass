@@ -7,6 +7,8 @@ struct SettingsView: View {
     @Environment(AppState.self) private var state
     @Environment(\.modelContext) private var context
     @State private var askHealthUpload = false
+    @State private var askLocalOnly = false
+    @State private var localError: String?
     @State private var invite: Invite?
     @State private var exportFile: URL?
     @State private var importing = false
@@ -66,6 +68,20 @@ struct SettingsView: View {
                             get: { state.profile.modules.contains(m.id) },
                             set: { on in state.profile.modules = allModules.map(\.id).filter { $0 == m.id ? on : state.profile.modules.contains($0) } }
                         )) { Label { Text(m.name) } icon: { Image(systemName: m.symbol) } }
+                    }
+                }
+                if !state.demo {
+                    Section {
+                        Toggle("Nur auf diesem iPhone speichern", isOn: Binding(
+                            get: { state.localOnly },
+                            set: { on in
+                                if on { askLocalOnly = true } else { Task { try? await state.setLocalOnly(false, context) } }
+                            }))
+                        if let localError { Text(localError).foregroundStyle(.red) }
+                    } header: { Text("Speicherort") } footer: {
+                        Text(state.localOnly
+                             ? LocalizedStringKey("Deine Daten liegen nur auf diesem iPhone. Dein Server leitet nur noch Anfragen an Claude und die Stimme weiter und speichert nichts. Sichere deine Daten ab und zu über „Export erstellen“.")
+                             : "Deine Daten werden auf deinem eigenen Server gespeichert und abgeglichen – so bleiben sie auch bei Verlust des iPhones erhalten und sind auf weiteren Geräten verfügbar.")
                     }
                 }
                 if Health.available && !state.demo {
@@ -138,6 +154,16 @@ struct SettingsView: View {
                 Button("Abbrechen", role: .cancel) {}
             } message: {
                 Text("Dein Server leitet anonyme Angaben zu den Coach-Gesprächen an die Entwickler von Körperkompass weiter, damit die App besser wird. Es werden keine Gesundheitswerte und keine Kennung übertragen. Du kannst das jederzeit wieder ausschalten.")
+            }
+            .alert("Nur auf diesem iPhone speichern?", isPresented: $askLocalOnly) {
+                Button("Server-Daten löschen", role: .destructive) {
+                    Task {
+                        do { try await state.setLocalOnly(true, context); localError = nil } catch { localError = error.localizedDescription }
+                    }
+                }
+                Button("Abbrechen", role: .cancel) {}
+            } message: {
+                Text("Alle auf deinem Server gespeicherten Einträge, dein Profil, deine Spielerkarte und das Protokoll werden dort gelöscht. Danach bleibt alles nur auf diesem iPhone. Geht das iPhone verloren, sind die Daten weg – außer in einem iPhone-Backup oder einem Export. Freunde sehen deine Spielerkarte nicht mehr. Du kannst es jederzeit wieder ausschalten; dann wird alles erneut hochgeladen.")
             }
             .alert("Health-Daten hochladen?", isPresented: $askHealthUpload) {
                 Button("Zustimmen") { state.setHealthUpload(true, context) }

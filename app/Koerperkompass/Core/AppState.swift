@@ -20,6 +20,9 @@ import UIKit
     var healthUpload: Bool { didSet { defaults.set(healthUpload, forKey: "healthUpload") } }
     /// Zustimmung 2: Daten dürfen zur Analyse an die Claude API gehen (über den eigenen Server)
     var aiConsent: Bool { didSet { defaults.set(aiConsent, forKey: "aiConsent") } }
+    /// Nur auf diesem iPhone speichern: keine Einträge, kein Profil, keine Protokolle auf dem Server.
+    /// Der Server dient dann nur noch als Durchgang zu Claude und für die Stimme.
+    var localOnly: Bool { didSet { defaults.set(localOnly, forKey: "localOnly") } }
     /// Apple Health wurde verbunden (Freigabe-Dialog wurde gezeigt)
     var healthEnabled: Bool { didSet { defaults.set(healthEnabled, forKey: "healthEnabled") } }
 
@@ -41,6 +44,7 @@ import UIKit
         healthUpload = defaults.bool(forKey: "healthUpload")
         aiConsent = defaults.bool(forKey: "aiConsent")
         healthEnabled = defaults.bool(forKey: "healthEnabled")
+        localOnly = defaults.bool(forKey: "localOnly")
         lastRev = Int64(defaults.integer(forKey: "lastRev"))
         profileDirty = defaults.bool(forKey: "profileDirty")
     }
@@ -111,6 +115,7 @@ import UIKit
             aiAvailable = status.ai
             ttsAvailable = status.tts ?? false
             serverVersion = status.version
+            if localOnly { syncError = nil; return }  // Daten bleiben auf dem iPhone
 
             let dirty = try context.fetch(FetchDescriptor<Entry>(predicate: #Predicate { $0.dirty }))
             AppLog.add("Abgleich: \(dirty.count) zu senden, seit rev \(lastRev)" + dirty.prefix(20).map { "\n  ↑ " + AppLog.describe($0) }.joined())
@@ -157,7 +162,7 @@ import UIKit
 
     /// Spielerkarte für Freunde hochladen – nur Spielwerte, keine Gesundheitsdaten
     func pushCard(_ context: ModelContext) async {
-        guard !demo, token != nil else { return }
+        guard !demo, !localOnly, token != nil else { return }
         let p = QuestProgress(context.allEntries(), profile)
         let card: [String: Any] = [
             "name": profile.name ?? "", "level": p.level, "xp": p.xp, "streak": p.streak,
@@ -171,7 +176,7 @@ import UIKit
 
     private func pushProfile() async {
         defaults.set(profileDirty, forKey: "profileDirty")
-        guard profileDirty, !demo, token != nil, let data = try? JSONEncoder().encode(profile),
+        guard profileDirty, !demo, !localOnly, token != nil, let data = try? JSONEncoder().encode(profile),
               let json = try? JSONSerialization.jsonObject(with: data) else { return }
         if (try? await api.call("PUT", "/api/profile", json: json)) != nil {
             profileDirty = false
@@ -185,6 +190,20 @@ import UIKit
         for e in context.changedModelsArray.compactMap({ $0 as? Entry }) { AppLog.add("geändert " + AppLog.describe(e)) }
         do { try context.save() } catch { AppLog.add("Speichern FEHLER: \(error.localizedDescription)") }
         Task { await sync(context) }
+    }
+
+    /// Speicherort umschalten. An: gespeicherte Daten auf dem Server löschen. Aus: alles wieder hochladen.
+    func setLocalOnly(_ on: Bool, _ context: ModelContext) async throws {
+        if on {
+            if !demo { _ = try await api.call("DELETE", "/api/data") }
+            localOnly = true
+        } else {
+            localOnly = false
+            for e in context.allEntries() where e.module != "coachlog" || CoachLog.enabled { e.dirty = true }
+            lastRev = 0
+            profileDirty = true
+            changed(context)
+        }
     }
 
     func delete(_ entry: Entry, _ context: ModelContext) {

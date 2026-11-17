@@ -101,7 +101,10 @@ func ttsMark(url string, ok bool) {
 }
 
 func tts(w http.ResponseWriter, r *http.Request) {
-	var req struct{ Text, Persona string }
+	var req struct {
+		Text, Persona string
+		Private       bool // „Nur auf dem iPhone“: nichts auf dem Server zwischenspeichern
+	}
 	if !readJSON(w, r, &req) {
 		return
 	}
@@ -152,7 +155,7 @@ func tts(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	// Nur die bevorzugte Stimme dauerhaft speichern – Rückfall-Töne (z. B. Piper, solange Kartoffelbox schläft) nicht
-	if best {
+	if best && !req.Private {
 		if os.MkdirAll(ttsDir(), 0o750) == nil {
 			os.WriteFile(file, data, 0o640)
 		}

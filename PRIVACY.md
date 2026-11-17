@@ -45,6 +45,10 @@ Während der Testphase meldet die App Abläufe an **deinen eigenen Server**, dam
 
 Nur wenn du in den Einstellungen „Anonyme Daten teilen“ einschaltest und bestätigst, leitet dein Server Angaben zu den Coach-Gesprächen an den Server der Entwickler von Körperkompass weiter: Art des Gesprächs, Coach-Stil, verwendetes Modell, Antwortzeit, ob ein Satz erkannt wurde, App-Version, iOS-Hauptversion, Sprache. **Ohne Nutzerkennung und ohne Gesundheitswerte.** Gesprächstexte werden nur übertragen, wenn du „Gesprächstexte mitsenden“ zusätzlich einschaltest; Namen aus deinem Profil, E-Mail-Adressen, Telefonnummern und Links werden vorher entfernt. Der Server der Entwickler speichert keine IP-Adressen und nutzt die Daten ausschließlich zur Verbesserung der App. Du kannst das jederzeit ausschalten; Server-Betreiber können die Weiterleitung ganz abschalten (`KK_TELEMETRY=off`). Verantwortlich für diese Daten: die Entwickler von Körperkompass (Kontakt über GitHub Issues).
 
+## Nur auf dem iPhone (optional)
+
+Unter Einstellungen → Speicherort kannst du „Nur auf diesem iPhone speichern“ einschalten. Dann löscht dein Server alle gespeicherten Einträge, dein Profil, deine Spielerkarte und das Protokoll und speichert nichts mehr davon; auch gesprochene Antworten werden dort nicht zwischengespeichert. Er leitet nur noch Anfragen an Claude (mit deiner Zustimmung) und an die Sprachausgabe weiter. Deine Daten liegen dann nur auf dem iPhone (und in dessen Backup). Schaltest du es wieder aus, wird alles erneut hochgeladen.
+
 ## Speicherung und Löschung
 
 - Lokal: SwiftData-Zwischenspeicher auf dem iPhone. „Verbindung trennen“ bzw. Löschen der App entfernt ihn.
@@ -111,6 +115,10 @@ During the test phase the app reports activity to **your own server** to help fi
 ## Anonymous improvement data (optional)
 
 Only if you turn on “Share anonymous data” in Settings and confirm it, your server forwards information about coach conversations to the Körperkompass developers’ server: type of conversation, coach style, model used, response time, whether a set was recognised, app version, major iOS version, language. **No user identifier and no health values.** Conversation texts are only sent if you also enable “Include conversation texts”; names from your profile, email addresses, phone numbers and links are removed first. The developers’ server stores no IP addresses and uses the data solely to improve the app. You can turn this off at any time; server operators can disable forwarding entirely (`KK_TELEMETRY=off`). Responsible for this data: the Körperkompass developers (contact via GitHub Issues).
+
+## iPhone only (optional)
+
+Under Settings → Storage you can turn on “Store only on this iPhone”. Your server then deletes all stored entries, your profile, your player card and the log, and stores none of it any more; spoken replies are not cached there either. It only forwards requests to Claude (with your consent) and to speech output. Your data then lives only on the iPhone (and its backup). If you turn it off again, everything is uploaded again.
 
 ## Storage and deletion
 
