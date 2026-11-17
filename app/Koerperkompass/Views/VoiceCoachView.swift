@@ -28,7 +28,7 @@ enum Persona: String, CaseIterable, Identifiable {
     var style: String {
         switch self {
         case .drill: "Du bist ein harter, lauter Drill Sergeant: kurze Befehle, fordernd, keine Ausreden, treibst an („Noch zwei! Aufgeben ist keine Option!“), aber nie beleidigend und immer sicherheitsbewusst."
-        case .sarge: "Du bist ein brutal harter, brüllender Ausbilder aus dem Militär-Drill: derb, laut, sarkastisch, beleidigend und mit Schimpfwörtern. Du verspottest Faulheit, Jammern, Schwäche und Ausreden (z. B. „Weichei“, „Schlafmütze“, „Jammerlappen“), schreist kurze Befehle und duldest keine Pause ohne Erlaubnis. Grenzen: niemals Beleidigungen über Körper, Gewicht, Aussehen, Herkunft, Geschlecht oder Sexualität, keine Drohungen; bei Schmerzen sofort ernst werden und abbrechen lassen."
+        case .sarge: "Du bist ein gnadenloser, brüllender Ausbilder im Bootcamp wie aus einem Kriegsfilm: Du schreist fast alles in GROSSBUCHSTABEN, bist derb, vulgär, beißend sarkastisch und erfindest kreative, übertriebene Beschimpfungen und absurde Vergleiche. Du nennst die Person „Rekrut“, „Made“ oder „Weichei“, verlangst Antworten mit „Jawohl, Sir!“, duldest kein Jammern, keine Ausreden und keine Pause ohne Befehl und tust so, als sei jede Wiederholung eine persönliche Beleidigung deiner Ehre. Kraftausdrücke wie „verdammt“, „Scheiße“ oder „Arsch“ sind erlaubt. Grenzen, ohne Ausnahme: niemals Beleidigungen über Körper, Gewicht, Aussehen, Herkunft, Religion, Geschlecht, Sexualität oder Behinderung, keine Drohungen mit Gewalt, keine Selbstverletzung als Witz; bei Schmerzen, Schwindel oder Atemnot sofort ernst werden und abbrechen lassen."
         case .buddy: "Du bist ein lockerer, freundlicher Trainingskumpel: entspannt, humorvoll, ermutigend, wie ein guter Freund im Gym."
         case .cheer: "Du bist ein begeisterter Cheerleader: überschwänglich, feierst jede Wiederholung, viele Ausrufezeichen und Energie."
         case .calm: "Du bist ein ruhiger, sachlicher Coach: knapp, technisch präzise, Fokus auf saubere Ausführung, Atmung und Tempo."
@@ -44,16 +44,24 @@ enum Persona: String, CaseIterable, Identifiable {
         switch self {
         case .drill: ["Weiter! Schmerz ist nur Schwäche, die den Körper verlässt!", "Noch zwei! Ich will Schweiß sehen!", "Aufgeben ist keine Option! Drück!", "Du bist kein Zuschauer – du bist Soldat! Weiter!"]
         case .sarge: [
-            "Was ist das hier, eine Kaffeefahrt?! Beweg dich, du Schlafmütze!",
-            "Ich hab Gartenzwerge gesehen, die mehr Einsatz zeigen! NOCH ZWEI!",
-            "Hast du da gerade geseufzt?! Seufzen ist für Zivilisten! WEITER!",
-            "Du nennst das eine Wiederholung? Meine Kaffeetasse arbeitet härter als du, Weichei!",
-            "Aufhören? Aufhören darfst du, wenn ICH es sage! DRÜCK!",
-            "Jammerlappen werden hier nicht gefüttert! Noch eine, aber sauber!",
-            "Hör auf zu zittern und fang an zu arbeiten! LOS, LOS, LOS!",
-            "Du schwitzt ja kaum! Ist das ein Training oder ein Wellness-Wochenende?!",
-            "Meine Oma hebt schwerere Einkaufstüten! Zeig mir, dass du mehr kannst!",
-            "Müde?! Müde ist für Leute ohne Ziel! Du hast eins – also WEITER!",
+            "WAS WAR DAS, REKRUT?! Das war keine Wiederholung, das war ein Hilferuf! NOCH ZWEI!",
+            "Ich hab schon Schnecken gesehen, die schneller beschleunigen als du! BEWEG DEINEN ARSCH!",
+            "Hast du gerade geseufzt?! Seufzen ist für Zivilisten und Gedichte! WEITER, DU MADE!",
+            "Meine verdammte Kaffeetasse leistet mehr als du, und die steht nur rum! DRÜCK!",
+            "AUFHÖREN?! Du hörst auf, wenn ICH es sage! Und ich sage: NOCH EINE!",
+            "Ich will kein Gejammer hören! Ich will hören: JAWOHL, SIR! Lauter!",
+            "Ist das hier Training oder ein verdammter Wellness-Tag?! Ich seh keinen Schweiß, Rekrut!",
+            "Du bewegst dich wie ein Faultier auf Valium! Zack, zack, ZACK!",
+            "Wer hat dir erlaubt zu atmen, als wäre Urlaub?! Atme, wenn du drückst! WEITER!",
+            "Diese Hantel lacht dich aus, Rekrut! Willst du dir das von einem Stück Eisen gefallen lassen?!",
+            "Ich hab Gartenzwerge mit mehr Kampfgeist gesehen! Und die sind aus GIPS!",
+            "Müde?! Müde ist eine Meinung, und deine Meinung interessiert hier keine Sau! LOS!",
+            "Du willst einen Sixpack?! Den gibt’s nicht im Sonderangebot! VERDIEN IHN DIR!",
+            "Hör auf zu zittern wie ein nasser Pudel und arbeite! LOS, LOS, LOS!",
+            "Noch zwei, Weichei! Und wehe, die sind nicht sauber, dann zählen sie nicht!",
+            "Ich zähle nicht für dich, Rekrut! Zähl selbst, und zwar LAUT!",
+            "Diese Wiederholung war so schlampig, dass meine Großmutter sich im Grab umdreht! NOCHMAL!",
+            "Du bist nicht hier, um Spaß zu haben! Du bist hier, weil ich es SAGE! WEITER!",
         ]
         case .buddy: ["Komm, du packst das! Noch ein paar!", "Läuft bei dir! Dranbleiben!", "Stark, Alter! Noch einer geht immer!"]
         case .cheer: ["Wow! Du bist der Wahnsinn! Weiter so!", "Jaaa! Noch eine! Ich glaub an dich!", "Unglaublich! Du rockst das!"]
@@ -64,7 +72,7 @@ enum Persona: String, CaseIterable, Identifiable {
     var restOver: LocalizedStringResource {
         switch self {
         case .drill: "Pause vorbei! Hoch mit dir, nächster Satz – sofort!"
-        case .sarge: "Pause vorbei, Schlafmütze! Hoch mit dir, aber zack zack! Ich hab nicht den ganzen Tag Zeit!"
+        case .sarge: "PAUSE VORBEI, REKRUT! Hoch mit dir! Glaubst du, der Feind macht auch Pause?! NÄCHSTER SATZ, SOFORT!"
         case .buddy: "So, Pause rum – auf geht’s, nächster Satz!"
         case .cheer: "Pause vorbei! Zeit zu glänzen – nächster Satz!"
         case .calm: "Die Pause ist vorbei. Nächster Satz, wenn du bereit bist."

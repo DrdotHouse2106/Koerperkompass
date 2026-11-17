@@ -541,6 +541,16 @@
         }
       }
     },
+    "AUFHÖREN?! Du hörst auf, wenn ICH es sage! Und ich sage: NOCH EINE!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "QUIT?! You quit when I SAY so! And I say: ONE MORE!"
+          }
+        }
+      }
+    },
     "Ab %lld:00 Uhr": {
       "localizations": {
         "en": {
@@ -1711,6 +1721,26 @@
         }
       }
     },
+    "Diese Hantel lacht dich aus, Rekrut! Willst du dir das von einem Stück Eisen gefallen lassen?!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "That dumbbell is laughing at you, recruit! Are you going to take that from a piece of iron?!"
+          }
+        }
+      }
+    },
+    "Diese Wiederholung war so schlampig, dass meine Großmutter sich im Grab umdreht! NOCHMAL!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "That rep was so sloppy my grandmother is spinning in her grave! AGAIN!"
+          }
+        }
+      }
+    },
     "Diese Woche": {
       "localizations": {
         "en": {
@@ -1781,12 +1811,32 @@
         }
       }
     },
+    "Du bewegst dich wie ein Faultier auf Valium! Zack, zack, ZACK!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You move like a sloth on sedatives! Move it, move it, MOVE IT!"
+          }
+        }
+      }
+    },
     "Du bist kein Zuschauer – du bist Soldat! Weiter!": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "You’re no spectator – you’re a soldier! Go!"
+          }
+        }
+      }
+    },
+    "Du bist nicht hier, um Spaß zu haben! Du bist hier, weil ich es SAGE! WEITER!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You're not here to have fun! You're here because I SAY so! KEEP GOING!"
           }
         }
       }
@@ -1817,6 +1867,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "You’re barely sweating! Is this a workout or a spa weekend?!"
+          }
+        }
+      }
+    },
+    "Du willst einen Sixpack?! Den gibt’s nicht im Sonderangebot! VERDIEN IHN DIR!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You want a six-pack?! It's not on sale! EARN IT!"
           }
         }
       }
@@ -2981,6 +3041,16 @@
         }
       }
     },
+    "Hast du gerade geseufzt?! Seufzen ist für Zivilisten und Gedichte! WEITER, DU MADE!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Did you just sigh?! Sighing is for civilians and poetry! KEEP GOING, YOU MAGGOT!"
+          }
+        }
+      }
+    },
     "Health-Daten an meinen Server senden": {
       "localizations": {
         "en": {
@@ -3061,6 +3131,16 @@
         }
       }
     },
+    "Hör auf zu zittern wie ein nasser Pudel und arbeite! LOS, LOS, LOS!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stop shaking like a wet poodle and get to work! GO, GO, GO!"
+          }
+        }
+      }
+    },
     "Hüfte": {
       "localizations": {
         "en": {
@@ -3101,6 +3181,16 @@
         }
       }
     },
+    "Ich hab Gartenzwerge mit mehr Kampfgeist gesehen! Und die sind aus GIPS!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I've seen garden gnomes with more fighting spirit! And they're made of PLASTER!"
+          }
+        }
+      }
+    },
     "Ich hab dich gehört! Sag mir einfach Wiederholungen und Gewicht, zum Beispiel: zehn Wiederholungen mit sechzig Kilo.": {
       "localizations": {
         "en": {
@@ -3111,12 +3201,42 @@
         }
       }
     },
+    "Ich hab schon Schnecken gesehen, die schneller beschleunigen als du! BEWEG DEINEN ARSCH!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I've seen snails accelerate faster than you! MOVE YOUR ASS!"
+          }
+        }
+      }
+    },
     "Ich höre zu …": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "I’m listening …"
+          }
+        }
+      }
+    },
+    "Ich will kein Gejammer hören! Ich will hören: JAWOHL, SIR! Lauter!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I don't want to hear whining! I want to hear: SIR, YES SIR! Louder!"
+          }
+        }
+      }
+    },
+    "Ich zähle nicht für dich, Rekrut! Zähl selbst, und zwar LAUT!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I'm not counting for you, recruit! Count yourself, and count LOUD!"
           }
         }
       }
@@ -3157,6 +3277,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Intervals"
+          }
+        }
+      }
+    },
+    "Ist das hier Training oder ein verdammter Wellness-Tag?! Ich seh keinen Schweiß, Rekrut!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Is this training or a damn spa day?! I don't see any sweat, recruit!"
           }
         }
       }
@@ -4251,6 +4381,16 @@
         }
       }
     },
+    "Meine verdammte Kaffeetasse leistet mehr als du, und die steht nur rum! DRÜCK!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "My damn coffee mug does more work than you, and it just sits there! PUSH!"
+          }
+        }
+      }
+    },
     "Meine Übungen": {
       "localizations": {
         "en": {
@@ -4411,6 +4551,16 @@
         }
       }
     },
+    "Müde?! Müde ist eine Meinung, und deine Meinung interessiert hier keine Sau! LOS!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tired?! Tired is an opinion, and nobody here gives a damn about your opinion! GO!"
+          }
+        }
+      }
+    },
     "Müde?! Müde ist für Leute ohne Ziel! Du hast eins – also WEITER!": {
       "localizations": {
         "en": {
@@ -4561,6 +4711,16 @@
         }
       }
     },
+    "Noch zwei, Weichei! Und wehe, die sind nicht sauber, dann zählen sie nicht!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Two more, softie! And they'd better be clean, or they don't count!"
+          }
+        }
+      }
+    },
     "Normal": {
       "localizations": {
         "en": {
@@ -4707,6 +4867,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Optional. Active energy from Health improves the calculation. Health data stays on the device until you agree to upload it."
+          }
+        }
+      }
+    },
+    "PAUSE VORBEI, REKRUT! Hoch mit dir! Glaubst du, der Feind macht auch Pause?! NÄCHSTER SATZ, SOFORT!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BREAK'S OVER, RECRUIT! On your feet! You think the enemy takes breaks too?! NEXT SET, NOW!"
           }
         }
       }
@@ -6411,6 +6581,16 @@
         }
       }
     },
+    "WAS WAR DAS, REKRUT?! Das war keine Wiederholung, das war ein Hilferuf! NOCH ZWEI!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "WHAT WAS THAT, RECRUIT?! That wasn't a rep, that was a cry for help! TWO MORE!"
+          }
+        }
+      }
+    },
     "Wadenheben – 4 × 15": {
       "localizations": {
         "en": {
@@ -6567,6 +6747,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Pair another device of mine"
+          }
+        }
+      }
+    },
+    "Wer hat dir erlaubt zu atmen, als wäre Urlaub?! Atme, wenn du drückst! WEITER!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Who said you could breathe like you're on vacation?! Breathe as you push! KEEP GOING!"
           }
         }
       }
