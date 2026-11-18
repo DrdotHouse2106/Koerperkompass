@@ -37,6 +37,7 @@ func main() {
 	}
 	db.Exec(`ALTER TABLE codes ADD COLUMN name TEXT NOT NULL DEFAULT ''`) // ältere Datenbanken nachrüsten
 	migrateAppLog()
+	db.Exec(`ALTER TABLE users ADD COLUMN vault TEXT NOT NULL DEFAULT ''`) // Ende-zu-Ende-Verschlüsselung
 	if err = migrateFriends(); err != nil {
 		log.Fatal("Datenbank: ", err)
 	}

@@ -85,6 +85,7 @@ Kompass-Analyse, Abgleich, Export/Import und die Claude-Auswertung funktionieren
 - Anonyme Verbesserungsdaten (`Core/Telemetry.swift`, `server/telemetry.go`): nur Felder aus dem Gesprächsprotokoll, nie Gesundheitswerte oder Kennungen; standardmäßig aus, nur nach Zustimmung. Neue Felder nur mit Hinweis in PRIVACY.md.
 - Hinweis „keine ärztliche Beratung“ überall dort, wo Werte bewertet werden.
 - Profil-Felder neu immer optional anlegen (ältere gespeicherte Profile bleiben lesbar).
+- Ende-zu-Ende-Verschlüsselung (`Core/Vault.swift`): Eintragsinhalte (`data`) und Profil können beim Server verschlüsselt ankommen (`"enc:v1:…"` bzw. `{"enc": …}`). Der Server darf sich deshalb **nie** auf Eintragsinhalte verlassen – Auswertungen rechnet die App und schickt sie mit. Uploads immer über `Vault.sealEntry`, Downloads über `Vault.open`.
 
 ## Prüfen
 

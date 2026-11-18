@@ -49,6 +49,10 @@ Nur wenn du in den Einstellungen „Anonyme Daten teilen“ einschaltest und bes
 
 Fügst du einen Link zu einer Rezeptseite ein, ruft dein Server diese Seite ab und übernimmt die eingebetteten Rezeptdaten; nur wenn diese fehlen, geht der Seitentext mit deiner Zustimmung an Claude. Fügst du einen Reel- oder Video-Link ein, gibt dein Server ihn an deine eigene Reelkoch-Installation weiter; die lädt das öffentliche Reel und lässt das Rezept mit ihrem eigenen Claude-Zugang erstellen. Eingefügter Rezepttext und – nur mit deiner Zustimmung – das fertige Rezept zur Nährwertschätzung gehen über deinen Server an Claude. Deine Rezepte liegen wie alle Einträge auf deinem iPhone und deinem Server; der Coach bekommt eine Liste der Rezepttitel mit Nährwerten.
 
+## Ende-zu-Ende-Verschlüsselung (optional)
+
+Unter Einstellungen → Verschlüsselung kannst du ein eigenes Passwort festlegen. Dann werden Einträge und Profil **auf dem iPhone verschlüsselt** (AES-GCM, Schlüssel aus dem Passwort mit PBKDF2 abgeleitet), bevor sie an den Server gehen. Der Server – und wer ihn betreibt – sieht nur Modul, Datum und Zeitpunkt der Einträge, nicht deren Inhalt. Passwort und Schlüssel verlassen das iPhone nie im Klartext. Für „Passwort vergessen“ bekommst du einen Wiederherstellungsschlüssel; vergisst du beides, sind die Daten auf dem Server nicht wiederherstellbar. Nicht verschlüsselt sind die Spielerkarte für Freunde sowie Daten, die du ausdrücklich an Claude, die Sprachausgabe oder als freiwillige Protokolle bzw. anonyme Verbesserungsdaten sendest.
+
 ## Nur auf dem iPhone (optional)
 
 Unter Einstellungen → Speicherort kannst du „Nur auf diesem iPhone speichern“ einschalten. Dann löscht dein Server alle gespeicherten Einträge, dein Profil, deine Spielerkarte und das Protokoll und speichert nichts mehr davon; auch gesprochene Antworten werden dort nicht zwischengespeichert. Er leitet nur noch Anfragen an Claude (mit deiner Zustimmung) und an die Sprachausgabe weiter. Sicherungen des Servers (falls der Betreiber welche anlegt) enthalten die Daten noch, bis sie überschrieben werden; für eine sofortige Löschung auch dort wende dich an den Betreiber deines Servers. Deine Daten liegen dann nur auf dem iPhone (und in dessen Backup). Schaltest du es wieder aus, wird alles erneut hochgeladen.
@@ -57,7 +61,7 @@ Unter Einstellungen → Speicherort kannst du „Nur auf diesem iPhone speichern
 
 - Lokal: SwiftData-Zwischenspeicher auf dem iPhone. „Verbindung trennen“ bzw. Löschen der App entfernt ihn.
 - Server: eine SQLite-Datei auf deinem Server. Einträge löschst du in der App; den ganzen Bestand löschst du, indem du die Datei auf dem Server entfernst.
-- Die Datei ist auf dem Server **nicht verschlüsselt**. Wer den Server betreibt oder Zugriff auf ihn hat, kann die Daten aller Nutzer dieses Servers lesen; ebenso Sicherungen des Servers, sofern sie nicht verschlüsselt sind. Nutzt du den Server einer anderen Person, vertraust du ihr deine Daten an – oder du wählst „Nur auf diesem iPhone speichern“.
+- Ohne Ende-zu-Ende-Verschlüsselung (siehe oben) ist die Datei auf dem Server **nicht verschlüsselt**. Wer den Server betreibt oder Zugriff auf ihn hat, kann die Daten aller Nutzer dieses Servers lesen; ebenso Sicherungen des Servers, sofern sie nicht verschlüsselt sind. Nutzt du den Server einer anderen Person, vertraust du ihr deine Daten an – oder du wählst „Nur auf diesem iPhone speichern“.
 - Export und Import als JSON sind jederzeit möglich.
 
 ## Übertragung
@@ -125,6 +129,10 @@ Only if you turn on “Share anonymous data” in Settings and confirm it, your 
 
 If you paste a link to a recipe website, your server fetches the page and takes over the embedded recipe data; only if there is none, the page text is sent to Claude with your consent. If you paste a reel or video link, your server passes it to your own Reelkoch installation, which downloads the public reel and creates the recipe with its own Claude access. Pasted recipe text and – only with your consent – the finished recipe for nutrition estimates are sent via your server to Claude. Your recipes are stored like all entries on your iPhone and your server; the coach receives a list of recipe titles with nutrition values.
 
+## End-to-end encryption (optional)
+
+Under Settings → Encryption you can set your own password. Entries and profile are then **encrypted on the iPhone** (AES-GCM, key derived from the password with PBKDF2) before they are sent to the server. The server – and whoever operates it – only sees module, date and time of entries, not their content. Password and key never leave the iPhone in plain text. For “forgot password” you get a recovery key; if you lose both, the data on the server cannot be recovered. Not encrypted are the player card for friends and data you explicitly send to Claude, speech output, or as optional logs or anonymous improvement data.
+
 ## iPhone only (optional)
 
 Under Settings → Storage you can turn on “Store only on this iPhone”. Your server then deletes all stored entries, your profile, your player card and the log, and stores none of it any more; spoken replies are not cached there either. It only forwards requests to Claude (with your consent) and to speech output. Server backups (if the operator makes any) still contain the data until they are overwritten; for immediate deletion there too, contact your server's operator. Your data then lives only on the iPhone (and its backup). If you turn it off again, everything is uploaded again.
@@ -133,7 +141,7 @@ Under Settings → Storage you can turn on “Store only on this iPhone”. Your
 
 - Local: SwiftData cache on the iPhone, removed by “Disconnect” or deleting the app.
 - Server: one SQLite file on your server. Delete entries in the app, or delete the file on the server to remove everything.
-- The file is **not encrypted** on the server. Whoever operates or has access to the server can read the data of all its users, as well as server backups unless they are encrypted. If you use someone else's server, you entrust them with your data – or choose “Store only on this iPhone”.
+- Without end-to-end encryption (see above) the file is **not encrypted** on the server. Whoever operates or has access to the server can read the data of all its users, as well as server backups unless they are encrypted. If you use someone else's server, you entrust them with your data – or choose “Store only on this iPhone”.
 - JSON export and import are available at any time.
 
 ## Transmission

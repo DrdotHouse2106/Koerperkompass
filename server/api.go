@@ -38,6 +38,11 @@ func routes() http.Handler {
 	m.HandleFunc("GET /api/me", auth(me))
 	m.HandleFunc("DELETE /api/devices/{id}", auth(deleteDevice))
 	m.HandleFunc("GET /api/profile", auth(getProfile))
+	// Ende-zu-Ende-Verschlüsselung: der Server bewahrt nur den mit Passwort bzw. Wiederherstellungsschlüssel
+	// verschlüsselten Datenschlüssel auf (nie Passwort oder Schlüssel im Klartext)
+	m.HandleFunc("GET /api/vault", auth(getVault))
+	m.HandleFunc("PUT /api/vault", auth(putVault))
+	m.HandleFunc("DELETE /api/vault", auth(deleteVault))
 	m.HandleFunc("PUT /api/profile", auth(putProfile))
 	m.HandleFunc("GET /api/entries", auth(listEntries))
 	m.HandleFunc("POST /api/entries", auth(putEntries))
@@ -244,6 +249,30 @@ func putEntries(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), 500)
 		return
 	}
+	w.WriteHeader(http.StatusNoContent)
+}
+
+func getVault(w http.ResponseWriter, r *http.Request) {
+	var v string
+	db.QueryRow(`SELECT vault FROM users WHERE id=?`, uid(r)).Scan(&v)
+	if v == "" {
+		v = "{}"
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.Write([]byte(v))
+}
+
+func putVault(w http.ResponseWriter, r *http.Request) {
+	var v json.RawMessage
+	if !readJSON(w, r, &v) {
+		return
+	}
+	db.Exec(`UPDATE users SET vault=? WHERE id=?`, string(v), uid(r))
+	w.WriteHeader(http.StatusNoContent)
+}
+
+func deleteVault(w http.ResponseWriter, r *http.Request) {
+	db.Exec(`UPDATE users SET vault='' WHERE id=?`, uid(r))
 	w.WriteHeader(http.StatusNoContent)
 }
 

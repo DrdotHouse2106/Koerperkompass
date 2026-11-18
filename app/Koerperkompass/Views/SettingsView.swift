@@ -34,6 +34,11 @@ struct SettingsView: View {
                 Section {
                     NavigationLink("Mein Plan") { GoalsView() }
                     NavigationLink("Über mich – Geräte und was dein Coach weiß") { AboutMeView() }
+                    if !state.demo {
+                        NavigationLink { VaultView() } label: {
+                            Label(Vault.enabled ? LocalizedStringKey("Verschlüsselung: an") : "Verschlüsselung mit Passwort", systemImage: Vault.enabled ? "lock.fill" : "lock.open")
+                        }
+                    }
                     NavigationLink("Gesprächsprotokoll (Testphase)") { CoachLogView() }
                     NavigationLink("Profil & Ziele") { SetupView(editing: true) }
                 }

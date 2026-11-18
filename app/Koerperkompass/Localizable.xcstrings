@@ -771,6 +771,16 @@
         }
       }
     },
+    "Alle Daten werden danach wieder unverschlüsselt auf deinem Server gespeichert.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All data will then be stored unencrypted on your server again."
+          }
+        }
+      }
+    },
     "Alle Programme": {
       "localizations": {
         "en": {
@@ -1021,6 +1031,16 @@
         }
       }
     },
+    "Auf diesem iPhone brauchst du das alte Passwort nicht. Auf einem neuen Gerät hilft der Wiederherstellungsschlüssel.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "On this iPhone you don't need the old password. On a new device the recovery key helps."
+          }
+        }
+      }
+    },
     "Auffüllen, bitte ⛽️": {
       "localizations": {
         "en": {
@@ -1147,6 +1167,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Detailed analysis with Claude"
+          }
+        }
+      }
+    },
+    "Ausschalten": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn off"
           }
         }
       }
@@ -1761,6 +1791,16 @@
         }
       }
     },
+    "Dein Wiederherstellungsschlüssel": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your recovery key"
+          }
+        }
+      }
+    },
     "Dein Wunsch und dein Profil (Ziel, Alter, Größe, Gewicht) werden über deinen Server an die Claude API (Anthropic) gesendet.": {
       "localizations": {
         "en": {
@@ -1821,12 +1861,42 @@
         }
       }
     },
+    "Deine Daten sind Ende-zu-Ende-verschlüsselt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your data is end-to-end encrypted"
+          }
+        }
+      }
+    },
+    "Deine Daten sind Ende-zu-Ende-verschlüsselt. Gib dein Passwort ein, um sie auf diesem Gerät zu öffnen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your data is end-to-end encrypted. Enter your password to open it on this device."
+          }
+        }
+      }
+    },
     "Deine Daten werden auf deinem eigenen Server gespeichert und abgeglichen – so bleiben sie auch bei Verlust des iPhones erhalten und sind auf weiteren Geräten verfügbar.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Your data is stored and synced on your own server – so it survives losing your iPhone and is available on other devices."
+          }
+        }
+      }
+    },
+    "Deine Einträge und dein Profil werden mit deinem Passwort verschlüsselt, bevor sie das iPhone verlassen – der Server und sein Betreiber können sie nicht lesen. Du bekommst einen Wiederherstellungsschlüssel für den Fall, dass du das Passwort vergisst. Vergisst du beides, sind die Daten auf dem Server verloren. Freiwillige Protokolle und anonyme Verbesserungsdaten kannst du weiterhin getrennt einschalten.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your entries and profile are encrypted with your password before they leave the iPhone – the server and its operator cannot read them. You get a recovery key in case you forget the password. If you lose both, the data on the server is lost. Optional logs and anonymous improvement data can still be switched on separately."
           }
         }
       }
@@ -2087,6 +2157,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Discipline"
+          }
+        }
+      }
+    },
+    "Doch mit Passwort": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use password instead"
           }
         }
       }
@@ -2561,6 +2641,16 @@
         }
       }
     },
+    "Einträge und Profil werden auf dem iPhone verschlüsselt. Der Server sieht nur Modul, Datum und Zeitpunkt der Einträge, nie die Inhalte.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Entries and profile are encrypted on the iPhone. The server only sees module, date and time of entries, never their content."
+          }
+        }
+      }
+    },
     "Eiweiß": {
       "localizations": {
         "en": {
@@ -2621,6 +2711,16 @@
         }
       }
     },
+    "Ende-zu-Ende-Verschlüsselung": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "End-to-end encryption"
+          }
+        }
+      }
+    },
     "Energie": {
       "localizations": {
         "en": {
@@ -2647,6 +2747,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Explorer"
+          }
+        }
+      }
+    },
+    "Entsperren": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unlock"
           }
         }
       }
@@ -3921,6 +4031,16 @@
         }
       }
     },
+    "Ich habe den Schlüssel sicher aufbewahrt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I have stored the key safely"
+          }
+        }
+      }
+    },
     "Ich höre zu …": {
       "localizations": {
         "en": {
@@ -4551,6 +4671,16 @@
         }
       }
     },
+    "Kopieren": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copy"
+          }
+        }
+      }
+    },
     "Koppeln": {
       "localizations": {
         "en": {
@@ -4707,6 +4837,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Körperkompass"
+          }
+        }
+      }
+    },
+    "Körperkompass-Wiederherstellungsschlüssel: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Körperkompass recovery key: %@"
           }
         }
       }
@@ -5301,6 +5441,16 @@
         }
       }
     },
+    "Mit dem Wiederherstellungsschlüssel entsperrst du deine Daten. Danach kannst du unter Einstellungen → Verschlüsselung ein neues Passwort setzen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unlock your data with the recovery key. Afterwards you can set a new password under Settings → Encryption."
+          }
+        }
+      }
+    },
     "Mit der Kamera oder in der Körperkompass-App scannen. Der Code ist einmalig und 24 Stunden gültig.": {
       "localizations": {
         "en": {
@@ -5507,6 +5657,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "New quest, e.g. “Stretch for 10 minutes”"
+          }
+        }
+      }
+    },
+    "Neues Passwort (mind. 8 Zeichen)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New password (min. 8 characters)"
           }
         }
       }
@@ -5827,6 +5987,76 @@
           "stringUnit": {
             "state": "translated",
             "value": "Matching the coach style"
+          }
+        }
+      }
+    },
+    "Passwort": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Password"
+          }
+        }
+      }
+    },
+    "Passwort (mind. 8 Zeichen)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Password (min. 8 characters)"
+          }
+        }
+      }
+    },
+    "Passwort falsch": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wrong password"
+          }
+        }
+      }
+    },
+    "Passwort geändert.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Password changed."
+          }
+        }
+      }
+    },
+    "Passwort vergessen?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Forgot password?"
+          }
+        }
+      }
+    },
+    "Passwort ändern": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Change password"
+          }
+        }
+      }
+    },
+    "Passwort ändern oder vergessen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Change or forgot password"
           }
         }
       }
@@ -6757,6 +6987,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Save"
+          }
+        }
+      }
+    },
+    "Sichern (z. B. in Passwörtern oder Notizen)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save (e.g. in Passwords or Notes)"
           }
         }
       }
@@ -7731,6 +7971,86 @@
         }
       }
     },
+    "Verschlüsselt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Encrypted"
+          }
+        }
+      }
+    },
+    "Verschlüsselt – bitte Passwort eingeben": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Encrypted – please enter your password"
+          }
+        }
+      }
+    },
+    "Verschlüsselung": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Encryption"
+          }
+        }
+      }
+    },
+    "Verschlüsselung ausschalten": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn off encryption"
+          }
+        }
+      }
+    },
+    "Verschlüsselung ausschalten?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn off encryption?"
+          }
+        }
+      }
+    },
+    "Verschlüsselung einrichten": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Set up encryption"
+          }
+        }
+      }
+    },
+    "Verschlüsselung mit Passwort": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Encryption with password"
+          }
+        }
+      }
+    },
+    "Verschlüsselung: an": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Encryption: on"
+          }
+        }
+      }
+    },
     "Version": {
       "localizations": {
         "en": {
@@ -8191,6 +8511,26 @@
         }
       }
     },
+    "Wiederherstellungsschlüssel falsch": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wrong recovery key"
+          }
+        }
+      }
+    },
+    "Wiederholen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Repeat"
+          }
+        }
+      }
+    },
     "Wiederholungen": {
       "localizations": {
         "en": {
@@ -8207,6 +8547,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Welcome to Körperkompass"
+          }
+        }
+      }
+    },
+    "Wird eingerichtet …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Setting up …"
+          }
+        }
+      }
+    },
+    "Wird entsperrt …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unlocking …"
           }
         }
       }
@@ -8237,6 +8597,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Creating …"
+          }
+        }
+      }
+    },
+    "Wird nur dieses eine Mal angezeigt. Damit setzt du ein neues Passwort, falls du deins vergisst. Ohne Passwort und ohne diesen Schlüssel kann niemand deine Daten wiederherstellen – auch nicht der Betreiber des Servers.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shown only this once. Use it to set a new password if you forget yours. Without the password and this key nobody can recover your data – not even the server operator."
           }
         }
       }

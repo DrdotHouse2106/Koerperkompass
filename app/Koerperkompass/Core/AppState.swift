@@ -1,3 +1,4 @@
+import CryptoKit
 import Foundation
 import SwiftData
 import UIKit
@@ -32,6 +33,9 @@ import UIKit
     var serverVersion = ""
     var syncError: String?
     var pendingLink: URL?
+    /// Ende-zu-Ende-Verschlüsselung aktiv, aber Schlüssel fehlt (z. B. neues Gerät) → Passwort abfragen
+    var vaultLocked = Vault.locked
+    private var pendingProfile: Data?  // verschlüsseltes Profil vom Server, bis der Tresor entsperrt ist
     private var lastRev: Int64 { didSet { defaults.set(lastRev, forKey: "lastRev") } }
     private var profileDirty = false
     private var syncing = false
@@ -68,11 +72,13 @@ import UIKit
         aiAvailable = status.ai
             ttsAvailable = status.tts ?? false; reelkochAvailable = status.reelkoch ?? false
         serverVersion = status.version
-        if let data = try? await self.api.call("GET", "/api/profile"), let p = try? JSONDecoder().decode(Profile.self, from: data) {
-            syncing = true
-            profile = p
-            syncing = false
-            profileDirty = false
+        // Tresor auf dem Server? Dann braucht dieses Gerät das Passwort, bevor es Daten lesen kann
+        if let data = try? await self.api.call("GET", "/api/vault"), (try? JSONDecoder().decode(Vault.Box.self, from: data)) != nil {
+            Vault.enabled = true
+            vaultLocked = Vault.locked
+        }
+        if let data = try? await self.api.call("GET", "/api/profile") {
+            if let p = decodeProfile(data) { applyServerProfile(p) } else { pendingProfile = data }
         }
         await sync(context)
     }
@@ -87,6 +93,10 @@ import UIKit
     func reset(_ context: ModelContext) {
         try? context.delete(model: Entry.self)
         try? context.save()
+        Vault.enabled = false
+        Vault.key = nil
+        vaultLocked = false
+        pendingProfile = nil
         token = nil
         demo = false
         lastRev = 0
@@ -117,12 +127,13 @@ import UIKit
             ttsAvailable = status.tts ?? false; reelkochAvailable = status.reelkoch ?? false
             serverVersion = status.version
             if localOnly { syncError = nil; return }  // Daten bleiben auf dem iPhone
+            if Vault.locked { vaultLocked = true; syncError = String(localized: "Verschlüsselt – bitte Passwort eingeben"); return }
 
             let dirty = try context.fetch(FetchDescriptor<Entry>(predicate: #Predicate { $0.dirty }))
             AppLog.add("Abgleich: \(dirty.count) zu senden, seit rev \(lastRev)" + dirty.prefix(20).map { "\n  ↑ " + AppLog.describe($0) }.joined())
             if !dirty.isEmpty {
                 let sent = dirty.map { ($0, $0.updated) }
-                _ = try await api.call("POST", "/api/entries", json: dirty.map(\.json))
+                _ = try await api.call("POST", "/api/entries", json: dirty.map { Vault.sealEntry($0.json) })
                 for (e, updated) in sent where e.updated == updated { e.dirty = false }
             }
 
@@ -142,9 +153,18 @@ import UIKit
                     return e
                 }()
                 guard updated >= e.updated, !e.dirty else { continue }
+                // Verschlüsselte Inhalte entschlüsseln; lässt sich etwas nicht öffnen, bleibt der lokale Stand
+                let values = Vault.open(r["data"]) as? [String: Any]
+                if values == nil && r["data"] is String {
+                    // Verschlüsselt, aber hier noch kein Schlüssel (Tresor auf einem anderen Gerät eingeschaltet) → Passwort abfragen
+                    if !Vault.enabled { Vault.enabled = true }
+                    vaultLocked = Vault.locked
+                    AppLog.add("Abgleich: Eintrag nicht entschlüsselbar")
+                    continue
+                }
                 e.module = module
                 e.date = r["date"] as? String ?? e.date
-                e.values = r["data"] as? [String: Any] ?? [:]
+                e.values = values ?? [:]
                 e.deleted = r["deleted"] as? Bool ?? false
                 e.updated = updated
                 e.dirty = false
@@ -178,7 +198,9 @@ import UIKit
     private func pushProfile() async {
         defaults.set(profileDirty, forKey: "profileDirty")
         guard profileDirty, !demo, !localOnly, token != nil, let data = try? JSONEncoder().encode(profile),
-              let json = try? JSONSerialization.jsonObject(with: data) else { return }
+              let plain = try? JSONSerialization.jsonObject(with: data) else { return }
+        let json: Any = Vault.enabled ? ["enc": Vault.seal(plain)] : plain  // mit Tresor nur verschlüsselt
+        if Vault.locked { return }
         if (try? await api.call("PUT", "/api/profile", json: json)) != nil {
             profileDirty = false
             defaults.set(false, forKey: "profileDirty")
@@ -205,6 +227,77 @@ import UIKit
             profileDirty = true
             changed(context)
         }
+    }
+
+    // MARK: Verschlüsselung (Tresor)
+
+    /// Profil vom Server lesen – auch verschlüsselt ({"enc": "…"})
+    private func decodeProfile(_ data: Data) -> Profile? {
+        if let p = try? JSONDecoder().decode(Profile.self, from: data) { return p }
+        guard let obj = try? JSONSerialization.jsonObject(with: data) as? [String: Any], obj["enc"] != nil,
+              let plain = Vault.open(obj["enc"]), let d = try? JSONSerialization.data(withJSONObject: plain) else { return nil }
+        return try? JSONDecoder().decode(Profile.self, from: d)
+    }
+
+    private func applyServerProfile(_ p: Profile) {
+        syncing = true
+        profile = p
+        syncing = false
+        profileDirty = false
+    }
+
+    private func vaultBox() async throws -> Vault.Box {
+        try JSONDecoder().decode(Vault.Box.self, from: try await api.call("GET", "/api/vault"))
+    }
+
+    /// Entsperren mit Passwort oder Wiederherstellungsschlüssel (z. B. auf einem neuen Gerät)
+    func unlockVault(password: String? = nil, recovery: String? = nil, _ context: ModelContext) async throws {
+        let box = try await vaultBox()
+        var key: SymmetricKey?
+        if let password { key = Vault.unlock(box, password: password) }
+        if let recovery { key = Vault.unlock(box, recovery: recovery) }
+        guard let key else {
+            throw API.Failure(message: password != nil ? String(localized: "Passwort falsch") : String(localized: "Wiederherstellungsschlüssel falsch"))
+        }
+        Vault.key = key
+        vaultLocked = false
+        lastRev = 0  // alles noch einmal holen und entschlüsseln
+        if pendingProfile == nil { pendingProfile = try? await api.call("GET", "/api/profile") }
+        if !profileDirty, let data = pendingProfile, let p = decodeProfile(data) { applyServerProfile(p) }
+        pendingProfile = nil
+        await sync(context)
+    }
+
+    /// Verschlüsselung einschalten: neuer Schlüssel, alles einmal verschlüsselt neu hochladen. Gibt den Wiederherstellungsschlüssel zurück.
+    func enableVault(password: String, _ context: ModelContext) async throws -> String {
+        let (box, key, recovery) = Vault.create(password: password)
+        if !demo && !localOnly { _ = try await api.call("PUT", "/api/vault", json: try JSONSerialization.jsonObject(with: JSONEncoder().encode(box))) }
+        Vault.key = key
+        Vault.enabled = true
+        reupload(context)
+        return recovery
+    }
+
+    /// Neues Passwort (das alte wird nicht gebraucht – dieses Gerät hat den Schlüssel)
+    func changeVaultPassword(_ password: String) async throws {
+        guard let key = Vault.key else { return }
+        let box = Vault.rewrap(try await vaultBox(), key: key, password: password)
+        _ = try await api.call("PUT", "/api/vault", json: try JSONSerialization.jsonObject(with: JSONEncoder().encode(box)))
+    }
+
+    /// Verschlüsselung ausschalten: alles wieder im Klartext hochladen
+    func disableVault(_ context: ModelContext) async throws {
+        if !demo && !localOnly { _ = try await api.call("DELETE", "/api/vault") }
+        Vault.enabled = false
+        reupload(context)
+        Vault.key = nil
+    }
+
+    private func reupload(_ context: ModelContext) {
+        for e in context.allEntries() { e.dirty = true }
+        profileDirty = true
+        defaults.set(true, forKey: "profileDirty")
+        changed(context)
     }
 
     func delete(_ entry: Entry, _ context: ModelContext) {

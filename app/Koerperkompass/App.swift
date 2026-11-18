@@ -27,6 +27,8 @@ struct RootView: View {
         Group {
             if !state.isConnected {
                 ConnectView()
+            } else if state.vaultLocked {
+                VaultUnlockView()
             } else if !state.profile.isSetUp {
                 NavigationStack { SetupView() }
             } else {
