@@ -27,7 +27,7 @@ Wenn du Freundschaften schließt, gibt dein Server deine **Spielerkarte** an die
 
 ## Über mich: Geräte und was der Coach weiß
 
-Deine Trainingsgeräte und die Tatsachen, die sich der Gesundheitscoach im Gespräch merkt (z. B. Beschwerden, verfügbare Zeit, Vorlieben), stehen in deinem Profil – auf deinem iPhone und deinem eigenen Server. An Claude gehen sie nur mit deiner Zustimmung, als Teil des Profils. Du siehst und löschst sie unter Einstellungen → Über mich.
+Deine Trainingsgeräte, dein Tagesablauf („Mein Alltag“) und die Tatsachen, die sich der Gesundheitscoach im Gespräch merkt (z. B. Beschwerden, verfügbare Zeit, Vorlieben), stehen in deinem Profil – auf deinem iPhone und deinem eigenen Server. An Claude gehen sie nur mit deiner Zustimmung, als Teil des Profils. Du siehst und löschst sie unter Einstellungen → Über mich.
 
 ## Apple Intelligence (auf dem Gerät)
 
@@ -103,7 +103,7 @@ If you make friends, your server shares your **player card** with your friends�
 
 ## About me: equipment and what the coach knows
 
-Your training equipment and the facts the health coach remembers from conversations (e.g. complaints, available time, preferences) are stored in your profile – on your iPhone and your own server. They are only sent to Claude with your consent, as part of the profile. You can view and delete them under Settings → About me.
+Your training equipment, your daily routine (“My daily routine”) and the facts the health coach remembers from conversations (e.g. complaints, available time, preferences) are stored in your profile – on your iPhone and your own server. They are only sent to Claude with your consent, as part of the profile. You can view and delete them under Settings → About me.
 
 ## Apple Intelligence (on device)
 

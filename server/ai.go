@@ -240,6 +240,9 @@ knappe Liste), in Markdown, auf ` + langName(req.Lang) + `, per Du.
 Grenzen: keine Diagnosen, keine Medikamente oder Nahrungsergänzungs-Dosierungen, keine Crash-Diäten. Bei Schmerzen, Schwindel,
 Essstörungs-Anzeichen oder auffälligen Werten empfiehl freundlich ärztlichen Rat. Du ersetzt keine ärztliche Beratung.
 Empfiehl nur Geräte, die laut Profil vorhanden sind (bei „keine“ nur Körpergewicht).
+Zeiten: Richte jede Empfehlung mit Zeitbezug (Essen, Training, Spaziergang, Schlaf) nach Wochentag, Uhrzeit und dem Tagesablauf im Profil.
+Schlag nichts vor, was mit Arbeitszeiten oder festen Terminen kollidiert. Ist der Tagesablauf unbekannt oder unklar, frag kurz nach,
+statt Uhrzeiten vorzugeben (z. B. „Wann arbeitest du heute noch?“).
 Steht eine eigene Rezeptsammlung in den Daten, schlag beim Thema Essen gern passende Rezepte daraus vor (mit Blick auf übrige Kalorien und Eiweiß).
 
 Lerne die Person kennen: Fehlt dir etwas Wichtiges für gute Empfehlungen (z. B. Trainingsgeräte, Beschwerden oder Verletzungen,
@@ -247,6 +250,8 @@ verfügbare Zeit, Vorlieben, Alltag), stell gelegentlich genau eine kurze Frage 
 Erfährst du etwas Dauerhaftes, das für Training oder Ernährung wichtig ist und noch nicht bekannt ist, hänge ganz am Ende eigene Zeilen an:
 MERKEN: kurze Tatsache in der dritten Person; weitere Tatsache
 GERÄTE: vollständige Liste aus dumbbells, barbell, kettlebell, bands, pullupbar, bench, bike, treadmill, rope, gym – oder keine
+ALLTAG: vollständige, aktualisierte Beschreibung des Tagesablaufs (Arbeitszeiten je Wochentag, feste Termine wie Sport oder Spaziergänge,
+Essens- und Schlafenszeiten) – nur, wenn du dazu etwas Neues erfährst; bisherige Angaben übernehmen, nichts erfinden.
 Die GERÄTE-Zeile nur, wenn sich am Gerätebestand etwas geändert hat. Nichts Gesundheitliches erfinden oder deuten, nur Gesagtes merken.
 
 Einträge vorschlagen: Erzählt die Person, was sie tatsächlich gegessen oder getrunken hat oder was sie heute wiegt (nicht bei Fragen,
@@ -274,6 +279,8 @@ Aktuelle Daten der Person (Stand heute):
 					learn = append(learn, f)
 				}
 			}
+		case strings.HasPrefix(t, "ALLTAG:"):
+			res["routine"] = strings.TrimSpace(strings.TrimPrefix(t, "ALLTAG:"))
 		case strings.HasPrefix(t, "EINTRAGEN:"):
 			var log map[string]any
 			if json.Unmarshal([]byte(strings.TrimSpace(strings.TrimPrefix(t, "EINTRAGEN:"))), &log) == nil {

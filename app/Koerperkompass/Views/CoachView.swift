@@ -263,6 +263,10 @@ struct CoachView: View {
                 // Was der Coach über dich gelernt hat, ins Profil übernehmen (sichtbar unter Einstellungen → Über mich)
                 var p = state.profile, notes: [String] = []
                 if let learn = r["learn"] as? [String], !learn.isEmpty { p.learn(learn); notes += learn }
+                if let routine = r["routine"] as? String, !routine.isEmpty {
+                    p.routine = routine
+                    notes.append(String(localized: "Alltag aktualisiert"))
+                }
                 if let eq = r["equipment"] as? [String] {
                     p.equipment = eq.filter { id in Profile.equipmentOptions.contains { $0.id == id } }
                     notes.append(String(localized: "Geräte: \(p.equipmentText)"))
@@ -304,7 +308,7 @@ func coachContext(_ all: [Entry], _ p: Profile, healthUpload: Bool) -> String {
     if sum("water", "alcohol") > 0 { drinks += ", Alkohol \(sum("water", "alcohol").whole) g" }
     var lines: [String] = []
     lines.append("Profil: \(p.aiText), Trinkziel \(p.waterGoal.whole) ml")
-    lines.append("Heute \(Day.today), \(Date().formatted(date: .omitted, time: .shortened)) Uhr:")
+    lines.append("Heute \(Date().formatted(.dateTime.weekday(.wide).locale(Locale(identifier: "de_DE")))), \(Day.today), \(Date().formatted(date: .omitted, time: .shortened)) Uhr:")
     lines.append("- Gegessen: \(kcal.whole) von \(p.kcal.whole) kcal, Eiweiß \(sum("nutrition", "protein").whole)/\(p.protein.whole) g, Kohlenhydrate \(sum("nutrition", "carbs").whole)/\(p.carbs.whole) g, Fett \(sum("nutrition", "fat").whole)/\(p.fat.whole) g")
     lines.append("- Mahlzeiten: " + (meals.isEmpty ? "noch nichts eingetragen" : meals.joined(separator: ", ")))
     lines.append(drinks)

@@ -26,6 +26,14 @@ struct AboutMeView: View {
                 Text("Trainingsplan und Coach schlagen nur Übungen vor, die du damit machen kannst. Dein Coach fragt auch im Gespräch danach.")
             }
             Section {
+                TextField("z. B. Mo–Fr 7–16 Uhr im Büro, Mittag um 12, abends gegen 20 Uhr meine 4-km-Runde, ins Bett um 23 Uhr",
+                          text: Binding(get: { state.profile.routine ?? "" }, set: { state.profile.routine = $0.isEmpty ? nil : $0 }),
+                          axis: .vertical)
+                    .lineLimit(3...8)
+            } header: { Text("Mein Alltag") } footer: {
+                Text("Arbeitszeiten, feste Termine, Essens- und Schlafenszeiten. Dein Coach richtet Uhrzeiten danach – und ergänzt es, wenn du ihm im Gespräch davon erzählst.")
+            }
+            Section {
                 ForEach(Array((state.profile.facts ?? []).enumerated()), id: \.offset) { _, f in Text(f) }
                     .onDelete { state.profile.facts?.remove(atOffsets: $0) }
                 HStack {

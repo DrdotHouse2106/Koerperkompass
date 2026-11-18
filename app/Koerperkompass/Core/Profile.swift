@@ -29,6 +29,7 @@ struct Profile: Codable, Equatable {
     var visible: Bool? = nil          // für Freunde meiner Freunde sichtbar sein
     var equipment: [String]? = nil    // vorhandene Trainingsgeräte (nil = unbekannt, leer = keine)
     var facts: [String]? = nil        // was der Coach im Gespräch über die Person erfahren hat
+    var routine: String? = nil        // Tagesablauf: Arbeitszeiten, feste Termine, Essens- und Schlafenszeiten
 
     struct Equipment: Identifiable { let id: String; let name: LocalizedStringResource }
     static let equipmentOptions: [Equipment] = [
@@ -75,7 +76,8 @@ struct Profile: Codable, Equatable {
         "Startgewicht: \(weight.short) kg, Wunschgewicht: \(targetWeight.short) kg, " +
         "Tagesziel: \(kcal.whole) kcal, Eiweiß \(protein.whole) g, Kohlenhydrate \(carbs.whole) g, Fett \(fat.whole) g, " +
         "Trainingsgeräte: \(equipmentText)" +
-        ((facts ?? []).isEmpty ? "" : "\nBekannt über die Person: " + (facts ?? []).joined(separator: "; "))
+        ((facts ?? []).isEmpty ? "" : "\nBekannt über die Person: " + (facts ?? []).joined(separator: "; ")) +
+        ((routine ?? "").isEmpty ? "\nTagesablauf: unbekannt" : "\nTagesablauf: " + (routine ?? ""))
     }
 
     /// Geräte als Text für die KI (deutsche Namen)

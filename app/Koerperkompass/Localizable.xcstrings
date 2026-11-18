@@ -841,6 +841,16 @@
         }
       }
     },
+    "Alltag aktualisiert": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Routine updated"
+          }
+        }
+      }
+    },
     "Alter": {
       "localizations": {
         "en": {
@@ -977,6 +987,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Connect Apple Health"
+          }
+        }
+      }
+    },
+    "Arbeitszeiten, feste Termine, Essens- und Schlafenszeiten. Dein Coach richtet Uhrzeiten danach – und ergänzt es, wenn du ihm im Gespräch davon erzählst.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Working hours, fixed appointments, meal and sleep times. Your coach plans times around it – and updates it when you tell him about it."
           }
         }
       }
@@ -5101,6 +5121,16 @@
         }
       }
     },
+    "Mein Alltag": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "My daily routine"
+          }
+        }
+      }
+    },
     "Mein Plan": {
       "localizations": {
         "en": {
@@ -8637,6 +8667,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "e.g. knee hurts when jogging"
+          }
+        }
+      }
+    },
+    "z. B. Mo–Fr 7–16 Uhr im Büro, Mittag um 12, abends gegen 20 Uhr meine 4-km-Runde, ins Bett um 23 Uhr": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "e.g. Mon–Fri 7–4 at the office, lunch at 12, my 4 km walk around 8 pm, bed at 11 pm"
           }
         }
       }
