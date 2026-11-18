@@ -25,7 +25,7 @@ struct SettingsView: View {
     @AppStorage("motivationEvening") private var motivationEvening = false
     @AppStorage("motivationEveningHour") private var motivationEveningHour = 19
 
-    @AppStorage("appLogOn") private var appLogOn = true
+    @AppStorage("appLogOn") private var appLogOn = false
 
     var body: some View {
         @Bindable var state = state

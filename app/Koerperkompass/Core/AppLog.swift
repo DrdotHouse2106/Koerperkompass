@@ -5,7 +5,7 @@ import Foundation
 /// Abschaltbar in den Einstellungen.
 enum AppLog {
     static var enabled: Bool {
-        (UserDefaults.standard.object(forKey: "appLogOn") as? Bool ?? true) && !UserDefaults.standard.bool(forKey: "localOnly")
+        (UserDefaults.standard.object(forKey: "appLogOn") as? Bool ?? false) && !UserDefaults.standard.bool(forKey: "localOnly")
     }
     private static var buffer: [[String: Any]] = []
     private static let lock = NSLock()

@@ -4,7 +4,7 @@ import SwiftUI
 /// Gesprächsprotokoll für die Testphase: hilft, die Coaches nachzuschärfen.
 /// Gespeichert als Einträge im Modul „coachlog“ – nur auf dem iPhone und dem eigenen Server. Abschaltbar.
 enum CoachLog {
-    static var enabled: Bool { UserDefaults.standard.object(forKey: "coachLogOn") as? Bool ?? true }
+    static var enabled: Bool { UserDefaults.standard.object(forKey: "coachLogOn") as? Bool ?? false }
 
     /// kind: „training“ oder „gesundheit“; source: „apple“, „haiku“, „claude“ oder „regel“
     static func add(kind: String, persona: String = "", heard: String, reply: String, source: String, ms: Int, extra: [String: Any] = [:]) {
@@ -33,7 +33,7 @@ enum CoachLog {
 
 /// Hinweis-Leiste in den Coach-Ansichten
 struct CoachLogBanner: View {
-    @AppStorage("coachLogOn") private var on = true
+    @AppStorage("coachLogOn") private var on = false
     var body: some View {
         if on {
             HStack {
@@ -52,7 +52,7 @@ struct CoachLogBanner: View {
 struct CoachLogView: View {
     @Environment(AppState.self) private var state
     @Environment(\.modelContext) private var context
-    @AppStorage("coachLogOn") private var on = true
+    @AppStorage("coachLogOn") private var on = false
     @Query(filter: #Predicate<Entry> { $0.module == "coachlog" && !$0.removed }, sort: \Entry.date, order: .reverse) private var entries: [Entry]
 
     var body: some View {
