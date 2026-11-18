@@ -11,6 +11,10 @@ struct ParsedFood: Identifiable {
     var protein: Double
     var carbs: Double
     var fat: Double
+    // Getränke: Menge in ml (0 = kein Getränk), Koffein (mg), Alkohol (g); landen bei den Getränken
+    var ml = 0.0
+    var caffeine = 0.0
+    var alcohol = 0.0
 }
 
 extension Meal {
@@ -62,7 +66,9 @@ enum MealParser {
             return (r["items"] as? [[String: Any]] ?? []).map {
                 ParsedFood(meal: ($0["meal"] as? String).flatMap(Meal.init(rawValue:)) ?? meal, name: $0["name"] as? String ?? "", amount: $0["amount"] as? String ?? "",
                            kcal: ($0["kcal"] as? NSNumber)?.doubleValue ?? 0, protein: ($0["protein"] as? NSNumber)?.doubleValue ?? 0,
-                           carbs: ($0["carbs"] as? NSNumber)?.doubleValue ?? 0, fat: ($0["fat"] as? NSNumber)?.doubleValue ?? 0)
+                           carbs: ($0["carbs"] as? NSNumber)?.doubleValue ?? 0, fat: ($0["fat"] as? NSNumber)?.doubleValue ?? 0,
+                           ml: ($0["ml"] as? NSNumber)?.doubleValue ?? 0, caffeine: ($0["caffeine"] as? NSNumber)?.doubleValue ?? 0,
+                           alcohol: ($0["alcohol"] as? NSNumber)?.doubleValue ?? 0)
             }
         }
         if let r = await OnDevice.parseMeal(text, hint: Meal.now.rawValue, history: refersToHistory(text) ? full : "") { return r }
@@ -191,6 +197,7 @@ private struct MealConfirmView: View {
                         }
                         TextField("Bezeichnung", text: $item.name)
                         TextField("Menge", text: $item.amount)
+                        if item.ml > 0 { row("Menge (ml)", $item.ml) }
                         row("kcal", $item.kcal)
                         row("Eiweiß (g)", $item.protein)
                         row("Kohlenhydrate (g)", $item.carbs)
@@ -225,6 +232,14 @@ private struct MealConfirmView: View {
     private func save() {
         for f in result.items {
             let name = f.amount.isEmpty ? f.name : "\(f.name) (\(f.amount))"
+            if f.ml > 0 {
+                // Getränk: zählt fürs Trinkziel (ohne Alkohol), Kalorien zählen über die Getränke in die Ernährung
+                context.insert(Entry(module: "water", date: day, values: [
+                    "drink": "custom", "name": f.name, "ml": f.ml, "hydration": f.alcohol > 0 ? 0 : f.ml,
+                    "kcal": f.kcal, "carbs": f.carbs, "caffeine": f.caffeine, "alcohol": f.alcohol,
+                ]))
+                continue
+            }
             context.insert(Entry(module: "nutrition", date: day, values: [
                 "meal": f.meal.rawValue, "name": name, "kcal": f.kcal, "protein": f.protein, "carbs": f.carbs, "fat": f.fat,
             ]))

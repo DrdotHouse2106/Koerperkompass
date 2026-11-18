@@ -47,12 +47,16 @@ struct Drink: Identifiable {
         Drink(id: "spirit", name: "Schnaps", emoji: "🥃", ml: 40, kcal: 90, alcohol: 13, hydrates: false),
     ]
 
-    func entry(date: String = Day.today) -> Entry {
-        Entry(module: "water", date: date, values: [
+    /// Eintrag für die übliche oder eine eigene Menge (Nährwerte werden umgerechnet)
+    func entry(date: String = Day.today, ml amount: Double? = nil) -> Entry {
+        let ml = amount ?? self.ml, f = ml / self.ml
+        return Entry(module: "water", date: date, values: [
             "drink": id, "name": String(localized: name), "ml": ml, "hydration": hydrates ? ml : 0,
-            "kcal": kcal, "carbs": carbs, "caffeine": caffeine, "alcohol": alcohol,
+            "kcal": kcal * f, "carbs": carbs * f, "caffeine": caffeine * f, "alcohol": alcohol * f,
         ])
     }
+
+    static let amounts: [Double] = [200, 250, 330, 400, 500, 1000]
 }
 
 /// Flüssigkeit eines Tages (ältere Einträge haben nur „ml“)
@@ -120,6 +124,8 @@ private struct WaterDetail: View {
     @AppStorage("reminderFrom") private var from = 9
     @AppStorage("reminderTo") private var to = 21
     @State private var denied = false
+    @State private var custom: Drink?
+    @State private var customML = ""
 
     var body: some View {
         let goal = state.profile.waterGoal, ml = hydration(entries)
@@ -143,7 +149,7 @@ private struct WaterDetail: View {
                 }
                 .padding(.vertical, 6)
             }
-            Section("Eintragen") {
+            Section {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 96), spacing: 10)], spacing: 10) {
                     ForEach(Drink.all) { d in
                         Button {
@@ -161,10 +167,16 @@ private struct WaterDetail: View {
                             .background((d.hydrates ? Color.cyan : Color.orange).opacity(0.15), in: RoundedRectangle(cornerRadius: 14))
                         }
                         .buttonStyle(.plain)
+                        .contextMenu {
+                            ForEach(Drink.amounts, id: \.self) { ml in
+                                Button(ml >= 1000 ? "\((ml / 1000).short) l" : "\((ml / 1000).formatted(.number.precision(.fractionLength(2)))) l") { add(d, ml) }
+                            }
+                            Button("Andere Menge …", systemImage: "pencil") { customML = ""; custom = d }
+                        }
                     }
                 }
                 .padding(.vertical, 4)
-            }
+            } header: { Text("Eintragen") } footer: { Text("Gedrückt halten für eine andere Menge, z. B. 0,33 l.") }
             Section("Heute") {
                 EntryRows(entries: entries.filter { $0.date == Day.today }.sorted { $0.updated > $1.updated }) {
                     "\($0.text("name") ?? String(localized: "Wasser")) · \(($0.num("ml") ?? 0).whole) ml"
@@ -192,6 +204,17 @@ private struct WaterDetail: View {
             }
         }
         .onChange(of: [reminderOn ? 1 : 0, every, from, to]) { update() }
+        .alert(Text(custom?.name ?? "Menge"), isPresented: Binding(get: { custom != nil }, set: { if !$0 { custom = nil } })) {
+            TextField("Menge in ml", text: $customML).keyboardType(.numberPad)
+            Button("Eintragen") { if let d = custom, let ml = Double(customML), ml > 0 { add(d, ml) } }
+            Button("Abbrechen", role: .cancel) {}
+        }
+    }
+
+    private func add(_ d: Drink, _ ml: Double) {
+        context.insert(d.entry(ml: ml))
+        state.changed(context)
+        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
     }
 
     private func update() {

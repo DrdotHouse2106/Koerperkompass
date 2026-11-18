@@ -33,11 +33,12 @@ enum OnDevice {
     static func parseMeal(_ text: String, hint: String, history: String = "") async -> [ParsedFood]? {
         #if canImport(FoundationModels)
         if #available(iOS 26.0, *), available {
-            let s = LanguageModelSession(instructions: "Du zerlegst Essensbeschreibungen in einzelne Lebensmittel mit realistischen Nährwerten für die genannte oder eine übliche deutsche Portionsgröße. Getränke mit Kalorien gehören dazu. Erkenne die Mahlzeit jedes Lebensmittels aus dem Text, sonst nimm den Hinweis. Eine Beschreibung kann mehrere Mahlzeiten enthalten. Bezieht sie sich auf frühere Mahlzeiten (z. B. „wie gestern“), übernimm die Lebensmittel mit Nährwerten aus dem Verlauf.")
+            let s = LanguageModelSession(instructions: "Du zerlegst Essensbeschreibungen in einzelne Lebensmittel mit realistischen Nährwerten für die genannte oder eine übliche deutsche Portionsgröße. Alle Getränke gehören dazu (auch Wasser, Kaffee, Bier). Erkenne die Mahlzeit jedes Lebensmittels aus dem Text, sonst nimm den Hinweis. Eine Beschreibung kann mehrere Mahlzeiten enthalten. Bezieht sie sich auf frühere Mahlzeiten (z. B. „wie gestern“), übernimm die Lebensmittel mit Nährwerten aus dem Verlauf.")
             if let r = try? await s.respond(to: (history.isEmpty ? "" : "Bisherige Mahlzeiten:\n\(history.suffix(3000))\n\n") + "Hinweis Mahlzeit: \(hint)\nBeschreibung: \(text)", generating: GenMeal.self) {
                 return r.content.items.map {
                     ParsedFood(meal: Meal(rawValue: $0.meal) ?? Meal(rawValue: hint) ?? .snack,
-                               name: $0.name, amount: $0.amount, kcal: $0.kcal, protein: $0.protein, carbs: $0.carbs, fat: $0.fat)
+                               name: $0.name, amount: $0.amount, kcal: $0.kcal, protein: $0.protein, carbs: $0.carbs, fat: $0.fat,
+                               ml: $0.ml, caffeine: $0.caffeine, alcohol: $0.alcohol)
                 }
             }
         }
@@ -80,6 +81,12 @@ struct GenFood {
     var carbs: Double
     @Guide(description: "Fett in Gramm")
     var fat: Double
+    @Guide(description: "Bei Getränken die Menge in ml (z. B. 330 für ein 0,33er), sonst 0")
+    var ml: Double
+    @Guide(description: "Koffein in mg (Kaffee, Tee, Cola, Energy), sonst 0")
+    var caffeine: Double
+    @Guide(description: "Reiner Alkohol in Gramm (Bier, Wein, Schnaps), sonst 0")
+    var alcohol: Double
 }
 
 @available(iOS 26.0, *)

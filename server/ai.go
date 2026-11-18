@@ -345,7 +345,7 @@ func aiMeal(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	system := `Du zerlegst Essensbeschreibungen in einzelne Lebensmittel mit realistischen Nährwerten für die genannte bzw. eine übliche Menge
-(deutsche Lebensmittel und Portionsgrößen, z. B. ein Berliner ≈ 70 g ≈ 250 kcal). Getränke mit Kalorien (z. B. Kaffee mit Milch, Saft) gehören dazu.
+(deutsche Lebensmittel und Portionsgrößen, z. B. ein Berliner ≈ 70 g ≈ 250 kcal). Alle Getränke gehören dazu (auch Wasser, Kaffee, Bier).
 Erkenne die Mahlzeit jedes Lebensmittels aus dem Text (Frühstück → breakfast, Mittag → lunch, Abend → dinner, Snack/Zwischendurch → snack),
 sonst nutze den Hinweis. Eine Beschreibung kann mehrere Mahlzeiten enthalten. Saucen und Beilagen sind eigene Einträge.
 Bezieht sich die Beschreibung auf frühere Mahlzeiten (z. B. „das Gleiche wie gestern“, „wie heute Mittag“, „nochmal den Toast“),
@@ -354,6 +354,7 @@ Fehlt dir dafür der Verlauf, antworte nur mit {"needHistory": true}. Ist die Be
 (z. B. welches von mehreren Gerichten gemeint ist), antworte nur mit {"question": "kurze Rückfrage"} – sonst schätze üblich.
 Antworte ausschließlich mit JSON:
 {"items": [{"meal": "breakfast|lunch|dinner|snack", "name": "kurze Bezeichnung", "amount": "Menge, z. B. 2 Stück (140 g)", "kcal": Zahl, "protein": g, "carbs": g, "fat": g}]}
+Bei Getränken (auch Wasser, Kaffee, Bier) zusätzlich "ml": Menge in ml (z. B. 330 für ein 0,33er), "caffeine": mg, "alcohol": Gramm reiner Alkohol.
 Bezeichnungen in ` + langName(req.Lang) + `.`
 	prompt := "Hinweis auf die Mahlzeit (nach Uhrzeit): " + req.Hint + "\nBeschreibung: " + req.Text
 	if h := strings.TrimSpace(req.History); h != "" {
