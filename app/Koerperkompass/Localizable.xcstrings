@@ -651,6 +651,16 @@
         }
       }
     },
+    "Abnehmen leicht gemacht 🎯": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Weight loss made easy 🎯"
+          }
+        }
+      }
+    },
     "Abzeichen": {
       "localizations": {
         "en": {
@@ -807,6 +817,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "All entries, your profile, your player card and the log stored on your server will be deleted there. Server backups (if any) keep them until they are overwritten. Afterwards everything stays only on this iPhone. If you lose the iPhone, the data is gone – unless it is in an iPhone backup or an export. Friends no longer see your player card. You can turn this off at any time; everything will then be uploaded again."
+          }
+        }
+      }
+    },
+    "Alle profitieren von einem Glas Wasser. Jetzt?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "They all benefit from a glass of water. Now?"
           }
         }
       }
@@ -971,6 +991,26 @@
         }
       }
     },
+    "Auch Tee zählt fürs Trinkziel. Gönn dir eine Tasse.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tea counts towards your goal too. Treat yourself to a cup."
+          }
+        }
+      }
+    },
+    "Auffüllen, bitte ⛽️": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Refill, please ⛽️"
+          }
+        }
+      }
+    },
     "Aufgeben ist keine Option! Drück!": {
       "localizations": {
         "en": {
@@ -987,6 +1027,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Stop? You stop when I SAY so! PUSH!"
+          }
+        }
+      }
+    },
+    "Aufstehen, Glas füllen, trinken. 30 Sekunden.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Get up, fill a glass, drink. 30 seconds."
           }
         }
       }
@@ -1431,6 +1481,16 @@
         }
       }
     },
+    "Dann füll es gleich wieder auf.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Then fill it right back up."
+          }
+        }
+      }
+    },
     "Das Foto wird über deinen Server an die Claude API (Anthropic) gesendet, um die Nährwerte zu schätzen. Du kannst die Zustimmung in den Einstellungen widerrufen.": {
       "localizations": {
         "en": {
@@ -1571,6 +1631,16 @@
         }
       }
     },
+    "Dein Gehirn ruft an 🧠": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your brain is calling 🧠"
+          }
+        }
+      }
+    },
     "Dein Gesundheitscoach": {
       "localizations": {
         "en": {
@@ -1587,6 +1657,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Your body is about 60 percent water – top it up!"
+          }
+        }
+      }
+    },
+    "Dein Körper hat bestellt. Lieferung bitte jetzt.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your body ordered. Delivery now, please."
           }
         }
       }
@@ -1637,6 +1717,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Your reflection begged for mercy this morning! Give it some hope! PUSH!"
+          }
+        }
+      }
+    },
+    "Dein Tank braucht Nachschub – am besten Wasser.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your tank needs topping up – water works best."
+          }
+        }
+      }
+    },
+    "Dein Trinkziel winkt 👋": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your goal is waving 👋"
           }
         }
       }
@@ -1707,6 +1807,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Your data is stored and synced on your own server – so it survives losing your iPhone and is available on other devices."
+          }
+        }
+      }
+    },
+    "Deine Nieren melden sich 🫘": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your kidneys are calling 🫘"
+          }
+        }
+      }
+    },
+    "Deine Zellen sagen danke 🙏": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your cells say thanks 🙏"
           }
         }
       }
@@ -1791,6 +1911,16 @@
         }
       }
     },
+    "Die Flasche schaut dich an 👀": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The bottle is watching you 👀"
+          }
+        }
+      }
+    },
     "Die Pause ist vorbei. Nächster Satz, wenn du bereit bist.": {
       "localizations": {
         "en": {
@@ -1837,6 +1967,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "These values are estimates and no substitute for medical or nutritional advice."
+          }
+        }
+      }
+    },
+    "Die nächste Runde fürs Trinkziel wartet.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The next round for your drinking goal is waiting."
           }
         }
       }
@@ -1897,6 +2037,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "This device"
+          }
+        }
+      }
+    },
+    "Diesmal mit Wasser. Deine Nieren stoßen mit an.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "With water this time. Your kidneys raise a glass too."
+          }
+        }
+      }
+    },
+    "Ding dong, Wasser 🔔": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ding dong, water 🔔"
           }
         }
       }
@@ -2011,6 +2171,16 @@
         }
       }
     },
+    "Du machst das gut 💪": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You’re doing great 💪"
+          }
+        }
+      }
+    },
     "Du nennst das eine Wiederholung? Meine Kaffeetasse arbeitet härter als du, Weichei!": {
       "localizations": {
         "en": {
@@ -2056,7 +2226,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Thirst is already too late 😉"
+            "value": "Thirst is already late 😉"
           }
         }
       }
@@ -2081,12 +2251,92 @@
         }
       }
     },
+    "Ein Glas Wasser vor dem Essen macht schneller satt.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A glass of water before eating fills you up faster."
+          }
+        }
+      }
+    },
+    "Ein Glas Wasser – und schon ein Haken mehr für heute.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A glass of water – and one more tick for today."
+          }
+        }
+      }
+    },
+    "Ein Glas Wasser, und sie arbeiten wieder auf Hochtouren.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A glass of water and they’re back at full speed."
+          }
+        }
+      }
+    },
+    "Ein Glas bringt dich deinem Trinkziel ein gutes Stück näher.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "One glass gets you a good bit closer to your goal."
+          }
+        }
+      }
+    },
+    "Ein Glas für den Fokus 🎧": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A glass for focus 🎧"
+          }
+        }
+      }
+    },
     "Ein Glas jetzt, und dein Kopf bleibt klar.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "One glass now keeps your head clear."
+            "value": "One glass now and your head stays clear."
+          }
+        }
+      }
+    },
+    "Ein Glas – und hier direkt abhaken.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "One glass – and log it right here."
+          }
+        }
+      }
+    },
+    "Ein Glas, ein Lächeln 😊": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "One glass, one smile 😊"
+          }
+        }
+      }
+    },
+    "Ein halbes Glas ist besser als keins.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Half a glass is better than none."
           }
         }
       }
@@ -2097,6 +2347,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "A small step towards your drinking goal."
+          }
+        }
+      }
+    },
+    "Ein kühles Glas Wasser wirkt Wunder.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A cool glass of water works wonders."
           }
         }
       }
@@ -2117,6 +2377,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "A few details so Körperkompass can suggest suitable daily goals."
+          }
+        }
+      }
+    },
+    "Ein paar Schlucke jetzt halten dich frisch.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A few sips now keep you fresh."
           }
         }
       }
@@ -2361,6 +2631,16 @@
         }
       }
     },
+    "Erfrischung gefällig? 🧊": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fancy a refresher? 🧊"
+          }
+        }
+      }
+    },
     "Ergänzung für Rücken und Haltung – 2× pro Woche": {
       "localizations": {
         "en": {
@@ -2421,6 +2701,16 @@
         }
       }
     },
+    "Erst ein Glas Wasser, dann darf der Kaffee kommen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A glass of water first, then the coffee."
+          }
+        }
+      }
+    },
     "Erste Schritte": {
       "localizations": {
         "en": {
@@ -2467,6 +2757,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Extended log (test phase)"
+          }
+        }
+      }
+    },
+    "Es möchte Wasser. Schon ein Glas hilft gegen das Nachmittagstief.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "It wants water. One glass helps against the afternoon slump."
           }
         }
       }
@@ -2831,6 +3131,16 @@
         }
       }
     },
+    "Für die Haut ✨": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "For your skin ✨"
+          }
+        }
+      }
+    },
     "Für die Testphase: Teile das Protokoll (z. B. mit Claude im Chat), um Antworten, Stile und Erkennung zu verbessern. Gespeichert wird nur auf deinem iPhone und deinem Server.": {
       "localizations": {
         "en": {
@@ -3101,12 +3411,52 @@
         }
       }
     },
+    "Glas Wasser, kurz aus dem Fenster schauen, durchatmen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Glass of water, look out the window, breathe."
+          }
+        }
+      }
+    },
+    "Glas leer? Gut so! 🥛": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Glass empty? Good! 🥛"
+          }
+        }
+      }
+    },
+    "Glas statt Gähnen 🥱": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Glass instead of yawning 🥱"
+          }
+        }
+      }
+    },
     "Glaubst du, dein Bauch trainiert sich weg, während du mich anglotzt?! ARBEITE!": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "You think that belly trains itself away while you stare at me?! WORK!"
+          }
+        }
+      }
+    },
+    "Gleicher Durstlöscher, null Zucker.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Same thirst quencher, zero sugar."
           }
         }
       }
@@ -3171,6 +3521,16 @@
         }
       }
     },
+    "Gut versorgt sieht man frischer aus. Ein Glas, bitte.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Well hydrated, you look fresher. One glass, please."
+          }
+        }
+      }
+    },
     "Guten Abend": {
       "localizations": {
         "en": {
@@ -3211,6 +3571,16 @@
         }
       }
     },
+    "Halbzeit? ⏱️": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Halfway? ⏱️"
+          }
+        }
+      }
+    },
     "Hallo": {
       "localizations": {
         "en": {
@@ -3236,7 +3606,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Press and hold the notification and tick off what you drank."
+            "value": "Press and hold this notification to log what you drank."
           }
         }
       }
@@ -3287,6 +3657,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Did you just sigh?! Sighing is for civilians and poetry! KEEP GOING, YOU MAGGOT!"
+          }
+        }
+      }
+    },
+    "Haut, Kopf, Konzentration 💡": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Skin, head, focus 💡"
           }
         }
       }
@@ -3357,6 +3737,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Add"
+          }
+        }
+      }
+    },
+    "Hunger oder Durst? 🤔": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hungry or thirsty? 🤔"
+          }
+        }
+      }
+    },
+    "Hydration Check ✅": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hydration check ✅"
           }
         }
       }
@@ -3621,6 +4021,16 @@
         }
       }
     },
+    "Jedes Glas bringt dich näher. Los geht’s!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Every glass gets you closer. Let’s go!"
+          }
+        }
+      }
+    },
     "Jedes Schnitzel, das du gefressen hast, steht jetzt hier und lacht dich aus! ZEIG IHM, WER DER CHEF IST!": {
       "localizations": {
         "en": {
@@ -3861,6 +4271,36 @@
         }
       }
     },
+    "Kleine Erinnerung 🥤": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Little reminder 🥤"
+          }
+        }
+      }
+    },
+    "Kleine Gewohnheit, große Wirkung.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Small habit, big impact."
+          }
+        }
+      }
+    },
+    "Kleine Schlucke zählen auch 🐦": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Small sips count too 🐦"
+          }
+        }
+      }
+    },
     "Kleinen Moment, die Stimme wird geladen …": {
       "localizations": {
         "en": {
@@ -3897,6 +4337,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Pull-ups or lat pulldown – 4 × 6–10"
+          }
+        }
+      }
+    },
+    "Klingt pathetisch, stimmt aber. Ein Glas, bitte.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sounds dramatic, but it’s true. One glass, please."
           }
         }
       }
@@ -4031,6 +4481,26 @@
         }
       }
     },
+    "Konzentration im Keller? 📉": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Focus dropping? 📉"
+          }
+        }
+      }
+    },
+    "Kopfschmerzen vorbeugen 💆": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prevent headaches 💆"
+          }
+        }
+      }
+    },
     "Koppeln": {
       "localizations": {
         "en": {
@@ -4127,6 +4597,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Short and intense, no equipment"
+          }
+        }
+      }
+    },
+    "Kurzer Check-in 📲": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quick check-in 📲"
           }
         }
       }
@@ -4417,6 +4897,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Level up!"
+          }
+        }
+      }
+    },
+    "Lieber jetzt als später ⏰": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Better now than later ⏰"
           }
         }
       }
@@ -4731,6 +5221,16 @@
         }
       }
     },
+    "Mini-Pause 🕐": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mini break 🕐"
+          }
+        }
+      }
+    },
     "Mit Beispieldaten, ganz ohne Server. Es werden keine Daten übertragen.": {
       "localizations": {
         "en": {
@@ -4747,6 +5247,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Scan with the camera or in the Körperkompass app. The code can be used once and is valid for 24 hours."
+          }
+        }
+      }
+    },
+    "Mit genug Wasser hast du mehr Kraft und Ausdauer.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "With enough water you have more strength and stamina."
           }
         }
       }
@@ -4867,6 +5377,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tired?! Tired is for people without a goal! You have one – so KEEP GOING!"
+          }
+        }
+      }
+    },
+    "Müdigkeit ist oft einfach Durst. Probier’s aus.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tiredness is often just thirst. Try it."
           }
         }
       }
@@ -5041,6 +5561,16 @@
         }
       }
     },
+    "Null Kalorien, volle Wirkung.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zero calories, full effect."
+          }
+        }
+      }
+    },
     "Nur auf diesem iPhone speichern": {
       "localizations": {
         "en": {
@@ -5111,6 +5641,16 @@
         }
       }
     },
+    "Oft ist es Durst. Erst ein Glas Wasser, dann entscheiden.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Often it’s thirst. Have a glass of water first, then decide."
+          }
+        }
+      }
+    },
     "Ohne Apple Intelligence erkennt der Coach nur Wiederholungen und Gewicht.": {
       "localizations": {
         "en": {
@@ -5147,6 +5687,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "No name"
+          }
+        }
+      }
+    },
+    "Ohne Wasser lässt du den Kopf hängen. Gießen!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Without water you droop. Time to water!"
           }
         }
       }
@@ -5341,6 +5891,16 @@
         }
       }
     },
+    "Plopp! Wasserzeit 🫧": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pop! Water time 🫧"
+          }
+        }
+      }
+    },
     "Premium": {
       "localizations": {
         "en": {
@@ -5471,6 +6031,16 @@
         }
       }
     },
+    "Prost! 🥂": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cheers! 🥂"
+          }
+        }
+      }
+    },
     "Protokoll löschen": {
       "localizations": {
         "en": {
@@ -5497,6 +6067,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Check"
+          }
+        }
+      }
+    },
+    "Psst … 🤫": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Psst … 🤫"
           }
         }
       }
@@ -5841,6 +6421,16 @@
         }
       }
     },
+    "Schau mal, wie weit du beim Trinkziel bist – und leg nach.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Check how far you are with your goal – and top up."
+          }
+        }
+      }
+    },
     "Schick diesen Link einem Freund. Er fügt ihn in Körperkompass unter Abenteuer → Freunde ein. Einmalig, 7 Tage gültig.": {
       "localizations": {
         "en": {
@@ -5927,6 +6517,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Quick log"
+          }
+        }
+      }
+    },
+    "Schon getrunken? 🧐": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Already had a drink? 🧐"
+          }
+        }
+      }
+    },
+    "Schon leichter Wassermangel macht unkonzentriert. Glas holen!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Even mild dehydration hurts concentration. Get a glass!"
           }
         }
       }
@@ -6087,6 +6697,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Save"
+          }
+        }
+      }
+    },
+    "Sie arbeiten am besten mit genug Wasser.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "They work best with enough water."
+          }
+        }
+      }
+    },
+    "Sie ist noch voll. Ändere das!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "It’s still full. Change that!"
           }
         }
       }
@@ -6321,6 +6951,16 @@
         }
       }
     },
+    "Streak-Gefahr! 🔥": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Streak alert! 🔥"
+          }
+        }
+      }
+    },
     "Stufe": {
       "localizations": {
         "en": {
@@ -6457,6 +7097,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tea"
+          }
+        }
+      }
+    },
+    "Tee-Zeit 🍵": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tea time 🍵"
           }
         }
       }
@@ -6601,6 +7251,16 @@
         }
       }
     },
+    "Training läuft besser 🏃": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Training goes better 🏃"
+          }
+        }
+      }
+    },
     "Trainings-Coach": {
       "localizations": {
         "en": {
@@ -6686,7 +7346,37 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Drink a glass before you notice – and tick it off right here."
+            "value": "Drink a glass before you notice – and log it right here."
+          }
+        }
+      }
+    },
+    "Trinken nicht vergessen 📝": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Don’t forget to drink 📝"
+          }
+        }
+      }
+    },
+    "Trinken, abhaken, weitermachen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drink, log, carry on."
+          }
+        }
+      }
+    },
+    "Trinken, durchatmen, weiter geht’s.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drink, breathe, carry on."
           }
         }
       }
@@ -6701,12 +7391,32 @@
         }
       }
     },
+    "Trinkpause mit Aussicht 🪟": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drink break with a view 🪟"
+          }
+        }
+      }
+    },
     "Trinkpause! 💦": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Drink break! 💦"
+          }
+        }
+      }
+    },
+    "Trinkziel schaffen hält deine Serie am Leben.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reaching your goal keeps your streak alive."
           }
         }
       }
@@ -6757,6 +7467,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Time"
+          }
+        }
+      }
+    },
+    "Und mit einem Glas Wasser gleich noch besser.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "And even better with a glass of water."
           }
         }
       }
@@ -7051,6 +7771,16 @@
         }
       }
     },
+    "Wann hast du zuletzt etwas getrunken? Genau.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "When did you last drink something? Exactly."
+          }
+        }
+      }
+    },
     "Was dein Coach über dich weiß": {
       "localizations": {
         "en": {
@@ -7111,12 +7841,82 @@
         }
       }
     },
+    "Wasser ist Leben 🌍": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Water is life 🌍"
+          }
+        }
+      }
+    },
+    "Wasser ist der beste Snack 🍏": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Water is the best snack 🍏"
+          }
+        }
+      }
+    },
     "Wasser marsch! 🌊": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Water time! 🌊"
+            "value": "Water, go! 🌊"
+          }
+        }
+      }
+    },
+    "Wasser marsch, Teil 2 🚒": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Water, go – part 2 🚒"
+          }
+        }
+      }
+    },
+    "Wasser schlägt Limo 🥇": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Water beats soda 🥇"
+          }
+        }
+      }
+    },
+    "Wasser vor Kaffee ☕️": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Water before coffee ☕️"
+          }
+        }
+      }
+    },
+    "Wasser. Jetzt. Danke.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Water. Now. Thanks."
+          }
+        }
+      }
+    },
+    "Wasserstand prüfen 📏": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Check your water level 📏"
           }
         }
       }
@@ -7211,6 +8011,26 @@
         }
       }
     },
+    "Wenn ja: abhaken. Wenn nein: jetzt!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "If yes: log it. If not: now!"
+          }
+        }
+      }
+    },
+    "Wer gleichmäßig trinkt, muss abends nicht nachholen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drink steadily and you won’t have to catch up tonight."
+          }
+        }
+      }
+    },
     "Wer hat dir erlaubt zu atmen, als wäre Urlaub?! Atme, wenn du drückst! WEITER!": {
       "localizations": {
         "en": {
@@ -7247,6 +8067,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Resistance bands"
+          }
+        }
+      }
+    },
+    "Wie eine Pflanze 🌱": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Like a plant 🌱"
           }
         }
       }
@@ -7507,6 +8337,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Too hard"
+          }
+        }
+      }
+    },
+    "Zu wenig trinken ist ein häufiger Grund. Ein Glas, bitte.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not drinking enough is a common cause. One glass, please."
           }
         }
       }

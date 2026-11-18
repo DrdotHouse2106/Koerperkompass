@@ -42,6 +42,7 @@ struct RootView: View {
                     await state.importHealth(context)
                     await state.sync(context)
                     await refreshMotivation(state, context)  // Sprüche für die nächsten 14 Tage auffüllen
+                    await Reminders.refresh()  // Trinkerinnerungen für die nächsten Tage nachfüllen
                 }
             }
         }
