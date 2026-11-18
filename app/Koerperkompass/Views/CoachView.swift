@@ -4,6 +4,7 @@ import SwiftUI
 /// Gesundheitscoach: Gespräch mit Claude über die eigenen Daten. Der Verlauf bleibt nur auf dem iPhone.
 struct CoachView: View {
     @Environment(AppState.self) private var state
+    @Environment(\.modelContext) private var context
     @Query(sort: \Entry.date) private var entries: [Entry]
     @AppStorage("coachChat") private var stored = Data()
     @AppStorage("coachReminder") private var reminder = false
@@ -21,6 +22,24 @@ struct CoachView: View {
     struct Message: Codable, Hashable {
         let role: String  // "user" oder "assistant"
         let text: String
+        var log: Proposal? = nil  // vom Coach vorgeschlagene Einträge (Essen, Getränke, Gewicht)
+    }
+
+    /// Einträge, die der Coach aus dem Gespräch vorschlägt – gespeichert erst nach Tipp auf „Eintragen“
+    struct Proposal: Codable, Hashable {
+        struct Item: Codable, Hashable {
+            var meal, name, amount: String?
+            var kcal, protein, carbs, fat, ml, caffeine, alcohol: Double?
+            var food: ParsedFood {
+                ParsedFood(meal: Meal(rawValue: meal ?? "") ?? .now, name: name ?? "", amount: amount ?? "", kcal: kcal ?? 0,
+                           protein: protein ?? 0, carbs: carbs ?? 0, fat: fat ?? 0, ml: ml ?? 0, caffeine: caffeine ?? 0, alcohol: alcohol ?? 0)
+            }
+        }
+        var day: Int?
+        var items: [Item]?
+        var weight: Double?
+        var done: Bool?
+        var date: String { Day.string(Calendar.current.date(byAdding: .day, value: min(day ?? 0, 0), to: Date())!) }
     }
 
     private var messages: [Message] { (try? JSONDecoder().decode([Message].self, from: stored)) ?? [] }
@@ -43,6 +62,7 @@ struct CoachView: View {
                         intro
                         ForEach(Array(messages.enumerated()), id: \.offset) { i, m in
                             bubble(m).id(i)
+                            if let p = m.log { proposal(p, i) }
                         }
                         if busy {
                             HStack { ProgressView(); Text("Dein Coach denkt nach …").foregroundStyle(.secondary) }
@@ -171,6 +191,52 @@ struct CoachView: View {
         .disabled(!state.aiAvailable)
     }
 
+    /// Karte unter der Antwort: vorgeschlagene Einträge mit „Eintragen“
+    private func proposal(_ p: Proposal, _ i: Int) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Label(p.day == -1 ? LocalizedStringKey("Für gestern eintragen?") : "Eintragen?", systemImage: "square.and.pencil").font(.caption.bold())
+            ForEach(Array((p.items ?? []).enumerated()), id: \.offset) { _, x in
+                Text("\((x.ml ?? 0) > 0 ? "🥤" : "🍽") \(x.name ?? "") \(x.amount.map { "(\($0))" } ?? "") · \((x.kcal ?? 0).whole) kcal").font(.caption)
+            }
+            if let w = p.weight { Text("⚖️ \(w.short) kg").font(.caption) }
+            if p.done == true {
+                Label("Eingetragen", systemImage: "checkmark.circle.fill").font(.caption.bold()).foregroundStyle(.green)
+            } else {
+                HStack {
+                    Button("Eintragen") { apply(p, i) }.buttonStyle(.borderedProminent).tint(Theme.orange)
+                    Button("Verwerfen", role: .cancel) { mark(i, nil) }.buttonStyle(.bordered)
+                }
+                .font(.caption)
+            }
+        }
+        .padding(10)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Color.white.opacity(0.06), in: RoundedRectangle(cornerRadius: 14))
+    }
+
+    private func apply(_ p: Proposal, _ i: Int) {
+        ParsedFood.save((p.items ?? []).map(\.food), day: p.date, context: context, state: state)
+        if let kg = p.weight, kg > 20, kg < 400 {
+            context.insert(Entry(module: "body", date: p.date, values: ["weight": kg]))
+            if p.date == Day.today {
+                if state.healthEnabled { Health.saveWeight(kg) }
+                state.profile.weight = kg
+            }
+            state.changed(context)
+        }
+        var done = p
+        done.done = true
+        mark(i, done)
+    }
+
+    /// Vorschlag einer Nachricht ändern (nil = verwerfen)
+    private func mark(_ i: Int, _ p: Proposal?) {
+        var list = messages
+        guard list.indices.contains(i) else { return }
+        list[i].log = p
+        save(list)
+    }
+
     private func save(_ list: [Message]) { stored = (try? JSONEncoder().encode(Array(list.suffix(60)))) ?? Data() }
 
     private func send(_ text: String) {
@@ -205,7 +271,11 @@ struct CoachView: View {
                 let spoken = reply
                 if !notes.isEmpty { reply += "\n\n_📝 Gemerkt: " + notes.joined(separator: "; ") + "_" }
                 CoachLog.add(kind: "gesundheit", heard: text, reply: reply, source: "claude", ms: Int(Date().timeIntervalSince(started) * 1000))
-                save(list + [Message(role: "assistant", text: reply)])
+                // Vorgeschlagene Einträge aus dem Gespräch (Essen, Getränke, Gewicht)
+                let log = (r["log"] as? [String: Any]).flatMap { try? JSONSerialization.data(withJSONObject: $0) }
+                    .flatMap { try? JSONDecoder().decode(Proposal.self, from: $0) }
+                    .flatMap { ($0.items ?? []).isEmpty && $0.weight == nil ? nil : $0 }
+                save(list + [Message(role: "assistant", text: reply, log: log)])
                 if speakReplies {
                     speaker.api = state.ttsAvailable ? state.api : nil
                     speaker.speak(spoken)

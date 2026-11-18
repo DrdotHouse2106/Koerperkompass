@@ -249,6 +249,12 @@ MERKEN: kurze Tatsache in der dritten Person; weitere Tatsache
 GERÄTE: vollständige Liste aus dumbbells, barbell, kettlebell, bands, pullupbar, bench, bike, treadmill, rope, gym – oder keine
 Die GERÄTE-Zeile nur, wenn sich am Gerätebestand etwas geändert hat. Nichts Gesundheitliches erfinden oder deuten, nur Gesagtes merken.
 
+Einträge vorschlagen: Erzählt die Person, was sie tatsächlich gegessen oder getrunken hat oder was sie heute wiegt (nicht bei Fragen,
+Plänen oder Überlegungen), hänge ganz am Ende eine einzige Zeile an (JSON in einer Zeile, die App fragt vor dem Speichern nach):
+EINTRAGEN: {"day": 0, "items": [{"meal": "breakfast|lunch|dinner|snack", "name": "kurz", "amount": "Menge", "kcal": Zahl, "protein": g, "carbs": g, "fat": g}], "weight": kg}
+day: 0 = heute, -1 = gestern. Bei Getränken in items zusätzlich "ml", "caffeine" (mg), "alcohol" (g). weight nur, wenn genannt.
+Realistische Nährwerte für deutsche Portionen schätzen. Nichts eintragen, was schon in den heutigen Daten steht.
+
 Aktuelle Daten der Person (Stand heute):
 ` + req.Context
 	out, err := askMessages(r.Context(), system, anthropic.BetaOutputConfigEffortMedium, msgs)
@@ -267,6 +273,11 @@ Aktuelle Daten der Person (Stand heute):
 				if f = strings.TrimSpace(f); f != "" {
 					learn = append(learn, f)
 				}
+			}
+		case strings.HasPrefix(t, "EINTRAGEN:"):
+			var log map[string]any
+			if json.Unmarshal([]byte(strings.TrimSpace(strings.TrimPrefix(t, "EINTRAGEN:"))), &log) == nil {
+				res["log"] = log
 			}
 		case strings.HasPrefix(t, "GERÄTE:"):
 			eq := []string{}

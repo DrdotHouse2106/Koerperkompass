@@ -2421,6 +2421,16 @@
         }
       }
     },
+    "Eingetragen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Logged"
+          }
+        }
+      }
+    },
     "Eingetragen! 90 Sekunden Pause.": {
       "localizations": {
         "en": {
@@ -2517,6 +2527,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Log"
+          }
+        }
+      }
+    },
+    "Eintragen?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Log this?"
           }
         }
       }
@@ -3167,6 +3187,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "For a detailed analysis with patterns and suggestions, a Claude API key can be configured on your server."
+          }
+        }
+      }
+    },
+    "Für gestern eintragen?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Log for yesterday?"
           }
         }
       }
@@ -7687,6 +7717,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Version %@ · All values are estimates and not medical advice."
+          }
+        }
+      }
+    },
+    "Verwerfen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Discard"
           }
         }
       }

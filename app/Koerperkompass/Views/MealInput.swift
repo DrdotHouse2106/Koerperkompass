@@ -25,6 +25,29 @@ extension Meal {
     }
 }
 
+extension ParsedFood {
+    /// Speichern: Essen in die Ernährung, Getränke zu den Getränken (Trinkziel ohne Alkohol, Kalorien zählen mit)
+    @MainActor static func save(_ items: [ParsedFood], day: String, context: ModelContext, state: AppState) {
+        for f in items {
+            let name = f.amount.isEmpty ? f.name : "\(f.name) (\(f.amount))"
+            if f.ml > 0 {
+                context.insert(Entry(module: "water", date: day, values: [
+                    "drink": "custom", "name": f.name, "ml": f.ml, "hydration": f.alcohol > 0 ? 0 : f.ml,
+                    "kcal": f.kcal, "carbs": f.carbs, "caffeine": f.caffeine, "alcohol": f.alcohol,
+                ]))
+                continue
+            }
+            context.insert(Entry(module: "nutrition", date: day, values: [
+                "meal": f.meal.rawValue, "name": name, "kcal": f.kcal, "protein": f.protein, "carbs": f.carbs, "fat": f.fat,
+            ]))
+            if state.healthEnabled && day == Day.today {
+                Health.saveMeal(name: name, kcal: f.kcal, protein: f.protein, carbs: f.carbs, fat: f.fat)
+            }
+        }
+        state.changed(context)
+    }
+}
+
 /// Freie Beschreibung → Lebensmittel mit Nährwerten.
 /// Mit Claude (Haiku, mit Zustimmung) über den eigenen Server, sonst mit Apple Intelligence auf dem iPhone.
 enum MealParser {
@@ -230,24 +253,7 @@ private struct MealConfirmView: View {
     }
 
     private func save() {
-        for f in result.items {
-            let name = f.amount.isEmpty ? f.name : "\(f.name) (\(f.amount))"
-            if f.ml > 0 {
-                // Getränk: zählt fürs Trinkziel (ohne Alkohol), Kalorien zählen über die Getränke in die Ernährung
-                context.insert(Entry(module: "water", date: day, values: [
-                    "drink": "custom", "name": f.name, "ml": f.ml, "hydration": f.alcohol > 0 ? 0 : f.ml,
-                    "kcal": f.kcal, "carbs": f.carbs, "caffeine": f.caffeine, "alcohol": f.alcohol,
-                ]))
-                continue
-            }
-            context.insert(Entry(module: "nutrition", date: day, values: [
-                "meal": f.meal.rawValue, "name": name, "kcal": f.kcal, "protein": f.protein, "carbs": f.carbs, "fat": f.fat,
-            ]))
-            if state.healthEnabled && day == Day.today {
-                Health.saveMeal(name: name, kcal: f.kcal, protein: f.protein, carbs: f.carbs, fat: f.fat)
-            }
-        }
-        state.changed(context)
+        ParsedFood.save(result.items, day: day, context: context, state: state)
         done()
         dismiss()
     }
