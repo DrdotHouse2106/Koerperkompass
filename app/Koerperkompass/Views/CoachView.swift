@@ -19,6 +19,7 @@ struct CoachView: View {
     @State private var speaker = Speaker()
     @AppStorage("coachSpeak") private var speakReplies = true
     @State private var talking = false
+    @FocusState private var inputFocused: Bool
     @State private var talkTask: Task<Void, Never>?
     @State private var phase = ""
 
@@ -75,10 +76,17 @@ struct CoachView: View {
                     }
                     .padding()
                 }
+                .scrollDismissesKeyboard(.interactively)  // Verlauf nach unten ziehen schließt die Tastatur
                 .onChange(of: messages.count) { withAnimation { proxy.scrollTo(messages.count - 1, anchor: .bottom) } }
                 .onChange(of: busy) { if busy { withAnimation { proxy.scrollTo("busy", anchor: .bottom) } } }
             }
             .safeAreaInset(edge: .bottom) { inputBar }
+            .toolbar {
+                ToolbarItemGroup(placement: .keyboard) {
+                    Spacer()
+                    Button("Fertig") { inputFocused = false }
+                }
+            }
             .background(Theme.background.ignoresSafeArea())
             .navigationTitle("Coach")
             .toolbar {
@@ -198,6 +206,7 @@ struct CoachView: View {
                         .font(.title).foregroundStyle(speech.listening ? .red : Theme.orange)
                 }
                 TextField(speech.listening ? LocalizedStringKey("Ich höre zu …") : "Frag deinen Coach …", text: $input, axis: .vertical)
+                    .focused($inputFocused)
                     .lineLimit(1...4)
                     .padding(10)
                     .background(Color.white.opacity(0.08), in: RoundedRectangle(cornerRadius: 16))
@@ -268,6 +277,7 @@ struct CoachView: View {
         guard state.aiConsent else { pending = text; askConsent = true; return }
         // Beim Absenden das Mikrofon beenden – sonst nimmt es die vorgelesene Antwort mit auf
         if speech.listening { Task { _ = await speech.stop() } }
+        inputFocused = false
         Task {
             if let spoken = await ask(text), speakReplies {
                 speaker.api = state.ttsAvailable ? state.api : nil
@@ -325,13 +335,21 @@ struct CoachView: View {
     private func startTalk() {
         guard state.aiConsent else { askConsent = true; return }
         speaker.stop()
+        inputFocused = false
         talking = true
         talkTask = Task {
             speaker.api = state.ttsAvailable ? state.api : nil
+            var next: String?  // Antwort auf die Eintragen-Frage, die eigentlich etwas anderes war
             while talking && !Task.isCancelled {
-                phase = String(localized: "Ich höre zu …")
-                await speech.start()
-                let text = await speech.waitForPause()
+                let text: String
+                if let n = next {
+                    text = n
+                    next = nil
+                } else {
+                    phase = String(localized: "Ich höre zu …")
+                    await speech.start()
+                    text = await speech.waitForPause()
+                }
                 guard talking else { break }
                 if text.isEmpty { break }  // längere Zeit nichts gesagt → Gespräch beenden
                 if isGoodbye(text) {
@@ -343,6 +361,28 @@ struct CoachView: View {
                 phase = String(localized: "Dein Coach spricht …")
                 speaker.speak(reply)
                 await speaker.waitUntilDone()
+                // Vorgeschlagene Einträge per Sprache bestätigen
+                if let i = messages.indices.last, let p = messages[i].log, p.done != true, talking {
+                    phase = String(localized: "Eintragen?")
+                    speaker.speak(confirmQuestion(p))
+                    await speaker.waitUntilDone()
+                    phase = String(localized: "Ich höre zu …")
+                    await speech.start()
+                    let answer = await speech.waitForPause(timeout: 15)
+                    guard talking else { break }
+                    switch yesNo(answer) {
+                    case true?:
+                        apply(p, i)
+                        speaker.speak(String(localized: "Ist eingetragen."))
+                        await speaker.waitUntilDone()
+                    case false?:
+                        mark(i, nil)
+                        speaker.speak(String(localized: "Okay, trage ich nicht ein."))
+                        await speaker.waitUntilDone()
+                    case nil:
+                        if !answer.isEmpty { next = answer }  // keine klare Antwort → als normale Nachricht weiter
+                    }
+                }
             }
             talking = false
         }
@@ -353,6 +393,27 @@ struct CoachView: View {
         talkTask?.cancel()
         speaker.stop()
         Task { _ = await speech.stop() }
+    }
+
+    /// Frage zum Vorlesen: „Soll ich das eintragen: Currywurst, Pommes und Cola, zusammen 1020 Kilokalorien?“
+    private func confirmQuestion(_ p: Proposal) -> String {
+        let items = p.items ?? []
+        var parts: [String] = []
+        if !items.isEmpty {
+            let names = items.compactMap(\.name).formatted(.list(type: .and))
+            parts.append(String(localized: "\(names), zusammen \(items.compactMap(\.kcal).reduce(0, +).whole) Kilokalorien"))
+        }
+        if let w = p.weight { parts.append(String(localized: "dein Gewicht von \(w.short) Kilo")) }
+        let what = parts.joined(separator: String(localized: " und "))
+        return p.day == -1 ? String(localized: "Soll ich das für gestern eintragen: \(what)?") : String(localized: "Soll ich das eintragen: \(what)?")
+    }
+
+    /// Ja/Nein aus der gesprochenen Antwort (nil = unklar)
+    private func yesNo(_ text: String) -> Bool? {
+        let w = Set(text.lowercased().split { !$0.isLetter }.map(String.init))
+        if !w.isDisjoint(with: ["nein", "nee", "ne", "nö", "nicht", "lass", "falsch", "no", "nope"]) { return false }
+        if !w.isDisjoint(with: ["ja", "jo", "jep", "jawohl", "gerne", "gern", "klar", "okay", "ok", "mach", "bitte", "genau", "passt", "trag", "richtig", "yes", "yeah"]) { return true }
+        return nil
     }
 
     /// „Tschüss“, „Stopp“, „Ende“ … beendet das Gespräch

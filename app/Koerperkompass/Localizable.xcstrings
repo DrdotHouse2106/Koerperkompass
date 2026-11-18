@@ -1,6 +1,16 @@
 {
   "sourceLanguage": "de",
   "strings": {
+    " und ": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": " and "
+          }
+        }
+      }
+    },
     "%@ %@ probehören": {
       "localizations": {
         "en": {
@@ -147,6 +157,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@ · %lld alternating training days"
+          }
+        }
+      }
+    },
+    "%@, zusammen %@ Kilokalorien": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, %@ kilocalories in total"
           }
         }
       }
@@ -4151,6 +4171,16 @@
         }
       }
     },
+    "Ist eingetragen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Logged."
+          }
+        }
+      }
+    },
     "Ja, ich kann das ab": {
       "localizations": {
         "en": {
@@ -5961,6 +5991,16 @@
         }
       }
     },
+    "Okay, trage ich nicht ein.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Okay, I won't log it."
+          }
+        }
+      }
+    },
     "Optional. Die aktive Energie aus Health verbessert die Berechnung. Health-Daten bleiben auf dem Gerät, bis du dem Hochladen zustimmst.": {
       "localizations": {
         "en": {
@@ -7127,6 +7167,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Soft drink"
+          }
+        }
+      }
+    },
+    "Soll ich das eintragen: %@?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shall I log this: %@?"
+          }
+        }
+      }
+    },
+    "Soll ich das für gestern eintragen: %@?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shall I log this for yesterday: %@?"
           }
         }
       }
@@ -8967,6 +9027,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Brisk walk"
+          }
+        }
+      }
+    },
+    "dein Gewicht von %@ Kilo": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "your weight of %@ kilos"
           }
         }
       }
