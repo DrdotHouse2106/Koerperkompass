@@ -7,6 +7,7 @@ import Speech
     var listening = false
     var heard = ""
     var error: String?
+    private var lastChange = Date()
 
     private let recognizer = SFSpeechRecognizer(locale: Locale.current.language.languageCode?.identifier == "en"
                                                 ? Locale(identifier: "en-US") : Locale(identifier: "de-DE"))
@@ -26,7 +27,21 @@ import Speech
         if !current.isEmpty, !text.hasPrefix(String(current.prefix(8))), text.count < current.count / 2 { commit() }
         current = text
         if segmentEnded { commit() }
-        heard = [done, current].filter { !$0.isEmpty }.joined(separator: " ")
+        let new = [done, current].filter { !$0.isEmpty }.joined(separator: " ")
+        if new != heard { lastChange = Date() }
+        heard = new
+    }
+
+    /// Gesprächsmodus: zuhören, bis nach dem Sprechen eine Pause kommt – dann den Satz zurückgeben.
+    /// Leer, wenn innerhalb von `timeout` Sekunden nichts gesagt wurde.
+    func waitForPause(_ pause: Double = 1.6, timeout: Double = 25) async -> String {
+        let started = Date()
+        while listening && !Task.isCancelled {
+            try? await Task.sleep(for: .milliseconds(200))
+            if !heard.isEmpty && Date().timeIntervalSince(lastChange) > pause { return await stop() }
+            if heard.isEmpty && Date().timeIntervalSince(started) > timeout { _ = await stop(); return "" }
+        }
+        return heard
     }
 
     private func commit() {
@@ -114,6 +129,8 @@ import Speech
         // Lange Texte (z. B. Gesundheitscoach) satzweise holen: der erste Teil spielt, während der nächste entsteht
         let parts = Self.chunks(clean)
         playTask = Task {
+            playing = true
+            defer { playing = false }
             var next: Task<Data?, Never>? = Task { await Self.audio(parts[0], persona: persona, api: api) }
             for i in parts.indices {
                 let data = await next?.value
@@ -134,6 +151,17 @@ import Speech
     }
 
     private var playTask: Task<Void, Never>?
+    private var playing = false
+
+    /// Spricht gerade (Server-Stimme oder iPhone-Stimme)?
+    var speaking: Bool { playing || synth.isSpeaking }
+
+    /// Warten, bis zu Ende gesprochen ist (Gesprächsmodus: erst dann wieder zuhören)
+    func waitUntilDone() async {
+        try? await Task.sleep(for: .milliseconds(300))
+        while speaking && !Task.isCancelled { try? await Task.sleep(for: .milliseconds(200)) }
+        try? await Task.sleep(for: .milliseconds(300))  // Nachhall abklingen lassen
+    }
 
     /// Text zum Vorlesen: Markdown, Emojis und Sonderzeichen entfernen, Pfeile in Worte fassen
     static func speakable(_ text: String) -> String {

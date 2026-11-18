@@ -18,6 +18,9 @@ struct CoachView: View {
     @State private var speech = SpeechInput()
     @State private var speaker = Speaker()
     @AppStorage("coachSpeak") private var speakReplies = true
+    @State private var talking = false
+    @State private var talkTask: Task<Void, Never>?
+    @State private var phase = ""
 
     struct Message: Codable, Hashable {
         let role: String  // "user" oder "assistant"
@@ -124,7 +127,7 @@ struct CoachView: View {
                      : "Damit der Coach antworten kann, muss auf deinem Server ein Claude-API-Key eingetragen sein (ANTHROPIC_API_KEY, siehe Anleitung).")
                     .font(.callout).foregroundStyle(.orange)
             }
-            Text("Tipp: Tippe aufs Mikrofon und sprich mit deinem Coach – er liest seine Antwort vor (abschaltbar im Menü oben rechts).")
+            Text("Tipp: Tippe auf die Welle für ein freies Gespräch – sprechen, kurz Pause machen, der Coach antwortet und hört dann wieder zu. Oder aufs Mikrofon für einzelne Nachrichten.")
                 .font(.caption).foregroundStyle(.secondary)
             Text("Keine ärztliche Beratung – bei Beschwerden bitte ärztlich abklären lassen.").font(.caption2).foregroundStyle(.secondary)
         }
@@ -161,7 +164,25 @@ struct CoachView: View {
                 }
                 .padding(.horizontal)
             }
+            if talking {
+                // Gesprächsmodus: Status und Beenden statt Eingabefeld
+                HStack(spacing: 12) {
+                    Image(systemName: "waveform").font(.title2).foregroundStyle(Theme.orange).symbolEffect(.variableColor.iterative, isActive: true)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(phase).font(.subheadline.bold())
+                        if speech.listening && !speech.heard.isEmpty { Text(speech.heard).font(.caption).foregroundStyle(.secondary).lineLimit(2) }
+                        Text("Sag „Tschüss“ zum Beenden").font(.caption2).foregroundStyle(.secondary)
+                    }
+                    Spacer()
+                    Button("Beenden", systemImage: "xmark.circle.fill") { stopTalk() }.labelStyle(.iconOnly).font(.title).foregroundStyle(.red)
+                }
+                .padding(.horizontal)
+            } else {
             HStack {
+                Button { startTalk() } label: {
+                    Image(systemName: "waveform.circle.fill").font(.title).foregroundStyle(Theme.orange)
+                }
+                .accessibilityLabel(Text("Gespräch starten"))
                 Button {
                     Task {
                         if speech.listening {
@@ -184,10 +205,12 @@ struct CoachView: View {
                     .disabled(input.trimmingCharacters(in: .whitespaces).isEmpty || busy)
             }
             .padding(.horizontal)
+            }
         }
         .padding(.vertical, 8)
         .background(.ultraThinMaterial)
-        .onChange(of: speech.heard) { if speech.listening { input = speech.heard } }
+        .onChange(of: speech.heard) { if speech.listening && !talking { input = speech.heard } }
+        .onDisappear { if talking { stopTalk() } }
         .disabled(!state.aiAvailable)
     }
 
@@ -245,19 +268,29 @@ struct CoachView: View {
         guard state.aiConsent else { pending = text; askConsent = true; return }
         // Beim Absenden das Mikrofon beenden – sonst nimmt es die vorgelesene Antwort mit auf
         if speech.listening { Task { _ = await speech.stop() } }
+        Task {
+            if let spoken = await ask(text), speakReplies {
+                speaker.api = state.ttsAvailable ? state.api : nil
+                speaker.speak(spoken)
+            }
+        }
+    }
+
+    /// Nachricht an den Coach; liefert den Text zum Vorlesen (nil bei Fehler)
+    private func ask(_ text: String) async -> String? {
         input = ""
         error = nil
         let list = messages + [Message(role: "user", text: text)]
         save(list)
         busy = true
         let started = Date()
-        Task {
-            defer { busy = false }
+        defer { busy = false }
             do {
                 let r = try await state.api.object("POST", "/api/ai/coach", json: [
                     "messages": list.suffix(30).map { ["role": $0.role, "content": $0.text] },
                     "context": coachContext(entries, state.profile, healthUpload: state.healthUpload),
                     "lang": Locale.current.language.languageCode?.identifier ?? "de",
+                    "voice": talking,  // Gesprächsmodus: kurz und gesprochen antworten
                 ])
                 var reply = r["text"] as? String ?? ""
                 // Was der Coach über dich gelernt hat, ins Profil übernehmen (sichtbar unter Einstellungen → Über mich)
@@ -280,14 +313,52 @@ struct CoachView: View {
                     .flatMap { try? JSONDecoder().decode(Proposal.self, from: $0) }
                     .flatMap { ($0.items ?? []).isEmpty && $0.weight == nil ? nil : $0 }
                 save(list + [Message(role: "assistant", text: reply, log: log)])
-                if speakReplies {
-                    speaker.api = state.ttsAvailable ? state.api : nil
-                    speaker.speak(spoken)
-                }
+                return spoken
             } catch {
                 self.error = error.localizedDescription
+                return nil
             }
+    }
+
+    // MARK: Gesprächsmodus – freihändig: zuhören, nach einer Pause absenden, Antwort vorlesen, wieder zuhören
+
+    private func startTalk() {
+        guard state.aiConsent else { askConsent = true; return }
+        speaker.stop()
+        talking = true
+        talkTask = Task {
+            speaker.api = state.ttsAvailable ? state.api : nil
+            while talking && !Task.isCancelled {
+                phase = String(localized: "Ich höre zu …")
+                await speech.start()
+                let text = await speech.waitForPause()
+                guard talking else { break }
+                if text.isEmpty { break }  // längere Zeit nichts gesagt → Gespräch beenden
+                if isGoodbye(text) {
+                    speaker.speak(String(localized: "Alles klar, bis später!"))
+                    break
+                }
+                phase = String(localized: "Dein Coach denkt nach …")
+                guard let reply = await ask(text) else { break }
+                phase = String(localized: "Dein Coach spricht …")
+                speaker.speak(reply)
+                await speaker.waitUntilDone()
+            }
+            talking = false
         }
+    }
+
+    private func stopTalk() {
+        talking = false
+        talkTask?.cancel()
+        speaker.stop()
+        Task { _ = await speech.stop() }
+    }
+
+    /// „Tschüss“, „Stopp“, „Ende“ … beendet das Gespräch
+    private func isGoodbye(_ text: String) -> Bool {
+        let words = text.lowercased().split { !$0.isLetter }.map(String.init)
+        return words.contains { ["tschüss", "tschüs", "stopp", "bye"].contains($0) } || words.last == "ende" || words == ["ende"]
     }
 }
 

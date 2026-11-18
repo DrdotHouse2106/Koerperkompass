@@ -841,6 +841,16 @@
         }
       }
     },
+    "Alles klar, bis später!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alright, see you later!"
+          }
+        }
+      }
+    },
     "Allrounder": {
       "localizations": {
         "en": {
@@ -1667,6 +1677,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Your coach is planning the session …"
+          }
+        }
+      }
+    },
+    "Dein Coach spricht …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your coach is speaking …"
           }
         }
       }
@@ -3441,6 +3461,16 @@
         }
       }
     },
+    "Gespräch starten": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start conversation"
+          }
+        }
+      }
+    },
     "Gespräche protokollieren": {
       "localizations": {
         "en": {
@@ -4046,7 +4076,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "I’m listening …"
+            "value": "Listening …"
           }
         }
       }
@@ -6661,6 +6691,16 @@
         }
       }
     },
+    "Sag „Tschüss“ zum Beenden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Say “bye” to end"
+          }
+        }
+      }
+    },
     "Sanfter Start ohne Geräte – 3× pro Woche": {
       "localizations": {
         "en": {
@@ -7507,6 +7547,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Thorsten – surprised"
+          }
+        }
+      }
+    },
+    "Tipp: Tippe auf die Welle für ein freies Gespräch – sprechen, kurz Pause machen, der Coach antwortet und hört dann wieder zu. Oder aufs Mikrofon für einzelne Nachrichten.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tip: tap the wave for a hands-free conversation – speak, pause briefly, the coach answers and then listens again. Or tap the mic for single messages."
           }
         }
       }

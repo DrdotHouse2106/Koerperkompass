@@ -210,6 +210,7 @@ func aiCoach(w http.ResponseWriter, r *http.Request) {
 		Messages []struct{ Role, Content string }
 		Context  string
 		Lang     string
+		Voice    bool // Gesprächsmodus: Antwort wird vorgelesen, danach antwortet die Person per Sprache
 	}
 	if !requireAI(w) || !readJSON(w, r, &req) {
 		return
@@ -262,6 +263,11 @@ Realistische Nährwerte für deutsche Portionen schätzen. Nichts eintragen, was
 
 Aktuelle Daten der Person (Stand heute):
 ` + req.Context
+	if req.Voice {
+		system += "\n\nGESPRÄCHSMODUS: Deine Antwort wird vorgelesen und die Person antwortet gleich per Sprache. Sprich natürlich wie im Gespräch: " +
+			"2–4 kurze Sätze, keine Listen, keine Überschriften, kein Markdown, keine Emojis. Höchstens eine Frage am Ende. " +
+			"Die Zeilen MERKEN, ALLTAG, GERÄTE und EINTRAGEN darfst du weiterhin anhängen."
+	}
 	out, err := askMessages(r.Context(), system, anthropic.BetaOutputConfigEffortMedium, msgs)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadGateway)
