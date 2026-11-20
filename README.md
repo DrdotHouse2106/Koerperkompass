@@ -19,7 +19,7 @@ Es gibt keinen zentralen Dienst: Die Entwickler betreiben keinen Server und sehe
 
 | | |
 |---|---|
-| 🍽 **Ernährung** | Tagesziele, Ringe für Eiweiß/Kohlenhydrate/Fett, 7-Tage-Diagramm, Tagebuch (Frühstück, Mittag, Abend, Snack). **Frei beschreiben oder sprechen** („Zum Frühstück 2 Berliner“) – Claude Haiku bzw. Apple Intelligence schätzt die Nährwerte, du prüfst vor dem Speichern; häufige Lebensmittel mit einem Tipp; optional Foto-Eintrag |
+| 🍽 **Ernährung** | Tagesziele, Ringe für Eiweiß/Kohlenhydrate/Fett, 7-Tage-Diagramm, Tagebuch (Frühstück, Mittag, Abend, Snack). **Frei beschreiben oder sprechen** („Zum Frühstück 2 Berliner“) – Claude Haiku bzw. Apple Intelligence schätzt die Nährwerte, du prüfst vor dem Speichern; häufige Lebensmittel mit einem Tipp; **Foto** vom Teller oder der Packung (Nährwerttabelle wird abgelesen, z. B. „halbe Packung“) |
 | ⚖️ **Gewicht & Maße** | Gewicht, Körperfett, Taille, Hüfte, Brust – mit Verlauf und Wunschgewicht |
 | 🚶 **Aktivität & Schlaf** | Schritte, aktive Energie, Schlaf, Ruhepuls und Trainings aus Apple Health |
 | 🗺 **Mein Plan** | Überblick: Gewichtsverlauf bis zum Ziel, BMI-Skala, Tagesziele, Wasser und Training |

@@ -1881,6 +1881,16 @@
         }
       }
     },
+    "Deine Beschreibung (und ggf. das Foto) wird über deinen Server an die Claude API (Anthropic, Modell Haiku) gesendet, um die Nährwerte zu schätzen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your description (and the photo, if any) is sent via your server to the Claude API (Anthropic, Haiku model) to estimate nutrition."
+          }
+        }
+      }
+    },
     "Deine Beschreibung wird über deinen Server an die Claude API (Anthropic, Modell Haiku) gesendet, um die Nährwerte zu schätzen.": {
       "localizations": {
         "en": {
@@ -3157,6 +3167,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Choose photo"
+          }
+        }
+      }
+    },
+    "Fotos erkennt Claude auf deinem Server – dafür braucht es den Claude-Schlüssel und deine Zustimmung.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Photos are recognised by Claude on your server – this needs the Claude key and your consent."
           }
         }
       }
@@ -7547,6 +7567,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Share"
+          }
+        }
+      }
+    },
+    "Teller oder Packung – optional dazu schreiben, wie viel, z. B. „halbe Packung“.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Plate or package – optionally add how much, e.g. “half a pack”."
           }
         }
       }

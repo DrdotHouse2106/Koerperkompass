@@ -74,14 +74,18 @@ enum MealParser {
     }
 
     /// Verlauf nur bei Bedarf: bei erkennbarem Verweis sofort, sonst wenn Claude ihn anfordert. Unklares → Rückfrage.
-    @MainActor static func parse(_ text: String, state: AppState, entries: [Entry]) async throws -> [ParsedFood] {
+    @MainActor static func parse(_ text: String, state: AppState, entries: [Entry], image: Data? = nil) async throws -> [ParsedFood] {
         let full = history(entries)
         var history = refersToHistory(text) ? full : ""
+        if image != nil && !(state.aiAvailable && state.aiConsent) {
+            throw API.Failure(message: String(localized: "Fotos erkennt Claude auf deinem Server – dafür braucht es den Claude-Schlüssel und deine Zustimmung."))
+        }
         if state.aiAvailable && state.aiConsent {
             var r: [String: Any] = [:]
             for _ in 0..<2 {
                 r = try await state.api.object("POST", "/api/ai/meal", json: [
                     "text": text, "hint": Meal.now.rawValue, "now": Day.now, "history": history, "lang": Locale.current.language.languageCode?.identifier ?? "de",
+                    "image": image?.base64EncodedString() ?? "",
                 ])
                 guard r["needHistory"] as? Bool == true, history.isEmpty, !full.isEmpty else { break }
                 AppLog.add("Essen: Verlauf nachgefordert")
@@ -114,6 +118,8 @@ struct MealInputSection: View {
     @State private var error: String?
     @State private var result: MealResult?
     @State private var askConsent = false
+    @State private var photo: UIImage?  // Teller oder Packung/Nährwerttabelle
+    @State private var camera = false
 
     struct MealResult: Identifiable {
         let id = UUID()
@@ -142,19 +148,33 @@ struct MealInputSection: View {
                         .foregroundStyle(speech.listening ? .red : .orange)
                 }
                 .buttonStyle(.plain)
+                if UIImagePickerController.isSourceTypeAvailable(.camera) && state.aiAvailable {
+                    Button { camera = true } label: { Image(systemName: "camera.circle.fill").font(.title2).foregroundStyle(.orange) }
+                        .buttonStyle(.plain)
+                        .accessibilityLabel(Text("Foto aufnehmen"))
+                }
             }
             .onChange(of: speech.heard) { if speech.listening { text = speech.heard } }
-            Button(busy ? LocalizedStringKey("Wird erkannt …") : "Eintragen", systemImage: "sparkles") {
-                if state.aiAvailable && !state.aiConsent && !OnDevice.available { askConsent = true } else { parse() }
+            .sheet(isPresented: $camera) { CameraPicker(image: $photo).ignoresSafeArea() }
+            if let photo {
+                HStack {
+                    Image(uiImage: photo).resizable().scaledToFill().frame(width: 64, height: 64).clipShape(RoundedRectangle(cornerRadius: 10))
+                    Text("Teller oder Packung – optional dazu schreiben, wie viel, z. B. „halbe Packung“.").font(.caption).foregroundStyle(.secondary)
+                    Spacer()
+                    Button { self.photo = nil } label: { Image(systemName: "xmark.circle.fill").foregroundStyle(.secondary) }.buttonStyle(.plain)
+                }
             }
-            .disabled(text.trimmingCharacters(in: .whitespaces).isEmpty || busy)
+            Button(busy ? LocalizedStringKey("Wird erkannt …") : "Eintragen", systemImage: "sparkles") {
+                if state.aiAvailable && !state.aiConsent && (!OnDevice.available || photo != nil) { askConsent = true } else { parse() }
+            }
+            .disabled((text.trimmingCharacters(in: .whitespaces).isEmpty && photo == nil) || busy)
             // Fenster und Rückfrage an genau dieser Zeile: an der Section gälten sie für jede Zeile einzeln
-            .sheet(item: $result) { r in MealConfirmView(result: r, day: day) { text = "" } }
+            .sheet(item: $result) { r in MealConfirmView(result: r, day: day) { text = ""; photo = nil } }
             .alert("Beschreibung an Claude senden?", isPresented: $askConsent) {
                 Button("Zustimmen") { state.aiConsent = true; parse() }
                 Button("Abbrechen", role: .cancel) {}
             } message: {
-                Text("Deine Beschreibung wird über deinen Server an die Claude API (Anthropic, Modell Haiku) gesendet, um die Nährwerte zu schätzen.")
+                Text("Deine Beschreibung (und ggf. das Foto) wird über deinen Server an die Claude API (Anthropic, Modell Haiku) gesendet, um die Nährwerte zu schätzen.")
             }
             // Rückfragen (❓) in Orange: einfach im Textfeld ergänzen und erneut eintragen
             if let error { Text(error).font(.caption).foregroundStyle(error.hasPrefix("❓") ? .orange : .red) }
@@ -199,7 +219,7 @@ struct MealInputSection: View {
             if speech.listening { text = await speech.stop() }
             let input = text
             do {
-                let items = try await MealParser.parse(input, state: state, entries: entries)
+                let items = try await MealParser.parse(input, state: state, entries: entries, image: photo?.jpeg(maxSide: 1280, quality: 0.75))
                 guard !items.isEmpty else { throw API.Failure(message: String(localized: "Nichts erkannt – beschreib es etwas genauer.")) }
                 AppLog.add("Essen erkannt: \(items.count) Lebensmittel")
                 result = MealResult(items: items)
