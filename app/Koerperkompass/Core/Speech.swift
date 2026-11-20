@@ -124,7 +124,7 @@ import Speech
         guard useServer, let api else { speakLocal(clean, rate: rate, pitch: pitch); return }
         // Fest gewählte Server-Stimme (Einstellungen → Stimme), sonst passend zum Coach-Stil
         let fixed = UserDefaults.standard.string(forKey: "serverVoicePreset") ?? ""
-        let persona = fixed.isEmpty ? persona : fixed
+        let persona = fixed.isEmpty || persona.hasPrefix("dark") ? persona : fixed  // Dark Motivation behält ihre Erzählstimme
         stop()
         // Lange Texte (z. B. Gesundheitscoach) satzweise holen: der erste Teil spielt, während der nächste entsteht
         let parts = Self.chunks(clean)
@@ -195,7 +195,7 @@ import Speech
 
     private func speakLocal(_ text: String, rate: Float, pitch: Float) {
         let u = AVSpeechUtterance(string: text)
-        u.voice = Self.voice()
+        u.voice = persona == "darkEn" ? AVSpeechSynthesisVoice(language: "en-US") : Self.voice()
         u.rate = rate
         u.pitchMultiplier = pitch
         synth.speak(u)

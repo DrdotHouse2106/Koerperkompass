@@ -1631,6 +1631,16 @@
         }
       }
     },
+    "Dark": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dark"
+          }
+        }
+      }
+    },
     "Das Foto wird über deinen Server an die Claude API (Anthropic) gesendet, um die Nährwerte zu schätzen. Du kannst die Zustimmung in den Einstellungen widerrufen.": {
       "localizations": {
         "en": {
@@ -2097,6 +2107,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Harsh language?"
+          }
+        }
+      }
+    },
+    "Deutsch": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "German"
           }
         }
       }
@@ -2861,6 +2881,16 @@
         }
       }
     },
+    "Englisch": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "English"
+          }
+        }
+      }
+    },
     "Entdecker": {
       "localizations": {
         "en": {
@@ -3567,6 +3597,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Apply every day, +15 XP per quest."
+          }
+        }
+      }
+    },
+    "Gemischt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mixed"
           }
         }
       }
@@ -5961,6 +6001,16 @@
         }
       }
     },
+    "Neue persönliche Geschichten": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New personal stories"
+          }
+        }
+      }
+    },
     "Neue persönliche Sprüche": {
       "localizations": {
         "en": {
@@ -7041,6 +7091,16 @@
         }
       }
     },
+    "Sanft": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gentle"
+          }
+        }
+      }
+    },
     "Sanfter Start ohne Geräte – 3× pro Woche": {
       "localizations": {
         "en": {
@@ -7551,6 +7611,16 @@
         }
       }
     },
+    "Sprache": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Language"
+          }
+        }
+      }
+    },
     "Sprich jetzt – tippen zum Beenden": {
       "localizations": {
         "en": {
@@ -7597,6 +7667,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Strong, mate! There’s always one more!"
+          }
+        }
+      }
+    },
+    "Stil": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Style"
           }
         }
       }

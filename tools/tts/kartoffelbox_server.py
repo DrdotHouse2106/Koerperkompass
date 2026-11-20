@@ -31,6 +31,7 @@ from safetensors.torch import load_file
 # Ausdruck je Coach-Stil: exaggeration = Übertreibung/Emotion, cfg_weight = Tempo/Treue, temperature = Lebendigkeit
 PERSONAS = {
     "sarge": dict(exaggeration=1.2, cfg_weight=0.3, temperature=0.8),  # Drill Sergeant – Hardcore: brüllt
+    "dark": dict(exaggeration=0.35, cfg_weight=0.3, temperature=0.7),  # Dark Motivation: tief, ruhig, langsam
     "brutal": dict(exaggeration=1.3, cfg_weight=0.3, temperature=0.85),  # Drill Sergeant – Ohne Gnade
     "drill": dict(exaggeration=0.9, cfg_weight=0.3, temperature=0.7),
     "cheer": dict(exaggeration=0.9, cfg_weight=0.4, temperature=0.8),

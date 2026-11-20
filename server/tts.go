@@ -40,6 +40,9 @@ type ttsVoice struct {
 var defaultVoices = map[string]ttsVoice{
 	"sarge":  {"de_DE-thorsten_emotional-medium", "angry", 0.85},
 	"brutal": {"de_DE-thorsten_emotional-medium", "angry", 0.8},
+	// Dark Motivation: tiefe, ruhige Erzählstimme (Deutsch / Englisch)
+	"dark":   {"de_DE-thorsten-high", "", 1.3},
+	"darkEn": {"en_US-ryan-high", "", 1.25},
 	"drill":  {"de_DE-thorsten_emotional-medium", "angry", 0.95},
 	"cheer":  {"de_DE-thorsten_emotional-medium", "amused", 0.9},
 	"buddy":  {"de_DE-thorsten-high", "", 1.0},

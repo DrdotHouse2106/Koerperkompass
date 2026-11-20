@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	_ "embed"
 	"encoding/json"
 	"net/http"
 	"strconv"
@@ -313,16 +314,40 @@ Aktuelle Daten der Person (Stand heute):
 
 // aiMotivation erzeugt kurze, persönliche Motivationssprüche für die nächsten Erinnerungen.
 // Bewusst mit dem günstigen kleinen Modell (KK_MODEL_SMALL, Standard Claude Haiku 5.5) und wenig Aufwand.
+//
+//go:embed dark_style.md
+var darkStyle string
+
 func aiMotivation(w http.ResponseWriter, r *http.Request) {
 	var req struct {
-		Context, Lang string
-		Count         int
+		Context, Lang, Style string
+		Count                int
 	}
 	if !requireAI(w) || !readJSON(w, r, &req) {
 		return
 	}
 	if req.Count < 1 || req.Count > 6 {
 		req.Count = 2
+	}
+	if req.Style == "dark" {
+		if req.Lang != "en" && req.Lang != "mix" {
+			req.Lang = "de"
+		}
+		// „Dark Motivation“: kurze, ernste Geschichten nach der Stilvorlage (dark_style.md)
+		system := darkStyle + `
+
+Schreibe eigene Geschichten in diesem Stil. Antworte ausschließlich mit JSON:
+{"stories": [{"lang": "de|en", "lines": ["Zeile", "…"]}]}
+Sprache: ` + map[string]string{"de": "Deutsch", "en": "Englisch", "mix": "abwechselnd Deutsch und Englisch"}[req.Lang] + `.`
+		prompt := "Schreibe " + strconv.Itoa(req.Count) + " verschiedene Geschichten. Greife, wo es passt, den Weg der Person auf:\n" + req.Context
+		out, err := askModel(r.Context(), env("KK_MODEL_SMALL", "claude-haiku-5-5"), system, anthropic.BetaOutputConfigEffortLow,
+			[]anthropic.BetaMessageParam{anthropic.NewBetaUserMessage(anthropic.NewBetaTextBlock(prompt))})
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadGateway)
+			return
+		}
+		writeObject(w, out)
+		return
 	}
 	system := `Du schreibst kurze, motivierende Push-Mitteilungen für eine Gesundheits-App. Jede höchstens 140 Zeichen, per Du,
 warm, konkret auf die Daten der Person bezogen (Serie, Ziel, Training, Trinken, Essen), abwechslungsreich, gern mit einem Emoji,
