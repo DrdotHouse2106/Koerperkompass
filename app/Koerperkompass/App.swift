@@ -86,6 +86,16 @@ struct DashboardView: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal)
+                NavigationLink { MotivationView() } label: {
+                    Label("Motivation – Sprüche ohne Ende", systemImage: "sparkles")
+                        .font(.subheadline.bold())
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding()
+                        .background(LinearGradient(colors: [Theme.petrol.opacity(0.5), Theme.orange.opacity(0.4)], startPoint: .leading, endPoint: .trailing),
+                                    in: RoundedRectangle(cornerRadius: 16))
+                }
+                .buttonStyle(.plain)
+                .padding(.horizontal)
                 if state.profile.modules.contains("water") {
                     VStack(alignment: .leading, spacing: 8) {
                         Text("Schnell eintragen").font(.caption.bold()).foregroundStyle(.secondary)

@@ -193,6 +193,22 @@ enum Motivation {
 
     static let titles = ["Körperkompass", "Kleiner Schubs 💪", "Dein Kompass 🧭", "Weiter so! ✨", "Hey 👋"]
 
+    /// Alle Sprüche der App-Sprache
+    static var pool: [String] { Locale.current.language.languageCode?.identifier == "en" ? en : de }
+
+    /// Platzhalter {name}, {serie}, {ziel} füllen
+    static func fill(_ text: String, profile: Profile, streak: Int) -> String {
+        let english = Locale.current.language.languageCode?.identifier == "en"
+        let goal: String = switch profile.goal {
+        case .lose: english ? "reach \(profile.targetWeight.short) kg" : "\(profile.targetWeight.short) kg erreichen"
+        case .gain: english ? "build muscle" : "Muskeln aufbauen"
+        case .maintain: english ? "stay fit" : "fit bleiben"
+        }
+        return text.replacingOccurrences(of: "{name}", with: profile.name.map { ", \($0)" } ?? "")
+            .replacingOccurrences(of: "{serie}", with: "\(max(streak, 1))")
+            .replacingOccurrences(of: "{ziel}", with: goal)
+    }
+
     /// Plant die nächsten 14 Tage neu (ersetzt bisherige). `hours`: Uhrzeiten pro Tag.
     /// `personal`: von Claude geschriebene Sprüche – sie ersetzen die nächsten fälligen Sprüche aus dem Vorrat.
     static func schedule(hours: [Int], profile: Profile, streak: Int, personal: [String] = []) async {
@@ -224,10 +240,7 @@ enum Motivation {
                 let dayNumber = cal.dateComponents([.day], from: Day.date("2026-01-01"), to: date).day ?? 0
                 let slot = hours.firstIndex(of: hour) ?? 0
                 let fromCoach = !personal.isEmpty
-                let text = fromCoach ? personal.removeFirst() : pool[order[(dayNumber * hours.count + slot) % order.count]]
-                    .replacingOccurrences(of: "{name}", with: name)
-                    .replacingOccurrences(of: "{serie}", with: "\(max(streak, 1))")
-                    .replacingOccurrences(of: "{ziel}", with: goal)
+                let text = fromCoach ? personal.removeFirst() : fill(pool[order[(dayNumber * hours.count + slot) % order.count]], profile: profile, streak: streak)
                 let content = UNMutableNotificationContent()
                 content.title = fromCoach ? String(localized: "Von deinem Coach 💬") : titles.randomElement()!
                 content.body = text

@@ -1381,6 +1381,16 @@
         }
       }
     },
+    "Bild konnte nicht erzeugt werden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Image could not be created"
+          }
+        }
+      }
+    },
     "Bin müde – trainieren oder lieber Pause?": {
       "localizations": {
         "en": {
@@ -2967,6 +2977,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Extended log (test phase)"
+          }
+        }
+      }
+    },
+    "Erzeugt ein Bild mit einem motivierenden Spruch – z. B. für die Aktion „Hintergrundbild festlegen“.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Creates an image with a motivating quote – e.g. for the “Set wallpaper” action."
           }
         }
       }
@@ -5421,6 +5441,16 @@
         }
       }
     },
+    "Meine Favoriten zeigen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show my favourites"
+          }
+        }
+      }
+    },
     "Meine Freunde meinen Freunden zeigen": {
       "localizations": {
         "en": {
@@ -5631,6 +5661,36 @@
         }
       }
     },
+    "Motivation": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Motivation"
+          }
+        }
+      }
+    },
+    "Motivation – Sprüche ohne Ende": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Motivation – endless quotes"
+          }
+        }
+      }
+    },
+    "Motivations-Hintergrundbild": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Motivation wallpaper"
+          }
+        }
+      }
+    },
     "Motivierende Erinnerungen": {
       "localizations": {
         "en": {
@@ -5767,6 +5827,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "New quest, e.g. “Stretch for 10 minutes”"
+          }
+        }
+      }
+    },
+    "Neue persönliche Sprüche": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New personal quotes"
           }
         }
       }
