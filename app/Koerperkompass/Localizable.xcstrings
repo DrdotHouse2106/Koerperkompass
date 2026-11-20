@@ -1621,6 +1621,16 @@
         }
       }
     },
+    "Daraus konnte kein Rezept erstellt werden.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No recipe could be created from this."
+          }
+        }
+      }
+    },
     "Das Foto wird über deinen Server an die Claude API (Anthropic) gesendet, um die Nährwerte zu schätzen. Du kannst die Zustimmung in den Einstellungen widerrufen.": {
       "localizations": {
         "en": {
@@ -5061,6 +5071,16 @@
         }
       }
     },
+    "Körperkompass ist noch nicht mit einem Server verbunden.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Körperkompass is not connected to a server yet."
+          }
+        }
+      }
+    },
     "Körperkompass-Wiederherstellungsschlüssel: %@": {
       "localizations": {
         "en": {
@@ -5367,6 +5387,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Light/Zero"
+          }
+        }
+      }
+    },
+    "Link": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Link"
           }
         }
       }
@@ -6791,6 +6821,36 @@
         }
       }
     },
+    "Rezept aus Link": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recipe from link"
+          }
+        }
+      }
+    },
+    "Rezept aus Link speichern": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save recipe from link"
+          }
+        }
+      }
+    },
+    "Rezept in ${applicationName} speichern": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save recipe in ${applicationName}"
+          }
+        }
+      }
+    },
     "Rezept konnte nicht erstellt werden: %@": {
       "localizations": {
         "en": {
@@ -6807,6 +6867,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Search recipes"
+          }
+        }
+      }
+    },
+    "Rezept wird erstellt – in 1–2 Minuten unter Rezepte.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recipe is being created – in 1–2 minutes under Recipes."
           }
         }
       }
@@ -7437,6 +7507,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Storage"
+          }
+        }
+      }
+    },
+    "Speichert ein Rezept aus einem Reel, Video oder einer Rezeptseite in Körperkompass.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saves a recipe from a reel, video or recipe page in Körperkompass."
           }
         }
       }
@@ -9537,6 +9617,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Exercises & sets"
+          }
+        }
+      }
+    },
+    "„%@“ gespeichert.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“%@” saved."
           }
         }
       }

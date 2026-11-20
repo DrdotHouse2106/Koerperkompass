@@ -31,6 +31,42 @@ struct LogDrinkIntent: AppIntent {
     }
 }
 
+/// Kurzbefehl fürs Teilen-Menü: Link (Reel, Video, Rezeptseite) als Rezept speichern, ohne die App zu öffnen.
+/// Einrichten: Kurzbefehle-App → neuer Kurzbefehl mit dieser Aktion → „Im Teilen-Menü anzeigen“ (Eingabe: URLs).
+struct SaveRecipeLinkIntent: AppIntent {
+    static var title: LocalizedStringResource = "Rezept aus Link speichern"
+    static var description = IntentDescription("Speichert ein Rezept aus einem Reel, Video oder einer Rezeptseite in Körperkompass.")
+
+    @Parameter(title: "Link")
+    var url: URL
+
+    @MainActor
+    func perform() async throws -> some IntentResult & ProvidesDialog {
+        let d = UserDefaults.standard
+        guard let server = d.string(forKey: "server"), !server.isEmpty, let token = Keychain.get("token") else {
+            return .result(dialog: IntentDialog("Körperkompass ist noch nicht mit einem Server verbunden."))
+        }
+        let r = try await API(server: server, token: token).object("POST", "/api/recipes/link", json: [
+            "url": url.absoluteString, "ai": d.bool(forKey: "aiConsent"), "lang": Locale.current.language.languageCode?.identifier ?? "de",
+        ])
+        if let recipe = r["recipe"] as? [String: Any] {
+            // Rezeptseite: sofort fertig – wird beim nächsten Öffnen der App abgeglichen
+            let context = ModelContext(sharedContainer)
+            context.insert(Entry(module: "recipes", values: recipe))
+            try? context.save()
+            return .result(dialog: IntentDialog(LocalizedStringResource(stringLiteral: String(localized: "„\(recipe["title"] as? String ?? "")“ gespeichert."))))
+        }
+        if let id = r["id"] as? String {
+            // Reel/Video: Reelkoch arbeitet, die App holt das Rezept beim Öffnen der Rezepte ab
+            var jobs = RecipeJobs.all
+            jobs[id] = url.absoluteString
+            RecipeJobs.all = jobs
+            return .result(dialog: IntentDialog("Rezept wird erstellt – in 1–2 Minuten unter Rezepte."))
+        }
+        return .result(dialog: IntentDialog("Daraus konnte kein Rezept erstellt werden."))
+    }
+}
+
 struct KoerperkompassShortcuts: AppShortcutsProvider {
     static var appShortcuts: [AppShortcut] {
         AppShortcut(
@@ -42,5 +78,10 @@ struct KoerperkompassShortcuts: AppShortcutsProvider {
             ],
             shortTitle: "Getränk eintragen",
             systemImageName: "drop.fill")
+        AppShortcut(
+            intent: SaveRecipeLinkIntent(),
+            phrases: ["Rezept in \(.applicationName) speichern"],
+            shortTitle: "Rezept aus Link",
+            systemImageName: "book.closed.fill")
     }
 }

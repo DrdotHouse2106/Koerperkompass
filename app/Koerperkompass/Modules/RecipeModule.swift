@@ -56,7 +56,7 @@ private struct RecipeTile: View {
 }
 
 /// Laufende Reel-Aufträge (Reelkoch-id → Link), überstehen das Schließen der App
-private enum RecipeJobs {
+enum RecipeJobs {
     static var all: [String: String] {
         get { (UserDefaults.standard.dictionary(forKey: "recipeJobs") as? [String: String]) ?? [:] }
         set { UserDefaults.standard.set(newValue, forKey: "recipeJobs") }
