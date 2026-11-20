@@ -386,11 +386,21 @@ Antworte ausschließlich mit JSON: {"reply": "…", "exercise": "Übung oder lee
 // aiMeal zerlegt eine freie Beschreibung („Mein Frühstück waren 2 Berliner“) in Lebensmittel mit Nährwerten.
 // Kleines, günstiges Modell (KK_MODEL_SMALL, Standard Claude Haiku 5.5).
 func aiMeal(w http.ResponseWriter, r *http.Request) {
-	var req struct{ Text, Lang, Hint, History, Now, Image string } // Image: optional JPEG (Base64) vom Teller oder der Packung
+	var req struct {
+		Text, Lang, Hint, History, Now, Image string   // Image: optional JPEG (Base64) vom Teller oder der Packung
+		Images                                []string // mehrere Fotos (z. B. Teller und Packungen) – zusammen ausgewertet
+	}
 	if !requireAI(w) || !readJSON(w, r, &req) {
 		return
 	}
-	if (strings.TrimSpace(req.Text) == "" && req.Image == "") || len(req.Text) > 2000 || len(req.Image) > 3<<20 {
+	if req.Image != "" {
+		req.Images = append(req.Images, req.Image)
+	}
+	size := 0
+	for _, img := range req.Images {
+		size += len(img)
+	}
+	if (strings.TrimSpace(req.Text) == "" && len(req.Images) == 0) || len(req.Text) > 2000 || len(req.Images) > 6 || size > 12<<20 {
 		http.Error(w, "Beschreibung fehlt oder ist zu lang", http.StatusBadRequest)
 		return
 	}
@@ -414,15 +424,17 @@ Bezeichnungen in ` + langName(req.Lang) + `.`
 		prompt = "(Verlauf nicht mitgeschickt – bei Bedarf mit needHistory anfordern.)\n" + prompt
 	}
 	blocks := []anthropic.BetaContentBlockParamUnion{anthropic.NewBetaTextBlock(prompt)}
-	if req.Image != "" {
-		// Foto: Teller → Lebensmittel und Mengen schätzen; Packung/Nährwerttabelle → Werte pro 100 g ablesen
-		// und auf die beschriebene Menge umrechnen (z. B. „halbe Packung“)
-		blocks = []anthropic.BetaContentBlockParamUnion{
-			anthropic.NewBetaImageBlock(anthropic.BetaBase64ImageSourceParam{Data: req.Image, MediaType: anthropic.BetaBase64ImageSourceMediaTypeImageJPEG}),
-			anthropic.NewBetaTextBlock(prompt + "\nZum Foto: Zeigt es einen Teller, erkenne die einzelnen Lebensmittel und schätze die Mengen. " +
-				"Zeigt es eine Verpackung oder Nährwerttabelle, lies Produkt, Packungsgröße und Werte pro 100 g ab und rechne auf die beschriebene Menge um " +
-				"(ohne Angabe: die ganze Packung bzw. eine übliche Portion; nenne die Menge in amount)."),
+	if len(req.Images) > 0 {
+		// Fotos: Teller → Lebensmittel und Mengen schätzen; Packung/Nährwerttabelle → Werte pro 100 g ablesen
+		// und auf die beschriebene Menge umrechnen (z. B. „halbe Packung“). Mehrere Fotos = mehrere Zutaten einer Mahlzeit.
+		blocks = nil
+		for _, img := range req.Images {
+			blocks = append(blocks, anthropic.NewBetaImageBlock(anthropic.BetaBase64ImageSourceParam{Data: img, MediaType: anthropic.BetaBase64ImageSourceMediaTypeImageJPEG}))
 		}
+		blocks = append(blocks, anthropic.NewBetaTextBlock(prompt+"\nZu den Fotos: Zeigt eines einen Teller, erkenne die einzelnen Lebensmittel und schätze die Mengen. "+
+			"Zeigt eines eine Verpackung oder Nährwerttabelle, lies Produkt, Packungsgröße und Werte pro 100 g ab und rechne auf die beschriebene Menge um "+
+			"(ohne Angabe: die ganze Packung bzw. eine übliche Portion; nenne die Menge in amount). Mehrere Fotos gehören zusammen – "+
+			"ein Eintrag je Lebensmittel, nichts doppelt zählen (z. B. Packung und Teller mit demselben Produkt)."))
 	}
 	out, err := askModel(r.Context(), env("KK_MODEL_SMALL", "claude-haiku-5-5"), system, anthropic.BetaOutputConfigEffortLow,
 		[]anthropic.BetaMessageParam{anthropic.NewBetaUserMessage(blocks...)})

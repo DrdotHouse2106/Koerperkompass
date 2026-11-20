@@ -1,3 +1,4 @@
+import PhotosUI
 import SwiftData
 import SwiftUI
 
@@ -74,10 +75,10 @@ enum MealParser {
     }
 
     /// Verlauf nur bei Bedarf: bei erkennbarem Verweis sofort, sonst wenn Claude ihn anfordert. Unklares → Rückfrage.
-    @MainActor static func parse(_ text: String, state: AppState, entries: [Entry], image: Data? = nil) async throws -> [ParsedFood] {
+    @MainActor static func parse(_ text: String, state: AppState, entries: [Entry], images: [Data] = []) async throws -> [ParsedFood] {
         let full = history(entries)
         var history = refersToHistory(text) ? full : ""
-        if image != nil && !(state.aiAvailable && state.aiConsent) {
+        if !images.isEmpty && !(state.aiAvailable && state.aiConsent) {
             throw API.Failure(message: String(localized: "Fotos erkennt Claude auf deinem Server – dafür braucht es den Claude-Schlüssel und deine Zustimmung."))
         }
         if state.aiAvailable && state.aiConsent {
@@ -85,7 +86,7 @@ enum MealParser {
             for _ in 0..<2 {
                 r = try await state.api.object("POST", "/api/ai/meal", json: [
                     "text": text, "hint": Meal.now.rawValue, "now": Day.now, "history": history, "lang": Locale.current.language.languageCode?.identifier ?? "de",
-                    "image": image?.base64EncodedString() ?? "",
+                    "images": images.map { $0.base64EncodedString() },
                 ])
                 guard r["needHistory"] as? Bool == true, history.isEmpty, !full.isEmpty else { break }
                 AppLog.add("Essen: Verlauf nachgefordert")
@@ -118,7 +119,9 @@ struct MealInputSection: View {
     @State private var error: String?
     @State private var result: MealResult?
     @State private var askConsent = false
-    @State private var photo: UIImage?  // Teller oder Packung/Nährwerttabelle
+    @State private var photos: [UIImage] = []  // Teller, Packungen/Nährwerttabellen – bis zu 6, zusammen ausgewertet
+    @State private var shot: UIImage?
+    @State private var picks: [PhotosPickerItem] = []
     @State private var camera = false
 
     struct MealResult: Identifiable {
@@ -148,28 +151,54 @@ struct MealInputSection: View {
                         .foregroundStyle(speech.listening ? .red : .orange)
                 }
                 .buttonStyle(.plain)
-                if UIImagePickerController.isSourceTypeAvailable(.camera) && state.aiAvailable {
-                    Button { camera = true } label: { Image(systemName: "camera.circle.fill").font(.title2).foregroundStyle(.orange) }
-                        .buttonStyle(.plain)
-                        .accessibilityLabel(Text("Foto aufnehmen"))
+                if state.aiAvailable {
+                    // Kamera: jedes Foto kommt dazu; gedrückt halten → aus der Mediathek (mehrere auf einmal)
+                    Menu {
+                        if UIImagePickerController.isSourceTypeAvailable(.camera) { Button("Foto aufnehmen", systemImage: "camera") { camera = true } }
+                        PhotosPicker(selection: $picks, maxSelectionCount: 6 - photos.count, matching: .images) { Label("Aus Mediathek", systemImage: "photo.on.rectangle") }
+                    } label: { Image(systemName: "camera.circle.fill").font(.title2).foregroundStyle(.orange) }
+                    primaryAction: { if UIImagePickerController.isSourceTypeAvailable(.camera) { camera = true } }
+                    .buttonStyle(.plain)
+                    .disabled(photos.count >= 6)
+                    .accessibilityLabel(Text("Foto hinzufügen"))
                 }
             }
             .onChange(of: speech.heard) { if speech.listening { text = speech.heard } }
-            .sheet(isPresented: $camera) { CameraPicker(image: $photo).ignoresSafeArea() }
-            if let photo {
-                HStack {
-                    Image(uiImage: photo).resizable().scaledToFill().frame(width: 64, height: 64).clipShape(RoundedRectangle(cornerRadius: 10))
-                    Text("Teller oder Packung – optional dazu schreiben, wie viel, z. B. „halbe Packung“.").font(.caption).foregroundStyle(.secondary)
-                    Spacer()
-                    Button { self.photo = nil } label: { Image(systemName: "xmark.circle.fill").foregroundStyle(.secondary) }.buttonStyle(.plain)
+            .sheet(isPresented: $camera) { CameraPicker(image: $shot).ignoresSafeArea() }
+            .onChange(of: shot) { if let shot { photos.append(shot); self.shot = nil } }
+            .onChange(of: picks) {
+                Task {
+                    for p in picks { if let d = try? await p.loadTransferable(type: Data.self), let img = UIImage(data: d), photos.count < 6 { photos.append(img) } }
+                    picks = []
                 }
             }
-            Button(busy ? LocalizedStringKey("Wird erkannt …") : "Eintragen", systemImage: "sparkles") {
-                if state.aiAvailable && !state.aiConsent && (!OnDevice.available || photo != nil) { askConsent = true } else { parse() }
+            if !photos.isEmpty {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack {
+                        ForEach(photos.indices, id: \.self) { i in
+                            Image(uiImage: photos[i]).resizable().scaledToFill().frame(width: 64, height: 64).clipShape(RoundedRectangle(cornerRadius: 10))
+                                .overlay(alignment: .topTrailing) {
+                                    Button { photos.remove(at: i) } label: { Image(systemName: "xmark.circle.fill").foregroundStyle(.white, .black.opacity(0.6)) }
+                                        .buttonStyle(.plain).padding(2)
+                                }
+                        }
+                        if photos.count < 6 && UIImagePickerController.isSourceTypeAvailable(.camera) {
+                            Button { camera = true } label: {
+                                Image(systemName: "plus").frame(width: 64, height: 64)
+                                    .background(Color.orange.opacity(0.15), in: RoundedRectangle(cornerRadius: 10))
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
+                }
+                Text("Teller und Packungen – optional dazu schreiben, wie viel, z. B. „halbe Packung Skyr“.").font(.caption).foregroundStyle(.secondary)
             }
-            .disabled((text.trimmingCharacters(in: .whitespaces).isEmpty && photo == nil) || busy)
+            Button(busy ? LocalizedStringKey("Wird erkannt …") : "Eintragen", systemImage: "sparkles") {
+                if state.aiAvailable && !state.aiConsent && (!OnDevice.available || !photos.isEmpty) { askConsent = true } else { parse() }
+            }
+            .disabled((text.trimmingCharacters(in: .whitespaces).isEmpty && photos.isEmpty) || busy)
             // Fenster und Rückfrage an genau dieser Zeile: an der Section gälten sie für jede Zeile einzeln
-            .sheet(item: $result) { r in MealConfirmView(result: r, day: day) { text = ""; photo = nil } }
+            .sheet(item: $result) { r in MealConfirmView(result: r, day: day) { text = ""; photos = [] } }
             .alert("Beschreibung an Claude senden?", isPresented: $askConsent) {
                 Button("Zustimmen") { state.aiConsent = true; parse() }
                 Button("Abbrechen", role: .cancel) {}
@@ -219,7 +248,7 @@ struct MealInputSection: View {
             if speech.listening { text = await speech.stop() }
             let input = text
             do {
-                let items = try await MealParser.parse(input, state: state, entries: entries, image: photo?.jpeg(maxSide: 1280, quality: 0.75))
+                let items = try await MealParser.parse(input, state: state, entries: entries, images: photos.compactMap { $0.jpeg(maxSide: 1280, quality: 0.7) })
                 guard !items.isEmpty else { throw API.Failure(message: String(localized: "Nichts erkannt – beschreib es etwas genauer.")) }
                 AppLog.add("Essen erkannt: \(items.count) Lebensmittel")
                 result = MealResult(items: items)

@@ -1161,6 +1161,16 @@
         }
       }
     },
+    "Aus Mediathek": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "From library"
+          }
+        }
+      }
+    },
     "Aus Reelkoch": {
       "localizations": {
         "en": {
@@ -7917,6 +7927,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Plate or package – optionally add how much, e.g. “half a pack”."
+          }
+        }
+      }
+    },
+    "Teller und Packungen – optional dazu schreiben, wie viel, z. B. „halbe Packung Skyr“.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Plates and packages – optionally add how much, e.g. “half a pack of skyr”."
           }
         }
       }
