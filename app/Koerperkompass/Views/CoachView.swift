@@ -32,11 +32,12 @@ struct CoachView: View {
     /// Einträge, die der Coach aus dem Gespräch vorschlägt – gespeichert erst nach Tipp auf „Eintragen“
     struct Proposal: Codable, Hashable {
         struct Item: Codable, Hashable {
-            var meal, name, amount: String?
+            var meal, name, amount, time: String?
             var kcal, protein, carbs, fat, ml, caffeine, alcohol: Double?
             var food: ParsedFood {
                 ParsedFood(meal: Meal(rawValue: meal ?? "") ?? .now, name: name ?? "", amount: amount ?? "", kcal: kcal ?? 0,
-                           protein: protein ?? 0, carbs: carbs ?? 0, fat: fat ?? 0, ml: ml ?? 0, caffeine: caffeine ?? 0, alcohol: alcohol ?? 0)
+                           protein: protein ?? 0, carbs: carbs ?? 0, fat: fat ?? 0, ml: ml ?? 0, caffeine: caffeine ?? 0, alcohol: alcohol ?? 0,
+                           time: time ?? "")
             }
         }
         var day: Int?
@@ -438,6 +439,11 @@ func coachContext(_ all: [Entry], _ p: Profile, healthUpload: Bool) -> String {
     var drinks = "- Getrunken: \(hydration(entries).whole) von \(p.waterGoal.whole) ml"
     if sum("water", "caffeine") > 0 { drinks += ", Koffein \(sum("water", "caffeine").whole) mg" }
     if sum("water", "alcohol") > 0 { drinks += ", Alkohol \(sum("water", "alcohol").whole) g" }
+    // Getränke mit Uhrzeit (soweit bekannt) – zeigt, wann getrunken wurde, z. B. Koffein spät am Tag
+    let timed = today.filter { $0.module == "water" && $0.text("time") != nil }.sorted { ($0.text("time") ?? "") < ($1.text("time") ?? "") }
+    if !timed.isEmpty {
+        drinks += "\n- Getränke heute: " + timed.map { "\($0.text("time") ?? "") \($0.text("name") ?? "") \(($0.num("ml") ?? 0).whole) ml" }.joined(separator: ", ")
+    }
     var lines: [String] = []
     lines.append("Profil: \(p.aiText), Trinkziel \(p.waterGoal.whole) ml")
     lines.append("Heute \(Date().formatted(.dateTime.weekday(.wide).locale(Locale(identifier: "de_DE")))), \(Day.today), \(Date().formatted(date: .omitted, time: .shortened)) Uhr:")

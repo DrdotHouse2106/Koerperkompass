@@ -258,7 +258,7 @@ Die GERÄTE-Zeile nur, wenn sich am Gerätebestand etwas geändert hat. Nichts G
 Einträge vorschlagen: Erzählt die Person, was sie tatsächlich gegessen oder getrunken hat oder was sie heute wiegt (nicht bei Fragen,
 Plänen oder Überlegungen), hänge ganz am Ende eine einzige Zeile an (JSON in einer Zeile, die App fragt vor dem Speichern nach):
 EINTRAGEN: {"day": 0, "items": [{"meal": "breakfast|lunch|dinner|snack", "name": "kurz", "amount": "Menge", "kcal": Zahl, "protein": g, "carbs": g, "fat": g}], "weight": kg}
-day: 0 = heute, -1 = gestern. Bei Getränken in items zusätzlich "ml", "caffeine" (mg), "alcohol" (g). weight nur, wenn genannt.
+day: 0 = heute, -1 = gestern. Bei Getränken in items zusätzlich "ml", "caffeine" (mg), "alcohol" (g). Ist eine Uhrzeit genannt oder ableitbar, "time": "HH:MM". weight nur, wenn genannt.
 Realistische Nährwerte für deutsche Portionen schätzen. Nichts eintragen, was schon in den heutigen Daten steht.
 
 Aktuelle Daten der Person (Stand heute):
@@ -360,7 +360,7 @@ Antworte ausschließlich mit JSON: {"reply": "…", "exercise": "Übung oder lee
 // aiMeal zerlegt eine freie Beschreibung („Mein Frühstück waren 2 Berliner“) in Lebensmittel mit Nährwerten.
 // Kleines, günstiges Modell (KK_MODEL_SMALL, Standard Claude Haiku 5.5).
 func aiMeal(w http.ResponseWriter, r *http.Request) {
-	var req struct{ Text, Lang, Hint, History string }
+	var req struct{ Text, Lang, Hint, History, Now string }
 	if !requireAI(w) || !readJSON(w, r, &req) {
 		return
 	}
@@ -379,8 +379,9 @@ Fehlt dir dafür der Verlauf, antworte nur mit {"needHistory": true}. Ist die Be
 Antworte ausschließlich mit JSON:
 {"items": [{"meal": "breakfast|lunch|dinner|snack", "name": "kurze Bezeichnung", "amount": "Menge, z. B. 2 Stück (140 g)", "kcal": Zahl, "protein": g, "carbs": g, "fat": g}]}
 Bei Getränken (auch Wasser, Kaffee, Bier) zusätzlich "ml": Menge in ml (z. B. 330 für ein 0,33er), "caffeine": mg, "alcohol": Gramm reiner Alkohol.
+Wenn eine Uhrzeit genannt oder klar ableitbar ist („um 10“, „nach dem Aufstehen“, „vorhin“ = vor etwa einer Stunde), zusätzlich "time": "HH:MM" (24 Stunden), sonst weglassen.
 Bezeichnungen in ` + langName(req.Lang) + `.`
-	prompt := "Hinweis auf die Mahlzeit (nach Uhrzeit): " + req.Hint + "\nBeschreibung: " + req.Text
+	prompt := "Jetzt: " + req.Now + " Uhr\nHinweis auf die Mahlzeit (nach Uhrzeit): " + req.Hint + "\nBeschreibung: " + req.Text
 	if h := strings.TrimSpace(req.History); h != "" {
 		prompt = "Bisherige Mahlzeiten:\n" + truncate(h, 6000) + "\n\n" + prompt
 	} else {

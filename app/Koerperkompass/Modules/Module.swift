@@ -125,6 +125,7 @@ struct Ring: View {
 struct EntryRows: View {
     let entries: [Entry]
     let row: (Entry) -> String
+    var onTap: ((Entry) -> Void)? = nil  // z. B. Uhrzeit ändern
     @Environment(AppState.self) private var state
     @Environment(\.modelContext) private var context
     var body: some View {
@@ -136,6 +137,8 @@ struct EntryRows: View {
                 Spacer()
                 Text(Day.date(e.date), format: .dateTime.day().month()).foregroundStyle(.secondary)
             }
+            .contentShape(Rectangle())
+            .onTapGesture { onTap?(e) }
         }
         .onDelete { idx in idx.map { visible[$0] }.forEach { state.delete($0, context) } }
     }

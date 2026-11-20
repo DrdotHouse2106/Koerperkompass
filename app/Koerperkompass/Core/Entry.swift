@@ -83,6 +83,8 @@ enum Day {
     static func string(_ d: Date) -> String { formatter.string(from: d) }
     static func date(_ s: String) -> Date { formatter.date(from: s) ?? Date() }
     static var today: String { string(Date()) }
+    /// Aktuelle Uhrzeit „HH:mm“ (für Getränke und Mahlzeiten)
+    static var now: String { Date().formatted(.dateTime.hour(.twoDigits(amPM: .omitted)).minute(.twoDigits)) }
 
     /// Montag der aktuellen Woche
     static var weekStart: String {

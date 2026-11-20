@@ -15,6 +15,7 @@ struct ParsedFood: Identifiable {
     var ml = 0.0
     var caffeine = 0.0
     var alcohol = 0.0
+    var time = ""  // „HH:mm“, falls genannt oder ableitbar
 }
 
 extension Meal {
@@ -30,15 +31,17 @@ extension ParsedFood {
     @MainActor static func save(_ items: [ParsedFood], day: String, context: ModelContext, state: AppState) {
         for f in items {
             let name = f.amount.isEmpty ? f.name : "\(f.name) (\(f.amount))"
+            // Uhrzeit: genannt, sonst jetzt (aktuelle Mahlzeit heute), sonst übliche Zeit der Mahlzeit
+            let time = f.time.count == 5 ? f.time : (day == Day.today && f.meal == Meal.now ? Day.now : f.meal.defaultTime)
             if f.ml > 0 {
                 context.insert(Entry(module: "water", date: day, values: [
                     "drink": "custom", "name": f.name, "ml": f.ml, "hydration": f.alcohol > 0 ? 0 : f.ml,
-                    "kcal": f.kcal, "carbs": f.carbs, "caffeine": f.caffeine, "alcohol": f.alcohol,
+                    "kcal": f.kcal, "carbs": f.carbs, "caffeine": f.caffeine, "alcohol": f.alcohol, "time": time,
                 ]))
                 continue
             }
             context.insert(Entry(module: "nutrition", date: day, values: [
-                "meal": f.meal.rawValue, "name": name, "kcal": f.kcal, "protein": f.protein, "carbs": f.carbs, "fat": f.fat,
+                "meal": f.meal.rawValue, "name": name, "kcal": f.kcal, "protein": f.protein, "carbs": f.carbs, "fat": f.fat, "time": time,
             ]))
             if state.healthEnabled && day == Day.today {
                 Health.saveMeal(name: name, kcal: f.kcal, protein: f.protein, carbs: f.carbs, fat: f.fat)
@@ -78,7 +81,7 @@ enum MealParser {
             var r: [String: Any] = [:]
             for _ in 0..<2 {
                 r = try await state.api.object("POST", "/api/ai/meal", json: [
-                    "text": text, "hint": Meal.now.rawValue, "history": history, "lang": Locale.current.language.languageCode?.identifier ?? "de",
+                    "text": text, "hint": Meal.now.rawValue, "now": Day.now, "history": history, "lang": Locale.current.language.languageCode?.identifier ?? "de",
                 ])
                 guard r["needHistory"] as? Bool == true, history.isEmpty, !full.isEmpty else { break }
                 AppLog.add("Essen: Verlauf nachgefordert")
@@ -91,7 +94,7 @@ enum MealParser {
                            kcal: ($0["kcal"] as? NSNumber)?.doubleValue ?? 0, protein: ($0["protein"] as? NSNumber)?.doubleValue ?? 0,
                            carbs: ($0["carbs"] as? NSNumber)?.doubleValue ?? 0, fat: ($0["fat"] as? NSNumber)?.doubleValue ?? 0,
                            ml: ($0["ml"] as? NSNumber)?.doubleValue ?? 0, caffeine: ($0["caffeine"] as? NSNumber)?.doubleValue ?? 0,
-                           alcohol: ($0["alcohol"] as? NSNumber)?.doubleValue ?? 0)
+                           alcohol: ($0["alcohol"] as? NSNumber)?.doubleValue ?? 0, time: $0["time"] as? String ?? "")
             }
         }
         if let r = await OnDevice.parseMeal(text, hint: Meal.now.rawValue, history: refersToHistory(text) ? full : "") { return r }

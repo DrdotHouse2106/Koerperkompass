@@ -3401,6 +3401,16 @@
         }
       }
     },
+    "Gedrückt halten für eine andere Menge, z. B. 0,33 l. Uhrzeit ändern: Eintrag unten antippen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Press and hold for another amount, e.g. 0.33 l. To change the time, tap an entry below."
+          }
+        }
+      }
+    },
     "Gegessen": {
       "localizations": {
         "en": {
@@ -4637,6 +4647,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Caffeine"
+          }
+        }
+      }
+    },
+    "Koffein nach 15 Uhr: Ø %@ mg je Tag": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Caffeine after 3 pm: avg %@ mg per day"
           }
         }
       }
@@ -7817,6 +7837,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Drink break! 💦"
+          }
+        }
+      }
+    },
+    "Trinkverteilung (Ø je Tag): bis 12 Uhr %@ ml, 12–17 Uhr %@ ml, ab 17 Uhr %@ ml": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drinking pattern (avg per day): until 12 pm %@ ml, 12–5 pm %@ ml, after 5 pm %@ ml"
           }
         }
       }

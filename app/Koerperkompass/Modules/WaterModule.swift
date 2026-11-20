@@ -50,10 +50,12 @@ struct Drink: Identifiable {
     /// Eintrag für die übliche oder eine eigene Menge (Nährwerte werden umgerechnet)
     func entry(date: String = Day.today, ml amount: Double? = nil) -> Entry {
         let ml = amount ?? self.ml, f = ml / self.ml
-        return Entry(module: "water", date: date, values: [
+        var v: [String: Any] = [
             "drink": id, "name": String(localized: name), "ml": ml, "hydration": hydrates ? ml : 0,
             "kcal": kcal * f, "carbs": carbs * f, "caffeine": caffeine * f, "alcohol": alcohol * f,
-        ])
+        ]
+        if date == Day.today { v["time"] = Day.now }  // Uhrzeit für die Auswertung (Trinkverteilung, Koffein am Abend)
+        return Entry(module: "water", date: date, values: v)
     }
 
     static let amounts: [Double] = [200, 250, 330, 400, 500, 1000]
@@ -125,6 +127,8 @@ private struct WaterDetail: View {
     @AppStorage("reminderTo") private var to = 21
     @State private var denied = false
     @State private var custom: Drink?
+    @State private var editTime: Entry?
+    @State private var time = Date()
     @State private var customML = ""
 
     var body: some View {
@@ -176,11 +180,11 @@ private struct WaterDetail: View {
                     }
                 }
                 .padding(.vertical, 4)
-            } header: { Text("Eintragen") } footer: { Text("Gedrückt halten für eine andere Menge, z. B. 0,33 l.") }
+            } header: { Text("Eintragen") } footer: { Text("Gedrückt halten für eine andere Menge, z. B. 0,33 l. Uhrzeit ändern: Eintrag unten antippen.") }
             Section("Heute") {
-                EntryRows(entries: entries.filter { $0.date == Day.today }.sorted { $0.updated > $1.updated }) {
-                    "\($0.text("name") ?? String(localized: "Wasser")) · \(($0.num("ml") ?? 0).whole) ml"
-                }
+                EntryRows(entries: entries.filter { $0.date == Day.today }.sorted { ($0.text("time") ?? "") > ($1.text("time") ?? "") },
+                          row: { "\($0.text("time").map { $0 + " · " } ?? "")\($0.text("name") ?? String(localized: "Wasser")) · \(($0.num("ml") ?? 0).whole) ml" },
+                          onTap: { e in time = clock(e.text("time")); editTime = e })
             }
             Section {
                 Toggle("Trinkerinnerung", isOn: $reminderOn)
@@ -204,11 +208,40 @@ private struct WaterDetail: View {
             }
         }
         .onChange(of: [reminderOn ? 1 : 0, every, from, to]) { update() }
+        .sheet(item: $editTime) { e in
+            NavigationStack {
+                DatePicker("Uhrzeit", selection: $time, displayedComponents: .hourAndMinute)
+                    .datePickerStyle(.wheel).labelsHidden()
+                    .navigationTitle(Text(e.text("name") ?? ""))
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        ToolbarItem(placement: .cancellationAction) { Button("Abbrechen") { editTime = nil } }
+                        ToolbarItem(placement: .confirmationAction) {
+                            Button("Sichern") {
+                                var v = e.values
+                                v["time"] = time.formatted(.dateTime.hour(.twoDigits(amPM: .omitted)).minute(.twoDigits))
+                                e.values = v
+                                e.touch()
+                                state.changed(context)
+                                editTime = nil
+                            }
+                        }
+                    }
+            }
+            .presentationDetents([.medium])
+        }
         .alert(Text(custom?.name ?? "Menge"), isPresented: Binding(get: { custom != nil }, set: { if !$0 { custom = nil } })) {
             TextField("Menge in ml", text: $customML).keyboardType(.numberPad)
             Button("Eintragen") { if let d = custom, let ml = Double(customML), ml > 0 { add(d, ml) } }
             Button("Abbrechen", role: .cancel) {}
         }
+    }
+
+    /// „HH:mm“ → heutiges Datum mit dieser Uhrzeit (sonst jetzt)
+    private func clock(_ s: String?) -> Date {
+        let p = (s ?? "").split(separator: ":").compactMap { Int($0) }
+        guard p.count == 2 else { return Date() }
+        return Calendar.current.date(bySettingHour: p[0], minute: p[1], second: 0, of: Date()) ?? Date()
     }
 
     private func add(_ d: Drink, _ ml: Double) {

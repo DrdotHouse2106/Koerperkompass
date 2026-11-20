@@ -97,6 +97,22 @@ struct CompassView: View {
                 out.append(String(localized: "Eiweißziel an \(ok) von \(kcal.count) Tagen erreicht"))
             }
         }
+        if p.modules.contains("water") {
+            // Trinkverteilung über den Tag (nur Getränke mit Uhrzeit)
+            let drinks = entries("water").filter { days.contains($0.date) && ($0.text("time")?.count ?? 0) == 5 }
+            let dayCount = Set(drinks.map(\.date)).count
+            if dayCount > 0 {
+                var slots = [0.0, 0.0, 0.0], lateCaffeine = 0.0
+                for e in drinks {
+                    let h = Int(e.text("time")!.prefix(2)) ?? 12
+                    slots[h < 12 ? 0 : h < 17 ? 1 : 2] += e.num("hydration") ?? e.num("ml") ?? 0
+                    if h >= 15 { lateCaffeine += e.num("caffeine") ?? 0 }
+                }
+                let n = Double(dayCount)
+                out.append(String(localized: "Trinkverteilung (Ø je Tag): bis 12 Uhr \((slots[0] / n).whole) ml, 12–17 Uhr \((slots[1] / n).whole) ml, ab 17 Uhr \((slots[2] / n).whole) ml"))
+                if lateCaffeine > 0 { out.append(String(localized: "Koffein nach 15 Uhr: Ø \((lateCaffeine / n).whole) mg je Tag")) }
+            }
+        }
         if p.modules.contains("body"), let last = entries("body").filter({ $0.num("weight") != nil }).max(by: { $0.date < $1.date })?.num("weight") {
             let rest = last - p.targetWeight
             out.append(abs(rest) < 0.5

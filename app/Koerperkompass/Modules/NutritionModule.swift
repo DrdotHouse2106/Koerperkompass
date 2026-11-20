@@ -21,6 +21,8 @@ struct NutritionModule: AppModule {
 enum Meal: String, CaseIterable, Identifiable {
     case breakfast, lunch, dinner, snack
     var id: String { rawValue }
+    /// Übliche Uhrzeit, wenn keine genannt wurde
+    var defaultTime: String { ["breakfast": "08:00", "lunch": "12:30", "snack": "15:30", "dinner": "18:30"][rawValue] ?? "12:00" }
     var title: LocalizedStringResource {
         switch self {
         case .breakfast: "Frühstück"
