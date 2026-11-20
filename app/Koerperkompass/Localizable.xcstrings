@@ -1111,6 +1111,16 @@
         }
       }
     },
+    "Aufnehmen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Take photo"
+          }
+        }
+      }
+    },
     "Aufstehen, Glas füllen, trinken. 30 Sekunden.": {
       "localizations": {
         "en": {
@@ -2027,6 +2037,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "BMI is only a rough guide – it ignores muscle mass and build."
+          }
+        }
+      }
+    },
+    "Der Rezepttext bzw. das Foto wird über deinen Server an die Claude API (Anthropic) gesendet.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The recipe text or photo is sent via your server to the Claude API (Anthropic)."
           }
         }
       }
@@ -3151,6 +3171,16 @@
         }
       }
     },
+    "Foto (z. B. Kochbuchseite)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Photo (e.g. cookbook page)"
+          }
+        }
+      }
+    },
     "Foto an Claude senden?": {
       "localizations": {
         "en": {
@@ -3181,12 +3211,42 @@
         }
       }
     },
+    "Foto hinzufügen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add photo"
+          }
+        }
+      }
+    },
+    "Foto oder Screenshot auswählen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose photo or screenshot"
+          }
+        }
+      }
+    },
     "Foto wählen": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Choose photo"
+          }
+        }
+      }
+    },
+    "Foto ändern": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Change photo"
           }
         }
       }
@@ -3987,6 +4047,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Today’s quests"
+          }
+        }
+      }
+    },
+    "Hinweis (optional)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Note (optional)"
           }
         }
       }
@@ -7657,6 +7727,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Send text to Claude?"
+          }
+        }
+      }
+    },
+    "Text oder Foto": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Text or photo"
+          }
+        }
+      }
+    },
+    "Text oder Foto einfügen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add text or photo"
           }
         }
       }

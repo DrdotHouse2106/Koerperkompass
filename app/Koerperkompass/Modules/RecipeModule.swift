@@ -1,3 +1,4 @@
+import PhotosUI
 import SwiftData
 import SwiftUI
 
@@ -105,7 +106,7 @@ private struct RecipeList: View {
                 if state.reelkochAvailable {
                     Button("Aus Reelkoch übernehmen", systemImage: "square.and.arrow.down") { fromReelkoch = true }
                 }
-                if state.aiAvailable { Button("Rezepttext einfügen", systemImage: "doc.text") { addText = true } }
+                if state.aiAvailable { Button("Text oder Foto einfügen", systemImage: "doc.text.image") { addText = true } }
             } label: { Image(systemName: "plus") }
             .disabled(state.demo)
         }
@@ -247,17 +248,39 @@ private struct RecipeTextSheet: View {
     @State private var busy = false
     @State private var error: String?
     @State private var askConsent = false
+    @State private var photo: UIImage?  // Kochbuchseite, Rezeptkarte, Screenshot
+    @State private var pick: PhotosPickerItem?
+    @State private var camera = false
 
     var body: some View {
         NavigationStack {
             Form {
                 Section {
-                    TextEditor(text: $text).frame(minHeight: 200)
+                    if let photo {
+                        HStack {
+                            Image(uiImage: photo).resizable().scaledToFit().frame(maxHeight: 160)
+                            Spacer()
+                            Button { self.photo = nil } label: { Image(systemName: "xmark.circle.fill").foregroundStyle(.secondary) }.buttonStyle(.plain)
+                        }
+                    }
+                    PhotosPicker("Foto oder Screenshot auswählen", selection: $pick, matching: .images)
+                    if UIImagePickerController.isSourceTypeAvailable(.camera) {
+                        Button("Foto aufnehmen", systemImage: "camera") { camera = true }
+                    }
+                } header: { Text("Foto (z. B. Kochbuchseite)") }
+                Section {
+                    TextEditor(text: $text).frame(minHeight: photo == nil ? 200 : 80)
                     Button("Aus Zwischenablage einfügen", systemImage: "doc.on.clipboard") { text = UIPasteboard.general.string ?? text }
                     if let error { Text(error).foregroundStyle(.red) }
-                } footer: { Text("Claude macht daraus ein Rezept mit Zutaten, Schritten und geschätzten Nährwerten pro Portion.") }
+                } header: { Text(photo == nil ? "Rezepttext" : "Hinweis (optional)") } footer: {
+                    Text("Claude macht daraus ein Rezept mit Zutaten, Schritten und geschätzten Nährwerten pro Portion.")
+                }
             }
-            .navigationTitle("Rezepttext")
+            .onChange(of: pick) {
+                Task { if let d = try? await pick?.loadTransferable(type: Data.self) { photo = UIImage(data: d) } }
+            }
+            .sheet(isPresented: $camera) { CameraPicker(image: $photo).ignoresSafeArea() }
+            .navigationTitle("Text oder Foto")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) { Button("Abbrechen") { dismiss() } }
@@ -265,14 +288,14 @@ private struct RecipeTextSheet: View {
                     Button(busy ? LocalizedStringKey("Wird erstellt …") : "Erstellen") {
                         if state.aiConsent { send() } else { askConsent = true }
                     }
-                    .disabled(busy || text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                    .disabled(busy || (text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && photo == nil))
                 }
             }
             .alert("Text an Claude senden?", isPresented: $askConsent) {
                 Button("Zustimmen") { state.aiConsent = true; send() }
                 Button("Abbrechen", role: .cancel) {}
             } message: {
-                Text("Der Rezepttext wird über deinen Server an die Claude API (Anthropic) gesendet.")
+                Text("Der Rezepttext bzw. das Foto wird über deinen Server an die Claude API (Anthropic) gesendet.")
             }
         }
     }
@@ -283,7 +306,10 @@ private struct RecipeTextSheet: View {
         Task {
             defer { busy = false }
             do {
-                let r = try await state.api.object("POST", "/api/ai/recipe", json: ["text": text, "lang": Locale.current.language.languageCode?.identifier ?? "de"])
+                let r = try await state.api.object("POST", "/api/ai/recipe", json: [
+                    "text": text, "lang": Locale.current.language.languageCode?.identifier ?? "de",
+                    "image": photo?.jpeg(maxSide: 1600, quality: 0.75)?.base64EncodedString() ?? "",
+                ])
                 if let e = r["error"] as? String { error = e; return }
                 context.insert(Entry(module: "recipes", values: r))
                 state.changed(context)
@@ -297,14 +323,31 @@ private struct RecipeTextSheet: View {
 private struct RecipeView: View {
     let entry: Entry
     @State private var eat = false
+    @State private var pick: PhotosPickerItem?
+    @State private var camera = false
+    @State private var shot: UIImage?
+    @Environment(AppState.self) private var state
+    @Environment(\.modelContext) private var context
 
     var body: some View {
         List {
             Section {
-                if let img = entry.text("image"), let u = URL(string: img) {
+                // Eigenes Foto (auf dem iPhone verkleinert gespeichert) vor dem Bild der Rezeptseite
+                if let b = entry.text("photo"), let d = Data(base64Encoded: b), let img = UIImage(data: d) {
+                    Image(uiImage: img).resizable().scaledToFill().frame(maxHeight: 220).clipped().listRowInsets(EdgeInsets())
+                } else if let img = entry.text("image"), let u = URL(string: img) {
                     AsyncImage(url: u) { $0.resizable().scaledToFill() } placeholder: { Color.clear }
                         .frame(maxHeight: 220).clipped().listRowInsets(EdgeInsets())
                 }
+                HStack {
+                    PhotosPicker(selection: $pick, matching: .images) { Label(entry.text("photo") == nil ? "Foto hinzufügen" : "Foto ändern", systemImage: "photo") }
+                    if UIImagePickerController.isSourceTypeAvailable(.camera) {
+                        Spacer()
+                        Button("Aufnehmen", systemImage: "camera") { camera = true }
+                    }
+                }
+                .font(.caption)
+                .buttonStyle(.borderless)
                 Text(entry.text("title") ?? "").font(.title2.bold())
                 let info = [entry.text("servings").flatMap { $0.isEmpty ? nil : String(localized: "\($0) Portionen") },
                             entry.text("time").flatMap { $0.isEmpty ? nil : $0 }].compactMap { $0 }
@@ -338,6 +381,19 @@ private struct RecipeView: View {
         .navigationTitle(Text(entry.text("title") ?? ""))
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $eat) { EatSheet(entry: entry) }
+        .onChange(of: pick) { Task { if let d = try? await pick?.loadTransferable(type: Data.self) { setPhoto(UIImage(data: d)) } } }
+        .onChange(of: shot) { setPhoto(shot) }
+        .sheet(isPresented: $camera) { CameraPicker(image: $shot).ignoresSafeArea() }
+    }
+
+    /// Foto verkleinert im Eintrag speichern (geht mit Abgleich und Verschlüsselung mit)
+    private func setPhoto(_ img: UIImage?) {
+        guard let jpg = img?.jpeg(maxSide: 900, quality: 0.6) else { return }
+        var v = entry.values
+        v["photo"] = jpg.base64EncodedString()
+        entry.values = v
+        entry.touch()
+        state.changed(context)
     }
 }
 

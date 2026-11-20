@@ -175,15 +175,15 @@ Sind keine Portionen angegeben, nimm eine übliche Anzahl an. Antworte ausschlie
 
 // POST /api/ai/recipe {text, lang} → Rezept aus eingefügtem Text (z. B. Reel-Beschreibung), mit Nährwerten pro Portion
 func aiRecipe(w http.ResponseWriter, r *http.Request) {
-	var req struct{ Text, Lang string }
+	var req struct{ Text, Lang, Image string } // Image: optional JPEG (Base64), z. B. Kochbuchseite oder Screenshot
 	if !requireAI(w) || !readJSON(w, r, &req) {
 		return
 	}
-	if strings.TrimSpace(req.Text) == "" || len(req.Text) > 20000 {
-		http.Error(w, "Text fehlt oder ist zu lang", http.StatusBadRequest)
+	if (strings.TrimSpace(req.Text) == "" && req.Image == "") || len(req.Text) > 20000 || len(req.Image) > 6<<20 {
+		http.Error(w, "Text bzw. Foto fehlt oder ist zu groß", http.StatusBadRequest)
 		return
 	}
-	out, err := recipeFromText(r.Context(), req.Text, req.Lang)
+	out, err := recipeFromText(r.Context(), req.Text, req.Lang, req.Image)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadGateway)
 		return
@@ -192,15 +192,26 @@ func aiRecipe(w http.ResponseWriter, r *http.Request) {
 }
 
 // recipeFromText lässt Claude (kleines Modell) aus beliebigem Text ein Rezept mit Nährwerten machen.
-func recipeFromText(ctx context.Context, text, lang string) (string, error) {
+func recipeFromText(ctx context.Context, text, lang string, image ...string) (string, error) {
 	system := `Mach aus dem Text ein Rezept. Erfinde nichts: fehlende Mengen bleiben leer oder so, wie genannt („etwas“, „1 Schuss“).
 Schätze zusätzlich realistische Nährwerte pro Portion (deutsche Lebensmittel; ohne Portionsangabe eine übliche Anzahl annehmen).
 Antworte ausschließlich mit JSON:
 {"title": "…", "servings": "…", "time": "… oder leer", "ingredients": [{"amount": "…", "name": "…"}], "steps": ["…"],
  "notes": "kurze Tipps oder leer", "kcal": Zahl, "protein": g, "carbs": g, "fat": g}
 Sprache: ` + langName(lang) + `. Ist kein Rezept erkennbar, gib {"error": "kurze Begründung"} zurück.`
+	blocks := []anthropic.BetaContentBlockParamUnion{}
+	if len(image) > 0 && image[0] != "" {
+		// Foto einer Kochbuchseite, Rezeptkarte oder eines Screenshots: Text ablesen
+		blocks = append(blocks, anthropic.NewBetaImageBlock(anthropic.BetaBase64ImageSourceParam{Data: image[0], MediaType: anthropic.BetaBase64ImageSourceMediaTypeImageJPEG}))
+		if strings.TrimSpace(text) != "" {
+			text = "Lies das Rezept vom Foto ab.\nHinweis: " + text
+		} else {
+			text = "Lies das Rezept vom Foto ab."
+		}
+	}
+	blocks = append(blocks, anthropic.NewBetaTextBlock(text))
 	return askModel(ctx, env("KK_MODEL_SMALL", "claude-haiku-5-5"), system, anthropic.BetaOutputConfigEffortLow,
-		[]anthropic.BetaMessageParam{anthropic.NewBetaUserMessage(anthropic.NewBetaTextBlock(text))})
+		[]anthropic.BetaMessageParam{anthropic.NewBetaUserMessage(blocks...)})
 }
 
 func deref(s *string) string {
