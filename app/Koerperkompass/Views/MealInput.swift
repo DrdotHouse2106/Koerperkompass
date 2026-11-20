@@ -162,13 +162,19 @@ struct MealInputSection: View {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
                         ForEach(favorites) { e in
-                            Button {
-                                var v = e.values
-                                v["meal"] = Meal.now.rawValue
-                                v.removeValue(forKey: "photo")
-                                context.insert(Entry(module: "nutrition", date: day, values: v))
-                                state.changed(context)
-                                UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                            // Mahlzeit wählen – die nach Uhrzeit passende steht oben
+                            Menu {
+                                ForEach([Meal.now] + Meal.allCases.filter { $0 != Meal.now }) { meal in
+                                    Button(meal == Meal.now ? String(localized: "\(String(localized: meal.title)) (jetzt)") : String(localized: meal.title)) {
+                                        var v = e.values
+                                        v["meal"] = meal.rawValue
+                                        v["time"] = day == Day.today && meal == Meal.now ? Day.now : meal.defaultTime
+                                        v.removeValue(forKey: "photo")
+                                        context.insert(Entry(module: "nutrition", date: day, values: v))
+                                        state.changed(context)
+                                        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                                    }
+                                }
                             } label: {
                                 Text("+ \(e.text("name") ?? "")").font(.caption).lineLimit(1)
                                     .padding(.horizontal, 10).padding(.vertical, 6)

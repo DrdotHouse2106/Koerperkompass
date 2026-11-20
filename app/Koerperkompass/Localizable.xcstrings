@@ -21,6 +21,16 @@
         }
       }
     },
+    "%@ (jetzt)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ (now)"
+          }
+        }
+      }
+    },
     "%@ / %@ kcal": {
       "localizations": {
         "en": {
@@ -8107,6 +8117,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Missed sessions: %lld (−%lld XP)"
+          }
+        }
+      }
+    },
+    "Verschieben nach …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Move to …"
           }
         }
       }

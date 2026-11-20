@@ -74,8 +74,10 @@ private struct NutritionTile: View {
 private struct NutritionDetail: View {
     let entries: [Entry]
     @Environment(AppState.self) private var state
+    @Environment(\.modelContext) private var context
     @State private var date = Date()
     @State private var adding: Meal?
+    @State private var moving: Entry?
     private var day: String { Day.string(date) }
 
     var body: some View {
@@ -114,14 +116,29 @@ private struct NutritionDetail: View {
             }
             ForEach(Meal.allCases) { meal in
                 Section {
-                    EntryRows(entries: entries.filter { $0.module == "nutrition" && $0.date == day && $0.text("meal") == meal.rawValue }) { e in
-                        "\(e.text("name") ?? "–") · \((e.num("kcal") ?? 0).whole) kcal"
-                    }
+                    EntryRows(entries: entries.filter { $0.module == "nutrition" && $0.date == day && $0.text("meal") == meal.rawValue },
+                              row: { e in "\(e.text("name") ?? "–") · \((e.num("kcal") ?? 0).whole) kcal" },
+                              onTap: { moving = $0 })
                     Button("Hinzufügen", systemImage: "plus") { adding = meal }
                 } header: { Text(meal.title) }
             }
         }
         .sheet(item: $adding) { meal in FoodEditor(meal: meal, day: day) }
+        // Eintrag antippen → in eine andere Mahlzeit verschieben
+        .confirmationDialog("Verschieben nach …", isPresented: Binding(get: { moving != nil }, set: { if !$0 { moving = nil } }), titleVisibility: .visible) {
+            ForEach(Meal.allCases) { meal in
+                Button(String(localized: meal.title)) {
+                    if let e = moving {
+                        var v = e.values
+                        v["meal"] = meal.rawValue
+                        e.values = v
+                        e.touch()
+                        state.changed(context)
+                    }
+                    moving = nil
+                }
+            }
+        } message: { Text(moving?.text("name") ?? "") }
     }
 }
 
