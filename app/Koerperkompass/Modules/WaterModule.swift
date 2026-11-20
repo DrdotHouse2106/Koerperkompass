@@ -156,10 +156,12 @@ private struct WaterDetail: View {
             Section {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 96), spacing: 10)], spacing: 10) {
                     ForEach(Drink.all) { d in
-                        Button {
-                            context.insert(d.entry())
-                            state.changed(context)
-                            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                        // Tippen = übliche Menge; gedrückt halten = Menü direkt an der Kachel (nicht am ganzen Block)
+                        Menu {
+                            ForEach(Drink.amounts, id: \.self) { ml in
+                                Button(ml >= 1000 ? "\((ml / 1000).short) l" : "\((ml / 1000).formatted(.number.precision(.fractionLength(2)))) l") { add(d, ml) }
+                            }
+                            Button("Andere Menge …", systemImage: "pencil") { customML = ""; custom = d }
                         } label: {
                             VStack(spacing: 4) {
                                 Text(d.emoji).font(.largeTitle)
@@ -169,14 +171,11 @@ private struct WaterDetail: View {
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 10)
                             .background((d.hydrates ? Color.cyan : Color.orange).opacity(0.15), in: RoundedRectangle(cornerRadius: 14))
+                        } primaryAction: {
+                            add(d, d.ml)
                         }
+                        .menuStyle(.button)
                         .buttonStyle(.plain)
-                        .contextMenu {
-                            ForEach(Drink.amounts, id: \.self) { ml in
-                                Button(ml >= 1000 ? "\((ml / 1000).short) l" : "\((ml / 1000).formatted(.number.precision(.fractionLength(2)))) l") { add(d, ml) }
-                            }
-                            Button("Andere Menge …", systemImage: "pencil") { customML = ""; custom = d }
-                        }
                     }
                 }
                 .padding(.vertical, 4)
