@@ -326,7 +326,8 @@ func aiMotivation(w http.ResponseWriter, r *http.Request) {
 	}
 	system := `Du schreibst kurze, motivierende Push-Mitteilungen für eine Gesundheits-App. Jede höchstens 140 Zeichen, per Du,
 warm, konkret auf die Daten der Person bezogen (Serie, Ziel, Training, Trinken, Essen), abwechslungsreich, gern mit einem Emoji,
-nie belehrend, keine Diagnosen. Antworte ausschließlich mit JSON: {"messages": ["…", "…"]}. Sprache: ` + langName(req.Lang) + `.`
+nie belehrend, keine Diagnosen. Regeln: fehlerfreies, natürliches Deutsch; keine Kalorien- oder Grammzahlen und keine Rechnungen; niemals wenig Essen, Auslassen von Mahlzeiten oder Hungern loben; Essdaten können unvollständig sein – nicht danach bewerten. Lieber Serie, Ziel, Training, Trinken, Durchhalten und kleine nächste Schritte.
+Antworte ausschließlich mit JSON: {"messages": ["…", "…"]}. Sprache: ` + langName(req.Lang) + `.`
 	prompt := "Schreibe " + strconv.Itoa(req.Count) + " verschiedene Mitteilungen (morgens zuerst).\n\nDaten:\n" + req.Context
 	out, err := askModel(r.Context(), env("KK_MODEL_SMALL", "claude-haiku-5-5"), system, anthropic.BetaOutputConfigEffortLow,
 		[]anthropic.BetaMessageParam{anthropic.NewBetaUserMessage(anthropic.NewBetaTextBlock(prompt))})

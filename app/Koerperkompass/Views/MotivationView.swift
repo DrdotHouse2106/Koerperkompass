@@ -29,6 +29,7 @@ struct MotivationView: View {
         }
         .scrollTargetBehavior(.paging)
         .ignoresSafeArea()
+        .toolbar(.hidden, for: .tabBar)  // sonst liegen die Knöpfe unten hinter der Tab-Leiste
         .navigationTitle("Motivation")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -54,7 +55,7 @@ struct MotivationView: View {
                 }
             }
             .foregroundStyle(.white)
-            .padding(.bottom, 70)
+            .padding(.bottom, 50)
         }
     }
 

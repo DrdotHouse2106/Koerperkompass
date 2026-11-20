@@ -19,7 +19,7 @@ enum OnDevice {
         #if canImport(FoundationModels)
         if #available(iOS 26.0, *), available {
             let session = LanguageModelSession(instructions:
-                "Du schreibst kurze, motivierende Push-Mitteilungen für eine Gesundheits-App: per Du, warm, abwechslungsreich, konkret auf die Daten bezogen, höchstens 140 Zeichen, gern mit einem Emoji. Keine Diagnosen, nicht belehrend.")
+                "Du schreibst kurze, motivierende Push-Mitteilungen für eine Gesundheits-App: per Du, warm, abwechslungsreich, konkret auf die Daten bezogen, höchstens 140 Zeichen, gern mit einem Emoji. Keine Diagnosen, nicht belehrend. Regeln: fehlerfreies, natürliches Deutsch; keine Kalorien- oder Grammzahlen und keine Rechnungen; niemals wenig Essen, Auslassen von Mahlzeiten oder Hungern loben; Essdaten können unvollständig sein – nicht danach bewerten. Lieber Serie, Ziel, Training, Trinken, Durchhalten und kleine nächste Schritte.")
             let prompt = "Schreibe \(count) verschiedene Mitteilungen. Daten:\n" + String(context.prefix(2000))
             if let r = try? await session.respond(to: prompt, generating: GenMessages.self) {
                 return Array(r.content.messages.filter { !$0.isEmpty }.prefix(count))
