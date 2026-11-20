@@ -1,6 +1,8 @@
+import CoreTransferable
 import PhotosUI
 import SwiftData
 import SwiftUI
+import UniformTypeIdentifiers
 
 /// Rezepte: eigene Rezeptsammlung – aus Reel-Links (über Reelkoch auf dem eigenen Server) oder eingefügtem Text.
 /// Ein Eintrag je Rezept; „Gegessen“ trägt Portionen mit Nährwerten in die Ernährung ein. Der Coach kennt die Rezepte.
@@ -19,6 +21,21 @@ extension Entry {
         (values["ingredients"] as? [[String: Any]] ?? []).map { ($0["amount"] as? String ?? "", $0["name"] as? String ?? "") }
     }
     var steps: [String] { values["steps"] as? [String] ?? [] }
+    /// Rezept als lesbarer Text (zum Teilen und Exportieren)
+    var recipeText: String {
+        var t = [text("title") ?? ""]
+        let info = [text("servings").flatMap { $0.isEmpty ? nil : String(localized: "\($0) Portionen") }, text("time").flatMap { $0.isEmpty ? nil : $0 }].compactMap { $0 }
+        if !info.isEmpty { t.append(info.joined(separator: " · ")) }
+        if let k = num("kcal") {
+            t.append(String(localized: "Pro Portion: \(k.whole) kcal · Eiweiß \((num("protein") ?? 0).whole) g · KH \((num("carbs") ?? 0).whole) g · Fett \((num("fat") ?? 0).whole) g"))
+        }
+        t.append("\n" + String(localized: "Zutaten") + "\n" + ingredients.map { "• " + [$0.amount, $0.name].filter { !$0.isEmpty }.joined(separator: " ") }.joined(separator: "\n"))
+        t.append("\n" + String(localized: "Zubereitung") + "\n" + steps.enumerated().map { "\($0.offset + 1). \($0.element)" }.joined(separator: "\n"))
+        if let n = text("notes"), !n.isEmpty { t.append("\n" + String(localized: "Hinweise") + "\n" + n) }
+        if let s = text("source"), !s.isEmpty { t.append("\n" + String(localized: "Quelle") + ": " + s) }
+        return t.joined(separator: "\n")
+    }
+
     /// Kurzform für den Coach: „Hähnchen-Curry (520 kcal, 45 g Eiweiß pro Portion)“
     var recipeLine: String {
         let n = [num("kcal").map { "\($0.whole) kcal" }, num("protein").map { "\($0.whole) g Eiweiß" }].compactMap { $0 }
@@ -109,6 +126,12 @@ private struct RecipeList: View {
                 if state.aiAvailable { Button("Text oder Foto einfügen", systemImage: "doc.text.image") { addText = true } }
             } label: { Image(systemName: "plus") }
             .disabled(state.demo)
+            if !entries.isEmpty {
+                ShareLink(item: entries.sorted { ($0.text("title") ?? "") < ($1.text("title") ?? "") }.map(\.recipeText)
+                    .joined(separator: "\n\n――――――――――\n\n"), subject: Text("Meine Rezepte")) {
+                    Image(systemName: "square.and.arrow.up")
+                }
+            }
         }
         .sheet(isPresented: $addLink) { ReelLinkSheet { id, url in jobs[id] = url; RecipeJobs.all = jobs } }
         .sheet(isPresented: $addText) { RecipeTextSheet() }
@@ -376,6 +399,14 @@ private struct RecipeView: View {
             if let s = entry.text("source"), let url = URL(string: s) {
                 Section { Link("Original ansehen", destination: url) }
             }
+            Section {
+                ShareLink(item: RecipeExport(entry: entry), preview: SharePreview(Text(entry.text("title") ?? ""))) {
+                    Label("Als PDF exportieren", systemImage: "doc.richtext")
+                }
+                ShareLink(item: entry.recipeText, subject: Text(entry.text("title") ?? "")) {
+                    Label("Als Text teilen", systemImage: "text.alignleft")
+                }
+            }
         }
         .themed()
         .navigationTitle(Text(entry.text("title") ?? ""))
@@ -438,5 +469,49 @@ private struct EatSheet: View {
         }
         state.changed(context)
         dismiss()
+    }
+}
+
+/// Rezept als PDF – erst beim Teilen erzeugt (A4-Breite, Länge nach Inhalt)
+struct RecipeExport: Transferable {
+    let title: String
+    let text: String
+    let photo: Data?
+
+    init(entry: Entry) {
+        title = entry.text("title") ?? "Rezept"
+        text = entry.recipeText
+        photo = entry.text("photo").flatMap { Data(base64Encoded: $0) }
+    }
+
+    static var transferRepresentation: some TransferRepresentation {
+        DataRepresentation(exportedContentType: .pdf) { r in await MainActor.run { r.pdf() } }
+            .suggestedFileName { $0.title + ".pdf" }
+    }
+
+    @MainActor func pdf() -> Data {
+        let page = VStack(alignment: .leading, spacing: 14) {
+            if let photo, let img = UIImage(data: photo) {
+                Image(uiImage: img).resizable().scaledToFill().frame(height: 220).frame(maxWidth: .infinity).clipped()
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+            }
+            Text(text.components(separatedBy: "\n").first ?? "").font(.system(size: 24, weight: .bold))
+            Text(text.components(separatedBy: "\n").dropFirst().joined(separator: "\n")).font(.system(size: 12))
+            Text("Körperkompass").font(.system(size: 9)).foregroundStyle(.gray)
+        }
+        .foregroundStyle(.black)
+        .padding(40)
+        .frame(width: 595, alignment: .leading)
+        .background(Color.white)
+        let data = NSMutableData()
+        ImageRenderer(content: page).render { size, draw in
+            var box = CGRect(origin: .zero, size: size)
+            guard let consumer = CGDataConsumer(data: data), let ctx = CGContext(consumer: consumer, mediaBox: &box, nil) else { return }
+            ctx.beginPDFPage(nil)
+            draw(ctx)
+            ctx.endPDFPage()
+            ctx.closePDF()
+        }
+        return data as Data
     }
 }

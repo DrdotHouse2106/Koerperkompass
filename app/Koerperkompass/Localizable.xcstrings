@@ -901,6 +901,26 @@
         }
       }
     },
+    "Als PDF exportieren": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export as PDF"
+          }
+        }
+      }
+    },
+    "Als Text teilen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Share as text"
+          }
+        }
+      }
+    },
     "Alter": {
       "localizations": {
         "en": {
@@ -5551,6 +5571,16 @@
         }
       }
     },
+    "Meine Rezepte": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "My recipes"
+          }
+        }
+      }
+    },
     "Meine Trainingsgeräte": {
       "localizations": {
         "en": {
@@ -6677,6 +6707,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Scan QR code"
+          }
+        }
+      }
+    },
+    "Quelle": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Source"
           }
         }
       }
