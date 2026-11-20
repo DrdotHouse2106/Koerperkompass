@@ -5,6 +5,7 @@ import Foundation
 struct DarkStory: Codable, Hashable {
     var lang: String      // "de" oder "en"
     var lines: [String]
+    var inner: Bool? = nil  // Form „innere Stimme“: drängende Fragen, schneller vorgelesen
 
     /// Sprache für den Motivationsbereich: "de", "en" oder "mix"
     static var language: String { UserDefaults.standard.string(forKey: "darkLang") ?? (Locale.current.language.languageCode?.identifier == "en" ? "en" : "de") }
@@ -33,6 +34,17 @@ struct DarkStory: Codable, Hashable {
                                   "Und mach heute eine NEUE."]),
         .init(lang: "de", lines: ["Es ist Nacht. Die Straßen sind leer.", "Nur dein Atem und deine Schritte.", "Kein Publikum.",
                                   "Hier wird nicht gewonnen, um gesehen zu werden.", "Hier wird gewonnen, weil du es WILLST."]),
+        // Innere Stimme – Deutsch
+        .init(lang: "de", lines: ["Sitzt du schon wieder?", "Worauf WARTEST du eigentlich?", "Auf den perfekten Tag?",
+                                  "Der kommt nicht.", "Du gehst ihm ENTGEGEN."], inner: true),
+        .init(lang: "de", lines: ["Schon wieder morgen?", "Wie oft willst du das noch SAGEN?", "Wie viele Morgen hast du schon VERSCHENKT?",
+                                  "Jetzt.", "Nicht morgen. JETZT."], inner: true),
+        .init(lang: "de", lines: ["Spürst du das?", "Diese Wut auf dich SELBST?", "Gut.", "Nimm sie mit.", "Jede Wiederholung gehört ihr."], inner: true),
+        .init(lang: "de", lines: ["Wer hat dir gesagt, dass das deine GRENZE ist?", "Du selbst?", "Seit wann hörst du auf den SCHWACHEN Teil?",
+                                  "Noch eine.", "Und dann NOCH eine."], inner: true),
+        .init(lang: "de", lines: ["Müde?", "Und WEITER?", "Glaubst du, der alte du hätte jetzt aufgehört?", "Genau.", "Darum hörst du NICHT auf."], inner: true),
+        .init(lang: "de", lines: ["Sie haben dich abgeschrieben, oder?", "Zu WEICH. Zu langsam. Zu spät.", "Lass sie.",
+                                  "Lass sie zusehen, wie du ZURÜCKKOMMST."], inner: true),
         // English
         .init(lang: "en", lines: ["Something broke that night.", "Not his body. His excuses.", "He stood up in the dark.",
                                   "Laced his shoes. Stepped into the RAIN.", "Nobody saw it.", "That's why it MATTERED."]),
@@ -53,5 +65,16 @@ struct DarkStory: Codable, Hashable {
                                   "You have work to do.", "SILENT. FOCUSED. RELENTLESS."]),
         .init(lang: "en", lines: ["Every excuse is a chain.", "Too tired. Too late. Too hard.", "Break one today.", "Then another.",
                                   "Until nothing holds you BACK."]),
+        // Inner voice – English
+        .init(lang: "en", lines: ["Sitting down again?", "What are you WAITING for?", "The perfect day?",
+                                  "It's not coming.", "You go and TAKE it."], inner: true),
+        .init(lang: "en", lines: ["Tomorrow again?", "How many times will you SAY that?", "How many tomorrows have you WASTED?",
+                                  "Now.", "Not tomorrow. NOW."], inner: true),
+        .init(lang: "en", lines: ["Do you feel that?", "That anger at YOURSELF?", "Good.", "Keep it.", "Every rep belongs to it."], inner: true),
+        .init(lang: "en", lines: ["Who told you this is your LIMIT?", "You did?", "Since when do you listen to the WEAK part?",
+                                  "One more.", "Then ONE more."], inner: true),
+        .init(lang: "en", lines: ["Tired?", "So WHAT?", "You think the old you would stop here?", "Exactly.", "That's why you DON'T."], inner: true),
+        .init(lang: "en", lines: ["They wrote you off, didn't they?", "Too SOFT. Too slow. Too late.", "Let them.",
+                                  "Let them watch you COME BACK."], inner: true),
     ]
 }

@@ -337,7 +337,7 @@ func aiMotivation(w http.ResponseWriter, r *http.Request) {
 		system := darkStyle + `
 
 Schreibe eigene Geschichten in diesem Stil. Antworte ausschließlich mit JSON:
-{"stories": [{"lang": "de|en", "lines": ["Zeile", "…"]}]}
+{"stories": [{"lang": "de|en", "inner": true|false, "lines": ["Zeile", "…"]}]}  (inner = Form „innere Stimme“; Formen abwechseln)
 Sprache: ` + map[string]string{"de": "Deutsch", "en": "Englisch", "mix": "abwechselnd Deutsch und Englisch"}[req.Lang] + `.`
 		prompt := "Schreibe " + strconv.Itoa(req.Count) + " verschiedene Geschichten. Greife, wo es passt, den Weg der Person auf:\n" + req.Context
 		out, err := askModel(r.Context(), env("KK_MODEL_SMALL", "claude-haiku-5-5"), system, anthropic.BetaOutputConfigEffortLow,

@@ -250,9 +250,9 @@ struct DarkPage: View {
                     let l = w.filter(\.isLetter)
                     return l.count >= 2 && l == l.uppercased() ? w.lowercased().capitalized : String(w)
                 }.joined(separator: " ")
-                speaker.speak(spoken, rate: 0.42, pitch: 0.8)
+                speaker.speak(spoken, rate: story.inner == true ? 0.5 : 0.42, pitch: 0.8)  // innere Stimme drängender
                 await speaker.waitUntilDone()
-                try? await Task.sleep(for: .milliseconds(350))
+                try? await Task.sleep(for: .milliseconds(story.inner == true ? 150 : 350))
                 if Task.isCancelled { return }
             }
             withAnimation { current = nil }

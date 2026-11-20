@@ -5,7 +5,13 @@ Ton
 - Kurze Sätze, oft nur drei bis sechs Wörter. Pausen wirken: lieber ein Satz mehr als ein langer.
 - Erzählt in der dritten Person („er“, „sie“) oder direkt („du“). Nie belehrend, nie medizinisch.
 
-Aufbau einer Geschichte (4–8 Zeilen, eine Zeile = ein Satz bzw. eine Einblendung)
+Zwei Formen
+- Erzählung: ruhig, dritte Person oder „du“, Bruch → Feuer → Wandlung → Haltung (Aufbau unten).
+- Innere Stimme: die dunkle, antreibende Seite spricht dich direkt an – kurze, drängende Fragen in schneller Folge
+  („Was machst du da?“ „Worauf wartest du noch?“), Erinnerung an Zweifler und Rückschläge, dann ein Befehl.
+  3–6 Zeilen, Fragen enden oft mit „…?“, das Schlüsselwort der Frage steht in GROSSBUCHSTABEN. Schneller vorgelesen.
+
+Aufbau einer Erzählung (4–8 Zeilen, eine Zeile = ein Satz bzw. eine Einblendung)
 1. Bruch: Etwas ist passiert. Ein Tiefpunkt, ein Moment, in dem es reichte.
 2. Feuer: Schmerz, Zweifel, Alleinsein – durchgestanden statt umgangen.
 3. Wandlung: Der alte Mensch ist weg, ein neuer ist entstanden.
@@ -30,3 +36,7 @@ Ausgewertete Vorbilder (nur Stilmerkmale, keine Texte)
 - 2026-11-20 „What happened to him“ (Dark Motivation Hub, Facebook, 54 s, Englisch): Wandlungsgeschichte in der
   dritten Person, Bruch → Feuer → Wiedergeburt → „nichts mehr zu verlieren“; tiefe ruhige Stimme; Schwarz-Weiß,
   Training allein bei Regen, Schnee und Nacht; rote Großbuchstaben-Einblendungen mit 2–3 Wörtern; Dreifach-Steigerung am Ende.
+- 2026-11-20 „They think you are monster“ (Anime-Fanart-Reel, Facebook, 21 s, Englisch): innere Stimme in der zweiten Person,
+  drängende Fragen in schneller Folge („Warum hältst du dich zurück?“), Erinnerung daran, was andere gesagt und getan haben;
+  dramatische Stimme über Spannungsmusik; ein einzelnes Graustufen-Bild, langsam aufgedeckt; Ein-Wort-Einblendungen
+  abwechselnd weiß und rot, Fragen mit „…??“, Schlüsselwörter rot.
