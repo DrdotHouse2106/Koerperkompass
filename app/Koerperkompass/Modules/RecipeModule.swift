@@ -146,7 +146,15 @@ private struct RecipeList: View {
                 do {
                     let r = try await state.api.object("GET", "/api/recipes/reel/\(id)?nutrition=\(state.aiConsent ? 1 : 0)")
                     let status = r["status"] as? String ?? ""
-                    if var recipe = r["recipe"] as? [String: Any] {
+                    if let parts = r["recipes"] as? [[String: Any]], !parts.isEmpty {
+                        // Mehrere Varianten in einem Reel → eigenständige Rezepte
+                        for (n, var p) in parts.enumerated() {
+                            if p["source"] == nil { p["source"] = jobs[id] }
+                            context.upsert(id: "reel-\(id)-\(n + 1)", module: "recipes", date: Day.today, values: p, dirty: true)
+                        }
+                        state.changed(context)
+                        jobs[id] = nil
+                    } else if var recipe = r["recipe"] as? [String: Any] {
                         if recipe["source"] == nil { recipe["source"] = jobs[id] }
                         context.upsert(id: "reel-\(id)", module: "recipes", date: Day.today, values: recipe, dirty: true)
                         state.changed(context)

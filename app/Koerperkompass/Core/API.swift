@@ -26,7 +26,7 @@ struct API {
     /// Wie call, liefert zusätzlich die Antwort (z. B. für Kopfzeilen)
     func response(_ method: String = "GET", _ path: String, json: Any? = nil) async throws -> (Data, HTTPURLResponse?) {
         guard let url = URL(string: server + path) else { throw Failure(message: String(localized: "Ungültige Server-Adresse")) }
-        var req = URLRequest(url: url, timeoutInterval: path.hasPrefix("/api/ai") ? 300 : path == "/api/tts" ? 60 : 15)
+        var req = URLRequest(url: url, timeoutInterval: path.hasPrefix("/api/ai") || path.hasPrefix("/api/recipes") ? 300 : path == "/api/tts" ? 60 : 15)
         req.httpMethod = method
         req.setValue("application/json", forHTTPHeaderField: "Content-Type")
         if let token { req.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization") }

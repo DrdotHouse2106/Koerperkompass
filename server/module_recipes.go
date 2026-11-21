@@ -117,7 +117,10 @@ func recipeReelStatus(w http.ResponseWriter, r *http.Request) {
 			"ingredients": ingredients, "steps": x.Schritte, "notes": deref(x.Hinweise),
 			"source": firstNonEmpty(x.Quelle, d.URL), "reelkoch": r.PathValue("id")}
 		if r.URL.Query().Get("nutrition") == "1" && aiEnabled() {
-			if n, err := recipeNutrition(r, recipe); err == nil {
+			// Mehrere Varianten in einem Reel („Variante 1 …“)? Dann als eigenständige Rezepte aufteilen
+			if parts := recipeVariants(r, recipe); len(parts) > 1 {
+				res["recipes"] = parts
+			} else if n, err := recipeNutrition(r, recipe); err == nil {
 				for k, v := range n {
 					recipe[k] = v
 				}
@@ -145,6 +148,44 @@ func recipeReelList(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	writeJSON(w, out)
+}
+
+// recipeVariants teilt ein Rezept mit mehreren Varianten (Schritte „Variante 1 …“, „Version 2 …“) in eigenständige
+// Rezepte mit eigenen Zutaten und Nährwerten pro Portion. Ohne Varianten oder bei Fehlern: nil.
+func recipeVariants(r *http.Request, recipe map[string]any) []map[string]any {
+	steps, _ := recipe["steps"].([]string)
+	n := 0
+	for _, s := range steps {
+		l := strings.ToLower(s)
+		if strings.HasPrefix(l, "variante") || strings.HasPrefix(l, "version") || strings.HasPrefix(l, "variant") {
+			n++
+		}
+	}
+	if n < 2 {
+		return nil
+	}
+	b, _ := json.Marshal(recipe)
+	system := `Das Rezept enthält mehrere Varianten. Teile es in eigenständige Rezepte – eins je Variante – mit den Zutaten,
+die diese Variante braucht (gemeinsame Grundzutaten gehören zu jeder Variante, die sie nutzt; Mengen sinnvoll aufteilen),
+den Schritten dieser Variante und realistischen Nährwerten pro Portion. Erfinde keine Zutaten. Antworte ausschließlich mit JSON:
+{"recipes": [{"title": "…", "servings": "…", "time": "", "ingredients": [{"amount": "…", "name": "…"}], "steps": ["…"],
+"notes": "", "kcal": Zahl, "protein": g, "carbs": g, "fat": g}]}`
+	out, err := askModel(r.Context(), env("KK_MODEL_SMALL", "claude-haiku-5-5"), system, anthropic.BetaOutputConfigEffortLow,
+		[]anthropic.BetaMessageParam{anthropic.NewBetaUserMessage(anthropic.NewBetaTextBlock(string(b)))})
+	if err != nil {
+		return nil
+	}
+	var res struct {
+		Recipes []map[string]any `json:"recipes"`
+	}
+	i, j := strings.Index(out, "{"), strings.LastIndex(out, "}")
+	if i < 0 || j < i || json.Unmarshal([]byte(out[i:j+1]), &res) != nil {
+		return nil
+	}
+	for _, x := range res.Recipes {
+		x["source"], x["reelkoch"] = recipe["source"], recipe["reelkoch"]
+	}
+	return res.Recipes
 }
 
 // recipeNutrition schätzt Nährwerte pro Portion (kleines Modell, Bruchteile eines Cents).
