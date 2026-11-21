@@ -200,7 +200,15 @@ kompass.example.de {
 1. *Hosts → Proxy Hosts → Add Proxy Host*
 2. Domain: `kompass.example.de`, Scheme `http`, Forward Hostname/IP: IP des Servers, Port `8080`
 3. Tab *SSL*: „Request a new SSL Certificate“, *Force SSL* und *HTTP/2* aktivieren
-4. Tab *Advanced* (für Fotos): `client_max_body_size 20m;`
+4. Tab *Advanced* (für Fotos und längere Claude-Antworten):
+   ```
+   client_max_body_size 20m;
+   proxy_read_timeout 300s;
+   proxy_send_timeout 300s;
+   ```
+
+> **Andere nginx-Proxys (z. B. Plesk):** dieselben drei Zeilen in die zusätzlichen nginx-Anweisungen. Ohne sie bricht nginx
+> Anfragen nach 60 s ab (Fehler 504) – etwa ausführliche Auswertungen, Trainingspläne oder Rezepte mit mehreren Varianten.
 
 Danach `KK_PUBLIC_URL=https://kompass.example.de` setzen, damit der QR-Code die richtige Adresse enthält.
 
