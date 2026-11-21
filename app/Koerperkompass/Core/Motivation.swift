@@ -239,7 +239,8 @@ enum Motivation {
                                           of: cal.date(byAdding: .day, value: day, to: Date())!), date > Date() else { continue }
                 let dayNumber = cal.dateComponents([.day], from: Day.date("2026-01-01"), to: date).day ?? 0
                 let slot = hours.firstIndex(of: hour) ?? 0
-                let fromCoach = !personal.isEmpty
+                // Persönliche Sprüche nur für heute – sie beziehen sich auf den Stand von heute und veralten über Nacht
+                let fromCoach = day == 0 && !personal.isEmpty
                 let text = fromCoach ? personal.removeFirst() : fill(pool[order[(dayNumber * hours.count + slot) % order.count]], profile: profile, streak: streak)
                 let content = UNMutableNotificationContent()
                 content.title = fromCoach ? String(localized: "Von deinem Coach 💬") : titles.randomElement()!

@@ -120,7 +120,9 @@ struct MotivationView: View {
         let pool = Motivation.pool
         let streak = QuestProgress(entries, state.profile).streak
         var add: [String] = []
-        if items.isEmpty { add += UserDefaults.standard.stringArray(forKey: "aiMotivation") ?? [] }  // persönliche von heute zuerst
+        if items.isEmpty && UserDefaults.standard.string(forKey: "aiMotivationDay") == Day.today {
+            add += UserDefaults.standard.stringArray(forKey: "aiMotivation") ?? []  // persönliche von heute zuerst (nie von gestern)
+        }
         for _ in 0..<10 {
             if order.isEmpty { order = Array(pool.indices).shuffled() }
             add.append(Motivation.fill(pool[order.removeFirst()], profile: state.profile, streak: streak))
