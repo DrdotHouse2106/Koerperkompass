@@ -1,3 +1,4 @@
+import AVFoundation
 import AppIntents
 import CoreTransferable
 import SwiftData
@@ -18,13 +19,23 @@ struct MotivationView: View {
     @State private var stories: [DarkStory] = []
     @State private var storyOrder: [Int] = []
     @State private var speaker = Speaker()
+    @State private var clips: [Clip] = []
+    @State private var addClip = false
 
     private var favs: [String] { (try? JSONDecoder().decode([String].self, from: favData)) ?? [] }
 
     var body: some View {
         ScrollView(.vertical) {
             LazyVStack(spacing: 0) {
-                if style == "dark" {
+                if style == "clips" {
+                    if clips.isEmpty {
+                        ClipEmpty(add: { addClip = true }).containerRelativeFrame([.horizontal, .vertical])
+                    }
+                    ForEach(clips) { clip in
+                        ClipPage(clip: clip, api: state.api) { deleteClip(clip) }
+                            .containerRelativeFrame([.horizontal, .vertical])
+                    }
+                } else if style == "dark" {
                     ForEach(Array(stories.enumerated()), id: \.offset) { i, story in
                         DarkPage(story: story, speaker: speaker, api: state.ttsAvailable && !state.demo ? state.api : nil)
                             .containerRelativeFrame([.horizontal, .vertical])
@@ -40,7 +51,9 @@ struct MotivationView: View {
             }
             .scrollTargetLayout()
         }
-        .onChange(of: style) { speaker.stop(); if style == "dark" && stories.isEmpty { moreStories() } }
+        .onChange(of: style) { speaker.stop(); if style == "dark" && stories.isEmpty { moreStories() }; if style == "clips" { Task { await loadClips() } } }
+        .task { if style == "clips" { await loadClips() } }
+        .sheet(isPresented: $addClip, onDismiss: { Task { await loadClips() } }) { ClipAddSheet() }
         .onChange(of: darkLang) { speaker.stop(); stories = []; storyOrder = []; moreStories() }
         .onDisappear { speaker.stop() }
         .scrollTargetBehavior(.paging)
@@ -53,7 +66,9 @@ struct MotivationView: View {
                 Picker("Stil", selection: $style) {
                     Text("Sanft").tag("soft")
                     Text("Dark").tag("dark")
+                    if state.clipsAvailable { Text("Meine Clips").tag("clips") }
                 }
+                if style == "clips" { Button("Clip aus Link hinzufügen", systemImage: "plus") { addClip = true } }
                 if style == "dark" {
                     Picker("Sprache", selection: $darkLang) {
                         Text("Deutsch").tag("de")
@@ -70,6 +85,19 @@ struct MotivationView: View {
             } label: { Image(systemName: "ellipsis.circle") }
         }
         .onAppear { if items.isEmpty { more() }; if style == "dark" && stories.isEmpty { moreStories() } }
+    }
+
+    private func loadClips() async {
+        guard let data = try? await state.api.call("GET", "/api/clips") else { return }
+        clips = (try? JSONDecoder().decode([Clip].self, from: data)) ?? []
+    }
+
+    private func deleteClip(_ c: Clip) {
+        Task {
+            _ = try? await state.api.call("DELETE", "/api/clips/\(c.id)")
+            try? FileManager.default.removeItem(at: Clip.cache(c.id))
+            await loadClips()
+        }
     }
 
     /// Nächste Dark-Geschichten: durchgemischt, erst wieder, wenn alle dran waren
@@ -279,5 +307,143 @@ struct DarkPage: View {
             a += w
         }
         return Text(a)
+    }
+}
+
+// MARK: Meine Clips – private Tonspuren aus Reels (nur im eigenen Konto, nie geteilt)
+
+struct Clip: Codable, Identifiable, Hashable {
+    let id: String
+    let url: String
+    let title: String
+    static func cache(_ id: String) -> URL { URL.cachesDirectory.appendingPathComponent("clips/\(id).m4a") }
+}
+
+/// Ein Clip: dunkle Seite, Titel, Abspielen mit pulsierenden Balken
+struct ClipPage: View {
+    let clip: Clip
+    let api: API
+    let delete: () -> Void
+    @State private var player: AVAudioPlayer?
+    @State private var playing = false
+    @State private var loading = false
+    @State private var error: String?
+    @State private var confirmDelete = false
+
+    var body: some View {
+        ZStack {
+            LinearGradient(colors: [.black, Color(white: 0.12), .black], startPoint: .top, endPoint: .bottom)
+            VStack(spacing: 28) {
+                TimelineView(.animation(minimumInterval: 0.12, paused: !playing)) { t in
+                    HStack(spacing: 5) {
+                        ForEach(0..<16, id: \.self) { i in
+                            let h = playing ? 12 + 50 * abs(sin(t.date.timeIntervalSinceReferenceDate * 3 + Double(i) * 0.7)) : 8
+                            Capsule().fill(i % 4 == 0 ? Color.red : .white.opacity(0.8)).frame(width: 6, height: h)
+                        }
+                    }
+                    .frame(height: 70)
+                }
+                Text(clip.title.isEmpty ? String(localized: "Clip") : clip.title)
+                    .font(.system(size: 26, weight: .heavy)).foregroundStyle(.white).multilineTextAlignment(.center).padding(.horizontal, 28)
+                Button { toggle() } label: {
+                    Image(systemName: loading ? "hourglass.circle.fill" : playing ? "pause.circle.fill" : "play.circle.fill")
+                        .font(.system(size: 64)).foregroundStyle(.white.opacity(0.9))
+                }
+                .disabled(loading)
+                if let error { Text(error).font(.caption).foregroundStyle(.red) }
+            }
+            VStack {
+                Spacer()
+                HStack(spacing: 28) {
+                    if let u = URL(string: clip.url) { Link(destination: u) { Image(systemName: "link").font(.title3) } }
+                    Button { confirmDelete = true } label: { Image(systemName: "trash").font(.title3) }
+                }
+                .foregroundStyle(.white.opacity(0.7))
+                .padding(.bottom, 50)
+            }
+        }
+        .onDisappear { player?.stop(); playing = false }
+        .confirmationDialog("Clip löschen?", isPresented: $confirmDelete) { Button("Löschen", role: .destructive) { player?.stop(); delete() } }
+    }
+
+    private func toggle() {
+        if let player, playing { player.pause(); playing = false; return }
+        if let player { player.play(); playing = true; return }
+        loading = true
+        Task {
+            defer { loading = false }
+            let file = Clip.cache(clip.id)
+            var data = try? Data(contentsOf: file)
+            if data == nil {
+                data = try? await api.call("GET", "/api/clips/\(clip.id)")
+                if let data {
+                    try? FileManager.default.createDirectory(at: file.deletingLastPathComponent(), withIntermediateDirectories: true)
+                    try? data.write(to: file)
+                }
+            }
+            guard let data, let p = try? AVAudioPlayer(data: data) else { error = String(localized: "Ton konnte nicht geladen werden"); return }
+            try? Speaker.activateSession()
+            player = p
+            p.play()
+            playing = true
+            // Ende abwarten, damit die Balken stoppen
+            while p.isPlaying { try? await Task.sleep(for: .milliseconds(300)) }
+            if p.currentTime == 0 { playing = false }
+        }
+    }
+}
+
+struct ClipEmpty: View {
+    let add: () -> Void
+    var body: some View {
+        ZStack {
+            Color.black
+            VStack(spacing: 16) {
+                Image(systemName: "waveform").font(.system(size: 48)).foregroundStyle(.red)
+                Text("Meine Clips").font(.title2.bold()).foregroundStyle(.white)
+                Text("Füge den Link zu einem Reel oder Video ein – dein Server speichert nur den Ton, nur für dich. Am schnellsten über Teilen mit dem Kurzbefehl „Clip speichern“.")
+                    .font(.callout).foregroundStyle(.white.opacity(0.7)).multilineTextAlignment(.center).padding(.horizontal, 32)
+                Button("Clip aus Link hinzufügen", systemImage: "plus", action: add).buttonStyle(.borderedProminent).tint(.red)
+            }
+        }
+    }
+}
+
+struct ClipAddSheet: View {
+    @Environment(AppState.self) private var state
+    @Environment(\.dismiss) private var dismiss
+    @State private var url = ""
+    @State private var busy = false
+    @State private var error: String?
+
+    var body: some View {
+        NavigationStack {
+            Form {
+                Section {
+                    TextField("https://www.facebook.com/…", text: $url).keyboardType(.URL).textInputAutocapitalization(.never)
+                    Button("Aus Zwischenablage einfügen", systemImage: "doc.on.clipboard") { url = UIPasteboard.general.string ?? url }
+                    if let error { Text(error).foregroundStyle(.red) }
+                } footer: {
+                    Text("Nur für dich: Der Ton wird in deinem Konto auf deinem Server gespeichert, nicht geteilt und nicht weitergegeben. Bitte nur für den privaten Gebrauch.")
+                }
+            }
+            .navigationTitle("Clip hinzufügen")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) { Button("Abbrechen") { dismiss() } }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button(busy ? LocalizedStringKey("Wird geladen …") : "Hinzufügen") {
+                        busy = true
+                        error = nil
+                        Task {
+                            defer { busy = false }
+                            do { _ = try await state.api.object("POST", "/api/clips", json: ["url": url.trimmingCharacters(in: .whitespaces)]); dismiss() }
+                            catch { self.error = error.localizedDescription }
+                        }
+                    }
+                    .disabled(busy || !url.lowercased().hasPrefix("https://"))
+                }
+            }
+        }
     }
 }

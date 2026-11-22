@@ -8,6 +8,7 @@ import (
 	"net"
 	"net/http"
 	"net/url"
+	"os"
 	"strconv"
 	"strings"
 	"time"
@@ -30,7 +31,7 @@ func routes() http.Handler {
 	m := http.NewServeMux()
 	m.HandleFunc("GET /{$}", page)
 	m.HandleFunc("GET /api/status", func(w http.ResponseWriter, r *http.Request) {
-		writeJSON(w, map[string]any{"name": "koerperkompass", "version": version, "ai": aiEnabled(), "tts": env("KK_TTS_URL", "") != "", "reelkoch": reelkochEnabled(), "recipeLinks": true})
+		writeJSON(w, map[string]any{"name": "koerperkompass", "version": version, "ai": aiEnabled(), "tts": env("KK_TTS_URL", "") != "", "reelkoch": reelkochEnabled(), "clips": clipsEnabled(), "recipeLinks": true})
 	})
 	m.HandleFunc("GET /api/modules", func(w http.ResponseWriter, r *http.Request) { writeJSON(w, modules) })
 	m.HandleFunc("POST /api/pair", pairHandler)
@@ -48,6 +49,11 @@ func routes() http.Handler {
 	m.HandleFunc("POST /api/entries", auth(putEntries))
 	m.HandleFunc("POST /api/log", auth(postAppLog)) // Testphase, siehe applog.go
 	m.HandleFunc("GET /api/log", auth(getAppLog))
+	// „Meine Clips“: private Motivations-Tonspuren, siehe clips.go
+	m.HandleFunc("POST /api/clips", auth(addClip))
+	m.HandleFunc("GET /api/clips", auth(listClips))
+	m.HandleFunc("GET /api/clips/{id}", auth(getClip))
+	m.HandleFunc("DELETE /api/clips/{id}", auth(deleteClip))
 	m.HandleFunc("DELETE /api/data", auth(deleteData)) // „Nur auf dem iPhone“: gespeicherte Daten löschen
 	m.HandleFunc("GET /api/export", auth(export))
 	m.HandleFunc("POST /api/import", auth(importData))
@@ -178,12 +184,13 @@ func putProfile(w http.ResponseWriter, r *http.Request) {
 func deleteData(w http.ResponseWriter, r *http.Request) {
 	u := uid(r)
 	for _, q := range []string{`DELETE FROM entries WHERE user_id=?`, `DELETE FROM applog WHERE user_id=?`,
-		`UPDATE users SET profile='{}', card='{}' WHERE id=?`} {
+		`DELETE FROM clips WHERE user_id=?`, `UPDATE users SET profile='{}', card='{}' WHERE id=?`} {
 		if _, err := db.Exec(q, u); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
 	}
+	os.RemoveAll(clipDir(u))
 	w.WriteHeader(http.StatusNoContent)
 }
 

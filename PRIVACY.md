@@ -49,6 +49,10 @@ Nur wenn du in den Einstellungen „Anonyme Daten teilen“ einschaltest und bes
 
 Fügst du einen Link zu einer Rezeptseite ein, ruft dein Server diese Seite ab und übernimmt die eingebetteten Rezeptdaten; nur wenn diese fehlen, geht der Seitentext mit deiner Zustimmung an Claude. Fügst du einen Reel- oder Video-Link ein, gibt dein Server ihn an deine eigene Reelkoch-Installation weiter; die lädt das öffentliche Reel und lässt das Rezept mit ihrem eigenen Claude-Zugang erstellen. Eingefügter Rezepttext und – nur mit deiner Zustimmung – das fertige Rezept zur Nährwertschätzung gehen über deinen Server an Claude. Deine Rezepte liegen wie alle Einträge auf deinem iPhone und deinem Server; der Coach bekommt eine Liste der Rezepttitel mit Nährwerten.
 
+## Meine Clips (optional)
+
+Fügst du unter Motivation → Meine Clips einen Link zu einem Reel oder Video ein, lädt dein Server nur dessen Tonspur und speichert sie in deinem Konto. Clips sind nur für dich, werden nicht geteilt und gehen nicht an Freunde oder andere Server. Die Tondateien liegen auf deinem Server **nicht** Ende-zu-Ende-verschlüsselt. Die Rechte an den Inhalten liegen bei deren Urhebern – nutze Clips nur privat. Löschen kannst du sie einzeln; „Nur auf diesem iPhone speichern“ löscht sie ebenfalls.
+
 ## Ende-zu-Ende-Verschlüsselung (optional)
 
 Unter Einstellungen → Verschlüsselung kannst du ein eigenes Passwort festlegen. Dann werden Einträge und Profil **auf dem iPhone verschlüsselt** (AES-GCM, Schlüssel aus dem Passwort mit PBKDF2 abgeleitet), bevor sie an den Server gehen. Der Server – und wer ihn betreibt – sieht nur Modul, Datum und Zeitpunkt der Einträge, nicht deren Inhalt. Passwort und Schlüssel verlassen das iPhone nie im Klartext. Für „Passwort vergessen“ bekommst du einen Wiederherstellungsschlüssel; vergisst du beides, sind die Daten auf dem Server nicht wiederherstellbar. Nicht verschlüsselt sind die Spielerkarte für Freunde sowie Daten, die du ausdrücklich an Claude, die Sprachausgabe oder als freiwillige Protokolle bzw. anonyme Verbesserungsdaten sendest.
@@ -128,6 +132,10 @@ Only if you turn on “Share anonymous data” in Settings and confirm it, your 
 ## Recipes (optional)
 
 If you paste a link to a recipe website, your server fetches the page and takes over the embedded recipe data; only if there is none, the page text is sent to Claude with your consent. If you paste a reel or video link, your server passes it to your own Reelkoch installation, which downloads the public reel and creates the recipe with its own Claude access. Pasted recipe text and – only with your consent – the finished recipe for nutrition estimates are sent via your server to Claude. Your recipes are stored like all entries on your iPhone and your server; the coach receives a list of recipe titles with nutrition values.
+
+## My clips (optional)
+
+If you paste a link to a reel or video under Motivation → My clips, your server downloads only its audio track and stores it in your account. Clips are only for you, are not shared and never go to friends or other servers. Audio files on your server are **not** end-to-end encrypted. The rights to the content belong to its creators – use clips privately only. You can delete them individually; “Store only on this iPhone” deletes them as well.
 
 ## End-to-end encryption (optional)
 

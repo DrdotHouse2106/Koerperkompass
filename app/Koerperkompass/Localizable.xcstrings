@@ -1591,6 +1591,66 @@
         }
       }
     },
+    "Clip": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clip"
+          }
+        }
+      }
+    },
+    "Clip aus Link hinzufügen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add clip from link"
+          }
+        }
+      }
+    },
+    "Clip gespeichert: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clip saved: %@"
+          }
+        }
+      }
+    },
+    "Clip hinzufügen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add clip"
+          }
+        }
+      }
+    },
+    "Clip löschen?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete clip?"
+          }
+        }
+      }
+    },
+    "Clip speichern": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save clip"
+          }
+        }
+      }
+    },
     "Coach": {
       "localizations": {
         "en": {
@@ -3457,6 +3517,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tracker"
+          }
+        }
+      }
+    },
+    "Füge den Link zu einem Reel oder Video ein – dein Server speichert nur den Ton, nur für dich. Am schnellsten über Teilen mit dem Kurzbefehl „Clip speichern“.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paste a link to a reel or video – your server stores only the audio, just for you. Fastest via Share with the “Save clip” shortcut."
           }
         }
       }
@@ -5521,6 +5591,16 @@
         }
       }
     },
+    "Löschen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete"
+          }
+        }
+      }
+    },
     "Mahlzeit": {
       "localizations": {
         "en": {
@@ -5607,6 +5687,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "My day: give me a short briefing with one tip for today."
+          }
+        }
+      }
+    },
+    "Meine Clips": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "My clips"
           }
         }
       }
@@ -6177,6 +6267,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Store only on this iPhone?"
+          }
+        }
+      }
+    },
+    "Nur für dich: Der Ton wird in deinem Konto auf deinem Server gespeichert, nicht geteilt und nicht weitergegeben. Bitte nur für den privaten Gebrauch.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Just for you: the audio is stored in your account on your server, not shared or passed on. For private use only."
           }
         }
       }
@@ -7581,6 +7681,16 @@
         }
       }
     },
+    "Speichert den Ton eines Reels oder Videos privat unter Motivation → Meine Clips.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saves the audio of a reel or video privately under Motivation → My clips."
+          }
+        }
+      }
+    },
     "Speichert ein Rezept aus einem Reel, Video oder einer Rezeptseite in Körperkompass.": {
       "localizations": {
         "en": {
@@ -8077,6 +8187,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tap and speak"
+          }
+        }
+      }
+    },
+    "Ton konnte nicht geladen werden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Audio could not be loaded"
           }
         }
       }
@@ -9167,6 +9287,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Creating …"
+          }
+        }
+      }
+    },
+    "Wird geladen …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loading …"
           }
         }
       }

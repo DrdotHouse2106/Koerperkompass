@@ -30,6 +30,7 @@ import UIKit
     var aiAvailable = false
     var ttsAvailable = false
     var reelkochAvailable = false
+    var clipsAvailable = false
     var serverVersion = ""
     var syncError: String?
     var pendingLink: URL?
@@ -70,7 +71,7 @@ import UIKit
         self.server = api.server
         self.token = token
         aiAvailable = status.ai
-            ttsAvailable = status.tts ?? false; reelkochAvailable = status.reelkoch ?? false
+            ttsAvailable = status.tts ?? false; reelkochAvailable = status.reelkoch ?? false; clipsAvailable = status.clips ?? false
         serverVersion = status.version
         // Tresor auf dem Server? Dann braucht dieses Gerät das Passwort, bevor es Daten lesen kann
         if let data = try? await self.api.call("GET", "/api/vault"), (try? JSONDecoder().decode(Vault.Box.self, from: data)) != nil {
@@ -124,7 +125,7 @@ import UIKit
         do {
             let status = try await api.status()
             aiAvailable = status.ai
-            ttsAvailable = status.tts ?? false; reelkochAvailable = status.reelkoch ?? false
+            ttsAvailable = status.tts ?? false; reelkochAvailable = status.reelkoch ?? false; clipsAvailable = status.clips ?? false
             serverVersion = status.version
             if localOnly { syncError = nil; return }  // Daten bleiben auf dem iPhone
             if Vault.locked { vaultLocked = true; syncError = String(localized: "Verschlüsselt – bitte Passwort eingeben"); return }
