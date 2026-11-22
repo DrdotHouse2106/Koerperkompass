@@ -54,6 +54,7 @@ struct RootView: View {
 
 struct MainView: View {
     @State private var tab = "heute"
+    @State private var router = Router.shared
     var body: some View {
         TabView(selection: Binding(get: { tab }, set: { tab = $0; AppLog.add("Tab \($0)") })) {
             DashboardView().tag("heute").tabItem { Label("Heute", systemImage: "square.grid.2x2.fill") }
@@ -63,6 +64,11 @@ struct MainView: View {
             CoachView().tag("coach").tabItem { Label("Coach", systemImage: "bubble.left.and.text.bubble.right.fill") }
             SettingsView().tag("einstellungen").tabItem { Label("Einstellungen", systemImage: "gearshape.fill") }
         }
+        // Aus einer Mitteilung: Coach-Tab bzw. „Heute“ (dort öffnet die Übersicht Getränke oder Motivation)
+        .onChange(of: router.route, initial: true) {
+            guard let r = router.route else { return }
+            if r == "coach" { tab = "coach"; router.route = nil } else { tab = "heute" }
+        }
     }
 }
 
@@ -71,6 +77,8 @@ struct DashboardView: View {
     @Environment(AppState.self) private var state
     @Environment(\.modelContext) private var context
     @Query(sort: \Entry.date) private var entries: [Entry]
+    @State private var router = Router.shared
+    @State private var open: String?  // aus einer Mitteilung geöffnet: „water“ oder „motivation“
 
     private var greeting: String {
         let h = Calendar.current.component(.hour, from: Date())
@@ -130,6 +138,16 @@ struct DashboardView: View {
             }
             .background(Theme.background.ignoresSafeArea())
             .toolbar(.hidden, for: .navigationBar)
+            .navigationDestination(item: $open) { target in
+                if target == "motivation" {
+                    MotivationView()
+                } else {
+                    WaterModule().detail(entries.filter { $0.module == "water" && !$0.deleted }).navigationTitle(Text(WaterModule().name)).themed()
+                }
+            }
+            .onChange(of: router.route, initial: true) {
+                if let r = router.route, r == "water" || r == "motivation" { open = r; router.route = nil }
+            }
             .refreshable {
                 await state.importHealth(context)
                 await state.sync(context)

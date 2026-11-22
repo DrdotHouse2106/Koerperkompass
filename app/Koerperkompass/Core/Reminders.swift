@@ -136,6 +136,12 @@ enum Reminders {
     }
 }
 
+/// Ziel nach dem Tippen auf eine Mitteilung („water“, „motivation“, „coach“)
+@Observable @MainActor final class Router {
+    static let shared = Router()
+    var route: String?
+}
+
 /// Nimmt die Aktionen aus den Mitteilungen entgegen und trägt das Getränk ein.
 final class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions options: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
@@ -151,6 +157,14 @@ final class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCent
     @MainActor
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
         let id = response.actionIdentifier
+        // Tipp auf die Mitteilung selbst → passende Stelle in der App öffnen
+        if id == UNNotificationDefaultActionIdentifier {
+            let req = response.notification.request
+            Router.shared.route = req.content.categoryIdentifier == Reminders.category ? "water"
+                : req.identifier.hasPrefix(Motivation.prefix) ? "motivation"
+                : req.identifier == "coach-daily" ? "coach" : nil
+            return
+        }
         guard id.hasPrefix("drink."), let drink = Drink.all.first(where: { "drink." + $0.id == id }) else { return }
         let context = ModelContext(sharedContainer)
         context.insert(drink.entry())
