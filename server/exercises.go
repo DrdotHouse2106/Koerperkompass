@@ -10,6 +10,7 @@ import (
 	_ "embed"
 	"encoding/json"
 	"io"
+	"log"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -133,6 +134,66 @@ Antworte ausschließlich mit JSON: {"name": "…", "instructions": ["…", "…"
 	db.Exec(`INSERT INTO exercise_de(id, name, instructions) VALUES(?,?,?) ON CONFLICT(id) DO UPDATE SET name=excluded.name, instructions=excluded.instructions`,
 		e.ID, nameDe, string(steps))
 	return nameDe, string(steps)
+}
+
+// translateAll übersetzt beim Start einmal alles, was noch fehlt: erst alle Namen, dann alle Anleitungen
+// (je 8 Übungen pro Aufruf, kleines Modell). Läuft im Hintergrund; was fertig ist, bleibt gespeichert.
+func translateAll() {
+	if !aiEnabled() {
+		return
+	}
+	loadExercises()
+	translateNames()
+	have := map[string]bool{}
+	if rows, err := db.Query(`SELECT id FROM exercise_de WHERE instructions <> ''`); err == nil {
+		for rows.Next() {
+			var id string
+			rows.Scan(&id)
+			have[id] = true
+		}
+		rows.Close()
+	}
+	var todo []exercise
+	for _, e := range exList {
+		if !have[e.ID] && len(e.Instructions) > 0 {
+			todo = append(todo, e)
+		}
+	}
+	system := `Übersetze diese Fitness-Übungen ins Deutsche: Name mit üblicher deutscher Studiobezeichnung, Anleitung natürlich und per Du.
+Antworte ausschließlich mit JSON: {"<id>": {"name": "…", "instructions": ["…", "…"]}, …}`
+	for len(todo) > 0 {
+		n := min(8, len(todo))
+		in := map[string]any{}
+		for _, e := range todo[:n] {
+			in[e.ID] = map[string]any{"name": e.Name, "instructions": e.Instructions}
+		}
+		todo = todo[n:]
+		b, _ := json.Marshal(in)
+		out, err := askModel(context.Background(), env("KK_MODEL_SMALL", "claude-haiku-5-5"), system, anthropic.BetaOutputConfigEffortLow,
+			[]anthropic.BetaMessageParam{anthropic.NewBetaUserMessage(anthropic.NewBetaTextBlock(string(b)))})
+		if err != nil {
+			log.Printf("Übungen übersetzen: %v", err)
+			return
+		}
+		var res map[string]struct {
+			Name         string   `json:"name"`
+			Instructions []string `json:"instructions"`
+		}
+		i, j := strings.Index(out, "{"), strings.LastIndex(out, "}")
+		if i < 0 || j < i || json.Unmarshal([]byte(out[i:j+1]), &res) != nil {
+			continue
+		}
+		for id, x := range res {
+			if _, ok := exByID[id]; !ok || len(x.Instructions) == 0 {
+				continue
+			}
+			steps, _ := json.Marshal(x.Instructions)
+			db.Exec(`INSERT INTO exercise_de(id, name, instructions) VALUES(?,?,?) ON CONFLICT(id) DO UPDATE SET
+				name=CASE WHEN exercise_de.name='' THEN excluded.name ELSE exercise_de.name END, instructions=excluded.instructions`,
+				id, strings.TrimSpace(x.Name), string(steps))
+		}
+	}
+	log.Printf("Übungen: Übersetzung vollständig")
 }
 
 // translateNames übersetzt fehlende Namen in Blöcken zu 100 (einmalig, im Hintergrund)
