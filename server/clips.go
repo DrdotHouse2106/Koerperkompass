@@ -64,7 +64,7 @@ func addClip(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Ton konnte nicht geladen werden", http.StatusBadGateway)
 		return
 	}
-	title := strings.TrimSpace(strings.SplitN(string(out), "\n", 2)[0])
+	title := cleanTitle(strings.SplitN(string(out), "\n", 2)[0])
 	db.Exec(`INSERT INTO clips(user_id, id, url, title, created) VALUES(?,?,?,?,?)`, user, id, u.String(), truncate(title, 200), time.Now().Unix())
 	writeJSON(w, map[string]string{"id": id, "title": title})
 }
@@ -110,4 +110,23 @@ func deleteClip(w http.ResponseWriter, r *http.Request) {
 	db.Exec(`DELETE FROM clips WHERE user_id=? AND id=?`, uid(r), id)
 	os.Remove(filepath.Join(clipDir(uid(r)), id+".m4a"))
 	w.WriteHeader(http.StatusNoContent)
+}
+
+// cleanTitle: Facebook liefert „136K views · 6.3K reactions | Beschreibung #tags | Seite“ – übrig bleibt
+// die Beschreibung ohne Hashtags, sonst der Seitenname
+func cleanTitle(t string) string {
+	parts := strings.Split(t, "|")
+	if len(parts) >= 3 {
+		t = strings.Join(parts[1:len(parts)-1], "|")
+		if strings.TrimSpace(strings.Split(t, "#")[0]) == "" {
+			t = parts[len(parts)-1]
+		}
+	}
+	var words []string
+	for _, w := range strings.Fields(t) {
+		if !strings.HasPrefix(w, "#") {
+			words = append(words, w)
+		}
+	}
+	return strings.TrimSpace(strings.Join(words, " "))
 }
