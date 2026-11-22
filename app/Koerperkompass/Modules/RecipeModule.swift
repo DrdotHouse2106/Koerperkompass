@@ -56,6 +56,62 @@ private struct RecipeTile: View {
 }
 
 /// Laufende Reel-Aufträge (Reelkoch-id → Link), überstehen das Schließen der App
+/// Fragt laufende Reel-Aufträge ab, bis alle fertig sind – unabhängig davon, welche Ansicht offen ist.
+/// Startet beim Öffnen der App, der Rezepte und nach jedem neuen Auftrag (auch aus dem Teilen-Kurzbefehl).
+@Observable @MainActor final class RecipePoller {
+    static let shared = RecipePoller()
+    var jobs = RecipeJobs.all { didSet { RecipeJobs.all = jobs } }
+    var status: [String: String] = [:]
+    var error: String?
+    private var running = false
+
+    func add(_ id: String, _ url: String, _ state: AppState) {
+        jobs[id] = url
+        start(state)
+    }
+
+    func start(_ state: AppState) {
+        jobs = RecipeJobs.all  // Aufträge aus dem Kurzbefehl übernehmen
+        guard !running, !jobs.isEmpty, !state.demo else { return }
+        running = true
+        Task {
+            defer { running = false }
+            let context = sharedContainer.mainContext
+            while !jobs.isEmpty {
+                for id in jobs.keys.sorted() {
+                    do {
+                        let r = try await state.api.object("GET", "/api/recipes/reel/\(id)?nutrition=\(state.aiConsent ? 1 : 0)")
+                        let st = r["status"] as? String ?? ""
+                        if let parts = r["recipes"] as? [[String: Any]], !parts.isEmpty {
+                            // Mehrere Varianten in einem Reel → eigenständige Rezepte
+                            for (n, var p) in parts.enumerated() {
+                                if p["source"] == nil { p["source"] = jobs[id] }
+                                context.upsert(id: "reel-\(id)-\(n + 1)", module: "recipes", date: Day.today, values: p, dirty: true)
+                            }
+                            state.changed(context)
+                            jobs[id] = nil
+                        } else if var recipe = r["recipe"] as? [String: Any] {
+                            if recipe["source"] == nil { recipe["source"] = jobs[id] }
+                            context.upsert(id: "reel-\(id)", module: "recipes", date: Day.today, values: recipe, dirty: true)
+                            state.changed(context)
+                            jobs[id] = nil
+                        } else if st == "Fehler" {
+                            error = String(localized: "Rezept konnte nicht erstellt werden: \(r["fehler"] as? String ?? "")")
+                            jobs[id] = nil
+                        } else {
+                            status[id] = st
+                            error = nil
+                        }
+                    } catch {
+                        self.error = error.localizedDescription
+                    }
+                }
+                if !jobs.isEmpty { try? await Task.sleep(for: .seconds(5)) }
+            }
+        }
+    }
+}
+
 enum RecipeJobs {
     static var all: [String: String] {
         get { (UserDefaults.standard.dictionary(forKey: "recipeJobs") as? [String: String]) ?? [:] }
@@ -68,9 +124,8 @@ private struct RecipeList: View {
     @Environment(AppState.self) private var state
     @Environment(\.modelContext) private var context
     @State private var search = ""
-    @State private var jobs = RecipeJobs.all
-    @State private var jobStatus: [String: String] = [:]
-    @State private var error: String?
+    @State private var poller = RecipePoller.shared
+    private var jobs: [String: String] { poller.jobs }
     @State private var addLink = false
     @State private var addText = false
     @State private var fromReelkoch = false
@@ -86,18 +141,17 @@ private struct RecipeList: View {
                             ProgressView()
                             VStack(alignment: .leading) {
                                 Text(jobs[id] ?? "").font(.caption).lineLimit(1)
-                                Text(jobStatus[id] ?? String(localized: "wartet")).font(.caption2).foregroundStyle(.secondary)
+                                Text(poller.status[id] ?? String(localized: "wartet")).font(.caption2).foregroundStyle(.secondary)
                             }
                         }
                     }
                     .onDelete { idx in
                         let keys = jobs.keys.sorted()
-                        for i in idx { jobs[keys[i]] = nil }
-                        RecipeJobs.all = jobs
+                        for i in idx { poller.jobs[keys[i]] = nil }
                     }
                 }
             }
-            if let error { Text(error).foregroundStyle(.red).font(.caption) }
+            if let error = poller.error { Text(error).foregroundStyle(.red).font(.caption) }
             Section {
                 ForEach(list) { e in
                     NavigationLink { RecipeView(entry: e) } label: {
@@ -133,45 +187,10 @@ private struct RecipeList: View {
                 }
             }
         }
-        .sheet(isPresented: $addLink) { ReelLinkSheet { id, url in jobs[id] = url; RecipeJobs.all = jobs } }
+        .sheet(isPresented: $addLink) { ReelLinkSheet { id, url in poller.add(id, url, state) } }
         .sheet(isPresented: $addText) { RecipeTextSheet() }
-        .sheet(isPresented: $fromReelkoch) { ReelkochSheet { id, url in jobs[id] = url; RecipeJobs.all = jobs } }
-        .task(id: jobs.count) { await poll() }
-    }
-
-    /// Laufende Aufträge alle paar Sekunden abfragen, fertige Rezepte speichern
-    private func poll() async {
-        while !jobs.isEmpty && !Task.isCancelled {
-            for id in jobs.keys.sorted() {
-                do {
-                    let r = try await state.api.object("GET", "/api/recipes/reel/\(id)?nutrition=\(state.aiConsent ? 1 : 0)")
-                    let status = r["status"] as? String ?? ""
-                    if let parts = r["recipes"] as? [[String: Any]], !parts.isEmpty {
-                        // Mehrere Varianten in einem Reel → eigenständige Rezepte
-                        for (n, var p) in parts.enumerated() {
-                            if p["source"] == nil { p["source"] = jobs[id] }
-                            context.upsert(id: "reel-\(id)-\(n + 1)", module: "recipes", date: Day.today, values: p, dirty: true)
-                        }
-                        state.changed(context)
-                        jobs[id] = nil
-                    } else if var recipe = r["recipe"] as? [String: Any] {
-                        if recipe["source"] == nil { recipe["source"] = jobs[id] }
-                        context.upsert(id: "reel-\(id)", module: "recipes", date: Day.today, values: recipe, dirty: true)
-                        state.changed(context)
-                        jobs[id] = nil
-                    } else if status == "Fehler" {
-                        error = String(localized: "Rezept konnte nicht erstellt werden: \(r["fehler"] as? String ?? "")")
-                        jobs[id] = nil
-                    } else {
-                        jobStatus[id] = status
-                    }
-                } catch {
-                    self.error = error.localizedDescription
-                }
-            }
-            RecipeJobs.all = jobs
-            try? await Task.sleep(for: .seconds(5))
-        }
+        .sheet(isPresented: $fromReelkoch) { ReelkochSheet { id, url in poller.add(id, url, state) } }
+        .onAppear { poller.start(state) }
     }
 }
 
