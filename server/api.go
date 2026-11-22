@@ -66,6 +66,10 @@ func routes() http.Handler {
 	m.HandleFunc("POST /api/ai/voice", auth(aiVoice))
 	m.HandleFunc("POST /api/ai/meal", auth(aiMeal))
 	m.HandleFunc("POST /api/ai/recipe", auth(aiRecipe))
+	// Übungsbibliothek (free-exercise-db), siehe exercises.go
+	m.HandleFunc("GET /api/exercises", auth(listExercises))
+	m.HandleFunc("GET /api/exercises/{id}", auth(getExercise))
+	m.HandleFunc("GET /api/exercises/img/{path...}", exerciseImage)
 	// Rezepte aus Reels über Reelkoch, siehe module_recipes.go
 	m.HandleFunc("POST /api/recipes/link", auth(recipeLink)) // erkennt Video/Reel oder Rezeptseite
 	m.HandleFunc("POST /api/recipes/reel", auth(recipeReel))

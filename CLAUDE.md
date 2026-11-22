@@ -22,6 +22,8 @@ server/                  Go-Server, eine Binary, SQLite (modernc.org/sqlite, ohn
   applog.go              Erweitertes Protokoll der Testphase (POST/GET /api/log, nie weitergeleitet)
   friends.go             Freundschaften, auch zwischen Servern (Föderation über /api/fed/*)
   modules.go             Modul-Schema + Liste, generische Zusammenfassung
+  exercises.go           Übungsbibliothek (exercises.json aus free-exercise-db, Unlicense; Übersetzungen in exercise_de, Bilder-Zwischenspeicher)
+  clips.go               „Meine Clips“ (Ton aus Reels, nur mit KK_YTDLP)
   module_*.go            ein File pro Modul (module_recipes.go: Rezepte, Reel-Links über Reelkoch)
 .github/workflows/       server.yml (Docker → ghcr.io), testflight.yml (iOS → TestFlight)
 ```

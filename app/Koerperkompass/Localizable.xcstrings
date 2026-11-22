@@ -641,6 +641,16 @@
         }
       }
     },
+    "Abduktoren": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abductors"
+          }
+        }
+      }
+    },
     "Abendessen": {
       "localizations": {
         "en": {
@@ -697,6 +707,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Badges"
+          }
+        }
+      }
+    },
+    "Adduktoren": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adductors"
           }
         }
       }
@@ -951,6 +971,26 @@
         }
       }
     },
+    "Anfänger": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beginner"
+          }
+        }
+      }
+    },
+    "Anleitung": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Instructions"
+          }
+        }
+      }
+    },
     "Anleitung & Quellcode": {
       "localizations": {
         "en": {
@@ -1087,6 +1127,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tea counts towards your goal too. Treat yourself to a cup."
+          }
+        }
+      }
+    },
+    "Auf YouTube ansehen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Watch on YouTube"
           }
         }
       }
@@ -1331,6 +1381,16 @@
         }
       }
     },
+    "Bauch": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abs"
+          }
+        }
+      }
+    },
     "Beenden": {
       "localizations": {
         "en": {
@@ -1467,6 +1527,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Please allow microphone and speech recognition in iOS Settings."
+          }
+        }
+      }
+    },
+    "Bizeps": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Biceps"
           }
         }
       }
@@ -3211,6 +3281,16 @@
         }
       }
     },
+    "Faszienrolle": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Foam roller"
+          }
+        }
+      }
+    },
     "Fertig": {
       "localizations": {
         "en": {
@@ -3811,6 +3891,16 @@
         }
       }
     },
+    "Gesäß": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Glutes"
+          }
+        }
+      }
+    },
     "Geteilt werden nur Name, Level, Rang, Klasse, Serie, Erfolge und Wochenwerte – keine Gesundheitsdaten. Freunde von Freunden siehst du nur, wenn beide zugestimmt haben.": {
       "localizations": {
         "en": {
@@ -3867,6 +3957,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Weight & measurements"
+          }
+        }
+      }
+    },
+    "Gewicht (kg)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Weight (kg)"
           }
         }
       }
@@ -4031,6 +4131,16 @@
         }
       }
     },
+    "Gymnastikball": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exercise ball"
+          }
+        }
+      }
+    },
     "HIIT 20 Minuten": {
       "localizations": {
         "en": {
@@ -4077,6 +4187,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hi! I’m your coach. Let’s go – two more reps, you’ve got this!"
+          }
+        }
+      }
+    },
+    "Hals": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Neck"
           }
         }
       }
@@ -4557,6 +4677,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Sync now"
+          }
+        }
+      }
+    },
+    "Kabelzug": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cable"
           }
         }
       }
@@ -5181,6 +5311,16 @@
         }
       }
     },
+    "Körpergewicht": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bodyweight"
+          }
+        }
+      }
+    },
     "Körperkompass": {
       "localizations": {
         "en": {
@@ -5247,6 +5387,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Barbell row – 3 × 8"
+          }
+        }
+      }
+    },
+    "Latissimus": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lats"
           }
         }
       }
@@ -5611,6 +5761,16 @@
         }
       }
     },
+    "Maschine": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Machine"
+          }
+        }
+      }
+    },
     "Max. Gewicht": {
       "localizations": {
         "en": {
@@ -5641,12 +5801,32 @@
         }
       }
     },
+    "Medizinball": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Medicine ball"
+          }
+        }
+      }
+    },
     "Mein Alltag": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "My daily routine"
+          }
+        }
+      }
+    },
+    "Mein Fortschritt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "My progress"
           }
         }
       }
@@ -5901,6 +6081,16 @@
         }
       }
     },
+    "Mittlerer Rücken": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Middle back"
+          }
+        }
+      }
+    },
     "Mobilität": {
       "localizations": {
         "en": {
@@ -6037,6 +6227,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tiredness is often just thirst. Try it."
+          }
+        }
+      }
+    },
+    "Nacken/Trapez": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Traps"
           }
         }
       }
@@ -6281,6 +6481,16 @@
         }
       }
     },
+    "Nur mit meinen Geräten": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Only with my equipment"
+          }
+        }
+      }
+    },
     "Nächster Rang ab Level %lld: %@": {
       "localizations": {
         "en": {
@@ -6317,6 +6527,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Upper / lower body"
+          }
+        }
+      }
+    },
+    "Oberschenkel hinten": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hamstrings"
+          }
+        }
+      }
+    },
+    "Oberschenkel vorn": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quadriceps"
           }
         }
       }
@@ -6711,6 +6941,16 @@
         }
       }
     },
+    "Profi": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Expert"
+          }
+        }
+      }
+    },
     "Profil & Ziele": {
       "localizations": {
         "en": {
@@ -6981,6 +7221,26 @@
         }
       }
     },
+    "Rekord Gewicht": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Weight record"
+          }
+        }
+      }
+    },
+    "Rekord Wdh.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reps record"
+          }
+        }
+      }
+    },
     "Rezept aus Link": {
       "localizations": {
         "en": {
@@ -7181,6 +7441,16 @@
         }
       }
     },
+    "SZ-Stange": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "EZ bar"
+          }
+        }
+      }
+    },
     "Saft": {
       "localizations": {
         "en": {
@@ -7226,7 +7496,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Log a set"
+            "value": "Log set"
           }
         }
       }
@@ -7451,6 +7721,16 @@
         }
       }
     },
+    "Schultern": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shoulders"
+          }
+        }
+      }
+    },
     "Schätze …": {
       "localizations": {
         "en": {
@@ -7657,6 +7937,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Shall I log this for yesterday: %@?"
+          }
+        }
+      }
+    },
+    "Sonstiges": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Other"
           }
         }
       }
@@ -8411,6 +8701,16 @@
         }
       }
     },
+    "Trizeps": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Triceps"
+          }
+        }
+      }
+    },
     "Trizepsdrücken – 3 × 12": {
       "localizations": {
         "en": {
@@ -8501,6 +8801,16 @@
         }
       }
     },
+    "Unterarme": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Forearms"
+          }
+        }
+      }
+    },
     "Unterarmstütz": {
       "localizations": {
         "en": {
@@ -8537,6 +8847,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Plank – 3 × 45 s"
+          }
+        }
+      }
+    },
+    "Unterer Rücken": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lower back"
           }
         }
       }
@@ -8827,6 +9147,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "WHAT WAS THAT, RECRUIT?! That wasn't a rep, that was a cry for help! TWO MORE!"
+          }
+        }
+      }
+    },
+    "Waden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calves"
           }
         }
       }
@@ -9831,6 +10161,16 @@
         }
       }
     },
+    "Übung suchen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Search exercises"
+          }
+        }
+      }
+    },
     "Übungen": {
       "localizations": {
         "en": {
@@ -9847,6 +10187,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Exercises & sets"
+          }
+        }
+      }
+    },
+    "Übungsbibliothek": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exercise library"
           }
         }
       }

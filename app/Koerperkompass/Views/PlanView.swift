@@ -55,6 +55,7 @@ struct TrainingView: View {
                 } header: { Text("Alle Programme") }
 
                 Section {
+                    NavigationLink { ExerciseLibraryView() } label: { Label("Übungsbibliothek", systemImage: "figure.strengthtraining.traditional") }
                     NavigationLink { PlanView() } label: { Label("Persönliches Programm mit Claude", systemImage: "sparkles") }
                     NavigationLink {
                         ExerciseModule().detail(entries.filter { $0.module == "exercises" && !$0.deleted }).navigationTitle(Text("Übungen")).themed()
