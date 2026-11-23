@@ -3331,6 +3331,16 @@
         }
       }
     },
+    "Fettfreie Masse": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lean mass"
+          }
+        }
+      }
+    },
     "Fitnessstudio": {
       "localizations": {
         "en": {

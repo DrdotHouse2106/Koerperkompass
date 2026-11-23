@@ -323,8 +323,8 @@ import UIKit
         for (day, values) in await Health.activity(days: days) {
             context.upsert(id: "activity-" + day, module: "activity", date: day, values: values, dirty: healthUpload)
         }
-        for w in await Health.weights(days: days) {
-            context.upsert(id: w.id, module: "body", date: w.date, values: ["weight": w.kg], dirty: healthUpload)
+        for m in await Health.bodyMeasurements(days: days) {
+            context.upsert(id: m.id, module: "body", date: m.date, values: m.values, dirty: healthUpload)
         }
         changed(context)
     }

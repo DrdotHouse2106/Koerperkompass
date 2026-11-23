@@ -275,7 +275,7 @@ Team-ID in `app/Local.xcconfig` eintragen, oben das iPhone als Ziel wählen und 
 |---|---|---|---|
 | Abenteuer | `quests` | – (berechnet aus allen anderen Modulen) | Quests, XP, Level |
 | Ernährung | `nutrition` | kcal, protein, carbs, fat (+ meal, name, photo) | Eingabe, Foto |
-| Gewicht & Maße | `body` | weight, bodyFat, waist, hip, chest | Eingabe, Apple Health (Gewicht) |
+| Gewicht & Maße | `body` | weight, bodyFat, leanMass, waist, hip, chest | Eingabe, Apple Health (Gewicht, Körperfett, fettfreie Masse – z. B. von Körperfettwaagen) |
 | Aktivität & Schlaf | `activity` | steps, activeEnergy, sleepHours, restingHR, workoutMinutes | Apple Health |
 | Übungen | `exercises` | reps, weight (+ exercise) | Eingabe |
 | Getränke | `water` | hydration, kcal, caffeine, alcohol (+ drink, name, ml) | Eingabe, Schnell-Buttons, Trinkerinnerung |

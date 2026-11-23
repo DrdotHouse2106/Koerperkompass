@@ -9,6 +9,7 @@ enum Health {
     static let readTypes: Set<HKObjectType> = [
         HKQuantityType(.stepCount), HKQuantityType(.activeEnergyBurned), HKQuantityType(.restingHeartRate),
         HKQuantityType(.bodyMass), HKCategoryType(.sleepAnalysis), HKObjectType.workoutType(),
+        HKQuantityType(.bodyFatPercentage), HKQuantityType(.leanBodyMass),  // Körperfettwaagen (über deren App nach Health)
     ]
     static let writeTypes: Set<HKSampleType> = [
         HKQuantityType(.bodyMass), HKQuantityType(.dietaryEnergyConsumed), HKQuantityType(.dietaryProtein),
@@ -63,13 +64,29 @@ enum Health {
         return out
     }
 
-    /// Gewichtsmessungen anderer Apps/Waagen (eigene Einträge der App werden übersprungen)
-    static func weights(days: Int) async -> [(id: String, date: String, kg: Double)] {
+    /// Körpermessungen anderer Apps/Waagen: Gewicht, dazu Körperfett und fettfreie Masse derselben Messung
+    /// (eigene Einträge der App werden übersprungen). Eine Messung = ein Eintrag, verbunden über den Zeitpunkt (±2 min).
+    static func bodyMeasurements(days: Int) async -> [(id: String, date: String, values: [String: Any])] {
         let p = HKQuery.predicateForSamples(withStart: since(days), end: nil)
-        let samples = (try? await HKSampleQueryDescriptor(predicates: [.quantitySample(type: HKQuantityType(.bodyMass), predicate: p)], sortDescriptors: []).result(for: store)) ?? []
-        return samples
-            .filter { $0.sourceRevision.source != HKSource.default() }
-            .map { ("health-" + $0.uuid.uuidString, Day.string($0.endDate), ($0.quantity.doubleValue(for: .gramUnit(with: .kilo)) * 10).rounded() / 10) }
+        func samples(_ id: HKQuantityTypeIdentifier) async -> [HKQuantitySample] {
+            ((try? await HKSampleQueryDescriptor(predicates: [.quantitySample(type: HKQuantityType(id), predicate: p)], sortDescriptors: []).result(for: store)) ?? [])
+                .filter { $0.sourceRevision.source != HKSource.default() }
+        }
+        let kg = HKUnit.gramUnit(with: .kilo)
+        let weights = await samples(.bodyMass), fats = await samples(.bodyFatPercentage), leans = await samples(.leanBodyMass)
+        func near(_ list: [HKQuantitySample], _ d: Date) -> HKQuantitySample? { list.first { abs($0.endDate.timeIntervalSince(d)) < 120 } }
+        var out: [(id: String, date: String, values: [String: Any])] = []
+        var used = Set<UUID>()
+        for w in weights {
+            var v: [String: Any] = ["weight": (w.quantity.doubleValue(for: kg) * 10).rounded() / 10]
+            if let f = near(fats, w.endDate) { v["bodyFat"] = (f.quantity.doubleValue(for: .percent()) * 1000).rounded() / 10; used.insert(f.uuid) }
+            if let l = near(leans, w.endDate) { v["leanMass"] = (l.quantity.doubleValue(for: kg) * 10).rounded() / 10 }
+            out.append(("health-" + w.uuid.uuidString, Day.string(w.endDate), v))
+        }
+        for f in fats where !used.contains(f.uuid) {
+            out.append(("health-" + f.uuid.uuidString, Day.string(f.endDate), ["bodyFat": (f.quantity.doubleValue(for: .percent()) * 1000).rounded() / 10]))
+        }
+        return out
     }
 
     /// Durchschnittliche aktive Energie pro Tag (letzte 14 Tage), nil ohne Daten

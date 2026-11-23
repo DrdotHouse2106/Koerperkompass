@@ -4,6 +4,7 @@ package main
 var body = Module{ID: "body", Name: "Gewicht & Maße", Symbol: "scalemass", Fields: []Field{
 	{"weight", "Gewicht", "kg", "last"},
 	{"bodyFat", "Körperfett", "%", "last"},
+	{"leanMass", "Fettfreie Masse", "kg", "last"},
 	{"waist", "Taille", "cm", "last"},
 	{"hip", "Hüfte", "cm", "last"},
 	{"chest", "Brust", "cm", "last"},

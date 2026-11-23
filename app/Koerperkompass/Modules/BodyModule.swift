@@ -9,6 +9,7 @@ struct BodyModule: AppModule {
     let fields = [
         Field(key: "weight", name: "Gewicht", unit: "kg", agg: .last),
         Field(key: "bodyFat", name: "Körperfett", unit: "%", agg: .last),
+        Field(key: "leanMass", name: "Fettfreie Masse", unit: "kg", agg: .last),
         Field(key: "waist", name: "Taille", unit: "cm", agg: .last),
         Field(key: "hip", name: "Hüfte", unit: "cm", agg: .last),
         Field(key: "chest", name: "Brust", unit: "cm", agg: .last),
