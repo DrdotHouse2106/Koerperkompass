@@ -250,17 +250,23 @@ struct BodyMap: View {
             let s = min(size.width / 100, size.height / 200)
             let dx = (size.width - 100 * s) / 2, dy = (size.height - 200 * s) / 2
             for shape in back ? BodyShapes.back : BodyShapes.front {
-                var path = Path()
                 let p = shape.points
                 guard p.count >= 6 else { continue }
-                path.move(to: CGPoint(x: dx + p[0] * s, y: dy + p[1] * s))
-                for k in stride(from: 2, to: p.count - 1, by: 2) { path.addLine(to: CGPoint(x: dx + p[k] * s, y: dy + p[k + 1] * s)) }
+                // Umriss weich: Kurven durch die Mittelpunkte der Kanten, Eckpunkte als Kontrollpunkte
+                let pts = stride(from: 0, to: p.count - 1, by: 2).map { CGPoint(x: dx + p[$0] * s, y: dy + p[$0 + 1] * s) }
+                func mid(_ a: CGPoint, _ b: CGPoint) -> CGPoint { CGPoint(x: (a.x + b.x) / 2, y: (a.y + b.y) / 2) }
+                var path = Path()
+                path.move(to: mid(pts[pts.count - 1], pts[0]))
+                for i in pts.indices { path.addQuadCurve(to: mid(pts[i], pts[(i + 1) % pts.count]), control: pts[i]) }
                 path.closeSubpath()
                 let isPrimary = shape.muscles.contains { primary.contains($0) }
                 let isSecondary = !isPrimary && shape.muscles.contains { secondary.contains($0) }
-                let fill: Color = isPrimary ? Color(red: 0.93, green: 0.2, blue: 0.22) : isSecondary ? Color(red: 0.25, green: 0.5, blue: 0.95) : .white.opacity(0.16)
-                ctx.fill(path, with: .color(fill))
-                ctx.stroke(path, with: .color(.black.opacity(0.35)), lineWidth: max(0.4, 0.5 * s))
+                let colors: [Color] = isPrimary ? [Color(red: 1, green: 0.35, blue: 0.37), Color(red: 0.78, green: 0.12, blue: 0.16)]
+                    : isSecondary ? [Color(red: 0.42, green: 0.63, blue: 1), Color(red: 0.18, green: 0.38, blue: 0.84)]
+                    : [Color(red: 0.23, green: 0.27, blue: 0.32), Color(red: 0.15, green: 0.18, blue: 0.23)]
+                let box = path.boundingRect
+                ctx.fill(path, with: .linearGradient(Gradient(colors: colors), startPoint: CGPoint(x: box.midX, y: box.minY), endPoint: CGPoint(x: box.midX, y: box.maxY)))
+                ctx.stroke(path, with: .color(.white.opacity(0.08)), lineWidth: max(0.3, 0.35 * s))
             }
         }
     }
