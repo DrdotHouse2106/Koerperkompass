@@ -237,7 +237,7 @@ struct ExerciseDetailView: View {
     }
 }
 
-/// Einfache Körperfigur von vorn oder hinten; Hauptmuskeln rot, Hilfsmuskeln blau
+/// Körperfigur von vorn oder hinten mit anatomischen Muskelumrissen (BodyShapes); Hauptmuskeln rot, Hilfsmuskeln blau
 struct BodyMap: View {
     let primary: [String]
     let secondary: [String]
@@ -245,48 +245,22 @@ struct BodyMap: View {
 
     static func isBack(_ m: String) -> Bool { ["lats", "middle back", "lower back", "traps", "triceps", "glutes", "hamstrings", "calves"].contains(m) }
 
-    /// Muskelflächen im Raster 100 × 200
-    private static let front: [(String, [CGRect])] = [
-        ("neck", [CGRect(x: 45, y: 21, width: 10, height: 6)]),
-        ("shoulders", [CGRect(x: 24, y: 28, width: 11, height: 10), CGRect(x: 65, y: 28, width: 11, height: 10)]),
-        ("chest", [CGRect(x: 35, y: 31, width: 14, height: 13), CGRect(x: 51, y: 31, width: 14, height: 13)]),
-        ("biceps", [CGRect(x: 22, y: 40, width: 8, height: 17), CGRect(x: 70, y: 40, width: 8, height: 17)]),
-        ("forearms", [CGRect(x: 20, y: 59, width: 8, height: 20), CGRect(x: 72, y: 59, width: 8, height: 20)]),
-        ("abdominals", [CGRect(x: 41, y: 46, width: 18, height: 28)]),
-        ("abductors", [CGRect(x: 33, y: 78, width: 5, height: 14), CGRect(x: 62, y: 78, width: 5, height: 14)]),
-        ("adductors", [CGRect(x: 45, y: 86, width: 10, height: 18)]),
-        ("quadriceps", [CGRect(x: 35, y: 86, width: 12, height: 40), CGRect(x: 53, y: 86, width: 12, height: 40)]),
-        ("calves", [CGRect(x: 37, y: 138, width: 9, height: 30), CGRect(x: 54, y: 138, width: 9, height: 30)]),
-    ]
-    private static let backSide: [(String, [CGRect])] = [
-        ("neck", [CGRect(x: 45, y: 21, width: 10, height: 6)]),
-        ("traps", [CGRect(x: 38, y: 26, width: 24, height: 11)]),
-        ("shoulders", [CGRect(x: 24, y: 28, width: 11, height: 10), CGRect(x: 65, y: 28, width: 11, height: 10)]),
-        ("triceps", [CGRect(x: 22, y: 40, width: 8, height: 17), CGRect(x: 70, y: 40, width: 8, height: 17)]),
-        ("forearms", [CGRect(x: 20, y: 59, width: 8, height: 20), CGRect(x: 72, y: 59, width: 8, height: 20)]),
-        ("lats", [CGRect(x: 34, y: 39, width: 9, height: 22), CGRect(x: 57, y: 39, width: 9, height: 22)]),
-        ("middle back", [CGRect(x: 44, y: 38, width: 12, height: 18)]),
-        ("lower back", [CGRect(x: 43, y: 58, width: 14, height: 14)]),
-        ("glutes", [CGRect(x: 35, y: 74, width: 30, height: 14)]),
-        ("hamstrings", [CGRect(x: 35, y: 90, width: 12, height: 36), CGRect(x: 53, y: 90, width: 12, height: 36)]),
-        ("calves", [CGRect(x: 37, y: 136, width: 10, height: 32), CGRect(x: 53, y: 136, width: 10, height: 32)]),
-    ]
-
     var body: some View {
         Canvas { ctx, size in
             let s = min(size.width / 100, size.height / 200)
-            let dx = (size.width - 100 * s) / 2
-            func r(_ x: CGFloat, _ y: CGFloat, _ w: CGFloat, _ h: CGFloat) -> CGRect { CGRect(x: dx + x * s, y: y * s, width: w * s, height: h * s) }
-            let base = Color.white.opacity(0.18)
-            // Grundfigur
-            ctx.fill(Path(ellipseIn: r(41, 2, 18, 18)), with: .color(base))
-            for rect in [r(32, 25, 36, 56), r(20, 28, 11, 54), r(69, 28, 11, 54), r(34, 80, 15, 112), r(51, 80, 15, 112)] {
-                ctx.fill(Path(roundedRect: rect, cornerRadius: 5 * s), with: .color(base))
-            }
-            for (m, rects) in back ? Self.backSide : Self.front {
-                let color: Color? = primary.contains(m) ? .red : secondary.contains(m) ? .blue : nil
-                guard let color else { continue }
-                for rect in rects { ctx.fill(Path(roundedRect: r(rect.minX, rect.minY, rect.width, rect.height), cornerRadius: 3 * s), with: .color(color.opacity(0.85))) }
+            let dx = (size.width - 100 * s) / 2, dy = (size.height - 200 * s) / 2
+            for shape in back ? BodyShapes.back : BodyShapes.front {
+                var path = Path()
+                let p = shape.points
+                guard p.count >= 6 else { continue }
+                path.move(to: CGPoint(x: dx + p[0] * s, y: dy + p[1] * s))
+                for k in stride(from: 2, to: p.count - 1, by: 2) { path.addLine(to: CGPoint(x: dx + p[k] * s, y: dy + p[k + 1] * s)) }
+                path.closeSubpath()
+                let isPrimary = shape.muscles.contains { primary.contains($0) }
+                let isSecondary = !isPrimary && shape.muscles.contains { secondary.contains($0) }
+                let fill: Color = isPrimary ? Color(red: 0.93, green: 0.2, blue: 0.22) : isSecondary ? Color(red: 0.25, green: 0.5, blue: 0.95) : .white.opacity(0.16)
+                ctx.fill(path, with: .color(fill))
+                ctx.stroke(path, with: .color(.black.opacity(0.35)), lineWidth: max(0.4, 0.5 * s))
             }
         }
     }

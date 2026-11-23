@@ -349,6 +349,11 @@ Team-ID für die Signierung in `app/Local.xcconfig` eintragen (`DEVELOPMENT_TEAM
 
 GitHub Actions: `server.yml` baut bei Änderungen in `server/` das Docker-Image (`ghcr.io/drdothouse2106/koerperkompass`), `testflight.yml` baut bei Änderungen in `app/` die App und lädt sie zu TestFlight hoch.
 
+## Verwendete freie Inhalte
+
+- Übungen: [free-exercise-db](https://github.com/yuhonas/free-exercise-db) (Unlicense, gemeinfrei)
+- Muskelumrisse der Körperfigur: [react-body-highlighter](https://github.com/giavinh79/react-body-highlighter) (MIT, © 2020 GV79) – Lizenztext in `app/Koerperkompass/Core/BodyShapes.swift`
+
 ## Lizenz
 
 [MIT](LICENSE)
