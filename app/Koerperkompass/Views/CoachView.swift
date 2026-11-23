@@ -27,6 +27,7 @@ struct CoachView: View {
         let role: String  // "user" oder "assistant"
         let text: String
         var log: Proposal? = nil  // vom Coach vorgeschlagene Einträge (Essen, Getränke, Gewicht)
+        var day: String? = Day.today  // Tag der Nachricht – ältere Nachrichten werden für den Coach als solche markiert
     }
 
     /// Einträge, die der Coach aus dem Gespräch vorschlägt – gespeichert erst nach Tipp auf „Eintragen“
@@ -298,7 +299,10 @@ struct CoachView: View {
         defer { busy = false }
             do {
                 let r = try await state.api.object("POST", "/api/ai/coach", json: [
-                    "messages": list.suffix(30).map { ["role": $0.role, "content": $0.text] },
+                    // Nachrichten früherer Tage mit Datum, damit der Coach Gestern nicht für Heute hält
+                    "messages": list.suffix(30).map { m in
+                        ["role": m.role, "content": (m.day ?? "") == Day.today ? m.text : "[\(m.day.map { Day.date($0).formatted(date: .abbreviated, time: .omitted) } ?? String(localized: "früher"))] " + m.text]
+                    },
                     "context": coachContext(entries, state.profile, healthUpload: state.healthUpload),
                     "lang": Locale.current.language.languageCode?.identifier ?? "de",
                     "voice": talking,  // Gesprächsmodus: kurz und gesprochen antworten

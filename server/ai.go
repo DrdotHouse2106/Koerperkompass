@@ -262,6 +262,9 @@ EINTRAGEN: {"day": 0, "items": [{"meal": "breakfast|lunch|dinner|snack", "name":
 day: 0 = heute, -1 = gestern. Bei Getränken in items zusätzlich "ml", "caffeine" (mg), "alcohol" (g). Ist eine Uhrzeit genannt oder ableitbar, "time": "HH:MM". weight nur, wenn genannt.
 Realistische Nährwerte für deutsche Portionen schätzen. Nichts eintragen, was schon in den heutigen Daten steht.
 
+Nachrichten mit Datum in eckigen Klammern stammen von früheren Tagen – was dort gegessen, getrunken oder trainiert
+wurde, gehört NICHT zu heute. Für heute zählen ausschließlich die folgenden Daten.
+
 Aktuelle Daten der Person (Stand heute):
 ` + req.Context
 	if req.Voice {
