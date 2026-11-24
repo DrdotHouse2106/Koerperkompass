@@ -35,10 +35,10 @@ extension ParsedFood {
             // Uhrzeit: genannt, sonst jetzt (aktuelle Mahlzeit heute), sonst übliche Zeit der Mahlzeit
             let time = f.time.count == 5 ? f.time : (day == Day.today && f.meal == Meal.now ? Day.now : f.meal.defaultTime)
             if f.ml > 0 {
-                context.insert(Health.logDrink(Entry(module: "water", date: day, values: [
+                context.insert(Entry(module: "water", date: day, values: [
                     "drink": "custom", "name": f.name, "ml": f.ml, "hydration": f.alcohol > 0 ? 0 : f.ml,
                     "kcal": f.kcal, "carbs": f.carbs, "caffeine": f.caffeine, "alcohol": f.alcohol, "time": time,
-                ])))
+                ]))
                 continue
             }
             context.insert(Entry(module: "nutrition", date: day, values: [

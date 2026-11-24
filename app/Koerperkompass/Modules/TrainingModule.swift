@@ -36,7 +36,6 @@ private struct TrainingDetail: View {
                 TextField("Dauer (min)", value: $minutes, format: .number).keyboardType(.numberPad)
                 Button("Sichern") {
                     context.insert(Entry(module: "training", values: ["name": name, "minutes": minutes ?? 0]))
-                    Health.saveWorkout(name: name, minutes: minutes ?? 0)
                     name = ""
                     minutes = nil
                     state.changed(context)

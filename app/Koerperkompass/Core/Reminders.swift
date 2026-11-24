@@ -167,7 +167,7 @@ final class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCent
         }
         guard id.hasPrefix("drink."), let drink = Drink.all.first(where: { "drink." + $0.id == id }) else { return }
         let context = ModelContext(sharedContainer)
-        context.insert(Health.logDrink(drink.entry()))
+        context.insert(drink.entry())
         try? context.save()
     }
 }

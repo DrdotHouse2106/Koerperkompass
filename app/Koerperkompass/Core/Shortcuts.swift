@@ -24,7 +24,7 @@ struct LogDrinkIntent: AppIntent {
             return .result(dialog: IntentDialog("Das kenne ich leider nicht."))
         }
         let context = ModelContext(sharedContainer)
-        context.insert(Health.logDrink(d.entry()))
+        context.insert(d.entry())
         try? context.save()
         let text = "\(d.emoji) \(String(localized: d.name)) (\(d.ml.whole) ml) eingetragen."
         return .result(dialog: IntentDialog(LocalizedStringResource(stringLiteral: text)))

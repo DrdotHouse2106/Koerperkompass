@@ -98,7 +98,7 @@ struct QuickDrinks: View {
         HStack(spacing: 10) {
             ForEach(Drink.all.filter { ids.contains($0.id) }) { d in
                 Button {
-                    context.insert(Health.logDrink(d.entry()))
+                    context.insert(d.entry())
                     state.changed(context)
                     last = d.id
                     UIImpactFeedbackGenerator(style: .medium).impactOccurred()
@@ -244,7 +244,7 @@ private struct WaterDetail: View {
     }
 
     private func add(_ d: Drink, _ ml: Double) {
-        context.insert(Health.logDrink(d.entry(ml: ml)))
+        context.insert(d.entry(ml: ml))
         state.changed(context)
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
     }
