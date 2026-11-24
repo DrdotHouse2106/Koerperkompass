@@ -32,7 +32,7 @@ struct MotivationView: View {
                         ClipEmpty(add: { addClip = true }).containerRelativeFrame([.horizontal, .vertical])
                     }
                     ForEach(clips) { clip in
-                        ClipPage(clip: clip, api: state.api) { deleteClip(clip) }
+                        ClipPage(clip: clip, api: state.api, delete: { deleteClip(clip) }, rename: { renameClip(clip, $0) })
                             .containerRelativeFrame([.horizontal, .vertical])
                     }
                 } else if style == "dark" {
@@ -96,6 +96,13 @@ struct MotivationView: View {
         Task {
             _ = try? await state.api.call("DELETE", "/api/clips/\(c.id)")
             try? FileManager.default.removeItem(at: Clip.cache(c.id))
+            await loadClips()
+        }
+    }
+
+    private func renameClip(_ c: Clip, _ title: String) {
+        Task {
+            _ = try? await state.api.call("PUT", "/api/clips/\(c.id)", json: ["title": title])
             await loadClips()
         }
     }
@@ -324,7 +331,10 @@ struct ClipPage: View {
     let clip: Clip
     let api: API
     let delete: () -> Void
+    let rename: (String) -> Void
     @State private var player: AVAudioPlayer?
+    @State private var renaming = false
+    @State private var newTitle = ""
     @State private var playing = false
     @State private var loading = false
     @State private var error: String?
@@ -343,8 +353,9 @@ struct ClipPage: View {
                     }
                     .frame(height: 70)
                 }
-                Text(clip.title.isEmpty ? String(localized: "Clip") : clip.title)
-                    .font(.system(size: 26, weight: .heavy)).foregroundStyle(.white).multilineTextAlignment(.center).padding(.horizontal, 28)
+                if !clip.title.isEmpty {
+                    Text(clip.title).font(.system(size: 26, weight: .heavy)).foregroundStyle(.white).multilineTextAlignment(.center).padding(.horizontal, 28)
+                }
                 Button { toggle() } label: {
                     Image(systemName: loading ? "hourglass.circle.fill" : playing ? "pause.circle.fill" : "play.circle.fill")
                         .font(.system(size: 64)).foregroundStyle(.white.opacity(0.9))
@@ -356,6 +367,7 @@ struct ClipPage: View {
                 Spacer()
                 HStack(spacing: 28) {
                     if let u = URL(string: clip.url) { Link(destination: u) { Image(systemName: "link").font(.title3) } }
+                    Button { newTitle = clip.title; renaming = true } label: { Image(systemName: "pencil").font(.title3) }
                     Button { confirmDelete = true } label: { Image(systemName: "trash").font(.title3) }
                 }
                 .foregroundStyle(.white.opacity(0.7))
@@ -363,6 +375,11 @@ struct ClipPage: View {
             }
         }
         .onDisappear { player?.stop(); playing = false }
+        .alert("Eigener Titel", isPresented: $renaming) {
+            TextField("Titel (optional)", text: $newTitle)
+            Button("Speichern") { rename(newTitle) }
+            Button("Abbrechen", role: .cancel) {}
+        }
         .confirmationDialog("Clip löschen?", isPresented: $confirmDelete) { Button("Löschen", role: .destructive) { player?.stop(); delete() } }
     }
 

@@ -56,17 +56,16 @@ func addClip(w http.ResponseWriter, r *http.Request) {
 	id := hex.EncodeToString(b)
 	ctx, cancel := context.WithTimeout(r.Context(), 3*time.Minute)
 	defer cancel()
-	out, err := exec.CommandContext(ctx, env("KK_YTDLP", ""), "--no-playlist", "--no-progress", "-x", "--audio-format", "m4a",
-		"--match-filter", "duration <= 600", "--max-filesize", "40M", "--print", "title", "--no-simulate",
-		"-o", filepath.Join(dir, id+".%(ext)s"), u.String()).Output()
+	err = exec.CommandContext(ctx, env("KK_YTDLP", ""), "--no-playlist", "--no-progress", "-q", "-x", "--audio-format", "m4a",
+		"--match-filter", "duration <= 600", "--max-filesize", "40M", "-o", filepath.Join(dir, id+".%(ext)s"), u.String()).Run()
 	file := filepath.Join(dir, id+".m4a")
 	if _, statErr := os.Stat(file); err != nil || statErr != nil {
 		http.Error(w, "Ton konnte nicht geladen werden", http.StatusBadGateway)
 		return
 	}
-	title := cleanTitle(strings.SplitN(string(out), "\n", 2)[0])
-	db.Exec(`INSERT INTO clips(user_id, id, url, title, created) VALUES(?,?,?,?,?)`, user, id, u.String(), truncate(title, 200), time.Now().Unix())
-	writeJSON(w, map[string]string{"id": id, "title": title})
+	// Kein Titel aus dem Reel (dort steht nur die Beschreibung) – einen eigenen kann man in der App vergeben
+	db.Exec(`INSERT INTO clips(user_id, id, url, created) VALUES(?,?,?,?)`, user, id, u.String(), time.Now().Unix())
+	writeJSON(w, map[string]string{"id": id})
 }
 
 // GET /api/clips → eigene Clips, neueste zuerst
@@ -100,6 +99,16 @@ func getClip(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, filepath.Join(clipDir(uid(r)), id+".m4a"))
 }
 
+// PUT /api/clips/{id} {title} → eigener Titel (leer = keiner)
+func renameClip(w http.ResponseWriter, r *http.Request) {
+	var req struct{ Title string }
+	if !readJSON(w, r, &req) {
+		return
+	}
+	db.Exec(`UPDATE clips SET title=? WHERE user_id=? AND id=?`, truncate(strings.TrimSpace(req.Title), 100), uid(r), r.PathValue("id"))
+	w.WriteHeader(http.StatusNoContent)
+}
+
 // DELETE /api/clips/{id}
 func deleteClip(w http.ResponseWriter, r *http.Request) {
 	id := r.PathValue("id")
@@ -110,23 +119,4 @@ func deleteClip(w http.ResponseWriter, r *http.Request) {
 	db.Exec(`DELETE FROM clips WHERE user_id=? AND id=?`, uid(r), id)
 	os.Remove(filepath.Join(clipDir(uid(r)), id+".m4a"))
 	w.WriteHeader(http.StatusNoContent)
-}
-
-// cleanTitle: Facebook liefert „136K views · 6.3K reactions | Beschreibung #tags | Seite“ – übrig bleibt
-// die Beschreibung ohne Hashtags, sonst der Seitenname
-func cleanTitle(t string) string {
-	parts := strings.Split(t, "|")
-	if len(parts) >= 3 {
-		t = strings.Join(parts[1:len(parts)-1], "|")
-		if strings.TrimSpace(strings.Split(t, "#")[0]) == "" {
-			t = parts[len(parts)-1]
-		}
-	}
-	var words []string
-	for _, w := range strings.Fields(t) {
-		if !strings.HasPrefix(w, "#") {
-			words = append(words, w)
-		}
-	}
-	return strings.TrimSpace(strings.Join(words, " "))
 }

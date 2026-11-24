@@ -53,6 +53,7 @@ func routes() http.Handler {
 	m.HandleFunc("POST /api/clips", auth(addClip))
 	m.HandleFunc("GET /api/clips", auth(listClips))
 	m.HandleFunc("GET /api/clips/{id}", auth(getClip))
+	m.HandleFunc("PUT /api/clips/{id}", auth(renameClip))
 	m.HandleFunc("DELETE /api/clips/{id}", auth(deleteClip))
 	m.HandleFunc("DELETE /api/data", auth(deleteData)) // „Nur auf dem iPhone“: gespeicherte Daten löschen
 	m.HandleFunc("GET /api/export", auth(export))

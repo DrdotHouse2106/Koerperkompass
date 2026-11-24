@@ -1741,6 +1741,16 @@
         }
       }
     },
+    "Clip gespeichert.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clip saved."
+          }
+        }
+      }
+    },
     "Clip gespeichert: %@": {
       "localizations": {
         "en": {
@@ -2727,6 +2737,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Your own server"
+          }
+        }
+      }
+    },
+    "Eigener Titel": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Custom title"
           }
         }
       }
@@ -9077,6 +9097,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tap and speak"
+          }
+        }
+      }
+    },
+    "Titel (optional)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Title (optional)"
           }
         }
       }

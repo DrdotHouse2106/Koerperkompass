@@ -80,9 +80,8 @@ struct SaveClipIntent: AppIntent {
         guard let server = UserDefaults.standard.string(forKey: "server"), !server.isEmpty, let token = Keychain.get("token") else {
             return .result(dialog: IntentDialog("Körperkompass ist noch nicht mit einem Server verbunden."))
         }
-        let r = try await API(server: server, token: token).object("POST", "/api/clips", json: ["url": url.absoluteString])
-        let title = r["title"] as? String ?? ""
-        return .result(dialog: IntentDialog(LocalizedStringResource(stringLiteral: String(localized: "Clip gespeichert: \(title)"))))
+        _ = try await API(server: server, token: token).object("POST", "/api/clips", json: ["url": url.absoluteString])
+        return .result(dialog: IntentDialog("Clip gespeichert."))
     }
 }
 
