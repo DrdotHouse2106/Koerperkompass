@@ -2021,6 +2021,16 @@
         }
       }
     },
+    "Dein Schlüssel liegt im iCloud-Schlüsselbund und ist auf deinen Geräten mit derselben Apple-ID automatisch da. Ist der Schlüsselbund aus oder weg, öffnest du deine Daten nur mit diesem Wiederherstellungsschlüssel – bewahre ihn sicher auf. Niemand sonst kann deine Daten wiederherstellen, auch nicht der Betreiber des Servers.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your key is stored in iCloud Keychain and is available automatically on your devices with the same Apple ID. If Keychain is off or lost, only this recovery key opens your data – keep it safe. Nobody else can recover your data, not even the server operator."
+          }
+        }
+      }
+    },
     "Dein Server erzeugt natürlichere Stimmen (Kartoffelbox bzw. Piper) – je Coach-Stil mit eigenem Tonfall. Ohne Verbindung spricht die iPhone-Stimme unten.": {
       "localizations": {
         "en": {
@@ -2157,6 +2167,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Your data is end-to-end encrypted"
+          }
+        }
+      }
+    },
+    "Deine Daten sind Ende-zu-Ende-verschlüsselt, der Schlüssel ist auf diesem Gerät nicht da (iCloud-Schlüsselbund aus oder andere Apple-ID). Gib dein Passwort oder den Wiederherstellungsschlüssel ein.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your data is end-to-end encrypted and the key is not on this device (iCloud Keychain off or a different Apple ID). Enter your password or recovery key."
           }
         }
       }
@@ -3017,6 +3037,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Entries and profile are encrypted on the iPhone. The server only sees module, date and time of entries, never their content."
+          }
+        }
+      }
+    },
+    "Einträge und Profil werden auf dem iPhone verschlüsselt. Der Server sieht nur Modul, Datum und Zeitpunkt der Einträge, nie die Inhalte. Der Schlüssel liegt in deinem iCloud-Schlüsselbund – auf einem neuen iPhone mit derselben Apple-ID sind deine Daten so ohne Passwort wieder da.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Entries and profile are encrypted on the iPhone. The server only sees module, date and time of entries, never their content. The key is in your iCloud Keychain – on a new iPhone with the same Apple ID your data is back without a password."
           }
         }
       }
@@ -6951,6 +6981,16 @@
         }
       }
     },
+    "Nur nötig, wenn du ohne iCloud-Schlüsselbund auf weitere Geräte willst. Das alte Passwort brauchst du hier nicht.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Only needed if you want to use other devices without iCloud Keychain. You don't need the old password here."
+          }
+        }
+      }
+    },
     "Nächster Rang ab Level %lld: %@": {
       "localizations": {
         "en": {
@@ -7197,6 +7237,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Wrong password"
+          }
+        }
+      }
+    },
+    "Passwort festlegen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Set password"
+          }
+        }
+      }
+    },
+    "Passwort gespeichert.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Password saved."
           }
         }
       }
@@ -10697,6 +10757,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Also in the evening"
+          }
+        }
+      }
+    },
+    "Zusätzliches Passwort (optional)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Additional password (optional)"
           }
         }
       }

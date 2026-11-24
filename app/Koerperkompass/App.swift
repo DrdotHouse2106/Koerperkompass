@@ -33,6 +33,10 @@ struct RootView: View {
                 NavigationStack { SetupView() }
             } else {
                 MainView()
+                    // Verschlüsselung wurde automatisch eingerichtet: Wiederherstellungsschlüssel einmal sichern lassen
+                    .sheet(isPresented: .constant(state.pendingRecovery != nil)) {
+                        NavigationStack { VaultView() }.interactiveDismissDisabled()
+                    }
             }
         }
         .onOpenURL { state.pendingLink = $0 }

@@ -35,6 +35,10 @@ import UIKit
     var pendingLink: URL?
     /// Ende-zu-Ende-Verschlüsselung aktiv, aber Schlüssel fehlt (z. B. neues Gerät) → Passwort abfragen
     var vaultLocked = Vault.locked
+    /// Wiederherstellungsschlüssel der automatisch eingerichteten Verschlüsselung, bis der Nutzer ihn gesichert hat
+    var pendingRecovery: String? = Keychain.get("vaultRecovery") {
+        didSet { Keychain.set("vaultRecovery", pendingRecovery) }
+    }
     private var pendingProfile: Data?  // verschlüsseltes Profil vom Server, bis der Tresor entsperrt ist
     private var lastRev: Int64 { didSet { defaults.set(lastRev, forKey: "lastRev") } }
     private var profileDirty = false
@@ -127,6 +131,13 @@ import UIKit
             ttsAvailable = status.tts ?? false; reelkochAvailable = status.reelkoch ?? false
             serverVersion = status.version
             if localOnly { syncError = nil; return }  // Daten bleiben auf dem iPhone
+            // Verschlüsselung standardmäßig: einmal prüfen, ob es auf dem Server schon einen Tresor gibt
+            // (dann gehört er zu diesem Konto – Schlüssel kommt aus dem iCloud-Schlüsselbund), sonst neu anlegen
+            if !Vault.enabled && !demo && !defaults.bool(forKey: "vaultChecked") {
+                let box = try JSONSerialization.jsonObject(with: try await api.call("GET", "/api/vault")) as? [String: Any] ?? [:]
+                if box.isEmpty { pendingRecovery = try await enableVault(password: nil, context) } else { Vault.enabled = true }
+                defaults.set(true, forKey: "vaultChecked")
+            }
             if Vault.locked { vaultLocked = true; syncError = String(localized: "Verschlüsselt – bitte Passwort eingeben"); return }
 
             let dirty = try context.fetch(FetchDescriptor<Entry>(predicate: #Predicate { $0.dirty }))
@@ -269,7 +280,7 @@ import UIKit
     }
 
     /// Verschlüsselung einschalten: neuer Schlüssel, alles einmal verschlüsselt neu hochladen. Gibt den Wiederherstellungsschlüssel zurück.
-    func enableVault(password: String, _ context: ModelContext) async throws -> String {
+    func enableVault(password: String?, _ context: ModelContext) async throws -> String {
         let (box, key, recovery) = Vault.create(password: password)
         if !demo && !localOnly { _ = try await api.call("PUT", "/api/vault", json: try JSONSerialization.jsonObject(with: JSONEncoder().encode(box))) }
         Vault.key = key

@@ -6,9 +6,10 @@ import Foundation
 /// Datenschlüssel verschlüsselt (AES-GCM), bevor sie zum Server gehen. Der Server sieht nur Modul, Datum und
 /// Zeitstempel der Einträge, nie die Inhalte.
 ///
-/// Der Datenschlüssel liegt im Schlüsselbund des iPhones. Auf dem Server liegt er nur zweifach verschlüsselt:
-/// mit dem Passwort und mit dem Wiederherstellungsschlüssel (je PBKDF2-SHA256). So kann ein weiteres Gerät ihn mit
-/// dem Passwort holen, und „Passwort vergessen“ geht mit dem Wiederherstellungsschlüssel – ohne Hintertür.
+/// Der Datenschlüssel liegt im iCloud-Schlüsselbund (von Apple Ende-zu-Ende-verschlüsselt) und ist so auf allen
+/// eigenen Geräten mit derselben Apple-ID da – ohne Passwort. Auf dem Server liegt er nur verschlüsselt: mit dem
+/// Wiederherstellungsschlüssel und, falls gesetzt, mit einem eigenen Passwort (je PBKDF2-SHA256) – ohne Hintertür.
+/// Neue Nutzer bekommen die Verschlüsselung automatisch (AppState.sync).
 enum Vault {
     /// Auf dem Server gespeicherte Angaben (alles ohne Passwort wertlos)
     struct Box: Codable {
@@ -31,7 +32,7 @@ enum Vault {
     /// Datenschlüssel aus dem Schlüsselbund (nil = gesperrt)
     static var key: SymmetricKey? {
         get { Keychain.get("vaultKey").flatMap { Data(base64Encoded: $0) }.map { SymmetricKey(data: $0) } }
-        set { Keychain.set("vaultKey", newValue.map { $0.withUnsafeBytes { Data($0) }.base64EncodedString() }) }
+        set { Keychain.set("vaultKey", newValue.map { $0.withUnsafeBytes { Data($0) }.base64EncodedString() }, sync: true) }
     }
 
     static var locked: Bool { enabled && key == nil }
@@ -71,11 +72,12 @@ enum Vault {
     }
 
     /// Neuer Tresor: Datenschlüssel, Box für den Server und Wiederherstellungsschlüssel
-    static func create(password: String) -> (box: Box, key: SymmetricKey, recovery: String) {
+    /// Ohne Passwort hilft auf neuen Geräten der iCloud-Schlüsselbund oder der Wiederherstellungsschlüssel.
+    static func create(password: String?) -> (box: Box, key: SymmetricKey, recovery: String) {
         let key = SymmetricKey(size: .bits256), code = recoveryCode()
         let salt = random(16), rsalt = random(16)
         let box = Box(rounds: rounds, salt: salt.base64EncodedString(),
-                      wrapped: wrap(key, with: derive(password, salt: salt, rounds: rounds)),
+                      wrapped: password.map { wrap(key, with: derive($0, salt: salt, rounds: rounds)) } ?? "",
                       rsalt: rsalt.base64EncodedString(),
                       rwrapped: wrap(key, with: derive(normalize(code), salt: rsalt, rounds: rounds)))
         return (box, key, code)

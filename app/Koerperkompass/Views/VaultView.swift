@@ -16,29 +16,29 @@ struct VaultView: View {
 
     var body: some View {
         Form {
-            if let recovery {
+            if let recovery = recovery ?? state.pendingRecovery {
                 Section {
                     Text(recovery).font(.title3.monospaced().bold()).textSelection(.enabled).frame(maxWidth: .infinity)
                     Button("Kopieren", systemImage: "doc.on.doc") { UIPasteboard.general.string = recovery }
                     ShareLink("Sichern (z. B. in Passwörtern oder Notizen)", item: String(localized: "Körperkompass-Wiederherstellungsschlüssel: \(recovery)"))
                     Toggle("Ich habe den Schlüssel sicher aufbewahrt", isOn: $saved)
-                    Button("Fertig") { self.recovery = nil }.disabled(!saved)
+                    Button("Fertig") { self.recovery = nil; state.pendingRecovery = nil }.disabled(!saved)
                 } header: { Text("Dein Wiederherstellungsschlüssel") } footer: {
-                    Text("Wird nur dieses eine Mal angezeigt. Damit setzt du ein neues Passwort, falls du deins vergisst. Ohne Passwort und ohne diesen Schlüssel kann niemand deine Daten wiederherstellen – auch nicht der Betreiber des Servers.")
+                    Text("Dein Schlüssel liegt im iCloud-Schlüsselbund und ist auf deinen Geräten mit derselben Apple-ID automatisch da. Ist der Schlüsselbund aus oder weg, öffnest du deine Daten nur mit diesem Wiederherstellungsschlüssel – bewahre ihn sicher auf. Niemand sonst kann deine Daten wiederherstellen, auch nicht der Betreiber des Servers.")
                 }
             } else if Vault.enabled {
                 Section {
                     Label("Deine Daten sind Ende-zu-Ende-verschlüsselt", systemImage: "lock.fill").foregroundStyle(.green)
                 } footer: {
-                    Text("Einträge und Profil werden auf dem iPhone verschlüsselt. Der Server sieht nur Modul, Datum und Zeitpunkt der Einträge, nie die Inhalte.")
+                    Text("Einträge und Profil werden auf dem iPhone verschlüsselt. Der Server sieht nur Modul, Datum und Zeitpunkt der Einträge, nie die Inhalte. Der Schlüssel liegt in deinem iCloud-Schlüsselbund – auf einem neuen iPhone mit derselben Apple-ID sind deine Daten so ohne Passwort wieder da.")
                 }
                 Section {
                     SecureField("Neues Passwort (mind. 8 Zeichen)", text: $password).textContentType(.newPassword)
                     SecureField("Wiederholen", text: $repeated).textContentType(.newPassword)
-                    Button("Passwort ändern") { run { try await state.changeVaultPassword(password); password = ""; repeated = ""; message = String(localized: "Passwort geändert.") } }
+                    Button("Passwort festlegen") { run { try await state.changeVaultPassword(password); password = ""; repeated = ""; message = String(localized: "Passwort gespeichert.") } }
                         .disabled(!valid || busy)
-                } header: { Text("Passwort ändern oder vergessen") } footer: {
-                    Text("Auf diesem iPhone brauchst du das alte Passwort nicht. Auf einem neuen Gerät hilft der Wiederherstellungsschlüssel.")
+                } header: { Text("Zusätzliches Passwort (optional)") } footer: {
+                    Text("Nur nötig, wenn du ohne iCloud-Schlüsselbund auf weitere Geräte willst. Das alte Passwort brauchst du hier nicht.")
                 }
                 Section {
                     Button("Verschlüsselung ausschalten", role: .destructive) { confirmOff = true }
@@ -97,7 +97,7 @@ struct VaultUnlockView: View {
                         .disabled(busy || (useRecovery ? recovery.isEmpty : password.isEmpty))
                     if let error { Text(error).foregroundStyle(.red) }
                 } footer: {
-                    Text("Deine Daten sind Ende-zu-Ende-verschlüsselt. Gib dein Passwort ein, um sie auf diesem Gerät zu öffnen.")
+                    Text("Deine Daten sind Ende-zu-Ende-verschlüsselt, der Schlüssel ist auf diesem Gerät nicht da (iCloud-Schlüsselbund aus oder andere Apple-ID). Gib dein Passwort oder den Wiederherstellungsschlüssel ein.")
                 }
                 Section {
                     Button(useRecovery ? LocalizedStringKey("Doch mit Passwort") : "Passwort vergessen?") { useRecovery.toggle(); error = nil }

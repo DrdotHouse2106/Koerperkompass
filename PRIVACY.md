@@ -61,9 +61,9 @@ Fügst du einen Link zu einer Rezeptseite ein, ruft dein Server diese Seite ab u
 
 Dein Server zählt bei jeder Claude-Anfrage nur die Anzahl der Tokens (pro Tag und Modell), keine Inhalte. Du siehst den Verbrauch in den Einstellungen unter „KI-Verbrauch“.
 
-## Ende-zu-Ende-Verschlüsselung (optional)
+## Ende-zu-Ende-Verschlüsselung (standardmäßig an)
 
-Unter Einstellungen → Verschlüsselung kannst du ein eigenes Passwort festlegen. Dann werden Einträge und Profil **auf dem iPhone verschlüsselt** (AES-GCM, Schlüssel aus dem Passwort mit PBKDF2 abgeleitet), bevor sie an den Server gehen. Der Server – und wer ihn betreibt – sieht nur Modul, Datum und Zeitpunkt der Einträge, nicht deren Inhalt. Passwort und Schlüssel verlassen das iPhone nie im Klartext. Für „Passwort vergessen“ bekommst du einen Wiederherstellungsschlüssel; vergisst du beides, sind die Daten auf dem Server nicht wiederherstellbar. Nicht verschlüsselt sind die Spielerkarte für Freunde sowie Daten, die du ausdrücklich an Claude, die Sprachausgabe oder als freiwillige Protokolle bzw. anonyme Verbesserungsdaten sendest.
+Einträge und Profil werden **auf dem iPhone verschlüsselt** (AES-GCM mit einem zufälligen 256-Bit-Schlüssel), bevor sie an den Server gehen. Die App richtet das beim ersten Abgleich automatisch ein. Der Server – und wer ihn betreibt – sieht nur Modul, Datum und Zeitpunkt der Einträge, nicht deren Inhalt. Der Schlüssel liegt in deinem **iCloud-Schlüsselbund** (von Apple Ende-zu-Ende-verschlüsselt), damit deine Daten auf einem neuen iPhone mit derselben Apple-ID ohne Passwort wieder da sind; in iCloud liegt dabei nur der Schlüssel, keine Gesundheitsdaten. Auf dem Server liegt der Schlüssel nur verschlüsselt – mit deinem Wiederherstellungsschlüssel und, falls du eins festlegst, mit einem zusätzlichen Passwort (je PBKDF2). Verlierst du Schlüsselbund, Wiederherstellungsschlüssel und Passwort, sind die Daten auf dem Server nicht wiederherstellbar. Nicht verschlüsselt sind die Spielerkarte für Freunde sowie Daten, die du ausdrücklich an Claude, die Sprachausgabe oder als freiwillige Protokolle bzw. anonyme Verbesserungsdaten sendest. Ausschalten kannst du die Verschlüsselung unter Einstellungen → Verschlüsselung.
 
 ## Nur auf dem iPhone (optional)
 
@@ -153,9 +153,9 @@ If you paste a link to a recipe website, your server fetches the page and takes 
 
 For every Claude request your server counts only the number of tokens (per day and model), no content. You can see it in Settings under “AI usage”.
 
-## End-to-end encryption (optional)
+## End-to-end encryption (on by default)
 
-Under Settings → Encryption you can set your own password. Entries and profile are then **encrypted on the iPhone** (AES-GCM, key derived from the password with PBKDF2) before they are sent to the server. The server – and whoever operates it – only sees module, date and time of entries, not their content. Password and key never leave the iPhone in plain text. For “forgot password” you get a recovery key; if you lose both, the data on the server cannot be recovered. Not encrypted are the player card for friends and data you explicitly send to Claude, speech output, or as optional logs or anonymous improvement data.
+Entries and profile are **encrypted on the iPhone** (AES-GCM with a random 256-bit key) before they are sent to the server; the app sets this up automatically on the first sync. The server – and whoever operates it – only sees module, date and time of entries, not their content. The key is stored in your **iCloud Keychain** (end-to-end encrypted by Apple), so your data is back on a new iPhone with the same Apple ID without a password; only the key is in iCloud, no health data. On the server the key is only stored encrypted – with your recovery key and, if you set one, an additional password (PBKDF2 each). If you lose Keychain, recovery key and password, the data on the server cannot be recovered. Not encrypted are the player card for friends and data you explicitly send to Claude, speech output, or as optional logs or anonymous improvement data. You can turn encryption off under Settings → Encryption.
 
 ## iPhone only (optional)
 

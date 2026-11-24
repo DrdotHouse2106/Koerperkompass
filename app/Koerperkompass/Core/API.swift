@@ -77,8 +77,9 @@ struct API {
 
 /// Das Token liegt im Schlüsselbund, nicht in den UserDefaults.
 enum Keychain {
+    /// Findet Einträge mit und ohne iCloud-Abgleich
     private static func query(_ key: String) -> [String: Any] {
-        [kSecClass as String: kSecClassGenericPassword, kSecAttrAccount as String: key]
+        [kSecClass as String: kSecClassGenericPassword, kSecAttrAccount as String: key, kSecAttrSynchronizable as String: kSecAttrSynchronizableAny]
     }
 
     static func get(_ key: String) -> String? {
@@ -89,10 +90,12 @@ enum Keychain {
         return String(data: d, encoding: .utf8)
     }
 
-    static func set(_ key: String, _ value: String?) {
+    /// sync: über den iCloud-Schlüsselbund auf die eigenen Geräte übertragen (von Apple Ende-zu-Ende-verschlüsselt)
+    static func set(_ key: String, _ value: String?, sync: Bool = false) {
         SecItemDelete(query(key) as CFDictionary)
         guard let value else { return }
         var q = query(key)
+        q[kSecAttrSynchronizable as String] = sync
         q[kSecValueData as String] = Data(value.utf8)
         q[kSecAttrAccessible as String] = kSecAttrAccessibleAfterFirstUnlock
         SecItemAdd(q as CFDictionary, nil)
