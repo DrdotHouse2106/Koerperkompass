@@ -80,12 +80,18 @@ struct CoachView: View {
                                 .frame(maxWidth: .infinity, alignment: .leading).id("busy")
                         }
                         if let error { Text(error).font(.caption).foregroundStyle(.red) }
+                        Color.clear.frame(height: 1).id("end")
                     }
                     .padding()
                 }
+                .defaultScrollAnchor(.bottom)  // beim Öffnen am Ende des Gesprächs
                 .scrollDismissesKeyboard(.interactively)  // Verlauf nach unten ziehen schließt die Tastatur
-                .onChange(of: messages.count) { withAnimation { proxy.scrollTo(messages.count - 1, anchor: .bottom) } }
-                .onChange(of: busy) { if busy { withAnimation { proxy.scrollTo("busy", anchor: .bottom) } } }
+                // Bei jeder neuen Nachricht (auch wenn der Verlauf voll ist und die Anzahl gleich bleibt), beim Nachdenken
+                // und beim Öffnen der Tastatur ans Ende springen
+                .onChange(of: stored) { withAnimation { proxy.scrollTo("end", anchor: .bottom) } }
+                .onChange(of: busy) { withAnimation { proxy.scrollTo("end", anchor: .bottom) } }
+                .onChange(of: inputFocused) { if inputFocused { withAnimation { proxy.scrollTo("end", anchor: .bottom) } } }
+                .onAppear { proxy.scrollTo("end", anchor: .bottom) }
             }
             .safeAreaInset(edge: .bottom) { inputBar }
             .toolbar {
