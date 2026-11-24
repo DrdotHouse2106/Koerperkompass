@@ -91,7 +91,7 @@ struct CoachView: View {
                 .onChange(of: stored) { withAnimation { proxy.scrollTo("end", anchor: .bottom) } }
                 .onChange(of: busy) { withAnimation { proxy.scrollTo("end", anchor: .bottom) } }
                 .onChange(of: inputFocused) { if inputFocused { withAnimation { proxy.scrollTo("end", anchor: .bottom) } } }
-                .onAppear { proxy.scrollTo("end", anchor: .bottom) }
+                .onAppear { proxy.scrollTo("end", anchor: .bottom); AppLog.add("Coach: Ansicht neu, \(messages.count) Nachrichten") }
             }
             .safeAreaInset(edge: .bottom) { inputBar }
             .toolbar {

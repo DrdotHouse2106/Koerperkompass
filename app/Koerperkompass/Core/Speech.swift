@@ -57,6 +57,9 @@ import Speech
         }
         do {
             try Speaker.activateSession(record: true)
+            let route = AVAudioSession.sharedInstance().currentRoute
+            AppLog.add("Mikro: " + route.inputs.map { "\($0.portType.rawValue) (\($0.portName))" }.joined(separator: ", ")
+                + " → Ausgabe: " + route.outputs.map(\.portType.rawValue).joined(separator: ", "))
             let req = SFSpeechAudioBufferRecognitionRequest()
             req.shouldReportPartialResults = true
             if recognizer?.supportsOnDeviceRecognition == true { req.requiresOnDeviceRecognition = true }
