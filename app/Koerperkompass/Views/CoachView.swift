@@ -331,7 +331,8 @@ struct CoachView: View {
                     "messages": list.suffix(30).map { m in
                         ["role": m.role, "content": (m.day ?? "") == Day.today ? m.text : "[\(m.day.map { Day.date($0).formatted(date: .abbreviated, time: .omitted) } ?? String(localized: "früher"))] " + m.text]
                     },
-                    "context": coachContext(entries, state.profile, healthUpload: state.healthUpload),
+                    "context": coachContext(entries, state.profile, healthUpload: state.healthUpload,
+                                            mention: list.filter { $0.role == "user" }.suffix(3).map(\.text).joined(separator: " ")),
                     "lang": Locale.current.language.languageCode?.identifier ?? "de",
                     "voice": talking,  // Gesprächsmodus: kurz und gesprochen antworten
                 ])
@@ -460,7 +461,8 @@ struct CoachView: View {
 }
 
 /// Zusammenfassung der eigenen Daten für den Coach. Health-Daten nur mit Zustimmung zum Hochladen.
-func coachContext(_ all: [Entry], _ p: Profile, healthUpload: Bool) -> String {
+/// mention: zuletzt Gesagtes – dort erwähnte Rezepte bekommen ihre Zutaten mit
+func coachContext(_ all: [Entry], _ p: Profile, healthUpload: Bool, mention: String = "") -> String {
     let entries = all.filter { !$0.deleted && (healthUpload || !($0.id.hasPrefix("activity-") || $0.id.hasPrefix("health-"))) }
     let today = entries.filter { $0.date == Day.today }
     func sum(_ module: String, _ key: String) -> Double {
@@ -499,7 +501,11 @@ func coachContext(_ all: [Entry], _ p: Profile, healthUpload: Bool) -> String {
         if !stats.isEmpty { lines.append("\(String(localized: m.name)):\n" + stats.map(\.text).joined(separator: "\n")) }
     }
     lines.append("\nTraining (4 Wochen):\n" + trainingHistory(entries))
-    let recipes = entries.filter { $0.module == "recipes" }.prefix(40).map(\.recipeLine)
+    let said = mention.lowercased()
+    let recipes = entries.filter { $0.module == "recipes" }.prefix(40).map { e in
+        let hit = (e.text("title") ?? "").lowercased().split { !$0.isLetter }.contains { $0.count >= 4 && said.contains($0) }
+        return e.recipeLine + (hit && !e.ingredients.isEmpty ? " – Zutaten: " + e.ingredients.map { [$0.amount, $0.name].filter { !$0.isEmpty }.joined(separator: " ") }.joined(separator: ", ") : "")
+    }
     if !recipes.isEmpty { lines.append("\nEigene Rezeptsammlung (gern passend vorschlagen):\n- " + recipes.joined(separator: "\n- ")) }
     return lines.joined(separator: "\n")
 }
