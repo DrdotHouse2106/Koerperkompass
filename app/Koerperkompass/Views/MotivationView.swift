@@ -416,7 +416,7 @@ struct ClipPage: View {
             }
             guard let data, let p = try? AVAudioPlayer(data: data) else { error = String(localized: "Ton konnte nicht geladen werden"); return }
             if lines.isEmpty { Task { lines = await ClipLine.transcript(file) } }
-            try? Speaker.activateSession()
+            try? Speaker.activateSession(record: false)
             player = p
             p.play()
             playing = true

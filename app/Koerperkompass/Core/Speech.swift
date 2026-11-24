@@ -56,7 +56,7 @@ import Speech
             return
         }
         do {
-            try Speaker.activateSession()
+            try Speaker.activateSession(record: true)
             let req = SFSpeechAudioBufferRecognitionRequest()
             req.shouldReportPartialResults = true
             if recognizer?.supportsOnDeviceRecognition == true { req.requiresOnDeviceRecognition = true }
@@ -111,9 +111,13 @@ import Speech
     /// Coach-Stil: bestimmt die Stimme auf dem Server
     var persona = "coach"
 
-    static func activateSession() throws {
+    /// record: true = Mikrofon des Headsets nutzen (AirPods & Co. über Bluetooth-HFP), false = nur Wiedergabe in voller
+    /// Qualität (A2DP), nil = so lassen (damit im Gespräch zwischen Zuhören und Sprechen nicht hin- und hergeschaltet wird)
+    static func activateSession(record: Bool? = nil) throws {
         let audio = AVAudioSession.sharedInstance()
-        try audio.setCategory(.playAndRecord, mode: .default, options: [.duckOthers, .defaultToSpeaker, .allowBluetoothA2DP])
+        var options: AVAudioSession.CategoryOptions = [.duckOthers, .defaultToSpeaker, .allowBluetoothA2DP]
+        if record ?? audio.categoryOptions.contains(.allowBluetooth) { options.insert(.allowBluetooth) }
+        try audio.setCategory(.playAndRecord, mode: .default, options: options)
         try audio.setActive(true)
     }
 
