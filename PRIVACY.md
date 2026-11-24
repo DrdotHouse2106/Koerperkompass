@@ -25,6 +25,10 @@ Ist auf deinem Server ein eigener Claude-API-Key hinterlegt, kannst du Fotos von
 
 Wenn du Freundschaften schließt, gibt dein Server deine **Spielerkarte** an die Server deiner Freunde weiter: Name, Level, Rang, Klasse, Serie, Anzahl der Erfolge und Workouts sowie Wochenwerte der Challenge. **Gesundheitsdaten werden nie geteilt.** Deine Freunde siehst nur du – außer du schaltest „Meine Freunde meinen Freunden zeigen“ ein; Freunde von Freunden erscheinen nur, wenn diese selbst zugestimmt haben. Beendest du eine Freundschaft, löschen beide Server die gespeicherten Werte.
 
+## Stimmung
+
+Im Modul „Stimmung“ trägst du deine Stimmung, Gefühle und Lebensbereiche ein. Sie werden wie andere Einträge auf deinem iPhone und deinem Server gespeichert (mit Ende-zu-Ende-Verschlüsselung nur verschlüsselt) und – mit Health-Freigabe – auch in Apple Health („Gemütszustand“). Stimmungen, die du in Apple Health oder anderen Apps einträgst, liest die App mit deiner Freigabe; zum Server gehen sie wie alle Health-Daten nur mit deiner Zustimmung zum Hochladen. An Claude geht – nur mit deiner Zustimmung – höchstens eine Zusammenfassung (z. B. Durchschnitt der letzten 7 Tage).
+
 ## Über mich: Geräte und was der Coach weiß
 
 Deine Trainingsgeräte, dein Tagesablauf („Mein Alltag“) und die Tatsachen, die sich der Gesundheitscoach im Gespräch merkt (z. B. Beschwerden, verfügbare Zeit, Vorlieben), stehen in deinem Profil – auf deinem iPhone und deinem eigenen Server. An Claude gehen sie nur mit deiner Zustimmung, als Teil des Profils. Du siehst und löschst sie unter Einstellungen → Über mich.
@@ -108,6 +112,10 @@ If your server is configured with its own Claude API key, you can have meal phot
 ## Friends (optional)
 
 If you make friends, your server shares your **player card** with your friends’ servers: name, level, rank, class, streak, number of achievements and workouts, and weekly challenge values. **Health data is never shared.** Only you see your friends – unless you turn on “Show my friends to my friends”; friends of friends only appear if they agreed themselves. Ending a friendship deletes the stored values on both servers.
+
+## Mood
+
+In the “Mood” module you log your mood, feelings and areas of life. They are stored like other entries on your iPhone and your server (only encrypted with end-to-end encryption) and – with Health permission – in Apple Health (“State of Mind”). Moods you log in Apple Health or other apps are read with your permission; like all Health data they only go to the server if you agreed to uploading. Claude receives – only with your consent – at most a summary (e.g. the 7-day average).
 
 ## About me: equipment and what the coach knows
 

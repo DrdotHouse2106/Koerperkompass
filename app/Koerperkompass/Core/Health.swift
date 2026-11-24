@@ -6,12 +6,23 @@ enum Health {
     static let store = HKHealthStore()
     static var available: Bool { HKHealthStore.isHealthDataAvailable() }
 
-    static let readTypes: Set<HKObjectType> = [
+    static var readTypes: Set<HKObjectType> {
+        var t = baseRead
+        if #available(iOS 18.0, *) { t.insert(HKSampleType.stateOfMindType()) }  // Gemütszustand (Stimmung)
+        return t
+    }
+    static var writeTypes: Set<HKSampleType> {
+        var t = baseWrite
+        if #available(iOS 18.0, *) { t.insert(HKSampleType.stateOfMindType()) }
+        return t
+    }
+
+    private static let baseRead: Set<HKObjectType> = [
         HKQuantityType(.stepCount), HKQuantityType(.activeEnergyBurned), HKQuantityType(.restingHeartRate),
         HKQuantityType(.bodyMass), HKCategoryType(.sleepAnalysis), HKObjectType.workoutType(),
         HKQuantityType(.bodyFatPercentage), HKQuantityType(.leanBodyMass),  // Körperfettwaagen (über deren App nach Health)
     ]
-    static let writeTypes: Set<HKSampleType> = [
+    private static let baseWrite: Set<HKSampleType> = [
         HKQuantityType(.bodyMass), HKQuantityType(.dietaryEnergyConsumed), HKQuantityType(.dietaryProtein),
         HKQuantityType(.dietaryCarbohydrates), HKQuantityType(.dietaryFatTotal),
     ]
@@ -93,6 +104,31 @@ enum Health {
     static func averageActiveEnergy() async -> Double? {
         let values = await daily(.activeEnergyBurned, .kilocalorie(), sum: true, days: 14).values.filter { $0 > 0 }
         return values.count >= 3 ? values.reduce(0, +) / Double(values.count) : nil
+    }
+
+    // MARK: Gemütszustand (State of Mind, ab iOS 18)
+
+    /// Stimmung speichern: Stufe 1–7 → Valenz −1…1, dazu Gefühle und Lebensbereiche (Kennungen aus MoodModule)
+    static func saveMood(level: Int, daily: Bool, feelings: [String], areas: [String]) {
+        guard #available(iOS 18.0, *) else { return }
+        let s = HKStateOfMind(date: Date(), kind: daily ? .dailyMood : .momentaryEmotion, valence: Mood.valence(level),
+                              labels: feelings.compactMap { Mood.hkLabels[$0] }, associations: areas.compactMap { Mood.hkAreas[$0] })
+        store.save(s) { _, _ in }
+    }
+
+    /// Stimmungen aus Health (andere Apps, Health-App, Watch); eigene werden übersprungen
+    static func moods(days: Int) async -> [(id: String, date: String, values: [String: Any])] {
+        guard #available(iOS 18.0, *) else { return [] }
+        let p = HKQuery.predicateForSamples(withStart: since(days), end: nil)
+        let samples = (try? await HKSampleQueryDescriptor(predicates: [.stateOfMind(p)], sortDescriptors: []).result(for: store)) ?? []
+        return samples.filter { $0.sourceRevision.source != HKSource.default() }.map { s in
+            let feelings = s.labels.compactMap { l in Mood.hkLabels.first { $0.value == l }?.key }
+            let areas = s.associations.compactMap { a in Mood.hkAreas.first { $0.value == a }?.key }
+            return ("health-" + s.uuid.uuidString, Day.string(s.startDate), [
+                "mood": Mood.level(s.valence), "valence": s.valence, "feelings": feelings, "areas": areas,
+                "kind": s.kind == .dailyMood ? "daily" : "moment", "time": s.startDate.formatted(.dateTime.hour(.twoDigits(amPM: .omitted)).minute(.twoDigits)),
+            ])
+        }
     }
 
     static func saveWeight(_ kg: Double) {

@@ -126,6 +126,8 @@ struct CompassView: View {
     private var correlations: [String] {
         let pairs: [(String, String, String, String, LocalizedStringResource)] = [
             ("activity", "sleepHours", "nutrition", "kcal", "Schlaf und Kalorien"),
+            ("activity", "sleepHours", "mood", "mood", "Schlaf und Stimmung"),
+            ("activity", "steps", "mood", "mood", "Schritte und Stimmung"),
             ("activity", "steps", "nutrition", "kcal", "Schritte und Kalorien"),
             ("activity", "sleepHours", "activity", "steps", "Schlaf und Schritte"),
         ]

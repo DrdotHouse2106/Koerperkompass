@@ -326,6 +326,9 @@ import UIKit
         for m in await Health.bodyMeasurements(days: days) {
             context.upsert(id: m.id, module: "body", date: m.date, values: m.values, dirty: healthUpload)
         }
+        for m in await Health.moods(days: days) {
+            context.upsert(id: m.id, module: "mood", date: m.date, values: m.values, dirty: healthUpload)
+        }
         changed(context)
     }
 

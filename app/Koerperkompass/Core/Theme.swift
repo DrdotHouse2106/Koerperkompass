@@ -20,6 +20,7 @@ enum Theme {
         case "training", "exercises": .purple
         case "quests": orange
         case "recipes": .yellow
+        case "mood": .mint
         default: petrol
         }
     }

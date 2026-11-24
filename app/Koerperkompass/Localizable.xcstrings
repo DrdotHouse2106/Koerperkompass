@@ -981,6 +981,16 @@
         }
       }
     },
+    "Angenehm": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pleasant"
+          }
+        }
+      }
+    },
     "Anleitung": {
       "localizations": {
         "en": {
@@ -1101,6 +1111,16 @@
         }
       }
     },
+    "Arbeit": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Work"
+          }
+        }
+      }
+    },
     "Arbeitszeiten, feste Termine, Essens- und Schlafenszeiten. Dein Coach richtet Uhrzeiten danach – und ergänzt es, wenn du ihm im Gespräch davon erzählst.": {
       "localizations": {
         "en": {
@@ -1157,6 +1177,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Refill, please ⛽️"
+          }
+        }
+      }
+    },
+    "Aufgaben": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tasks"
           }
         }
       }
@@ -1401,6 +1431,16 @@
         }
       }
     },
+    "Begeistert": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Excited"
+          }
+        }
+      }
+    },
     "Bei gesundem Tempo voraussichtlich erreicht: %@": {
       "localizations": {
         "en": {
@@ -1447,6 +1487,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Send description to Claude?"
+          }
+        }
+      }
+    },
+    "Besorgt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Worried"
           }
         }
       }
@@ -1747,6 +1797,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "For the coach to answer, a Claude API key must be set on your server (ANTHROPIC_API_KEY, see guide)."
+          }
+        }
+      }
+    },
+    "Dankbar": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Grateful"
           }
         }
       }
@@ -2611,6 +2671,26 @@
         }
       }
     },
+    "Eher angenehm": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Slightly pleasant"
+          }
+        }
+      }
+    },
+    "Eher unangenehm": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Slightly unpleasant"
+          }
+        }
+      }
+    },
     "Eigene Quests": {
       "localizations": {
         "en": {
@@ -2811,6 +2891,16 @@
         }
       }
     },
+    "Eingetragen ✓": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Logged ✓"
+          }
+        }
+      }
+    },
     "Eingetragen! 90 Sekunden Pause.": {
       "localizations": {
         "en": {
@@ -2877,6 +2967,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Setup"
+          }
+        }
+      }
+    },
+    "Einsam": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lonely"
           }
         }
       }
@@ -3131,12 +3231,32 @@
         }
       }
     },
+    "Erleichtert": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Relieved"
+          }
+        }
+      }
+    },
     "Ernährung": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Nutrition"
+          }
+        }
+      }
+    },
+    "Erschöpft": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drained"
           }
         }
       }
@@ -3281,6 +3401,16 @@
         }
       }
     },
+    "Familie": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Family"
+          }
+        }
+      }
+    },
     "Faszienrolle": {
       "localizations": {
         "en": {
@@ -3337,6 +3467,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Lean mass"
+          }
+        }
+      }
+    },
+    "Fitness": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fitness"
           }
         }
       }
@@ -3581,6 +3721,16 @@
         }
       }
     },
+    "Frustriert": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Frustrated"
+          }
+        }
+      }
+    },
     "Frühstück": {
       "localizations": {
         "en": {
@@ -3751,12 +3901,32 @@
         }
       }
     },
+    "Gefühl für den ganzen Tag": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Feeling for the whole day"
+          }
+        }
+      }
+    },
     "Gegessen": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Eaten"
+          }
+        }
+      }
+    },
+    "Geld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Money"
           }
         }
       }
@@ -3787,6 +3957,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Just right"
+          }
+        }
+      }
+    },
+    "Gereizt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Irritated"
           }
         }
       }
@@ -3891,12 +4071,32 @@
         }
       }
     },
+    "Gestresst": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stressed"
+          }
+        }
+      }
+    },
     "Gesund essen": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Eat healthy"
+          }
+        }
+      }
+    },
+    "Gesundheit": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Health"
           }
         }
       }
@@ -4051,12 +4251,32 @@
         }
       }
     },
+    "Gleichgültig": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Indifferent"
+          }
+        }
+      }
+    },
     "Gleichmäßiges Tempo, du machst das gut.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Steady tempo, you’re doing well."
+          }
+        }
+      }
+    },
+    "Glücklich": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Happy"
           }
         }
       }
@@ -4357,6 +4577,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Add"
+          }
+        }
+      }
+    },
+    "Hobbys": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hobbies"
+          }
+        }
+      }
+    },
+    "Hoffnungsvoll": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hopeful"
           }
         }
       }
@@ -4867,6 +5107,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Not medical advice – please see a doctor about any complaints."
+          }
+        }
+      }
+    },
+    "Keine ärztliche Beratung. Fühlst du dich über längere Zeit niedergeschlagen oder überfordert, sprich mit einer Ärztin, einem Arzt oder der Telefonseelsorge (0800 111 0 111, rund um die Uhr, kostenlos).": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not medical advice. If you feel down or overwhelmed for a longer time, talk to a doctor or a crisis line (in Germany: Telefonseelsorge 0800 111 0 111, free, 24/7)."
           }
         }
       }
@@ -5497,6 +5747,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Read"
+          }
+        }
+      }
+    },
+    "Letzte 14 Tage": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Last 14 days"
           }
         }
       }
@@ -6351,6 +6611,16 @@
         }
       }
     },
+    "Neutral": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Neutral"
+          }
+        }
+      }
+    },
     "Nichts erkannt – beschreib es etwas genauer.": {
       "localizations": {
         "en": {
@@ -6687,6 +6957,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "BREAK'S OVER, RECRUIT! On your feet! You think the enemy takes breaks too?! NEXT SET, NOW!"
+          }
+        }
+      }
+    },
+    "Partnerschaft": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Partner"
           }
         }
       }
@@ -7231,6 +7511,16 @@
         }
       }
     },
+    "Reisen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Travel"
+          }
+        }
+      }
+    },
     "Rekord Gewicht": {
       "localizations": {
         "en": {
@@ -7387,6 +7677,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Rest day"
+          }
+        }
+      }
+    },
+    "Ruhig": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calm"
           }
         }
       }
@@ -7601,6 +7901,16 @@
         }
       }
     },
+    "Schlaf und Stimmung": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sleep and mood"
+          }
+        }
+      }
+    },
     "Schlaf – letzte 7 Tage": {
       "localizations": {
         "en": {
@@ -7677,6 +7987,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Steps and calories"
+          }
+        }
+      }
+    },
+    "Schritte und Stimmung": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Steps and mood"
           }
         }
       }
@@ -7761,6 +8081,26 @@
         }
       }
     },
+    "Sehr angenehm": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Very pleasant"
+          }
+        }
+      }
+    },
+    "Sehr unangenehm": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Very unpleasant"
+          }
+        }
+      }
+    },
     "Seitheben – 3 × 12–15": {
       "localizations": {
         "en": {
@@ -7777,6 +8117,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Side plank – 3 × 30 s per side"
+          }
+        }
+      }
+    },
+    "Selbstfürsorge": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Self-care"
+          }
+        }
+      }
+    },
+    "Selbstsicher": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Confident"
           }
         }
       }
@@ -8137,6 +8497,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Voice from my server"
+          }
+        }
+      }
+    },
+    "Stimmung": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mood"
+          }
+        }
+      }
+    },
+    "Stolz": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Proud"
           }
         }
       }
@@ -8601,6 +8981,16 @@
         }
       }
     },
+    "Traurig": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sad"
+          }
+        }
+      }
+    },
     "Trennen und lokale Daten löschen": {
       "localizations": {
         "en": {
@@ -8757,6 +9147,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Time"
+          }
+        }
+      }
+    },
+    "Unangenehm": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unpleasant"
           }
         }
       }
@@ -9201,6 +9601,26 @@
         }
       }
     },
+    "Was beeinflusst dich?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What is affecting you?"
+          }
+        }
+      }
+    },
+    "Was beschreibt es am besten?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What describes it best?"
+          }
+        }
+      }
+    },
     "Was dein Coach über dich weiß": {
       "localizations": {
         "en": {
@@ -9481,6 +9901,16 @@
         }
       }
     },
+    "Wetter": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Weather"
+          }
+        }
+      }
+    },
     "Widerstandsbänder": {
       "localizations": {
         "en": {
@@ -9501,12 +9931,32 @@
         }
       }
     },
+    "Wie fühlst du dich gerade?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How do you feel right now?"
+          }
+        }
+      }
+    },
     "Wie geht’s dir heute? Hol dir dein Tagesbriefing im Coach.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "How are you today? Get your daily briefing from the coach."
+          }
+        }
+      }
+    },
+    "Wie geht’s dir?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How are you?"
           }
         }
       }
@@ -9577,6 +10027,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Welcome to Körperkompass"
+          }
+        }
+      }
+    },
+    "Wird auch in Apple Health unter „Gemütszustand“ gespeichert (ab iOS 18).": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Also saved in Apple Health under “State of Mind” (iOS 18+)."
           }
         }
       }
@@ -9837,6 +10297,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Preparation"
+          }
+        }
+      }
+    },
+    "Zufrieden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Content"
           }
         }
       }
@@ -10111,6 +10581,26 @@
         }
       }
     },
+    "Ängstlich": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anxious"
+          }
+        }
+      }
+    },
+    "Ø 7 Tage: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avg 7 days: %@"
+          }
+        }
+      }
+    },
     "Über": {
       "localizations": {
         "en": {
@@ -10147,6 +10637,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "About me – equipment and what your coach knows"
+          }
+        }
+      }
+    },
+    "Überfordert": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Overwhelmed"
           }
         }
       }
