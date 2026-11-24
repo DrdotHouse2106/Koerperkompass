@@ -373,6 +373,7 @@ private struct RecipeTextSheet: View {
 private struct RecipeView: View {
     let entry: Entry
     @State private var eat = false
+    @State private var cook = false
     @State private var pick: PhotosPickerItem?
     @State private var camera = false
     @State private var shot: UIImage?
@@ -408,6 +409,9 @@ private struct RecipeView: View {
                     Text("Geschätzte Werte – keine ärztliche Beratung.").font(.caption2).foregroundStyle(.secondary)
                 }
                 Button("Gegessen", systemImage: "fork.knife") { eat = true }.bold()
+                if state.aiAvailable {
+                    Button("Mit dem Coach kochen", systemImage: "frying.pan") { cook = true }.bold()
+                }
             }
             Section("Zutaten") {
                 ForEach(Array(entry.ingredients.enumerated()), id: \.offset) { _, z in
@@ -439,6 +443,7 @@ private struct RecipeView: View {
         .navigationTitle(Text(entry.text("title") ?? ""))
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $eat) { EatSheet(entry: entry) }
+        .fullScreenCover(isPresented: $cook) { CookView(title: entry.text("title") ?? "", recipe: entry.recipeText) }
         .onChange(of: pick) { Task { if let d = try? await pick?.loadTransferable(type: Data.self) { setPhoto(UIImage(data: d)) } } }
         .onChange(of: shot) { setPhoto(shot) }
         .sheet(isPresented: $camera) { CameraPicker(image: $shot).ignoresSafeArea() }

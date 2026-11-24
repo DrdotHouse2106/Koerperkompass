@@ -2031,6 +2031,16 @@
         }
       }
     },
+    "Dein Kochcoach überlegt …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your cooking coach is thinking …"
+          }
+        }
+      }
+    },
     "Dein Körper besteht zu rund 60 Prozent aus Wasser – füll nach!": {
       "localizations": {
         "en": {
@@ -3691,12 +3701,32 @@
         }
       }
     },
+    "Frag beim Kochen …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ask while cooking …"
+          }
+        }
+      }
+    },
     "Frag deinen Coach …": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Ask your coach …"
+          }
+        }
+      }
+    },
+    "Freihändig": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hands-free"
           }
         }
       }
@@ -3877,6 +3907,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "For your skin ✨"
+          }
+        }
+      }
+    },
+    "Für die Kochhilfe gehen das Rezept und deine Fragen über deinen Server an Claude (Anthropic). Gesundheitsdaten werden nicht gesendet.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "For cooking help, the recipe and your questions go to Claude (Anthropic) via your server. No health data is sent."
           }
         }
       }
@@ -4847,6 +4887,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Listening …"
+          }
+        }
+      }
+    },
+    "Ich möchte jetzt kochen. Was muss ich bereitlegen, und was ist der erste Schritt?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I want to start cooking now. What do I need to get ready, and what's the first step?"
           }
         }
       }
@@ -6451,6 +6501,16 @@
         }
       }
     },
+    "Mit dem Coach kochen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cook with the coach"
+          }
+        }
+      }
+    },
     "Mit dem Wiederherstellungsschlüssel entsperrst du deine Daten. Danach kannst du unter Einstellungen → Verschlüsselung ein neues Passwort setzen.": {
       "localizations": {
         "en": {
@@ -7697,6 +7757,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Reps record"
+          }
+        }
+      }
+    },
+    "Rezept an Claude senden?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send recipe to Claude?"
           }
         }
       }

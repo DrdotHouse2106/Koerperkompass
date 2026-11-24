@@ -211,7 +211,8 @@ func aiCoach(w http.ResponseWriter, r *http.Request) {
 		Messages []struct{ Role, Content string }
 		Context  string
 		Lang     string
-		Voice    bool // Gesprächsmodus: Antwort wird vorgelesen, danach antwortet die Person per Sprache
+		Voice    bool   // Gesprächsmodus: Antwort wird vorgelesen, danach antwortet die Person per Sprache
+		Cook     string // Kochhilfe: vollständiges Rezept – dann hilft der Coach nur beim Kochen
 	}
 	if !requireAI(w) || !readJSON(w, r, &req) {
 		return
@@ -283,12 +284,31 @@ wurde, gehört NICHT zu heute. Für heute zählen ausschließlich die folgenden 
 
 Aktuelle Daten der Person (Stand heute):
 ` + req.Context
-	if req.Voice {
+	if req.Cook != "" {
+		system = `Du bist der Kochcoach in der App „Körperkompass“ und begleitest die Person beim Kochen dieses Rezepts – Schritt für Schritt,
+freundlich, praktisch und kurz. Sie steht in der Küche und hat oft keine Hand frei.
+- Geh immer nur einen Schritt weiter; sag, was als Nächstes zu tun ist, und frag am Ende kurz, ob es weitergehen kann.
+- Beantworte Rückfragen konkret: Mengen umrechnen (andere Portionszahl), Ersatz für fehlende Zutaten, Garzeiten, Temperaturen,
+  woran man erkennt, dass etwas fertig ist, Küchentechnik, Timing (was parallel geht).
+- Fehlt im Rezept eine Angabe, schätz sie vernünftig und sag, dass es eine Schätzung ist.
+- Achte auf Sicherheit (heißes Fett, rohes Fleisch/Geflügel durchgaren, Allergene), ohne zu belehren.
+- Wenn die Person nach Nährwerten fragt, nutze die Angaben im Rezept.
+
+Rezept:
+` + req.Cook
+		if req.Voice {
+			system += "\n\nDeine Antwort wird vorgelesen: 1–3 kurze Sätze, keine Listen, kein Markdown, keine Emojis."
+		}
+	} else if req.Voice {
 		system += "\n\nGESPRÄCHSMODUS: Deine Antwort wird vorgelesen und die Person antwortet gleich per Sprache. Sprich natürlich wie im Gespräch: " +
 			"2–4 kurze Sätze, keine Listen, keine Überschriften, kein Markdown, keine Emojis. Höchstens eine Frage am Ende. " +
 			"Die Zeilen MERKEN, ALLTAG, GERÄTE und EINTRAGEN darfst du weiterhin anhängen."
 	}
-	out, err := askMessages(r.Context(), system, anthropic.BetaOutputConfigEffortMedium, msgs)
+	effort := anthropic.BetaOutputConfigEffortMedium
+	if req.Cook != "" {
+		effort = anthropic.BetaOutputConfigEffortLow // beim Kochen zählt Tempo
+	}
+	out, err := askMessages(r.Context(), system, effort, msgs)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadGateway)
 		return
