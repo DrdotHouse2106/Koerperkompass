@@ -52,7 +52,7 @@ vorhandene Dateien und kann jederzeit erneut laufen.
 ## Sprach-PC nur bei Bedarf (Wake-on-LAN)
 
 Startet jemand den Trainings- oder Gesundheitscoach, ruft die App `POST /api/tts/wake` auf. Der Körperkompass-Server schickt
-dann ein Wake-on-LAN-Paket an den Sprach-PC (`KK_TTS_WAKE_MAC`, Ziel `KK_TTS_WAKE_ADDR`, z. B. `192.168.72.255:9`) und meldet,
+dann ein Wake-on-LAN-Paket an den Sprach-PC (`KK_TTS_WAKE_MAC`, Ziel `KK_TTS_WAKE_ADDR`, z. B. `192.168.x.255:9`) und meldet,
 ob Kartoffelbox schon antwortet. Bis dahin sprechen vorgerenderte Sätze und Piper; die App zeigt „Kleinen Moment, die Stimme
 wird geladen …“. Ein nicht erreichbarer Dienst wird nur 15 Sekunden übersprungen, dann erneut versucht. Rückfall-Töne werden
 nicht dauerhaft gespeichert – nur die Fassung des bevorzugten Dienstes (Kopfzeile `X-KK-TTS-Final: 1`).

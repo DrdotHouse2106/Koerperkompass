@@ -77,7 +77,7 @@ Danach `http://<server-ip>:8080` im Browser öffnen: Dort steht der Kopplungscod
 | `KK_PUBLIC_URL` | öffentliche Adresse, z. B. `https://kompass.example.de` (für den QR-Code hinter einem Reverse Proxy) |
 | `KK_MODEL` | Claude-Modell für Coach, Fotos, Analyse und Training (Standard: `claude-opus-5-5`; günstiger: `claude-sonnet-5-5` oder `claude-haiku-5-5`) |
 | `KK_MODEL_SMALL` | kleines Modell für die täglichen Motivationssprüche (Standard: `claude-haiku-5-5`) |
-| `KK_TTS_WAKE_MAC`, `KK_TTS_WAKE_ADDR` | Sprach-PC per Wake-on-LAN wecken, wenn ein Coach startet (MAC-Adresse und Broadcast-Ziel, z. B. `192.168.72.255:9`) |
+| `KK_TTS_WAKE_MAC`, `KK_TTS_WAKE_ADDR` | Sprach-PC per Wake-on-LAN wecken, wenn ein Coach startet (MAC-Adresse und Broadcast-Ziel, z. B. `192.168.x.255:9`) |
 | `KK_YTDLP` | optional: Pfad zu yt-dlp (braucht ffmpeg) – „Meine Clips“: Ton aus Reels/Videos privat im eigenen Konto speichern |
 | `KK_REELKOCH_URL`, `KK_REELKOCH_TOKEN`, `KK_REELKOCH_HOSTS` | optional: Adresse und API-Token von [Reelkoch](https://github.com/DrdotHouse2106/Reelkoch) (Token unter Reelkoch → Konto) – Rezepte aus Reels/Videos; welche Links als Video gelten (Standard: Facebook, Instagram, TikTok, YouTube – für YouTube in Reelkoch `ERLAUBTE_HOSTS` ergänzen) |
 | `KK_TTS_URL`, `KK_TTS_DIR`, `KK_TTS_VOICES` | Sprachdienste (Piper/Kartoffelbox, durch Komma getrennt, der Reihe nach), Ordner für vorab gerenderte und zwischengespeicherte Sätze, Stimme je Coach-Stil (siehe `tools/tts/LIESMICH.md`) |
