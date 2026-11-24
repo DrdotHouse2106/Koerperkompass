@@ -50,6 +50,7 @@ func routes() http.Handler {
 	m.HandleFunc("POST /api/log", auth(postAppLog)) // Testphase, siehe applog.go
 	m.HandleFunc("GET /api/log", auth(getAppLog))
 	// „Meine Clips“: private Motivations-Tonspuren, siehe clips.go
+	m.HandleFunc("GET /api/usage", auth(getUsage)) // KI-Verbrauch, siehe usage.go
 	m.HandleFunc("POST /api/clips", auth(addClip))
 	m.HandleFunc("GET /api/clips", auth(listClips))
 	m.HandleFunc("GET /api/clips/{id}", auth(getClip))

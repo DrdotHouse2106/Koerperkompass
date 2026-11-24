@@ -57,6 +57,10 @@ Nur wenn du in den Einstellungen „Anonyme Daten teilen“ einschaltest und bes
 
 Fügst du einen Link zu einer Rezeptseite ein, ruft dein Server diese Seite ab und übernimmt die eingebetteten Rezeptdaten; nur wenn diese fehlen, geht der Seitentext mit deiner Zustimmung an Claude. Fügst du einen Reel- oder Video-Link ein, gibt dein Server ihn an deine eigene Reelkoch-Installation weiter; die lädt das öffentliche Reel und lässt das Rezept mit ihrem eigenen Claude-Zugang erstellen. Eingefügter Rezepttext und – nur mit deiner Zustimmung – das fertige Rezept zur Nährwertschätzung gehen über deinen Server an Claude. Deine Rezepte liegen wie alle Einträge auf deinem iPhone und deinem Server; der Coach bekommt eine Liste der Rezepttitel mit Nährwerten (bei erwähnten Rezepten auch die Zutaten). Bei „Mit dem Coach kochen“ gehen – nur mit deiner Zustimmung – das Rezept und deine Fragen über deinen Server an Claude, keine Gesundheitsdaten; das Gespräch wird nicht gespeichert.
 
+## KI-Verbrauch
+
+Dein Server zählt bei jeder Claude-Anfrage nur die Anzahl der Tokens (pro Tag und Modell), keine Inhalte. Du siehst den Verbrauch in den Einstellungen unter „KI-Verbrauch“.
+
 ## Meine Clips (optional)
 
 Fügst du unter Motivation → Meine Clips einen Link zu einem Reel oder Video ein, lädt dein Server nur dessen Tonspur und speichert sie in deinem Konto. Clips sind nur für dich, werden nicht geteilt und gehen nicht an Freunde oder andere Server. Die Tondateien liegen auf deinem Server **nicht** Ende-zu-Ende-verschlüsselt. Die Rechte an den Inhalten liegen bei deren Urhebern – nutze Clips nur privat. Löschen kannst du sie einzeln; „Nur auf diesem iPhone speichern“ löscht sie ebenfalls. Das mitlaufende Transkript erstellt die Apple-Spracherkennung auf deinem iPhone (wo das Gerät es nicht kann, über Apples Server) und speichert es nur im Zwischenspeicher der App.
@@ -148,6 +152,10 @@ Only if you turn on “Share anonymous data” in Settings and confirm it, your 
 ## Recipes (optional)
 
 If you paste a link to a recipe website, your server fetches the page and takes over the embedded recipe data; only if there is none, the page text is sent to Claude with your consent. If you paste a reel or video link, your server passes it to your own Reelkoch installation, which downloads the public reel and creates the recipe with its own Claude access. Pasted recipe text and – only with your consent – the finished recipe for nutrition estimates are sent via your server to Claude. Your recipes are stored like all entries on your iPhone and your server; the coach receives a list of recipe titles with nutrition values (ingredients for recipes you mention). With “Cook with the coach” – only with your consent – the recipe and your questions go to Claude via your server, no health data; the conversation is not stored.
+
+## AI usage
+
+For every Claude request your server counts only the number of tokens (per day and model), no content. You can see it in Settings under “AI usage”.
 
 ## My clips (optional)
 

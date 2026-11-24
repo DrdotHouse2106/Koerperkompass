@@ -50,6 +50,7 @@ func askModel(ctx context.Context, model, system string, effort anthropic.BetaOu
 	if err != nil {
 		return "", err
 	}
+	recordUsage(ctx, string(msg.Model), msg.Usage)
 	if msg.StopReason == anthropic.BetaStopReasonRefusal {
 		return "", errRefused
 	}

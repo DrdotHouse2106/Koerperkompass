@@ -105,6 +105,7 @@ struct SettingsView: View {
                 if state.aiAvailable {
                     Section {
                         Toggle("Daten zur Analyse an Claude senden", isOn: $state.aiConsent)
+                        NavigationLink("KI-Verbrauch") { UsageView() }
                     } header: { Text("Claude API") } footer: {
                         Text("Fotos und zusammengefasste Werte gehen nur nach deiner Zustimmung über deinen Server an Anthropic. Keine ärztliche Beratung.")
                     }
@@ -412,5 +413,35 @@ struct VoiceSettingsView: View {
         speaker.api = state.api
         speaker.persona = persona
         speaker.speak(text)
+    }
+}
+
+/// KI-Verbrauch der letzten 30 Tage: Anfragen, Tokens und geschätzte Kosten (vom eigenen Server gezählt)
+struct UsageView: View {
+    @Environment(AppState.self) private var state
+    @State private var data: [String: Any] = [:]
+
+    var body: some View {
+        let rows = data["rows"] as? [[String: Any]] ?? []
+        List {
+            Section {
+                LabeledContent("Anfragen", value: "\((data["calls"] as? NSNumber)?.intValue ?? 0)")
+                LabeledContent("Tokens", value: ((data["tokens"] as? NSNumber)?.intValue ?? 0).formatted())
+                LabeledContent("Geschätzte Kosten", value: ((data["usd"] as? NSNumber)?.doubleValue ?? 0).formatted(.currency(code: "USD")))
+            } header: { Text("Letzte 30 Tage") } footer: {
+                Text("Nach Anthropic-Listenpreisen geschätzt. Gezählt wird auf deinem Server bei jeder Claude-Anfrage.")
+            }
+            Section("Pro Tag") {
+                ForEach(Array(rows.enumerated()), id: \.offset) { _, r in
+                    let model = (r["model"] as? String ?? "").replacingOccurrences(of: "claude-", with: "")
+                    LabeledContent("\(r["day"] as? String ?? "") · \(model)",
+                                   value: "\((r["calls"] as? NSNumber)?.intValue ?? 0)× · " + ((r["usd"] as? NSNumber)?.doubleValue ?? 0).formatted(.currency(code: "USD")))
+                }
+            }
+        }
+        .navigationTitle("KI-Verbrauch")
+        .task {
+            if let d = try? await state.api.object("GET", "/api/usage?days=30") { data = d }
+        }
     }
 }

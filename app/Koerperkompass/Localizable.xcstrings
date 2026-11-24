@@ -971,6 +971,16 @@
         }
       }
     },
+    "Anfragen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Requests"
+          }
+        }
+      }
+    },
     "Anfänger": {
       "localizations": {
         "en": {
@@ -4101,6 +4111,16 @@
         }
       }
     },
+    "Geschätzte Kosten": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Estimated cost"
+          }
+        }
+      }
+    },
     "Geschätzte Werte – bitte prüfen. Zum Entfernen nach links wischen.": {
       "localizations": {
         "en": {
@@ -5081,6 +5101,16 @@
         }
       }
     },
+    "KI-Verbrauch": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AI usage"
+          }
+        }
+      }
+    },
     "Kabelzug": {
       "localizations": {
         "en": {
@@ -5961,6 +5991,16 @@
         }
       }
     },
+    "Letzte 30 Tage": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Last 30 days"
+          }
+        }
+      }
+    },
     "Letzte 7 Tage": {
       "localizations": {
         "en": {
@@ -6721,6 +6761,16 @@
         }
       }
     },
+    "Nach Anthropic-Listenpreisen geschätzt. Gezählt wird auf deinem Server bei jeder Claude-Anfrage.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Estimated from Anthropic list prices. Counted on your server for every Claude request."
+          }
+        }
+      }
+    },
     "Nacken/Trapez": {
       "localizations": {
         "en": {
@@ -7437,6 +7487,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Per serving: %@ kcal · protein %@ g · carbs %@ g · fat %@ g"
+          }
+        }
+      }
+    },
+    "Pro Tag": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Per day"
           }
         }
       }
@@ -9177,6 +9237,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Title (optional)"
+          }
+        }
+      }
+    },
+    "Tokens": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tokens"
           }
         }
       }
