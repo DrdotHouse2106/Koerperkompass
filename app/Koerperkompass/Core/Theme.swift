@@ -21,6 +21,7 @@ enum Theme {
         case "quests": orange
         case "recipes": .yellow
         case "mood": .mint
+        case "symptoms": .red
         default: petrol
         }
     }

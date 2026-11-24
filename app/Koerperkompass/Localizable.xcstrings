@@ -1491,6 +1491,16 @@
         }
       }
     },
+    "Beschwerden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Symptoms"
+          }
+        }
+      }
+    },
     "Besorgt": {
       "localizations": {
         "en": {
@@ -2661,6 +2671,16 @@
         }
       }
     },
+    "Durchfall": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diarrhoea"
+          }
+        }
+      }
+    },
     "Durst ist schon zu spät 😉": {
       "localizations": {
         "en": {
@@ -3261,6 +3281,16 @@
         }
       }
     },
+    "Erschöpfung": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fatigue"
+          }
+        }
+      }
+    },
     "Erst ein Glas Wasser, dann darf der Kaffee kommen.": {
       "localizations": {
         "en": {
@@ -3467,6 +3497,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Lean mass"
+          }
+        }
+      }
+    },
+    "Fieber": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fever"
           }
         }
       }
@@ -3971,6 +4011,16 @@
         }
       }
     },
+    "Geruchsverlust": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loss of smell"
+          }
+        }
+      }
+    },
     "Geräte: %@": {
       "localizations": {
         "en": {
@@ -4271,6 +4321,16 @@
         }
       }
     },
+    "Gliederschmerzen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Body aches"
+          }
+        }
+      }
+    },
     "Glücklich": {
       "localizations": {
         "en": {
@@ -4427,6 +4487,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Neck"
+          }
+        }
+      }
+    },
+    "Halsschmerzen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sore throat"
           }
         }
       }
@@ -4607,6 +4677,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hungry or thirsty? 🤔"
+          }
+        }
+      }
+    },
+    "Husten": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cough"
           }
         }
       }
@@ -5051,6 +5131,16 @@
         }
       }
     },
+    "Keine Beschwerden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No symptoms"
+          }
+        }
+      }
+    },
     "Keine Daten aus Apple Health": {
       "localizations": {
         "en": {
@@ -5107,6 +5197,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Not medical advice – please see a doctor about any complaints."
+          }
+        }
+      }
+    },
+    "Keine ärztliche Beratung. Bei hohem oder anhaltendem Fieber, Atemnot, starken oder länger als ein paar Tage anhaltenden Beschwerden bitte ärztlich abklären lassen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not medical advice. With high or lasting fever, shortness of breath, severe symptoms or symptoms lasting more than a few days, please see a doctor."
           }
         }
       }
@@ -5401,6 +5501,16 @@
         }
       }
     },
+    "Kopfschmerzen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Headache"
+          }
+        }
+      }
+    },
     "Kopfschmerzen vorbeugen 💆": {
       "localizations": {
         "en": {
@@ -5517,6 +5627,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Short and intense, no equipment"
+          }
+        }
+      }
+    },
+    "Kurzatmigkeit": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shortness of breath"
           }
         }
       }
@@ -5717,6 +5837,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Legend"
+          }
+        }
+      }
+    },
+    "Leicht": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mild"
           }
         }
       }
@@ -6347,6 +6477,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Notifications are turned off for Körperkompass – please allow them in iOS Settings."
+          }
+        }
+      }
+    },
+    "Mittel": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Moderate"
           }
         }
       }
@@ -7751,6 +7891,16 @@
         }
       }
     },
+    "Rückenschmerzen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Back pain"
+          }
+        }
+      }
+    },
     "SZ-Stange": {
       "localizations": {
         "en": {
@@ -7921,6 +8071,16 @@
         }
       }
     },
+    "Schlafprobleme": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sleep problems"
+          }
+        }
+      }
+    },
     "Schluck für Schluck 🚰": {
       "localizations": {
         "en": {
@@ -7947,6 +8107,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Quick log"
+          }
+        }
+      }
+    },
+    "Schnupfen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Runny nose"
           }
         }
       }
@@ -8061,12 +8231,32 @@
         }
       }
     },
+    "Schwindel": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dizziness"
+          }
+        }
+      }
+    },
     "Schätze …": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Estimating …"
+          }
+        }
+      }
+    },
+    "Schüttelfrost": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chills"
           }
         }
       }
@@ -8431,6 +8621,16 @@
         }
       }
     },
+    "Stark": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Severe"
+          }
+        }
+      }
+    },
     "Stark gekämpft! Gönn dir zwei Minuten Pause – beim nächsten Satz ruhig etwas leichter.": {
       "localizations": {
         "en": {
@@ -8557,6 +8757,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tier"
+          }
+        }
+      }
+    },
+    "Stärke": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Severity"
           }
         }
       }
@@ -9491,6 +9701,16 @@
         }
       }
     },
+    "Verstopfte Nase": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stuffy nose"
+          }
+        }
+      }
+    },
     "Verwerfen": {
       "localizations": {
         "en": {
@@ -9647,6 +9867,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "What did you train?"
+          }
+        }
+      }
+    },
+    "Was hast du?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What do you have?"
           }
         }
       }
@@ -10037,6 +10267,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Also saved in Apple Health under “State of Mind” (iOS 18+)."
+          }
+        }
+      }
+    },
+    "Wird auch in Apple Health unter „Symptome“ gespeichert.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Also saved in Apple Health under “Symptoms”."
           }
         }
       }
@@ -10441,6 +10681,16 @@
         }
       }
     },
+    "deine Stimmung „%@“": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "your mood “%@”"
+          }
+        }
+      }
+    },
     "ein deutlicher negativer Zusammenhang": {
       "localizations": {
         "en": {
@@ -10521,6 +10771,16 @@
         }
       }
     },
+    "letzte 3 Tage": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "last 3 days"
+          }
+        }
+      }
+    },
     "von %@ ml": {
       "localizations": {
         "en": {
@@ -10597,6 +10857,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Avg 7 days: %@"
+          }
+        }
+      }
+    },
+    "Übelkeit": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nausea"
           }
         }
       }

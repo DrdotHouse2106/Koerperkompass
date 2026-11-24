@@ -29,6 +29,10 @@ Wenn du Freundschaften schließt, gibt dein Server deine **Spielerkarte** an die
 
 Im Modul „Stimmung“ trägst du deine Stimmung, Gefühle und Lebensbereiche ein. Sie werden wie andere Einträge auf deinem iPhone und deinem Server gespeichert (mit Ende-zu-Ende-Verschlüsselung nur verschlüsselt) und – mit Health-Freigabe – auch in Apple Health („Gemütszustand“). Stimmungen, die du in Apple Health oder anderen Apps einträgst, liest die App mit deiner Freigabe; zum Server gehen sie wie alle Health-Daten nur mit deiner Zustimmung zum Hochladen. An Claude geht – nur mit deiner Zustimmung – höchstens eine Zusammenfassung (z. B. Durchschnitt der letzten 7 Tage).
 
+## Beschwerden
+
+Beschwerden und Krankheitssymptome (z. B. verstopfte Nase, Fieber) werden wie andere Einträge auf deinem iPhone und deinem Server gespeichert (mit Ende-zu-Ende-Verschlüsselung nur verschlüsselt) und – mit Health-Freigabe – auch in Apple Health („Symptome“). Symptome aus Apple Health liest die App mit deiner Freigabe; zum Server gehen sie nur mit deiner Zustimmung zum Hochladen. Der Coach erhält – nur mit deiner Zustimmung – eine Kurzliste der Beschwerden der letzten 7 Tage, damit er Training und Tipps anpasst. Erwähnst du Beschwerden im Gespräch, schlägt er einen Eintrag vor; gespeichert wird erst nach deiner Bestätigung.
+
 ## Über mich: Geräte und was der Coach weiß
 
 Deine Trainingsgeräte, dein Tagesablauf („Mein Alltag“) und die Tatsachen, die sich der Gesundheitscoach im Gespräch merkt (z. B. Beschwerden, verfügbare Zeit, Vorlieben), stehen in deinem Profil – auf deinem iPhone und deinem eigenen Server. An Claude gehen sie nur mit deiner Zustimmung, als Teil des Profils. Du siehst und löschst sie unter Einstellungen → Über mich.
@@ -116,6 +120,10 @@ If you make friends, your server shares your **player card** with your friends�
 ## Mood
 
 In the “Mood” module you log your mood, feelings and areas of life. They are stored like other entries on your iPhone and your server (only encrypted with end-to-end encryption) and – with Health permission – in Apple Health (“State of Mind”). Moods you log in Apple Health or other apps are read with your permission; like all Health data they only go to the server if you agreed to uploading. Claude receives – only with your consent – at most a summary (e.g. the 7-day average).
+
+## Symptoms
+
+Symptoms (e.g. stuffy nose, fever) are stored like other entries on your iPhone and your server (only encrypted with end-to-end encryption) and – with Health permission – in Apple Health (“Symptoms”). Symptoms from Apple Health are read with your permission; they only go to the server if you agreed to uploading. With your consent the coach receives a short list of symptoms from the last 7 days to adapt training and tips. If you mention symptoms in a chat, it proposes an entry; nothing is saved until you confirm.
 
 ## About me: equipment and what the coach knows
 

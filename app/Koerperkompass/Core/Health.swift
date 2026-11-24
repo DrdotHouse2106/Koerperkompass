@@ -7,12 +7,12 @@ enum Health {
     static var available: Bool { HKHealthStore.isHealthDataAvailable() }
 
     static var readTypes: Set<HKObjectType> {
-        var t = baseRead
+        var t = baseRead.union(symptomTypes)
         if #available(iOS 18.0, *) { t.insert(HKSampleType.stateOfMindType()) }  // Gemütszustand (Stimmung)
         return t
     }
     static var writeTypes: Set<HKSampleType> {
-        var t = baseWrite
+        var t = baseWrite.union(symptomTypes)
         if #available(iOS 18.0, *) { t.insert(HKSampleType.stateOfMindType()) }
         return t
     }

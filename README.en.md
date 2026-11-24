@@ -21,6 +21,8 @@ There is no central service: the developers run no server and never see any data
 - 🗺 **My plan** – overview: weight path to goal, BMI scale, daily goals, water and training
 - 🏁 **Adventure** – gamification: character card, shareable player card with your own photo, achievements, week strip and 🔥 streak, daily and custom quests, XP, levels, ranks, attributes
 - 📖 **Recipes** – your own recipe collection: paste any link – reels/videos (Facebook, Instagram, TikTok, YouTube) go to Reelkoch on your server, recipe websites are imported directly – or paste recipe text. Nutrition per serving, “Eaten” logs servings, the coach suggests matching recipes
+- 🧠 **Mood** – state of mind like Apple Health (read and write, iOS 18)
+- 🤒 **Symptoms** – stuffy nose, cough, headache, fever … with severity, synced with Apple Health “Symptoms”; the coach proposes entries when you mention them and adapts training advice
 - 📈 **Exercises** – log sets with reps and weight, progress chart per exercise, tiers bronze → silver → gold → platinum
 - 🏋️ **Training programs** – 4-week programs with training and rest days, XP per session, templates or created by Claude; optional penalties for missed sessions
 - 💧 **Drinks** – water, coffee, tea, beer, wine … with one tap; drinking goal, caffeine, alcohol; drink reminders you can tick off in the notification
@@ -112,6 +114,8 @@ Until it is on the App Store: create the app in App Store Connect (bundle ID `de
 | Water | `water` | ml |
 | Training | `training` | minutes |
 | Recipes | `recipes` | – (recipe with nutrition per serving) |
+| Mood | `mood` | mood (1–7, + valence, feelings, areas, kind, time) |
+| Symptoms | `symptoms` | severity (1–3, + symptom, name, time) |
 
 A new module is one new file in the app and one in the server plus a list entry – see [CLAUDE.md](CLAUDE.md) (German).
 

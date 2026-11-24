@@ -15,7 +15,7 @@ protocol AppModule {
 }
 
 /// Liste aller Module – Reihenfolge = Reihenfolge auf der Übersicht.
-let allModules: [any AppModule] = [QuestModule(), NutritionModule(), BodyModule(), ActivityModule(), WaterModule(), TrainingModule(), ExerciseModule(), RecipeModule(), MoodModule()]
+let allModules: [any AppModule] = [QuestModule(), NutritionModule(), BodyModule(), ActivityModule(), WaterModule(), TrainingModule(), ExerciseModule(), RecipeModule(), MoodModule(), SymptomModule()]
 
 func module(_ id: String) -> (any AppModule)? { allModules.first { $0.id == id } }
 

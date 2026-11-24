@@ -41,10 +41,15 @@ struct CoachView: View {
                            time: time ?? "")
             }
         }
+        struct MoodItem: Codable, Hashable { var level: Int?; var feelings: [String]?; var areas: [String]? }
+        struct SymptomItem: Codable, Hashable { var symptom: String?; var severity: Int? }
         var day: Int?
         var items: [Item]?
         var weight: Double?
+        var mood: MoodItem?
+        var symptoms: [SymptomItem]?
         var done: Bool?
+        var isEmpty: Bool { (items ?? []).isEmpty && weight == nil && mood?.level == nil && (symptoms ?? []).isEmpty }
         var date: String { Day.string(Calendar.current.date(byAdding: .day, value: min(day ?? 0, 0), to: Date())!) }
     }
 
@@ -233,6 +238,10 @@ struct CoachView: View {
                 Text("\((x.ml ?? 0) > 0 ? "🥤" : "🍽") \(x.name ?? "") \(x.amount.map { "(\($0))" } ?? "") · \((x.kcal ?? 0).whole) kcal").font(.caption)
             }
             if let w = p.weight { Text("⚖️ \(w.short) kg").font(.caption) }
+            if let l = p.mood?.level { Text("\(Mood.levels[max(0, min(6, l - 1))].emoji) \(String(localized: Mood.levels[max(0, min(6, l - 1))].title))").font(.caption) }
+            ForEach(Array((p.symptoms ?? []).enumerated()), id: \.offset) { _, s in
+                Text("🤒 \(Symptoms.name(s.symptom ?? "")) · \(String(localized: Symptoms.severities[max(0, min(2, (s.severity ?? 1) - 1))]))").font(.caption)
+            }
             if p.done == true {
                 Label("Eingetragen", systemImage: "checkmark.circle.fill").font(.caption.bold()).foregroundStyle(.green)
             } else {
@@ -258,6 +267,19 @@ struct CoachView: View {
             }
             state.changed(context)
         }
+        if let l = p.mood?.level, (1...7).contains(l) {
+            context.insert(Entry(module: "mood", date: p.date, values: [
+                "mood": l, "valence": Mood.valence(l), "feelings": p.mood?.feelings ?? [], "areas": p.mood?.areas ?? [], "kind": "moment", "time": Day.now,
+            ]))
+            if state.healthEnabled && p.date == Day.today { Health.saveMood(level: l, daily: false, feelings: p.mood?.feelings ?? [], areas: p.mood?.areas ?? []) }
+        }
+        for s in p.symptoms ?? [] {
+            guard let id = s.symptom, Symptoms.all.contains(where: { $0.id == id }) else { continue }
+            let sev = max(1, min(3, s.severity ?? 1))
+            context.insert(Entry(module: "symptoms", date: p.date, values: ["symptom": id, "name": Symptoms.name(id), "severity": sev, "time": Day.now]))
+            if state.healthEnabled && p.date == Day.today { Health.saveSymptom(id, severity: sev) }
+        }
+        state.changed(context)
         var done = p
         done.done = true
         mark(i, done)
@@ -326,7 +348,7 @@ struct CoachView: View {
                 // Vorgeschlagene Einträge aus dem Gespräch (Essen, Getränke, Gewicht)
                 let log = (r["log"] as? [String: Any]).flatMap { try? JSONSerialization.data(withJSONObject: $0) }
                     .flatMap { try? JSONDecoder().decode(Proposal.self, from: $0) }
-                    .flatMap { ($0.items ?? []).isEmpty && $0.weight == nil ? nil : $0 }
+                    .flatMap { $0.isEmpty ? nil : $0 }
                 save(list + [Message(role: "assistant", text: reply, log: log)])
                 return spoken
             } catch {
@@ -409,6 +431,9 @@ struct CoachView: View {
             parts.append(String(localized: "\(names), zusammen \(items.compactMap(\.kcal).reduce(0, +).whole) Kilokalorien"))
         }
         if let w = p.weight { parts.append(String(localized: "dein Gewicht von \(w.short) Kilo")) }
+        if let l = p.mood?.level { parts.append(String(localized: "deine Stimmung „\(String(localized: Mood.levels[max(0, min(6, l - 1))].title))“")) }
+        let symptoms = (p.symptoms ?? []).compactMap { $0.symptom.map(Symptoms.name) }
+        if !symptoms.isEmpty { parts.append(symptoms.formatted(.list(type: .and))) }
         let what = parts.joined(separator: String(localized: " und "))
         return p.day == -1 ? String(localized: "Soll ich das für gestern eintragen: \(what)?") : String(localized: "Soll ich das eintragen: \(what)?")
     }
@@ -454,6 +479,7 @@ func coachContext(_ all: [Entry], _ p: Profile, healthUpload: Bool) -> String {
     lines.append("- Gegessen: \(kcal.whole) von \(p.kcal.whole) kcal, Eiweiß \(sum("nutrition", "protein").whole)/\(p.protein.whole) g, Kohlenhydrate \(sum("nutrition", "carbs").whole)/\(p.carbs.whole) g, Fett \(sum("nutrition", "fat").whole)/\(p.fat.whole) g")
     lines.append("- Mahlzeiten: " + (meals.isEmpty ? "noch nichts eingetragen" : meals.joined(separator: ", ")))
     lines.append(drinks)
+    if let sym = Symptoms.summary(entries) { lines.append("- Beschwerden (letzte 7 Tage): " + sym) }
     if let plan = p.plan {
         lines.append("- Trainingsprogramm: \(plan.name), heute " + (plan.isTrainingDay(Day.today) ? "Trainingstag" : "Ruhetag")
                      + (today.contains { $0.module == "training" } ? " (erledigt)" : ""))
