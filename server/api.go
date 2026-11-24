@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"embed"
 	"encoding/base64"
 	"encoding/json"
@@ -42,7 +43,6 @@ func routes() http.Handler {
 	// verschlüsselten Datenschlüssel auf (nie Passwort oder Schlüssel im Klartext)
 	m.HandleFunc("GET /api/vault", auth(getVault))
 	m.HandleFunc("PUT /api/vault", auth(putVault))
-	m.HandleFunc("DELETE /api/vault", auth(deleteVault))
 	m.HandleFunc("PUT /api/profile", auth(putProfile))
 	m.HandleFunc("GET /api/entries", auth(listEntries))
 	m.HandleFunc("POST /api/entries", auth(putEntries))
@@ -169,9 +169,26 @@ func getProfile(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(p))
 }
 
+// Nur verschlüsselte Inhalte annehmen: Einträge als "enc:v1:…", Profil als {"enc": …} (siehe Vault.swift).
+// So liegen auf dem Server nie Gesundheitsdaten im Klartext.
+var errPlain = "Nur verschlüsselte Daten erlaubt – bitte die App aktualisieren"
+
+func sealedEntry(d json.RawMessage) bool {
+	return bytes.HasPrefix(bytes.TrimSpace(d), []byte(`"enc:v1:`))
+}
+
+func sealedProfile(p json.RawMessage) bool {
+	var m map[string]json.RawMessage
+	return json.Unmarshal(p, &m) == nil && (len(m) == 0 || (len(m) == 1 && m["enc"] != nil))
+}
+
 func putProfile(w http.ResponseWriter, r *http.Request) {
 	var p json.RawMessage
 	if !readJSON(w, r, &p) {
+		return
+	}
+	if !sealedProfile(p) {
+		http.Error(w, errPlain, http.StatusUnprocessableEntity)
 		return
 	}
 	db.Exec(`UPDATE users SET profile=? WHERE id=?`, string(p), uid(r))
@@ -249,6 +266,12 @@ func putEntries(w http.ResponseWriter, r *http.Request) {
 	if !readJSON(w, r, &es) {
 		return
 	}
+	for _, e := range es {
+		if !sealedEntry(e.Data) {
+			http.Error(w, errPlain, http.StatusUnprocessableEntity)
+			return
+		}
+	}
 	if err := saveEntries(uid(r), es); err != nil {
 		http.Error(w, err.Error(), 500)
 		return
@@ -275,11 +298,6 @@ func putVault(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNoContent)
 }
 
-func deleteVault(w http.ResponseWriter, r *http.Request) {
-	db.Exec(`UPDATE users SET vault='' WHERE id=?`, uid(r))
-	w.WriteHeader(http.StatusNoContent)
-}
-
 // Export/Import: komplettes Profil und alle Einträge eines Nutzers als JSON.
 type backup struct {
 	Version  int             `json:"version"`
@@ -303,7 +321,13 @@ func importData(w http.ResponseWriter, r *http.Request) {
 	if !readJSON(w, r, &b) {
 		return
 	}
-	if len(b.Profile) > 0 && string(b.Profile) != "null" {
+	for _, e := range b.Entries {
+		if !sealedEntry(e.Data) {
+			http.Error(w, errPlain, http.StatusUnprocessableEntity)
+			return
+		}
+	}
+	if len(b.Profile) > 0 && string(b.Profile) != "null" && sealedProfile(b.Profile) {
 		db.Exec(`UPDATE users SET profile=? WHERE id=?`, string(b.Profile), uid(r))
 	}
 	if err := saveEntries(uid(r), b.Entries); err != nil {

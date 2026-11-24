@@ -61,9 +61,9 @@ Fügst du einen Link zu einer Rezeptseite ein, ruft dein Server diese Seite ab u
 
 Dein Server zählt bei jeder Claude-Anfrage nur die Anzahl der Tokens (pro Tag und Modell), keine Inhalte. Du siehst den Verbrauch in den Einstellungen unter „KI-Verbrauch“.
 
-## Ende-zu-Ende-Verschlüsselung (standardmäßig an)
+## Ende-zu-Ende-Verschlüsselung (immer an)
 
-Einträge und Profil werden **auf dem iPhone verschlüsselt** (AES-GCM mit einem zufälligen 256-Bit-Schlüssel), bevor sie an den Server gehen. Die App richtet das beim ersten Abgleich automatisch ein. Der Server – und wer ihn betreibt – sieht nur Modul, Datum und Zeitpunkt der Einträge, nicht deren Inhalt. Der Schlüssel liegt in deinem **iCloud-Schlüsselbund** (von Apple Ende-zu-Ende-verschlüsselt), damit deine Daten auf einem neuen iPhone mit derselben Apple-ID ohne Passwort wieder da sind; in iCloud liegt dabei nur der Schlüssel, keine Gesundheitsdaten. Auf dem Server liegt der Schlüssel nur verschlüsselt – mit deinem Wiederherstellungsschlüssel und, falls du eins festlegst, mit einem zusätzlichen Passwort (je PBKDF2). Verlierst du Schlüsselbund, Wiederherstellungsschlüssel und Passwort, sind die Daten auf dem Server nicht wiederherstellbar. Nicht verschlüsselt sind die Spielerkarte für Freunde sowie Daten, die du ausdrücklich an Claude, die Sprachausgabe oder als freiwillige Protokolle bzw. anonyme Verbesserungsdaten sendest. Ausschalten kannst du die Verschlüsselung unter Einstellungen → Verschlüsselung.
+Einträge und Profil werden **auf dem iPhone verschlüsselt** (AES-GCM mit einem zufälligen 256-Bit-Schlüssel), bevor sie an den Server gehen. Die App richtet das beim ersten Abgleich automatisch ein. Der Server – und wer ihn betreibt – sieht nur Modul, Datum und Zeitpunkt der Einträge, nicht deren Inhalt. Der Schlüssel liegt in deinem **iCloud-Schlüsselbund** (von Apple Ende-zu-Ende-verschlüsselt), damit deine Daten auf einem neuen iPhone mit derselben Apple-ID ohne Passwort wieder da sind; in iCloud liegt dabei nur der Schlüssel, keine Gesundheitsdaten. Auf dem Server liegt der Schlüssel nur verschlüsselt – mit deinem Wiederherstellungsschlüssel und, falls du eins festlegst, mit einem zusätzlichen Passwort (je PBKDF2). Verlierst du Schlüsselbund, Wiederherstellungsschlüssel und Passwort, sind die Daten auf dem Server nicht wiederherstellbar. Nicht verschlüsselt sind die Spielerkarte für Freunde sowie Daten, die du ausdrücklich an Claude, die Sprachausgabe oder als freiwillige Protokolle bzw. anonyme Verbesserungsdaten sendest. Der Server nimmt Einträge und Profil nur verschlüsselt an.
 
 ## Nur auf dem iPhone (optional)
 
@@ -73,7 +73,7 @@ Unter Einstellungen → Speicherort kannst du „Nur auf diesem iPhone speichern
 
 - Lokal: SwiftData-Zwischenspeicher auf dem iPhone. „Verbindung trennen“ bzw. Löschen der App entfernt ihn.
 - Server: eine SQLite-Datei auf deinem Server. Einträge löschst du in der App; den ganzen Bestand löschst du, indem du die Datei auf dem Server entfernst.
-- Ohne Ende-zu-Ende-Verschlüsselung (siehe oben) ist die Datei auf dem Server **nicht verschlüsselt**. Wer den Server betreibt oder Zugriff auf ihn hat, kann die Daten aller Nutzer dieses Servers lesen; ebenso Sicherungen des Servers, sofern sie nicht verschlüsselt sind. Nutzt du den Server einer anderen Person, vertraust du ihr deine Daten an – oder du wählst „Nur auf diesem iPhone speichern“.
+- Einträge und Profil liegen auf dem Server nur Ende-zu-Ende-verschlüsselt (siehe oben). Lesbar sind für den Betreiber nur Konto, Geräte, Spielerkarte, KI-Verbrauch (Tokenzahlen) und – falls eingeschaltet – das App-Protokoll ohne Inhalte.
 - Export und Import als JSON sind jederzeit möglich.
 
 ## Übertragung
@@ -153,9 +153,9 @@ If you paste a link to a recipe website, your server fetches the page and takes 
 
 For every Claude request your server counts only the number of tokens (per day and model), no content. You can see it in Settings under “AI usage”.
 
-## End-to-end encryption (on by default)
+## End-to-end encryption (always on)
 
-Entries and profile are **encrypted on the iPhone** (AES-GCM with a random 256-bit key) before they are sent to the server; the app sets this up automatically on the first sync. The server – and whoever operates it – only sees module, date and time of entries, not their content. The key is stored in your **iCloud Keychain** (end-to-end encrypted by Apple), so your data is back on a new iPhone with the same Apple ID without a password; only the key is in iCloud, no health data. On the server the key is only stored encrypted – with your recovery key and, if you set one, an additional password (PBKDF2 each). If you lose Keychain, recovery key and password, the data on the server cannot be recovered. Not encrypted are the player card for friends and data you explicitly send to Claude, speech output, or as optional logs or anonymous improvement data. You can turn encryption off under Settings → Encryption.
+Entries and profile are **encrypted on the iPhone** (AES-GCM with a random 256-bit key) before they are sent to the server; the app sets this up automatically on the first sync. The server – and whoever operates it – only sees module, date and time of entries, not their content. The key is stored in your **iCloud Keychain** (end-to-end encrypted by Apple), so your data is back on a new iPhone with the same Apple ID without a password; only the key is in iCloud, no health data. On the server the key is only stored encrypted – with your recovery key and, if you set one, an additional password (PBKDF2 each). If you lose Keychain, recovery key and password, the data on the server cannot be recovered. Not encrypted are the player card for friends and data you explicitly send to Claude, speech output, or as optional logs or anonymous improvement data. The server only accepts encrypted entries and profiles.
 
 ## iPhone only (optional)
 
@@ -165,7 +165,7 @@ Under Settings → Storage you can turn on “Store only on this iPhone”. Your
 
 - Local: SwiftData cache on the iPhone, removed by “Disconnect” or deleting the app.
 - Server: one SQLite file on your server. Delete entries in the app, or delete the file on the server to remove everything.
-- Without end-to-end encryption (see above) the file is **not encrypted** on the server. Whoever operates or has access to the server can read the data of all its users, as well as server backups unless they are encrypted. If you use someone else's server, you entrust them with your data – or choose “Store only on this iPhone”.
+- Entries and profile are stored on the server only end-to-end encrypted (see above). The operator can only read account, devices, player card, AI usage (token counts) and – if enabled – the app log without content.
 - JSON export and import are available at any time.
 
 ## Transmission

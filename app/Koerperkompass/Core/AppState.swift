@@ -296,14 +296,6 @@ import UIKit
         _ = try await api.call("PUT", "/api/vault", json: try JSONSerialization.jsonObject(with: JSONEncoder().encode(box)))
     }
 
-    /// Verschlüsselung ausschalten: alles wieder im Klartext hochladen
-    func disableVault(_ context: ModelContext) async throws {
-        if !demo && !localOnly { _ = try await api.call("DELETE", "/api/vault") }
-        Vault.enabled = false
-        reupload(context)
-        Vault.key = nil
-    }
-
     private func reupload(_ context: ModelContext) {
         for e in context.allEntries() { e.dirty = true }
         profileDirty = true

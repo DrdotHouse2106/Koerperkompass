@@ -1,6 +1,7 @@
 import SwiftUI
 
-/// Einstellungen → Verschlüsselung: Ende-zu-Ende-Verschlüsselung mit eigenem Passwort einrichten, Passwort ändern, ausschalten
+/// Einstellungen → Verschlüsselung: Ende-zu-Ende-Verschlüsselung (Pflicht – der Server nimmt nur Verschlüsseltes an),
+/// Wiederherstellungsschlüssel sichern, zusätzliches Passwort festlegen
 struct VaultView: View {
     @Environment(AppState.self) private var state
     @Environment(\.modelContext) private var context
@@ -10,7 +11,6 @@ struct VaultView: View {
     @State private var saved = false
     @State private var busy = false
     @State private var message: String?
-    @State private var confirmOff = false
 
     private var valid: Bool { password.count >= 8 && password == repeated }
 
@@ -40,9 +40,6 @@ struct VaultView: View {
                 } header: { Text("Zusätzliches Passwort (optional)") } footer: {
                     Text("Nur nötig, wenn du ohne iCloud-Schlüsselbund auf weitere Geräte willst. Das alte Passwort brauchst du hier nicht.")
                 }
-                Section {
-                    Button("Verschlüsselung ausschalten", role: .destructive) { confirmOff = true }
-                }
             } else {
                 Section {
                     SecureField("Passwort (mind. 8 Zeichen)", text: $password).textContentType(.newPassword)
@@ -59,9 +56,6 @@ struct VaultView: View {
         }
         .themed()
         .navigationTitle("Verschlüsselung")
-        .confirmationDialog("Verschlüsselung ausschalten?", isPresented: $confirmOff, titleVisibility: .visible) {
-            Button("Ausschalten", role: .destructive) { run { try await state.disableVault(context) } }
-        } message: { Text("Alle Daten werden danach wieder unverschlüsselt auf deinem Server gespeichert.") }
     }
 
     private func run(_ action: @escaping () async throws -> Void) {
