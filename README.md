@@ -228,6 +228,40 @@ Alle Daten liegen in **einer SQLite-Datei** (`data/koerperkompass.db`, dazu ggf.
 
 ---
 
+## KI-Relais (zentraler KI-Dienst)
+
+Wer keinen eigenen Claude-Schlüssel hat, kann die KI über ein zentrales Relais nutzen. Das Relais ist dieselbe Binary
+in einer zweiten Rolle: Es prüft einen Relais-Schlüssel mit Guthaben, leitet die Anfrage mit dem Claude-Schlüssel des
+Relais-Betreibers an Anthropic weiter, zählt die Tokens aus der Antwort und bucht die Kosten ab. **Inhalte werden weder
+gespeichert noch protokolliert.** Erlaubt sind nur Anfragen, wie sie der Körperkompass-Server stellt (ohne Streaming,
+erlaubte Modelle, `max_tokens` ≤ 16000).
+
+**Körperkompass-Server ans Relais anschließen** – statt eines eigenen Claude-Schlüssels:
+
+```bash
+ANTHROPIC_BASE_URL=https://ki.example.org
+ANTHROPIC_API_KEY=kkr_…            # Relais-Schlüssel
+```
+
+**Relais betreiben:**
+
+```bash
+ANTHROPIC_API_KEY=sk-ant-…  RELAY_DB=/var/lib/kk-relay/relay.db  koerperkompass relay
+koerperkompass relay-key add <Name> 10      # neuer Schlüssel mit 10 € Guthaben (wird nur einmal angezeigt)
+koerperkompass relay-key topup <Name> 10    # aufladen
+koerperkompass relay-key list               # Guthaben und Verbrauch
+```
+
+| Variable | Bedeutung |
+|---|---|
+| `RELAY_ADDR` | Adresse, Standard `:8090` (hinter einen Reverse Proxy mit HTTPS stellen) |
+| `RELAY_DB` | SQLite-Datei für Schlüssel und Verbrauch, Standard `data/relay.db` |
+| `RELAY_EUR_PER_USD` | Umrechnung der Anthropic-Preise, Standard `0.92` |
+| `RELAY_MARKUP` | Aufschlag auf die Kosten, Standard `1.5` |
+| `RELAY_MODELS` | erlaubte Modelle, Standard `claude-opus-5-5,claude-sonnet-5-5,claude-haiku-5-5` |
+
+`GET /v1/balance` (mit dem Relais-Schlüssel) liefert Guthaben und Verbrauch in Euro.
+
 ## App koppeln
 
 1. App öffnen → **„QR-Code scannen“** und den Code auf der Weboberfläche des Servers scannen

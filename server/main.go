@@ -27,6 +27,15 @@ func env(key, def string) string {
 }
 
 func main() {
+	// Zweite Rolle derselben Binary: zentrales KI-Relais (siehe relay.go)
+	if len(os.Args) > 1 && os.Args[1] == "relay" {
+		runRelay()
+		return
+	}
+	if len(os.Args) > 1 && os.Args[1] == "relay-key" {
+		relayKeyCmd(os.Args[2:])
+		return
+	}
 	var err error
 	db, err = sql.Open("sqlite", env("KK_DB", "data/koerperkompass.db")+"?_pragma=journal_mode(WAL)&_pragma=busy_timeout(5000)&_pragma=foreign_keys(1)")
 	if err != nil {

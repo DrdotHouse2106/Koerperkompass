@@ -91,6 +91,14 @@ Set `KK_PUBLIC_URL` afterwards. A VPN (WireGuard, Tailscale) works as well.
 
 All data is stored in **one SQLite file** (`data/koerperkompass.db` plus `-wal`/`-shm`). Stop the container and copy `data/`, or run `sqlite3 data/koerperkompass.db ".backup backup.db"`. Per-user JSON export: in the app (*Settings → Data → Export*) or `GET /api/export`.
 
+## AI relay (central AI service)
+
+Without your own Claude key you can use AI through a central relay – the same binary in a second role
+(`koerperkompass relay`). It checks a relay key with credit, forwards the request to Anthropic with the operator's key,
+counts tokens from the response and deducts the cost. **No content is stored or logged.** Connect a server with
+`ANTHROPIC_BASE_URL=https://<relay>` and `ANTHROPIC_API_KEY=kkr_…`; manage keys with
+`koerperkompass relay-key add|topup|remove|list`. Settings: `RELAY_ADDR`, `RELAY_DB`, `RELAY_EUR_PER_USD`, `RELAY_MARKUP`, `RELAY_MODELS`.
+
 ## Pairing the app
 
 1. Open the app → **“Scan QR code”** and scan the code on the server's web page (or enter address and code manually).
