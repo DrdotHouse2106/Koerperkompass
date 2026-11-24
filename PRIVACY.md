@@ -13,7 +13,7 @@ Die App ist eine Software, die sich mit einem **von dir selbst betriebenen Serve
 ## Welche Daten verarbeitet werden
 
 - **Eingaben in der App:** Mahlzeiten mit Nährwerten und optional Fotos, Gewicht und Körpermaße, Wasser, Trainings, Profilangaben (Ziel, Gewicht, Größe, Alter, Geschlecht, Aktivität) und Tagesziele.
-- **Apple Health (optional):** Mit deiner Freigabe liest die App Schritte, aktive Energie, Schlaf, Ruhepuls, Gewicht und Trainings und schreibt Gewicht und Mahlzeiten. Health-Daten werden **erst nach einer gesonderten, ausdrücklichen Zustimmung** in der App an deinen Server übertragen. Ohne diese Zustimmung bleiben sie auf dem Gerät. Health-Daten werden nie für Werbung genutzt und nie an Dritte verkauft.
+- **Apple Health (optional):** Mit deiner Freigabe liest die App Schritte, aktive Energie, Schlaf, Ruhepuls, Gewicht und Trainings und schreibt Gewicht, Mahlzeiten, Getränke (Wasser, Koffein, Alkohol) und Trainings (als Workout). Health-Daten werden **erst nach einer gesonderten, ausdrücklichen Zustimmung** in der App an deinen Server übertragen. Ohne diese Zustimmung bleiben sie auf dem Gerät. Health-Daten werden nie für Werbung genutzt und nie an Dritte verkauft.
 - **Kopplung:** Server-Adresse und ein Zugangs-Token (im Schlüsselbund des iPhones). Der Server speichert den Gerätenamen.
 - **Kamera/Fotos:** nur zum Scannen des Kopplungscodes, für Fotos von Mahlzeiten und für das Foto der Spielerkarte (bleibt nur auf dem iPhone).
 
@@ -105,7 +105,7 @@ The app is software that connects to a **server operated by you**. You (or whoev
 ## Data processed
 
 - **Your entries:** meals with nutrients and optional photos, weight and body measurements, water, workouts, profile (goal, weight, height, age, sex, activity) and daily goals.
-- **Apple Health (optional):** with your permission the app reads steps, active energy, sleep, resting heart rate, weight and workouts, and writes weight and meals. Health data is sent to your server **only after separate, explicit consent** in the app; otherwise it stays on the device. Health data is never used for advertising and never sold.
+- **Apple Health (optional):** with your permission the app reads steps, active energy, sleep, resting heart rate, weight and workouts, and writes weight, meals, drinks (water, caffeine, alcohol) and workouts. Health data is sent to your server **only after separate, explicit consent** in the app; otherwise it stays on the device. Health data is never used for advertising and never sold.
 - **Pairing:** server address and an access token (stored in the iPhone keychain). The server stores the device name.
 - **Camera/photos:** only for scanning the pairing code, meal photos and the player card photo (stays on the iPhone).
 

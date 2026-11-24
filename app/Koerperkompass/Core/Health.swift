@@ -25,6 +25,8 @@ enum Health {
     private static let baseWrite: Set<HKSampleType> = [
         HKQuantityType(.bodyMass), HKQuantityType(.dietaryEnergyConsumed), HKQuantityType(.dietaryProtein),
         HKQuantityType(.dietaryCarbohydrates), HKQuantityType(.dietaryFatTotal),
+        HKQuantityType(.dietaryWater), HKQuantityType(.dietaryCaffeine), HKQuantityType(.numberOfAlcoholicBeverages),
+        HKObjectType.workoutType(),
     ]
 
     static func authorize() async throws {
@@ -134,6 +136,41 @@ enum Health {
     static func saveWeight(_ kg: Double) {
         let s = HKQuantitySample(type: HKQuantityType(.bodyMass), quantity: HKQuantity(unit: .gramUnit(with: .kilo), doubleValue: kg), start: Date(), end: Date())
         store.save(s) { _, _ in }
+    }
+
+    /// Getränk nach Health: Wasser (ohne Alkoholisches), Koffein, alkoholische Getränke (≈ 10 g Alkohol je Getränk),
+    /// Kalorien und Kohlenhydrate. Nur mit Health-Freigabe und nur für heute. Gibt den Eintrag unverändert zurück.
+    @discardableResult
+    static func logDrink(_ e: Entry) -> Entry {
+        guard UserDefaults.standard.bool(forKey: "healthEnabled"), e.date == Day.today else { return e }
+        let meta = [HKMetadataKeyFoodType: e.text("name") ?? "Getränk"]
+        let values: [(HKQuantityTypeIdentifier, HKUnit, Double)] = [
+            (.dietaryWater, .literUnit(with: .milli), e.num("hydration") ?? 0), (.dietaryCaffeine, .gramUnit(with: .milli), e.num("caffeine") ?? 0),
+            (.numberOfAlcoholicBeverages, .count(), (e.num("alcohol") ?? 0) / 10),
+            (.dietaryEnergyConsumed, .kilocalorie(), e.num("kcal") ?? 0), (.dietaryCarbohydrates, .gram(), e.num("carbs") ?? 0),
+        ]
+        let samples: [HKSample] = values.filter { $0.2 > 0 }.map {
+            HKQuantitySample(type: HKQuantityType($0.0), quantity: HKQuantity(unit: $0.1, doubleValue: $0.2), start: Date(), end: Date(), metadata: meta)
+        }
+        if !samples.isEmpty { store.save(samples) { _, _ in } }
+        return e
+    }
+
+    /// Training als Workout nach Health (endet jetzt, Dauer in Minuten); die Sportart wird grob aus dem Namen erkannt
+    static func saveWorkout(name: String, minutes: Double) {
+        guard UserDefaults.standard.bool(forKey: "healthEnabled"), minutes > 0 else { return }
+        let n = name.lowercased()
+        let kinds: [(String, HKWorkoutActivityType)] = [("lauf", .running), ("jogg", .running), ("rad", .cycling), ("bike", .cycling),
+            ("spazier", .walking), ("geh", .walking), ("wander", .hiking), ("schwimm", .swimming), ("yoga", .yoga), ("hiit", .highIntensityIntervalTraining)]
+        let config = HKWorkoutConfiguration()
+        config.activityType = kinds.first { n.contains($0.0) }?.1 ?? .traditionalStrengthTraining
+        let end = Date(), builder = HKWorkoutBuilder(healthStore: store, configuration: config, device: .local())
+        builder.beginCollection(withStart: end.addingTimeInterval(-minutes * 60)) { ok, _ in
+            guard ok else { return }
+            builder.addMetadata([HKMetadataKeyWorkoutBrandName: name]) { _, _ in
+                builder.endCollection(withEnd: end) { _, _ in builder.finishWorkout { _, _ in } }
+            }
+        }
     }
 
     static func saveMeal(name: String, kcal: Double, protein: Double, carbs: Double, fat: Double) {

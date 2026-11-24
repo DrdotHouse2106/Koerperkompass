@@ -415,6 +415,7 @@ struct TodayCard: View {
                     Button("Einheit abschließen (+\(planXP) XP)") {
                         context.upsert(id: "plan-" + Day.today, module: "training", date: Day.today,
                                        values: ["name": day.title, "minutes": 45], dirty: !state.demo)
+                        if !state.demo { Health.saveWorkout(name: day.title, minutes: 45) }
                         state.changed(context)
                     }
                     .buttonStyle(.borderedProminent).tint(.orange)
