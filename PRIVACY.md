@@ -59,7 +59,7 @@ Fügst du einen Link zu einer Rezeptseite ein, ruft dein Server diese Seite ab u
 
 ## Meine Clips (optional)
 
-Fügst du unter Motivation → Meine Clips einen Link zu einem Reel oder Video ein, lädt dein Server nur dessen Tonspur und speichert sie in deinem Konto. Clips sind nur für dich, werden nicht geteilt und gehen nicht an Freunde oder andere Server. Die Tondateien liegen auf deinem Server **nicht** Ende-zu-Ende-verschlüsselt. Die Rechte an den Inhalten liegen bei deren Urhebern – nutze Clips nur privat. Löschen kannst du sie einzeln; „Nur auf diesem iPhone speichern“ löscht sie ebenfalls.
+Fügst du unter Motivation → Meine Clips einen Link zu einem Reel oder Video ein, lädt dein Server nur dessen Tonspur und speichert sie in deinem Konto. Clips sind nur für dich, werden nicht geteilt und gehen nicht an Freunde oder andere Server. Die Tondateien liegen auf deinem Server **nicht** Ende-zu-Ende-verschlüsselt. Die Rechte an den Inhalten liegen bei deren Urhebern – nutze Clips nur privat. Löschen kannst du sie einzeln; „Nur auf diesem iPhone speichern“ löscht sie ebenfalls. Das mitlaufende Transkript erstellt die Apple-Spracherkennung auf deinem iPhone (wo das Gerät es nicht kann, über Apples Server) und speichert es nur im Zwischenspeicher der App.
 
 ## Ende-zu-Ende-Verschlüsselung (optional)
 
@@ -151,7 +151,7 @@ If you paste a link to a recipe website, your server fetches the page and takes 
 
 ## My clips (optional)
 
-If you paste a link to a reel or video under Motivation → My clips, your server downloads only its audio track and stores it in your account. Clips are only for you, are not shared and never go to friends or other servers. Audio files on your server are **not** end-to-end encrypted. The rights to the content belong to its creators – use clips privately only. You can delete them individually; “Store only on this iPhone” deletes them as well.
+If you paste a link to a reel or video under Motivation → My clips, your server downloads only its audio track and stores it in your account. Clips are only for you, are not shared and never go to friends or other servers. Audio files on your server are **not** end-to-end encrypted. The rights to the content belong to its creators – use clips privately only. You can delete them individually; “Store only on this iPhone” deletes them as well. The live transcript is created by Apple speech recognition on your iPhone (via Apple's servers where the device can't do it) and is kept only in the app's cache.
 
 ## End-to-end encryption (optional)
 

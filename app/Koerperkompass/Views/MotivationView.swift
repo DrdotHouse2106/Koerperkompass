@@ -1,4 +1,5 @@
 import AVFoundation
+import Speech
 import AppIntents
 import CoreTransferable
 import SwiftData
@@ -96,6 +97,7 @@ struct MotivationView: View {
         Task {
             _ = try? await state.api.call("DELETE", "/api/clips/\(c.id)")
             try? FileManager.default.removeItem(at: Clip.cache(c.id))
+            try? FileManager.default.removeItem(at: Clip.cache(c.id).deletingPathExtension().appendingPathExtension("json"))
             await loadClips()
         }
     }
@@ -333,6 +335,7 @@ struct ClipPage: View {
     let delete: () -> Void
     let rename: (String) -> Void
     @State private var player: AVAudioPlayer?
+    @State private var lines: [ClipLine] = []
     @State private var renaming = false
     @State private var newTitle = ""
     @State private var playing = false
@@ -362,6 +365,19 @@ struct ClipPage: View {
                 }
                 .disabled(loading)
                 if let error { Text(error).font(.caption).foregroundStyle(.red) }
+                // Transkript läuft mit: aktuelle Zeile hell, die nächste gedämpft
+                TimelineView(.animation(minimumInterval: 0.1, paused: !playing)) { _ in
+                    let t = player?.currentTime ?? 0
+                    let i = lines.lastIndex { $0.start <= t + 0.1 } ?? -1
+                    VStack(spacing: 10) {
+                        Text(i >= 0 && t <= lines[i].end + 1.5 ? lines[i].text : " ")
+                            .font(.title3.bold()).foregroundStyle(.white)
+                        Text(i + 1 < lines.count ? lines[i + 1].text : " ").font(.body).foregroundStyle(.white.opacity(0.4))
+                    }
+                    .multilineTextAlignment(.center).padding(.horizontal, 28).frame(minHeight: 110)
+                    .animation(.easeInOut(duration: 0.25), value: i)
+                }
+                .opacity(lines.isEmpty ? 0 : 1)
             }
             VStack {
                 Spacer()
@@ -399,6 +415,7 @@ struct ClipPage: View {
                 }
             }
             guard let data, let p = try? AVAudioPlayer(data: data) else { error = String(localized: "Ton konnte nicht geladen werden"); return }
+            if lines.isEmpty { Task { lines = await ClipLine.transcript(file) } }
             try? Speaker.activateSession()
             player = p
             p.play()
@@ -460,6 +477,54 @@ struct ClipAddSheet: View {
                     }
                     .disabled(busy || !url.lowercased().hasPrefix("https://"))
                 }
+            }
+        }
+    }
+}
+
+/// Eine Zeile des mitlaufenden Transkripts. Erkannt wird auf dem iPhone (Apple-Spracherkennung, wenn möglich ohne Netz),
+/// Deutsch und Englisch werden probiert, das sicherere Ergebnis gewinnt. Das Ergebnis liegt im Cache neben dem Ton.
+struct ClipLine: Codable {
+    let start, end: Double
+    let text: String
+
+    static func transcript(_ audio: URL) async -> [ClipLine] {
+        let cache = audio.deletingPathExtension().appendingPathExtension("json")
+        if let d = try? Data(contentsOf: cache), let l = try? JSONDecoder().decode([ClipLine].self, from: d) { return l }
+        guard await withCheckedContinuation({ c in SFSpeechRecognizer.requestAuthorization { c.resume(returning: $0 == .authorized) } }) else { return [] }
+        var best: [SFTranscriptionSegment] = [], score = 0.0
+        for id in ["en-US", "de-DE"] {
+            let segs = await recognize(audio, id)
+            let s = segs.reduce(0) { $0 + Double($1.confidence) }
+            if s > score { best = segs; score = s }
+        }
+        // Wörter zu Zeilen bündeln: höchstens 7 Wörter, neue Zeile auch nach einer Pause
+        var lines: [ClipLine] = [], words: [SFTranscriptionSegment] = []
+        func flush() {
+            guard let f = words.first, let l = words.last else { return }
+            lines.append(ClipLine(start: f.timestamp, end: l.timestamp + l.duration, text: words.map(\.substring).joined(separator: " ")))
+            words = []
+        }
+        for w in best {
+            if let l = words.last, words.count >= 7 || w.timestamp - (l.timestamp + l.duration) > 0.7 { flush() }
+            words.append(w)
+        }
+        flush()
+        if let d = try? JSONEncoder().encode(lines) { try? d.write(to: cache) }
+        return lines
+    }
+
+    private static func recognize(_ audio: URL, _ locale: String) async -> [SFTranscriptionSegment] {
+        guard let r = SFSpeechRecognizer(locale: Locale(identifier: locale)), r.isAvailable else { return [] }
+        let req = SFSpeechURLRecognitionRequest(url: audio)
+        req.shouldReportPartialResults = false
+        req.requiresOnDeviceRecognition = r.supportsOnDeviceRecognition
+        return await withCheckedContinuation { c in
+            var done = false
+            r.recognitionTask(with: req) { result, error in
+                guard !done, error != nil || result?.isFinal == true else { return }
+                done = true
+                c.resume(returning: result?.bestTranscription.segments ?? [])
             }
         }
     }
