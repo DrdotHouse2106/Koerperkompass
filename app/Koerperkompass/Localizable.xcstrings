@@ -1731,76 +1731,6 @@
         }
       }
     },
-    "Clip": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Clip"
-          }
-        }
-      }
-    },
-    "Clip aus Link hinzufügen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Add clip from link"
-          }
-        }
-      }
-    },
-    "Clip gespeichert.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Clip saved."
-          }
-        }
-      }
-    },
-    "Clip gespeichert: %@": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Clip saved: %@"
-          }
-        }
-      }
-    },
-    "Clip hinzufügen": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Add clip"
-          }
-        }
-      }
-    },
-    "Clip löschen?": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Delete clip?"
-          }
-        }
-      }
-    },
-    "Clip speichern": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Save clip"
-          }
-        }
-      }
-    },
     "Coach": {
       "localizations": {
         "en": {
@@ -3857,16 +3787,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tracker"
-          }
-        }
-      }
-    },
-    "Füge den Link zu einem Reel oder Video ein – dein Server speichert nur den Ton, nur für dich. Am schnellsten über Teilen mit dem Kurzbefehl „Clip speichern“.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Paste a link to a reel or video – your server stores only the audio, just for you. Fastest via Share with the “Save clip” shortcut."
           }
         }
       }
@@ -6381,16 +6301,6 @@
         }
       }
     },
-    "Meine Clips": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "My clips"
-          }
-        }
-      }
-    },
     "Meine Favoriten zeigen": {
       "localizations": {
         "en": {
@@ -8677,16 +8587,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Storage"
-          }
-        }
-      }
-    },
-    "Speichert den Ton eines Reels oder Videos privat unter Motivation → Meine Clips.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Saves the audio of a reel or video privately under Motivation → My clips."
           }
         }
       }

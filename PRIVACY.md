@@ -61,10 +61,6 @@ Fügst du einen Link zu einer Rezeptseite ein, ruft dein Server diese Seite ab u
 
 Dein Server zählt bei jeder Claude-Anfrage nur die Anzahl der Tokens (pro Tag und Modell), keine Inhalte. Du siehst den Verbrauch in den Einstellungen unter „KI-Verbrauch“.
 
-## Meine Clips (optional)
-
-Fügst du unter Motivation → Meine Clips einen Link zu einem Reel oder Video ein, lädt dein Server nur dessen Tonspur und speichert sie in deinem Konto. Clips sind nur für dich, werden nicht geteilt und gehen nicht an Freunde oder andere Server. Die Tondateien liegen auf deinem Server **nicht** Ende-zu-Ende-verschlüsselt. Die Rechte an den Inhalten liegen bei deren Urhebern – nutze Clips nur privat. Löschen kannst du sie einzeln; „Nur auf diesem iPhone speichern“ löscht sie ebenfalls. Das mitlaufende Transkript erstellt die Apple-Spracherkennung auf deinem iPhone (wo das Gerät es nicht kann, über Apples Server) und speichert es nur im Zwischenspeicher der App.
-
 ## Ende-zu-Ende-Verschlüsselung (optional)
 
 Unter Einstellungen → Verschlüsselung kannst du ein eigenes Passwort festlegen. Dann werden Einträge und Profil **auf dem iPhone verschlüsselt** (AES-GCM, Schlüssel aus dem Passwort mit PBKDF2 abgeleitet), bevor sie an den Server gehen. Der Server – und wer ihn betreibt – sieht nur Modul, Datum und Zeitpunkt der Einträge, nicht deren Inhalt. Passwort und Schlüssel verlassen das iPhone nie im Klartext. Für „Passwort vergessen“ bekommst du einen Wiederherstellungsschlüssel; vergisst du beides, sind die Daten auf dem Server nicht wiederherstellbar. Nicht verschlüsselt sind die Spielerkarte für Freunde sowie Daten, die du ausdrücklich an Claude, die Sprachausgabe oder als freiwillige Protokolle bzw. anonyme Verbesserungsdaten sendest.
@@ -156,10 +152,6 @@ If you paste a link to a recipe website, your server fetches the page and takes 
 ## AI usage
 
 For every Claude request your server counts only the number of tokens (per day and model), no content. You can see it in Settings under “AI usage”.
-
-## My clips (optional)
-
-If you paste a link to a reel or video under Motivation → My clips, your server downloads only its audio track and stores it in your account. Clips are only for you, are not shared and never go to friends or other servers. Audio files on your server are **not** end-to-end encrypted. The rights to the content belong to its creators – use clips privately only. You can delete them individually; “Store only on this iPhone” deletes them as well. The live transcript is created by Apple speech recognition on your iPhone (via Apple's servers where the device can't do it) and is kept only in the app's cache.
 
 ## End-to-end encryption (optional)
 

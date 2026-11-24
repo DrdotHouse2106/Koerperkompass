@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path/filepath"
 	"strings"
 
 	_ "modernc.org/sqlite"
@@ -37,7 +38,9 @@ func main() {
 	}
 	db.Exec(`ALTER TABLE codes ADD COLUMN name TEXT NOT NULL DEFAULT ''`) // ältere Datenbanken nachrüsten
 	migrateAppLog()
-	migrateClips()
+	// „Meine Clips“ gibt es nicht mehr: alte Tabelle und Tondateien entfernen
+	db.Exec(`DROP TABLE IF EXISTS clips`)
+	os.RemoveAll(filepath.Join(filepath.Dir(env("KK_DB", "data/koerperkompass.db")), "clips"))
 	migrateUsage()
 	go translateAll()                                                      // Übungsbibliothek einmal komplett ins Deutsche übersetzen (nur mit ANTHROPIC_API_KEY)
 	db.Exec(`ALTER TABLE users ADD COLUMN vault TEXT NOT NULL DEFAULT ''`) // Ende-zu-Ende-Verschlüsselung
