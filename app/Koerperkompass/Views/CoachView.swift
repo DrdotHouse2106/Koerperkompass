@@ -467,6 +467,7 @@ func coachContext(_ all: [Entry], _ p: Profile, healthUpload: Bool, mention: Str
     lines.append("- Mahlzeiten: " + (meals.isEmpty ? "noch nichts eingetragen" : meals.joined(separator: ", ")))
     lines.append(drinks)
     if let sym = Symptoms.summary(entries) { lines.append("- Beschwerden (letzte 7 Tage): " + sym) }
+    if let cal = CalendarAccess.summary() { lines.append(cal) }
     if let plan = p.plan {
         lines.append("- Trainingsprogramm: \(plan.name), heute " + (plan.isTrainingDay(Day.today) ? "Trainingstag" : "Ruhetag")
                      + (today.contains { $0.module == "training" } ? " (erledigt)" : ""))

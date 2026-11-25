@@ -2341,6 +2341,16 @@
         }
       }
     },
+    "Der Coach sieht deine Termine von heute und morgen und plant Essen, Training und Pausen drumherum. Ohne Titel nur „belegt“ mit Uhrzeit. Nur lesen, nichts wird geändert.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The coach sees your events for today and tomorrow and plans meals, training and breaks around them. Without titles only “busy” with times. Read-only, nothing is changed."
+          }
+        }
+      }
+    },
     "Der Rezepttext bzw. das Foto wird über deinen Server an die Claude API (Anthropic) gesendet.": {
       "localizations": {
         "en": {
@@ -5171,6 +5181,16 @@
         }
       }
     },
+    "Kalender für den Coach": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calendar for the coach"
+          }
+        }
+      }
+    },
     "Kalorien": {
       "localizations": {
         "en": {
@@ -6571,6 +6591,16 @@
         }
       }
     },
+    "Mit Titeln der Termine": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Include event titles"
+          }
+        }
+      }
+    },
     "Mit dem Coach kochen": {
       "localizations": {
         "en": {
@@ -6677,6 +6707,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Modules"
+          }
+        }
+      }
+    },
+    "Morgen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tomorrow"
           }
         }
       }
@@ -10931,6 +10971,16 @@
         }
       }
     },
+    "belegt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "busy"
+          }
+        }
+      }
+    },
     "dein Gewicht von %@ Kilo": {
       "localizations": {
         "en": {
@@ -10991,6 +11041,16 @@
         }
       }
     },
+    "ganztägig": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "all day"
+          }
+        }
+      }
+    },
     "iPhone-Stimme": {
       "localizations": {
         "en": {
@@ -11027,6 +11087,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "kcal"
+          }
+        }
+      }
+    },
+    "keine Termine": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "no events"
           }
         }
       }

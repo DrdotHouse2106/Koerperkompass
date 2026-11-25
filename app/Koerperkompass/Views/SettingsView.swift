@@ -18,6 +18,8 @@ struct SettingsView: View {
     @State private var memberName = ""
     @Environment(\.modelContext) private var modelContext
     @AppStorage("anonShare") private var anonShare = false
+    @AppStorage("calendarCoach") private var calendarCoach = false
+    @AppStorage("calendarTitles") private var calendarTitles = false
     @AppStorage("anonTexts") private var anonTexts = false
     @State private var askAnon = false
     @AppStorage("motivationOn") private var motivationOn = false
@@ -109,6 +111,13 @@ struct SettingsView: View {
                         NavigationLink("Claude-Connector") { ClaudeConnectView() }
                     } header: { Text("Claude API") } footer: {
                         Text("Fotos und zusammengefasste Werte gehen nur nach deiner Zustimmung über deinen Server an Anthropic. Keine ärztliche Beratung.")
+                    }
+                    Section {
+                        Toggle("Kalender für den Coach", isOn: $calendarCoach)
+                            .onChange(of: calendarCoach) { if calendarCoach { Task { if !(await CalendarAccess.request()) { calendarCoach = false } } } }
+                        if calendarCoach { Toggle("Mit Titeln der Termine", isOn: $calendarTitles) }
+                    } footer: {
+                        Text("Der Coach sieht deine Termine von heute und morgen und plant Essen, Training und Pausen drumherum. Ohne Titel nur „belegt“ mit Uhrzeit. Nur lesen, nichts wird geändert.")
                     }
                 }
                 if state.demo {
