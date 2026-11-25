@@ -10011,6 +10011,16 @@
         }
       }
     },
+    "Vom Körperkompass-Coach": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "From the Körperkompass coach"
+          }
+        }
+      }
+    },
     "Von Claude für dich angepasst": {
       "localizations": {
         "en": {

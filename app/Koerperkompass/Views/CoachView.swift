@@ -43,13 +43,27 @@ struct CoachView: View {
         }
         struct MoodItem: Codable, Hashable { var level: Int?; var feelings: [String]?; var areas: [String]? }
         struct SymptomItem: Codable, Hashable { var symptom: String?; var severity: Int? }
+        /// Termin oder Erinnerung (z. B. Trainingszeit); day 0 = heute, 1 = morgen …, time „HH:MM“
+        struct EventItem: Codable, Hashable {
+            var title: String?; var day: Int?; var time: String?; var minutes: Int?; var reminder: Bool?
+            var start: Date? {
+                let p = (time ?? "").split(separator: ":").compactMap { Int($0) }
+                guard p.count == 2, let d = Calendar.current.date(byAdding: .day, value: max(0, day ?? 0), to: Date()) else { return nil }
+                return Calendar.current.date(bySettingHour: p[0], minute: p[1], second: 0, of: d)
+            }
+            var text: String {
+                let when = start?.formatted(.dateTime.weekday(.wide).hour().minute()) ?? ""
+                return "\(reminder == true ? "⏰" : "📅") \(title ?? "") · \(when)" + (reminder == true ? "" : " (\(minutes ?? 60) min)")
+            }
+        }
         var day: Int?
+        var event: EventItem?
         var items: [Item]?
         var weight: Double?
         var mood: MoodItem?
         var symptoms: [SymptomItem]?
         var done: Bool?
-        var isEmpty: Bool { (items ?? []).isEmpty && weight == nil && mood?.level == nil && (symptoms ?? []).isEmpty }
+        var isEmpty: Bool { (items ?? []).isEmpty && weight == nil && mood?.level == nil && (symptoms ?? []).isEmpty && event?.start == nil }
         var date: String { Day.string(Calendar.current.date(byAdding: .day, value: min(day ?? 0, 0), to: Date())!) }
     }
 
@@ -244,6 +258,7 @@ struct CoachView: View {
                 Text("\((x.ml ?? 0) > 0 ? "🥤" : "🍽") \(x.name ?? "") \(x.amount.map { "(\($0))" } ?? "") · \((x.kcal ?? 0).whole) kcal").font(.caption)
             }
             if let w = p.weight { Text("⚖️ \(w.short) kg").font(.caption) }
+            if let e = p.event, e.start != nil { Text(e.text).font(.caption) }
             if let l = p.mood?.level { Text("\(Mood.levels[max(0, min(6, l - 1))].emoji) \(String(localized: Mood.levels[max(0, min(6, l - 1))].title))").font(.caption) }
             ForEach(Array((p.symptoms ?? []).enumerated()), id: \.offset) { _, s in
                 Text("🤒 \(Symptoms.name(s.symptom ?? "")) · \(String(localized: Symptoms.severities[max(0, min(2, (s.severity ?? 1) - 1))]))").font(.caption)
@@ -420,6 +435,10 @@ struct CoachView: View {
         if let l = p.mood?.level { parts.append(String(localized: "deine Stimmung „\(String(localized: Mood.levels[max(0, min(6, l - 1))].title))“")) }
         let symptoms = (p.symptoms ?? []).compactMap { $0.symptom.map(Symptoms.name) }
         if !symptoms.isEmpty { parts.append(symptoms.formatted(.list(type: .and))) }
+        if let e = p.event, let s = e.start {
+            let when = s.formatted(.dateTime.weekday(.wide).hour().minute())
+            parts.append(e.reminder == true ? String(localized: "eine Erinnerung „\(e.title ?? "")“ am \(when)") : String(localized: "den Termin „\(e.title ?? "")“ am \(when) in deinen Kalender"))
+        }
         let what = parts.joined(separator: String(localized: " und "))
         return p.day == -1 ? String(localized: "Soll ich das für gestern eintragen: \(what)?") : String(localized: "Soll ich das eintragen: \(what)?")
     }
@@ -491,7 +510,7 @@ func coachContext(_ all: [Entry], _ p: Profile, healthUpload: Bool, mention: Str
 }
 
 
-extension Proposal {
+extension CoachView.Proposal {
     /// Vorschlag eintragen (aus dem Coach oder vom Claude-Connector)
     @MainActor func apply(_ context: ModelContext, _ state: AppState) {
         ParsedFood.save((self.items ?? []).map(\.food), day: date, context: context, state: state)
@@ -515,6 +534,7 @@ extension Proposal {
             context.insert(Entry(module: "symptoms", date: date, values: ["symptom": id, "name": Symptoms.name(id), "severity": sev, "time": Day.now]))
             if state.healthEnabled && date == Day.today { Health.saveSymptom(id, severity: sev) }
         }
+        if let e = event { Task { await CalendarAccess.add(e) } }
         state.changed(context)
     }
 }

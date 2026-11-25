@@ -59,7 +59,7 @@ Fügst du einen Link zu einer Rezeptseite ein, ruft dein Server diese Seite ab u
 
 ## Kalender (optional)
 
-Schaltest du „Kalender für den Coach“ ein, liest die App deine Termine von heute und morgen (nur lesen) und gibt sie dem Coach mit – standardmäßig nur als „belegt“ mit Uhrzeit, Titel nur, wenn du das zusätzlich einschaltest. Die Termine gehen wie alle Coach-Daten nur mit deiner Zustimmung an Claude und werden nicht gespeichert.
+Schaltest du „Kalender für den Coach“ ein, liest die App deine Termine von heute und morgen (nur lesen) und gibt sie dem Coach mit – standardmäßig nur als „belegt“ mit Uhrzeit, Titel nur, wenn du das zusätzlich einschaltest. Die Termine gehen wie alle Coach-Daten nur mit deiner Zustimmung an Claude und werden nicht gespeichert. Schlägt der Coach einen Termin oder eine Erinnerung vor (z. B. eine Trainingszeit), trägt die App sie erst nach deiner Bestätigung in Kalender bzw. Erinnerungen ein.
 
 ## Claude-Connector (optional)
 
@@ -163,7 +163,7 @@ If you paste a link to a recipe website, your server fetches the page and takes 
 
 ## Calendar (optional)
 
-If you turn on “Calendar for the coach”, the app reads your events for today and tomorrow (read-only) and passes them to the coach – by default only as “busy” with times, titles only if you enable that as well. Like all coach data they only go to Claude with your consent and are not stored.
+If you turn on “Calendar for the coach”, the app reads your events for today and tomorrow (read-only) and passes them to the coach – by default only as “busy” with times, titles only if you enable that as well. Like all coach data they only go to Claude with your consent and are not stored. If the coach suggests an event or reminder (e.g. a training time), the app only adds it to Calendar or Reminders after you confirm.
 
 ## Claude connector (optional)
 

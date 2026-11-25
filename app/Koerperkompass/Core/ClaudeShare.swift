@@ -49,7 +49,7 @@ enum ClaudeShare {
         for item in list {
             guard let id = item["id"], let blob = item["blob"] else { continue }
             if let d = Data(base64Encoded: blob), let box = try? AES.GCM.SealedBox(combined: d),
-               let raw = try? AES.GCM.open(box, using: key), let p = try? JSONDecoder().decode(Proposal.self, from: raw) {
+               let raw = try? AES.GCM.open(box, using: key), let p = try? JSONDecoder().decode(CoachView.Proposal.self, from: raw) {
                 p.apply(context, state)
                 AppLog.add("Claude-Connector: Eintrag übernommen")
             }

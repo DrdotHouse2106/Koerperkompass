@@ -41,6 +41,8 @@ targets:
         NSCameraUsageDescription: Die Kamera wird zum Scannen des Kopplungscodes und für Fotos von Mahlzeiten verwendet.
         NSMicrophoneUsageDescription: Das Mikrofon wird für den Sprach-Coach im Training verwendet.
         NSCalendarsFullAccessUsageDescription: Der Coach liest deine Termine von heute und morgen, um Essen, Training und Pausen drumherum zu planen. Es wird nichts geändert.
+        NSCalendarsWriteOnlyAccessUsageDescription: Der Coach trägt nach deiner Bestätigung Termine wie Trainingszeiten in deinen Kalender ein.
+        NSRemindersFullAccessUsageDescription: Der Coach legt nach deiner Bestätigung Erinnerungen an, z. B. ans Training oder Trinken.
         NSSpeechRecognitionUsageDescription: Deine Sprache wird für den Sprach-Coach und die Kochhilfe in Text umgewandelt – nach Möglichkeit direkt auf dem iPhone.
         CFBundleURLTypes:
           - CFBundleURLName: de.drdothouse.koerperkompass
