@@ -61,6 +61,10 @@ Fügst du einen Link zu einer Rezeptseite ein, ruft dein Server diese Seite ab u
 
 Schaltest du „Kalender für den Coach“ ein, liest die App deine Termine von heute und morgen (nur lesen) und gibt sie dem Coach mit – standardmäßig nur als „belegt“ mit Uhrzeit, Titel nur, wenn du das zusätzlich einschaltest. Die Termine gehen wie alle Coach-Daten nur mit deiner Zustimmung an Claude und werden nicht gespeichert. Schlägt der Coach einen Termin oder eine Erinnerung vor (z. B. eine Trainingszeit), trägt die App sie erst nach deiner Bestätigung in Kalender bzw. Erinnerungen ein.
 
+## Testphase: lesbare Kopie (optional)
+
+Tippst du unter Einstellungen → Testphase auf „Meine Daten zur Auswertung senden“ und bestätigst, legt die App eine **lesbare** Kopie aller deiner Daten (Profil, Einträge, Gesprächsprotokoll) auf deinem Server ab, damit Fehler und Verbesserungen ausgewertet werden können. Das ist die einzige Ausnahme von der Verschlüsselung und passiert nur auf deinen ausdrücklichen Wunsch. Es gibt nur die neueste Kopie; sie wird nach 14 Tagen automatisch gelöscht und lässt sich jederzeit selbst löschen. Sie wird nicht weitergegeben.
+
 ## Claude-Connector (optional)
 
 Verbindest du Körperkompass mit deiner Claude-App, lädt die App eine Kurzfassung deiner Daten (heute, letzte 7 Tage, Ziele) **verschlüsselt** auf deinen Server. Den Schlüssel bekommt nur Claude als Teil des Zugangstokens; dein Server speichert ihn nicht. Fragt Claude in deinem Auftrag, entschlüsselt der Server die Kurzfassung kurz im Arbeitsspeicher und gibt sie an Claude (Anthropic) weiter – dabei gelten deine Vereinbarungen mit Anthropic für dein Claude-Konto. Einträge, die Claude für dich anlegt, liegen verschlüsselt auf dem Server, bis die App sie übernimmt. „Verbindung trennen“ löscht Kurzfassung, Zugang und Eingangskorb.
@@ -164,6 +168,10 @@ If you paste a link to a recipe website, your server fetches the page and takes 
 ## Calendar (optional)
 
 If you turn on “Calendar for the coach”, the app reads your events for today and tomorrow (read-only) and passes them to the coach – by default only as “busy” with times, titles only if you enable that as well. Like all coach data they only go to Claude with your consent and are not stored. If the coach suggests an event or reminder (e.g. a training time), the app only adds it to Calendar or Reminders after you confirm.
+
+## Test phase: readable copy (optional)
+
+If you tap “Send my data for analysis” under Settings → Test phase and confirm, the app stores a **readable** copy of all your data (profile, entries, conversation log) on your server so bugs and improvements can be analysed. This is the only exception to encryption and only happens at your explicit request. Only the latest copy is kept; it is deleted automatically after 14 days and you can delete it yourself at any time. It is not passed on.
 
 ## Claude connector (optional)
 

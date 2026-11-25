@@ -911,6 +911,16 @@
         }
       }
     },
+    "Alle deine Daten liegen danach unverschlüsselt auf deinem Server – für die Auswertung in der Testphase. Die Kopie wird nach 14 Tagen gelöscht.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All your data will then be stored unencrypted on your server – for analysis during the test phase. The copy is deleted after 14 days."
+          }
+        }
+      }
+    },
     "Alle profitieren von einem Glas Wasser. Jetzt?": {
       "localizations": {
         "en": {
@@ -1877,6 +1887,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "The photo is sent via your server to the Claude API (Anthropic) to estimate its nutrients. You can withdraw your consent in Settings."
+          }
+        }
+      }
+    },
+    "Das Protokoll meldet Abläufe wie Tippen, Abgleich, Server-Aufrufe und Fehler an deinen eigenen Server – nur Kennungen und Zeitstempel, keine Gesundheitswerte. „Meine Daten senden“ legt einmalig eine lesbare Kopie aller deiner Daten (Profil, Einträge, Gesprächsprotokoll) auf deinem Server ab, damit sie ausgewertet werden kann – trotz Verschlüsselung, nur auf deinen Wunsch, nach 14 Tagen automatisch gelöscht. Nichts davon wird weitergegeben.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The log reports flows such as taps, sync, server calls and errors to your own server – only identifiers and timestamps, no health values. “Send my data” stores a one-time readable copy of all your data (profile, entries, conversation log) on your server so it can be analysed – despite encryption, only at your request, deleted automatically after 14 days. Nothing is passed on."
           }
         }
       }
@@ -4191,6 +4211,26 @@
         }
       }
     },
+    "Gesendet: %lld Einträge.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sent: %lld entries."
+          }
+        }
+      }
+    },
+    "Gesendete Kopie löschen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete sent copy"
+          }
+        }
+      }
+    },
     "Gespräch löschen": {
       "localizations": {
         "en": {
@@ -5681,6 +5721,16 @@
         }
       }
     },
+    "Kopie gelöscht.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copy deleted."
+          }
+        }
+      }
+    },
     "Kopieren": {
       "localizations": {
         "en": {
@@ -6027,6 +6077,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Get to know me: ask me a few questions."
+          }
+        }
+      }
+    },
+    "Lesbare Kopie senden?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send readable copy?"
           }
         }
       }
@@ -6437,6 +6497,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "My day: give me a short briefing with one tip for today."
+          }
+        }
+      }
+    },
+    "Meine Daten zur Auswertung senden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send my data for analysis"
           }
         }
       }
@@ -8601,6 +8671,26 @@
         }
       }
     },
+    "Senden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send"
+          }
+        }
+      }
+    },
+    "Senden fehlgeschlagen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sending failed."
+          }
+        }
+      }
+    },
     "Serie": {
       "localizations": {
         "en": {
@@ -9197,6 +9287,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Plates and packages – optionally add how much, e.g. “half a pack of skyr”."
+          }
+        }
+      }
+    },
+    "Testphase": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Test phase"
           }
         }
       }

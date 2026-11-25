@@ -48,6 +48,8 @@ func routes() http.Handler {
 	m.HandleFunc("POST /api/entries", auth(putEntries))
 	m.HandleFunc("POST /api/log", auth(postAppLog)) // Testphase, siehe applog.go
 	m.HandleFunc("GET /api/log", auth(getAppLog))
+	m.HandleFunc("POST /api/debug/dump", auth(postDebugDump)) // Testphase: lesbare Kopie auf Wunsch, siehe applog.go
+	m.HandleFunc("DELETE /api/debug/dump", auth(deleteDebugDump))
 	// Claude-Connector (MCP + OAuth), siehe mcp.go
 	m.HandleFunc("POST /mcp", mcpHandler)
 	m.HandleFunc("GET /.well-known/oauth-protected-resource", oauthResource)
@@ -213,7 +215,7 @@ func putProfile(w http.ResponseWriter, r *http.Request) {
 // Konto, Geräte und Freundschaften bleiben – die App nutzt den Server danach nur noch als Durchgang (Claude, Stimme).
 func deleteData(w http.ResponseWriter, r *http.Request) {
 	u := uid(r)
-	for _, q := range []string{`DELETE FROM entries WHERE user_id=?`, `DELETE FROM applog WHERE user_id=?`, `UPDATE users SET profile='{}', card='{}' WHERE id=?`} {
+	for _, q := range []string{`DELETE FROM entries WHERE user_id=?`, `DELETE FROM applog WHERE user_id=?`, `DELETE FROM debug_dump WHERE user_id=?`, `UPDATE users SET profile='{}', card='{}' WHERE id=?`} {
 		if _, err := db.Exec(q, u); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return

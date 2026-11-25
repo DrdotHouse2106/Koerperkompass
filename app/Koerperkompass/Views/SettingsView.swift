@@ -22,12 +22,24 @@ struct SettingsView: View {
     @AppStorage("calendarTitles") private var calendarTitles = false
     @AppStorage("anonTexts") private var anonTexts = false
     @State private var askAnon = false
+    @State private var askDump = false
+    @State private var dumpMessage: String?
     @AppStorage("motivationOn") private var motivationOn = false
     @AppStorage("motivationHour") private var motivationHour = 8
     @AppStorage("motivationEvening") private var motivationEvening = false
     @AppStorage("motivationEveningHour") private var motivationEveningHour = 19
 
     @AppStorage("appLogOn") private var appLogOn = false
+
+    /// Testphase: lesbare Kopie aller eigenen Daten auf den eigenen Server (Ausnahme von der Verschlüsselung, nur auf Wunsch)
+    private func sendDump() async {
+        let entries = context.allEntries().filter { !$0.deleted }.map(\.json)
+        let profile = (try? JSONEncoder().encode(state.profile)).flatMap { try? JSONSerialization.jsonObject(with: $0) } ?? [:]
+        let dump: [String: Any] = ["created": Date().formatted(.iso8601), "app": Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "",
+                                   "profile": profile, "entries": entries]
+        dumpMessage = (try? await state.api.call("POST", "/api/debug/dump", json: dump)) != nil
+            ? String(localized: "Gesendet: \(entries.count) Einträge.") : String(localized: "Senden fehlgeschlagen.")
+    }
 
     var body: some View {
         @Bindable var state = state
@@ -46,8 +58,20 @@ struct SettingsView: View {
                 }
                 Section {
                     Toggle("Erweitertes Protokoll (Testphase)", isOn: $appLogOn)
-                } footer: {
-                    Text("Meldet Abläufe wie Tippen, Abgleich, Server-Aufrufe und Fehler an deinen eigenen Server, damit Fehler gefunden werden können – nur Kennungen und Zeitstempel, keine Gesundheitswerte. Wird nicht weitergegeben.")
+                    if !state.demo && !state.localOnly {
+                        Button("Meine Daten zur Auswertung senden", systemImage: "paperplane") { askDump = true }
+                        .confirmationDialog("Lesbare Kopie senden?", isPresented: $askDump, titleVisibility: .visible) {
+                            Button("Senden") { Task { await sendDump() } }
+                        } message: {
+                            Text("Alle deine Daten liegen danach unverschlüsselt auf deinem Server – für die Auswertung in der Testphase. Die Kopie wird nach 14 Tagen gelöscht.")
+                        }
+                        Button("Gesendete Kopie löschen", systemImage: "trash", role: .destructive) {
+                            Task { dumpMessage = (try? await state.api.call("DELETE", "/api/debug/dump")) != nil ? String(localized: "Kopie gelöscht.") : nil }
+                        }
+                        if let dumpMessage { Text(dumpMessage).font(.caption) }
+                    }
+                } header: { Text("Testphase") } footer: {
+                    Text("Das Protokoll meldet Abläufe wie Tippen, Abgleich, Server-Aufrufe und Fehler an deinen eigenen Server – nur Kennungen und Zeitstempel, keine Gesundheitswerte. „Meine Daten senden“ legt einmalig eine lesbare Kopie aller deiner Daten (Profil, Einträge, Gesprächsprotokoll) auf deinem Server ab, damit sie ausgewertet werden kann – trotz Verschlüsselung, nur auf deinen Wunsch, nach 14 Tagen automatisch gelöscht. Nichts davon wird weitergegeben.")
                 }
                 Section {
                     Toggle("Motivierende Erinnerungen", isOn: $motivationOn)

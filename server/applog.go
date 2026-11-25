@@ -1,7 +1,9 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"strconv"
 	"strings"
@@ -62,4 +64,30 @@ func truncate(s string, n int) string {
 		return s[:n]
 	}
 	return s
+}
+
+// Testdaten: Auf ausdrücklichen Wunsch schickt die App eine lesbare Kopie aller eigenen Daten (Profil, Einträge,
+// Gesprächsprotokoll) zur Auswertung in der Testphase – die einzige Ausnahme von der Verschlüsselungspflicht.
+// Pro Nutzer nur die neueste Kopie, nach 14 Tagen gelöscht, jederzeit löschbar. Nie weitergeleitet.
+func migrateDebugDump() {
+	db.Exec(`CREATE TABLE IF NOT EXISTS debug_dump (user_id INTEGER PRIMARY KEY, data TEXT NOT NULL, created INTEGER NOT NULL)`)
+	db.Exec(`DELETE FROM debug_dump WHERE created < ?`, time.Now().AddDate(0, 0, -14).Unix())
+}
+
+// POST /api/debug/dump – lesbare Kopie speichern (ersetzt die vorige)
+func postDebugDump(w http.ResponseWriter, r *http.Request) {
+	data, err := io.ReadAll(io.LimitReader(r.Body, 50<<20))
+	if err != nil || !json.Valid(data) {
+		http.Error(w, "ungültige Daten", http.StatusBadRequest)
+		return
+	}
+	db.Exec(`INSERT INTO debug_dump(user_id, data, created) VALUES(?,?,?) ON CONFLICT(user_id) DO UPDATE SET data=excluded.data, created=excluded.created`,
+		uid(r), string(data), time.Now().Unix())
+	w.WriteHeader(http.StatusNoContent)
+}
+
+// DELETE /api/debug/dump
+func deleteDebugDump(w http.ResponseWriter, r *http.Request) {
+	db.Exec(`DELETE FROM debug_dump WHERE user_id=?`, uid(r))
+	w.WriteHeader(http.StatusNoContent)
 }
