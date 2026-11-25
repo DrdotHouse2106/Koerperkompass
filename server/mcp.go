@@ -280,7 +280,7 @@ var mcpTools = []map[string]any{
 			"event": map[string]any{"type": "object", "description": "Termin im Kalender (reminder false, z. B. Trainingszeit) oder Erinnerung (reminder true)",
 				"properties": map[string]any{"title": map[string]any{"type": "string"}, "day": map[string]any{"type": "integer", "description": "0 = heute, 1 = morgen"},
 					"time": map[string]any{"type": "string", "description": "HH:MM"}, "minutes": map[string]any{"type": "integer"}, "reminder": map[string]any{"type": "boolean"}}},
-			"mood":   map[string]any{"type": "object", "properties": map[string]any{"level": map[string]any{"type": "integer", "description": "1 sehr unangenehm … 7 sehr angenehm"}}},
+			"mood": map[string]any{"type": "object", "properties": map[string]any{"level": map[string]any{"type": "integer", "description": "1 sehr unangenehm … 7 sehr angenehm"}}},
 			"symptoms": map[string]any{"type": "array", "items": map[string]any{"type": "object", "properties": map[string]any{
 				"symptom": map[string]any{"type": "string", "enum": []string{"sinusCongestion", "runnyNose", "soreThroat", "coughing", "headache", "fever",
 					"chills", "fatigue", "bodyAndMuscleAches", "lowerBackPain", "nausea", "diarrhea", "dizziness", "shortnessOfBreath", "lossOfSmell", "sleepChanges"}},
