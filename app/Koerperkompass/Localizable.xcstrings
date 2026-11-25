@@ -3341,6 +3341,16 @@
         }
       }
     },
+    "Erneut senden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send again"
+          }
+        }
+      }
+    },
     "Ernährung": {
       "localizations": {
         "en": {

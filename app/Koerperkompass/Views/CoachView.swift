@@ -93,7 +93,12 @@ struct CoachView: View {
                             HStack { ProgressView(); Text("Dein Coach denkt nach …").foregroundStyle(.secondary) }
                                 .frame(maxWidth: .infinity, alignment: .leading).id("busy")
                         }
-                        if let error { Text(error).font(.caption).foregroundStyle(.red) }
+                        if let error {
+                            Text(error).font(.caption).foregroundStyle(.red)
+                            if messages.last?.role == "user", !busy {
+                                Button("Erneut senden", systemImage: "arrow.clockwise") { retry() }.font(.caption).buttonStyle(.bordered)
+                            }
+                        }
                         Color.clear.frame(height: 1).id("end")
                     }
                     .padding()
@@ -294,6 +299,13 @@ struct CoachView: View {
     }
 
     private func save(_ list: [Message]) { stored = (try? JSONEncoder().encode(Array(list.suffix(60)))) ?? Data() }
+
+    /// Letzte Frage noch einmal senden (z. B. nach Verbindungsabbruch), ohne sie doppelt im Verlauf zu haben
+    private func retry() {
+        guard let last = messages.last, last.role == "user" else { return }
+        save(Array(messages.dropLast()))
+        send(last.text)
+    }
 
     private func send(_ text: String) {
         let text = text.trimmingCharacters(in: .whitespacesAndNewlines)

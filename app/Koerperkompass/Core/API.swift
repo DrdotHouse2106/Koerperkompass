@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 import Security
 
 /// Minimaler Client für den eigenen Körperkompass-Server.
@@ -32,17 +33,24 @@ struct API {
         if let token { req.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization") }
         if let json { req.httpBody = try JSONSerialization.data(withJSONObject: json) }
         let started = Date()
-        let result: (Data, URLResponse)
+        // Läuft weiter, auch wenn die App kurz in den Hintergrund geht (z. B. Bildschirm aus während der Coach antwortet)
+        let bg = await UIApplication.shared.beginBackgroundTask(withName: path)
+        defer { Task { @MainActor in UIApplication.shared.endBackgroundTask(bg) } }
+        var result: (Data, URLResponse)?
         do {
-            do { result = try await URLSession.shared.data(for: req) } catch URLError.networkConnectionLost {
-                // Kurz abgerissene Verbindung (z. B. WLAN ↔ Mobilfunk): einmal wiederholen
-                AppLog.add("\(method) \(path) → Verbindung unterbrochen, neuer Versuch")
-                result = try await URLSession.shared.data(for: req)
+            // Kurz abgerissene Verbindung (z. B. WLAN ↔ Mobilfunk, Funkloch): bis zu zweimal wiederholen
+            for attempt in 0..<3 where result == nil {
+                do { result = try await URLSession.shared.data(for: req) } catch let e as URLError
+                    where attempt < 2 && [.networkConnectionLost, .notConnectedToInternet, .cannotConnectToHost].contains(e.code) {
+                    AppLog.add("\(method) \(path) → \(e.code == .networkConnectionLost ? "Verbindung unterbrochen" : "kein Netz"), neuer Versuch")
+                    try? await Task.sleep(for: .seconds(attempt + 1))
+                }
             }
         } catch {
             if path != "/api/log" { AppLog.add("\(method) \(path) → Netzfehler: \(error.localizedDescription)") }
             throw error
         }
+        guard let result else { throw URLError(.networkConnectionLost) }
         let (data, resp) = result
         let code = (resp as? HTTPURLResponse)?.statusCode ?? 0
         if path != "/api/log" {
