@@ -57,6 +57,10 @@ Nur wenn du in den Einstellungen „Anonyme Daten teilen“ einschaltest und bes
 
 Fügst du einen Link zu einer Rezeptseite ein, ruft dein Server diese Seite ab und übernimmt die eingebetteten Rezeptdaten; nur wenn diese fehlen, geht der Seitentext mit deiner Zustimmung an Claude. Fügst du einen Reel- oder Video-Link ein, gibt dein Server ihn an deine eigene Reelkoch-Installation weiter; die lädt das öffentliche Reel und lässt das Rezept mit ihrem eigenen Claude-Zugang erstellen. Eingefügter Rezepttext und – nur mit deiner Zustimmung – das fertige Rezept zur Nährwertschätzung gehen über deinen Server an Claude. Deine Rezepte liegen wie alle Einträge auf deinem iPhone und deinem Server; der Coach bekommt eine Liste der Rezepttitel mit Nährwerten (bei erwähnten Rezepten auch die Zutaten). Bei „Mit dem Coach kochen“ gehen – nur mit deiner Zustimmung – das Rezept und deine Fragen über deinen Server an Claude, keine Gesundheitsdaten; das Gespräch wird nicht gespeichert.
 
+## Claude-Connector (optional)
+
+Verbindest du Körperkompass mit deiner Claude-App, lädt die App eine Kurzfassung deiner Daten (heute, letzte 7 Tage, Ziele) **verschlüsselt** auf deinen Server. Den Schlüssel bekommt nur Claude als Teil des Zugangstokens; dein Server speichert ihn nicht. Fragt Claude in deinem Auftrag, entschlüsselt der Server die Kurzfassung kurz im Arbeitsspeicher und gibt sie an Claude (Anthropic) weiter – dabei gelten deine Vereinbarungen mit Anthropic für dein Claude-Konto. Einträge, die Claude für dich anlegt, liegen verschlüsselt auf dem Server, bis die App sie übernimmt. „Verbindung trennen“ löscht Kurzfassung, Zugang und Eingangskorb.
+
 ## KI-Relais
 
 Nutzt dein Server statt eines eigenen Claude-Schlüssels ein KI-Relais, laufen die Anfragen an Claude zusätzlich über dieses Relais. Das Relais leitet sie nur weiter und speichert keine Inhalte – nur Relais-Schlüssel, Guthaben und Tokenzahlen pro Tag und Modell.
@@ -152,6 +156,10 @@ Only if you turn on “Share anonymous data” in Settings and confirm it, your 
 ## Recipes (optional)
 
 If you paste a link to a recipe website, your server fetches the page and takes over the embedded recipe data; only if there is none, the page text is sent to Claude with your consent. If you paste a reel or video link, your server passes it to your own Reelkoch installation, which downloads the public reel and creates the recipe with its own Claude access. Pasted recipe text and – only with your consent – the finished recipe for nutrition estimates are sent via your server to Claude. Your recipes are stored like all entries on your iPhone and your server; the coach receives a list of recipe titles with nutrition values (ingredients for recipes you mention). With “Cook with the coach” – only with your consent – the recipe and your questions go to Claude via your server, no health data; the conversation is not stored.
+
+## Claude connector (optional)
+
+If you connect Körperkompass to your Claude app, the app uploads an **encrypted** summary of your data (today, last 7 days, goals) to your server. Only Claude receives the key, as part of its access token; your server does not store it. When Claude asks on your behalf, the server decrypts the summary briefly in memory and passes it to Claude (Anthropic) under the terms of your Claude account. Entries Claude creates for you are stored encrypted until the app picks them up. “Disconnect” deletes the summary, access and inbox.
 
 ## AI relay
 

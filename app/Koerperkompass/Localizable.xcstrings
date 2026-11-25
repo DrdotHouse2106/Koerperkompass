@@ -401,6 +401,16 @@
         }
       }
     },
+    "1. In Claude hinzufügen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1. Add in Claude"
+          }
+        }
+      }
+    },
     "10 Workouts": {
       "localizations": {
         "en": {
@@ -457,6 +467,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "2 hours"
+          }
+        }
+      }
+    },
+    "2. Freigeben": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2. Allow"
           }
         }
       }
@@ -737,6 +757,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Address"
+          }
+        }
+      }
+    },
+    "Adresse kopieren": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copy address"
           }
         }
       }
@@ -1731,12 +1761,52 @@
         }
       }
     },
+    "Claude sieht eine Kurzfassung deiner Daten (heute, letzte 7 Tage, Ziele) und kann Essen, Getränke, Gewicht, Stimmung und Beschwerden eintragen. Trennen löscht die Freigabe auf dem Server.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Claude sees a summary of your data (today, last 7 days, goals) and can log food, drinks, weight, mood and symptoms. Disconnecting deletes the share on the server."
+          }
+        }
+      }
+    },
+    "Claude-App oder claude.ai → Einstellungen → Connectors → Benutzerdefinierten Connector hinzufügen → Name „Körperkompass“ und diese Adresse. Danach „Verbinden“ tippen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Claude app or claude.ai → Settings → Connectors → Add custom connector → name “Körperkompass” and this address. Then tap “Connect”."
+          }
+        }
+      }
+    },
+    "Claude-Connector": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Claude connector"
+          }
+        }
+      }
+    },
     "Coach": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Coach"
+          }
+        }
+      }
+    },
+    "Code von der Anmeldeseite": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Code from the sign-in page"
           }
         }
       }
@@ -3687,6 +3757,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ask your coach …"
+          }
+        }
+      }
+    },
+    "Freigeben": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Allow"
           }
         }
       }
@@ -6481,6 +6561,16 @@
         }
       }
     },
+    "Mit Claude verbunden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connected to Claude"
+          }
+        }
+      }
+    },
     "Mit dem Coach kochen": {
       "localizations": {
         "en": {
@@ -6497,6 +6587,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Unlock your data with the recovery key. Afterwards you can set a new password under Settings → Encryption."
+          }
+        }
+      }
+    },
+    "Mit der Freigabe geht eine Kurzfassung deiner Daten verschlüsselt an deinen Server; den Schlüssel bekommt nur Claude. Gelesen wird sie nur, wenn Claude in deinem Auftrag fragt – dabei gehen die Daten an Anthropic. Keine ärztliche Beratung.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Allowing sends an encrypted summary of your data to your server; only Claude gets the key. It is only read when Claude asks on your behalf – the data then goes to Anthropic. Not medical advice."
           }
         }
       }
@@ -9691,6 +9791,16 @@
         }
       }
     },
+    "Verbunden – zurück zu Claude, die Seite leitet gleich weiter.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connected – back to Claude, the page will redirect shortly."
+          }
+        }
+      }
+    },
     "Verlauf": {
       "localizations": {
         "en": {
@@ -10477,6 +10587,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Shown only this once. Use it to set a new password if you forget yours. Without the password and this key nobody can recover your data – not even the server operator."
+          }
+        }
+      }
+    },
+    "Wird verbunden …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connecting …"
           }
         }
       }

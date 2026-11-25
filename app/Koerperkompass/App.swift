@@ -57,6 +57,7 @@ struct RootView: View {
 }
 
 struct MainView: View {
+    @Environment(AppState.self) private var state
     @State private var tab = "heute"
     @State private var router = Router.shared
     var body: some View {
@@ -67,6 +68,11 @@ struct MainView: View {
                 .tabItem { Label("Abenteuer", systemImage: "flag.checkered") }.tag("abenteuer")
             CoachView().tag("coach").tabItem { Label("Coach", systemImage: "bubble.left.and.text.bubble.right.fill") }
             SettingsView().tag("einstellungen").tabItem { Label("Einstellungen", systemImage: "gearshape.fill") }
+        }
+        // Link von der Claude-Anmeldeseite (koerperkompass://claude-connect?req=CODE): Freigabe bestätigen
+        .sheet(isPresented: Binding(get: { state.pendingLink?.host == "claude-connect" }, set: { if !$0 { state.pendingLink = nil } })) {
+            let code = state.pendingLink.flatMap { URLComponents(url: $0, resolvingAgainstBaseURL: false)?.queryItems?.first { $0.name == "req" }?.value } ?? ""
+            NavigationStack { ClaudeConnectView(code: code).toolbar { Button("Fertig") { state.pendingLink = nil } } }
         }
         // Aus einer Mitteilung: Coach-Tab bzw. „Heute“ (dort öffnet die Übersicht Getränke oder Motivation)
         .onChange(of: router.route, initial: true) {

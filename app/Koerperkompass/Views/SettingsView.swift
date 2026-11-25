@@ -106,6 +106,7 @@ struct SettingsView: View {
                     Section {
                         Toggle("Daten zur Analyse an Claude senden", isOn: $state.aiConsent)
                         NavigationLink("KI-Verbrauch") { UsageView() }
+                        NavigationLink("Claude-Connector") { ClaudeConnectView() }
                     } header: { Text("Claude API") } footer: {
                         Text("Fotos und zusammengefasste Werte gehen nur nach deiner Zustimmung über deinen Server an Anthropic. Keine ärztliche Beratung.")
                     }

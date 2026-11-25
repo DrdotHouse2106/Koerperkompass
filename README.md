@@ -228,6 +228,23 @@ Alle Daten liegen in **einer SQLite-Datei** (`data/koerperkompass.db`, dazu ggf.
 
 ---
 
+## Claude-Connector (mit dem eigenen Claude-Abo)
+
+Körperkompass lässt sich in der Claude-App bzw. auf claude.ai als **benutzerdefinierter Connector** einbinden. Dann
+sprichst du dort – über dein eigenes Claude-Abo – mit deinen Daten und lässt Claude Essen, Getränke, Gewicht, Stimmung
+oder Beschwerden eintragen.
+
+1. App: Einstellungen → Claude API → **Claude-Connector**, Adresse kopieren (`<KK_PUBLIC_URL>/mcp`).
+2. Claude: Einstellungen → Connectors → Benutzerdefinierten Connector hinzufügen → „Verbinden“.
+3. Auf der Anmeldeseite „In Körperkompass öffnen“ tippen (oder den Code in der App eingeben) und freigeben.
+
+**Verschlüsselung:** Die App erzeugt einen Freigabe-Schlüssel und lädt damit verschlüsselt eine Kurzfassung hoch
+(heute, letzte 7 Tage, Ziele – bei jedem Abgleich neu). Der Schlüssel steckt nur im Zugangstoken, das Claude bekommt;
+der Server speichert davon nur einen Prüfwert. Nur während einer Anfrage von Claude entschlüsselt der Server die
+Kurzfassung im Arbeitsspeicher. Einträge von Claude liegen ebenfalls verschlüsselt im Eingangskorb, bis die App sie
+übernimmt. Voraussetzung: `KK_PUBLIC_URL` ist gesetzt und der Server ist per HTTPS erreichbar (auch `/mcp`, `/oauth/…`
+und `/.well-known/oauth-…`).
+
 ## KI-Relais (zentraler KI-Dienst)
 
 Wer keinen eigenen Claude-Schlüssel hat, kann die KI über ein zentrales Relais nutzen. Das Relais ist dieselbe Binary

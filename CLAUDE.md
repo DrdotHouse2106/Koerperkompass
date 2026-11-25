@@ -23,6 +23,7 @@ server/                  Go-Server, eine Binary, SQLite (modernc.org/sqlite, ohn
   friends.go             Freundschaften, auch zwischen Servern (Föderation über /api/fed/*)
   modules.go             Modul-Schema + Liste, generische Zusammenfassung
   exercises.go           Übungsbibliothek (exercises.json aus free-exercise-db, Unlicense; Übersetzungen in exercise_de, Bilder-Zwischenspeicher)
+  mcp.go                 Claude-Connector (MCP + OAuth): verschlüsselte Kurzfassung, Schlüssel nur im Zugangstoken, Eingangskorb für Einträge
   relay.go               KI-Relais (`koerperkompass relay`, `relay-key …`): zentraler Claude-Zugang mit Guthaben, speichert keine Inhalte
   usage.go               KI-Verbrauch: Tokens pro Nutzer/Tag/Modell (ai_usage), Kostenschätzung, GET /api/usage
   module_*.go            ein File pro Modul (module_recipes.go: Rezepte, Reel-Links über Reelkoch)

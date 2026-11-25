@@ -264,28 +264,7 @@ struct CoachView: View {
     }
 
     private func apply(_ p: Proposal, _ i: Int) {
-        ParsedFood.save((p.items ?? []).map(\.food), day: p.date, context: context, state: state)
-        if let kg = p.weight, kg > 20, kg < 400 {
-            context.insert(Entry(module: "body", date: p.date, values: ["weight": kg]))
-            if p.date == Day.today {
-                if state.healthEnabled { Health.saveWeight(kg) }
-                state.profile.weight = kg
-            }
-            state.changed(context)
-        }
-        if let l = p.mood?.level, (1...7).contains(l) {
-            context.insert(Entry(module: "mood", date: p.date, values: [
-                "mood": l, "valence": Mood.valence(l), "feelings": p.mood?.feelings ?? [], "areas": p.mood?.areas ?? [], "kind": "moment", "time": Day.now,
-            ]))
-            if state.healthEnabled && p.date == Day.today { Health.saveMood(level: l, daily: false, feelings: p.mood?.feelings ?? [], areas: p.mood?.areas ?? []) }
-        }
-        for s in p.symptoms ?? [] {
-            guard let id = s.symptom, Symptoms.all.contains(where: { $0.id == id }) else { continue }
-            let sev = max(1, min(3, s.severity ?? 1))
-            context.insert(Entry(module: "symptoms", date: p.date, values: ["symptom": id, "name": Symptoms.name(id), "severity": sev, "time": Day.now]))
-            if state.healthEnabled && p.date == Day.today { Health.saveSymptom(id, severity: sev) }
-        }
-        state.changed(context)
+        p.apply(context, state)
         var done = p
         done.done = true
         mark(i, done)
@@ -510,3 +489,31 @@ func coachContext(_ all: [Entry], _ p: Profile, healthUpload: Bool, mention: Str
     return lines.joined(separator: "\n")
 }
 
+
+extension Proposal {
+    /// Vorschlag eintragen (aus dem Coach oder vom Claude-Connector)
+    @MainActor func apply(_ context: ModelContext, _ state: AppState) {
+        ParsedFood.save((self.items ?? []).map(\.food), day: date, context: context, state: state)
+        if let kg = self.weight, kg > 20, kg < 400 {
+            context.insert(Entry(module: "body", date: date, values: ["weight": kg]))
+            if date == Day.today {
+                if state.healthEnabled { Health.saveWeight(kg) }
+                state.profile.weight = kg
+            }
+            state.changed(context)
+        }
+        if let l = self.mood?.level, (1...7).contains(l) {
+            context.insert(Entry(module: "mood", date: date, values: [
+                "mood": l, "valence": Mood.valence(l), "feelings": self.mood?.feelings ?? [], "areas": self.mood?.areas ?? [], "kind": "moment", "time": Day.now,
+            ]))
+            if state.healthEnabled && date == Day.today { Health.saveMood(level: l, daily: false, feelings: self.mood?.feelings ?? [], areas: self.mood?.areas ?? []) }
+        }
+        for s in self.symptoms ?? [] {
+            guard let id = s.symptom, Symptoms.all.contains(where: { $0.id == id }) else { continue }
+            let sev = max(1, min(3, s.severity ?? 1))
+            context.insert(Entry(module: "symptoms", date: date, values: ["symptom": id, "name": Symptoms.name(id), "severity": sev, "time": Day.now]))
+            if state.healthEnabled && date == Day.today { Health.saveSymptom(id, severity: sev) }
+        }
+        state.changed(context)
+    }
+}

@@ -183,6 +183,7 @@ import UIKit
             try context.save()
             await pushProfile()
             await pushCard(context)
+            await ClaudeShare.sync(self, context)  // Claude-Connector: Kurzfassung erneuern, Einträge aus Claude übernehmen
             await Telemetry.send(context, api: api, profileName: profile.name)  // nur wenn freiwillig eingeschaltet
             syncError = nil
             AppLog.add("Abgleich fertig")

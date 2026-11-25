@@ -91,6 +91,13 @@ Set `KK_PUBLIC_URL` afterwards. A VPN (WireGuard, Tailscale) works as well.
 
 All data is stored in **one SQLite file** (`data/koerperkompass.db` plus `-wal`/`-shm`). Stop the container and copy `data/`, or run `sqlite3 data/koerperkompass.db ".backup backup.db"`. Per-user JSON export: in the app (*Settings → Data → Export*) or `GET /api/export`.
 
+## Claude connector (with your own Claude subscription)
+
+Add Körperkompass in the Claude app or on claude.ai as a **custom connector** (`<KK_PUBLIC_URL>/mcp`, shown in the app
+under Settings → Claude API → Claude connector), then allow it in the app. Claude can read a summary of your data and
+log food, drinks, weight, mood and symptoms. The summary is encrypted with a share key that only exists in Claude's
+access token; the server decrypts it in memory only while Claude asks.
+
 ## AI relay (central AI service)
 
 Without your own Claude key you can use AI through a central relay – the same binary in a second role

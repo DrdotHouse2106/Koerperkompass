@@ -51,6 +51,7 @@ func main() {
 	db.Exec(`DROP TABLE IF EXISTS clips`)
 	os.RemoveAll(filepath.Join(filepath.Dir(env("KK_DB", "data/koerperkompass.db")), "clips"))
 	migrateUsage()
+	migrateMCP()
 	go translateAll()                                                      // Übungsbibliothek einmal komplett ins Deutsche übersetzen (nur mit ANTHROPIC_API_KEY)
 	db.Exec(`ALTER TABLE users ADD COLUMN vault TEXT NOT NULL DEFAULT ''`) // Ende-zu-Ende-Verschlüsselung
 	if err = migrateFriends(); err != nil {

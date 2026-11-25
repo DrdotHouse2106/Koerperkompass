@@ -48,6 +48,20 @@ func routes() http.Handler {
 	m.HandleFunc("POST /api/entries", auth(putEntries))
 	m.HandleFunc("POST /api/log", auth(postAppLog)) // Testphase, siehe applog.go
 	m.HandleFunc("GET /api/log", auth(getAppLog))
+	// Claude-Connector (MCP + OAuth), siehe mcp.go
+	m.HandleFunc("POST /mcp", mcpHandler)
+	m.HandleFunc("GET /.well-known/oauth-protected-resource", oauthResource)
+	m.HandleFunc("GET /.well-known/oauth-protected-resource/mcp", oauthResource)
+	m.HandleFunc("GET /.well-known/oauth-authorization-server", oauthMetadata)
+	m.HandleFunc("POST /oauth/register", oauthRegister)
+	m.HandleFunc("GET /oauth/authorize", oauthAuthorize)
+	m.HandleFunc("GET /oauth/wait", oauthWait)
+	m.HandleFunc("POST /oauth/token", oauthToken)
+	m.HandleFunc("POST /api/claude/approve", auth(claudeApprove))
+	m.HandleFunc("PUT /api/claude/share", auth(claudeShare))
+	m.HandleFunc("DELETE /api/claude/share", auth(claudeUnshare))
+	m.HandleFunc("GET /api/claude/inbox", auth(claudeInbox))
+	m.HandleFunc("DELETE /api/claude/inbox/{id}", auth(claudeInboxDone))
 	m.HandleFunc("GET /api/usage", auth(getUsage))     // KI-Verbrauch, siehe usage.go
 	m.HandleFunc("DELETE /api/data", auth(deleteData)) // „Nur auf dem iPhone“: gespeicherte Daten löschen
 	m.HandleFunc("GET /api/export", auth(export))
