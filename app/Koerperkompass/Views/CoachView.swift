@@ -56,14 +56,16 @@ struct CoachView: View {
                 return "\(reminder == true ? "⏰" : "📅") \(title ?? "") · \(when)" + (reminder == true ? "" : " (\(minutes ?? 60) min)")
             }
         }
+        struct SleepItem: Codable, Hashable { var quality: Int?; var hours: Double?; var issues: [String]? }
         var day: Int?
         var event: EventItem?
+        var sleep: SleepItem?
         var items: [Item]?
         var weight: Double?
         var mood: MoodItem?
         var symptoms: [SymptomItem]?
         var done: Bool?
-        var isEmpty: Bool { (items ?? []).isEmpty && weight == nil && mood?.level == nil && (symptoms ?? []).isEmpty && event?.start == nil }
+        var isEmpty: Bool { (items ?? []).isEmpty && weight == nil && mood?.level == nil && (symptoms ?? []).isEmpty && event?.start == nil && sleep?.quality == nil }
         var date: String { Day.string(Calendar.current.date(byAdding: .day, value: min(day ?? 0, 0), to: Date())!) }
     }
 
@@ -264,6 +266,7 @@ struct CoachView: View {
             }
             if let w = p.weight { Text("⚖️ \(w.short) kg").font(.caption) }
             if let e = p.event, e.start != nil { Text(e.text).font(.caption) }
+            if let q = p.sleep?.quality { Text("\(Sleep.level(Double(q)).emoji) \(String(localized: Sleep.level(Double(q)).title))" + (p.sleep?.hours.map { " · \($0.short) h" } ?? "")).font(.caption) }
             if let l = p.mood?.level { Text("\(Mood.levels[max(0, min(6, l - 1))].emoji) \(String(localized: Mood.levels[max(0, min(6, l - 1))].title))").font(.caption) }
             ForEach(Array((p.symptoms ?? []).enumerated()), id: \.offset) { _, s in
                 Text("🤒 \(Symptoms.name(s.symptom ?? "")) · \(String(localized: Symptoms.severities[max(0, min(2, (s.severity ?? 1) - 1))]))").font(.caption)
@@ -447,6 +450,7 @@ struct CoachView: View {
         if let l = p.mood?.level { parts.append(String(localized: "deine Stimmung „\(String(localized: Mood.levels[max(0, min(6, l - 1))].title))“")) }
         let symptoms = (p.symptoms ?? []).compactMap { $0.symptom.map(Symptoms.name) }
         if !symptoms.isEmpty { parts.append(symptoms.formatted(.list(type: .and))) }
+        if let q = p.sleep?.quality { parts.append(String(localized: "deinen Schlaf „\(String(localized: Sleep.level(Double(q)).title))“")) }
         if let e = p.event, let s = e.start {
             let when = s.formatted(.dateTime.weekday(.wide).hour().minute())
             parts.append(e.reminder == true ? String(localized: "eine Erinnerung „\(e.title ?? "")“ am \(when)") : String(localized: "den Termin „\(e.title ?? "")“ am \(when) in deinen Kalender"))
@@ -497,6 +501,7 @@ func coachContext(_ all: [Entry], _ p: Profile, healthUpload: Bool, mention: Str
     lines.append("- Gegessen: \(kcal.whole) von \(p.kcal.whole) kcal, Eiweiß \(sum("nutrition", "protein").whole)/\(p.protein.whole) g, Kohlenhydrate \(sum("nutrition", "carbs").whole)/\(p.carbs.whole) g, Fett \(sum("nutrition", "fat").whole)/\(p.fat.whole) g")
     lines.append("- Mahlzeiten: " + (meals.isEmpty ? "noch nichts eingetragen" : meals.joined(separator: ", ")))
     lines.append(drinks)
+    if let s = Sleep.summary(entries) { lines.append("- Schlaf (eigenes Gefühl): " + s) }
     if let sym = Symptoms.summary(entries) { lines.append("- Beschwerden (letzte 7 Tage): " + sym) }
     if let cal = CalendarAccess.summary() { lines.append(cal) }
     if let plan = p.plan {
@@ -545,6 +550,10 @@ extension CoachView.Proposal {
             let sev = max(1, min(3, s.severity ?? 1))
             context.insert(Entry(module: "symptoms", date: date, values: ["symptom": id, "name": Symptoms.name(id), "severity": sev, "time": Day.now]))
             if state.healthEnabled && date == Day.today { Health.saveSymptom(id, severity: sev) }
+        }
+        if let q = sleep?.quality, (1...5).contains(q) {
+            context.insert(Entry(module: "sleep", date: date, values: ["quality": q, "hours": sleep?.hours ?? 0,
+                                                                       "issues": (sleep?.issues ?? []).filter { i in Sleep.issues.contains { $0.id == i } }, "time": Day.now]))
         }
         if let e = event { Task { await CalendarAccess.add(e) } }
         state.changed(context)

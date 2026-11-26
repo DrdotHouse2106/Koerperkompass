@@ -2421,6 +2421,16 @@
         }
       }
     },
+    "Die Dauer ist mit dem Wert aus Apple Health vorbelegt, falls vorhanden.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Duration is prefilled from Apple Health if available."
+          }
+        }
+      }
+    },
     "Die Erinnerung kannst du direkt in der Mitteilung abhaken (gedrückt halten): Wasser, Kaffee oder Tee. Alkohol zählt nicht zum Trinkziel.": {
       "localizations": {
         "en": {
@@ -4061,6 +4071,16 @@
         }
       }
     },
+    "Gedankenkreisen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Racing thoughts"
+          }
+        }
+      }
+    },
     "Gedrückt halten für eine andere Menge, z. B. 0,33 l.": {
       "localizations": {
         "en": {
@@ -4097,6 +4117,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Eaten"
+          }
+        }
+      }
+    },
+    "Geht so": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "So-so"
           }
         }
       }
@@ -4167,6 +4197,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Equipment: %@"
+          }
+        }
+      }
+    },
+    "Geschlafen: %@ h": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Slept: %@ h"
           }
         }
       }
@@ -4557,6 +4597,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Height"
+          }
+        }
+      }
+    },
+    "Gut": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Good"
           }
         }
       }
@@ -5417,6 +5467,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Not medical advice. If you feel down or overwhelmed for a longer time, talk to a doctor or a crisis line (in Germany: Telefonseelsorge 0800 111 0 111, free, 24/7)."
+          }
+        }
+      }
+    },
+    "Keine ärztliche Beratung. Schläfst du über Wochen schlecht, sprich mit einer Ärztin oder einem Arzt.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not medical advice. If you sleep badly for weeks, talk to a doctor."
           }
         }
       }
@@ -6361,6 +6421,16 @@
         }
       }
     },
+    "Lärm/Störung": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Noise/disturbance"
+          }
+        }
+      }
+    },
     "Läuft bei dir! Dranbleiben!": {
       "localizations": {
         "en": {
@@ -7277,6 +7347,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Offline – changes will be synced later (%@)"
+          }
+        }
+      }
+    },
+    "Oft aufgewacht": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Woke up often"
           }
         }
       }
@@ -8411,6 +8491,16 @@
         }
       }
     },
+    "Schlafdauer": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sleep duration"
+          }
+        }
+      }
+    },
     "Schlafprobleme": {
       "localizations": {
         "en": {
@@ -8421,12 +8511,52 @@
         }
       }
     },
+    "Schlafqualität": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sleep quality"
+          }
+        }
+      }
+    },
+    "Schlecht": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bad"
+          }
+        }
+      }
+    },
+    "Schlecht geträumt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bad dreams"
+          }
+        }
+      }
+    },
     "Schluck für Schluck 🚰": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Sip by sip 🚰"
+          }
+        }
+      }
+    },
+    "Schmerzen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pain"
           }
         }
       }
@@ -8571,6 +8701,16 @@
         }
       }
     },
+    "Schwer eingeschlafen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hard to fall asleep"
+          }
+        }
+      }
+    },
     "Schwindel": {
       "localizations": {
         "en": {
@@ -8617,6 +8757,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Very pleasant"
+          }
+        }
+      }
+    },
+    "Sehr gut": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Very good"
+          }
+        }
+      }
+    },
+    "Sehr schlecht": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Very bad"
           }
         }
       }
@@ -10281,6 +10441,16 @@
         }
       }
     },
+    "Was hat gestört?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What disturbed you?"
+          }
+        }
+      }
+    },
     "Was ist das hier, eine Kaffeefahrt?! Beweg dich, du Schlafmütze!": {
       "localizations": {
         "en": {
@@ -10587,6 +10757,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "How are you?"
+          }
+        }
+      }
+    },
+    "Wie hast du geschlafen?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How did you sleep?"
+          }
+        }
+      }
+    },
+    "Wie hast du letzte Nacht geschlafen?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How did you sleep last night?"
           }
         }
       }
@@ -10911,6 +11101,16 @@
         }
       }
     },
+    "Zu früh wach": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Woke too early"
+          }
+        }
+      }
+    },
     "Zu leicht": {
       "localizations": {
         "en": {
@@ -10927,6 +11127,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Too hard"
+          }
+        }
+      }
+    },
+    "Zu spät ins Bett": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Went to bed too late"
           }
         }
       }
@@ -11117,6 +11327,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "your mood “%@”"
+          }
+        }
+      }
+    },
+    "deinen Schlaf „%@“": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "your sleep “%@”"
           }
         }
       }

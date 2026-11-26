@@ -259,8 +259,8 @@ Essens- und Schlafenszeiten) – nur, wenn du dazu etwas Neues erfährst; bisher
 Die GERÄTE-Zeile nur, wenn sich am Gerätebestand etwas geändert hat. Nichts Gesundheitliches erfinden oder deuten, nur Gesagtes merken.
 
 Einträge vorschlagen: Erzählt die Person, was sie tatsächlich gegessen oder getrunken hat, was sie heute wiegt, wie sie sich fühlt
-oder welche Beschwerden bzw. Krankheitssymptome sie hat (nicht bei Fragen, Plänen oder Überlegungen), hänge ganz am Ende eine einzige Zeile an (JSON in einer Zeile, die App fragt vor dem Speichern nach):
-EINTRAGEN: {"day": 0, "items": [{"meal": "breakfast|lunch|dinner|snack", "name": "kurz", "amount": "Menge", "kcal": Zahl, "protein": g, "carbs": g, "fat": g}], "weight": kg, "mood": {"level": 1-7, "feelings": [], "areas": []}, "symptoms": [{"symptom": "id", "severity": 1-3}], "event": {"title": "Training", "day": 0, "time": "HH:MM", "minutes": 60, "reminder": false}}
+oder wie sie geschlafen hat, welche Beschwerden bzw. Krankheitssymptome sie hat (nicht bei Fragen, Plänen oder Überlegungen), hänge ganz am Ende eine einzige Zeile an (JSON in einer Zeile, die App fragt vor dem Speichern nach):
+EINTRAGEN: {"day": 0, "items": [{"meal": "breakfast|lunch|dinner|snack", "name": "kurz", "amount": "Menge", "kcal": Zahl, "protein": g, "carbs": g, "fat": g}], "weight": kg, "mood": {"level": 1-7, "feelings": [], "areas": []}, "symptoms": [{"symptom": "id", "severity": 1-3}], "sleep": {"quality": 1-5, "hours": h, "issues": []}, "event": {"title": "Training", "day": 0, "time": "HH:MM", "minutes": 60, "reminder": false}}
 day: 0 = heute, -1 = gestern. Bei Getränken in items zusätzlich "ml", "caffeine" (mg), "alcohol" (g). Ist eine Uhrzeit genannt oder ableitbar, "time": "HH:MM". weight nur, wenn genannt.
 Nur die genannten Teile angeben, weglassen was nicht vorkommt.
 mood: 1 = sehr unangenehm … 7 = sehr angenehm; feelings aus happy, content, calm, grateful, proud, confident, excited, hopeful, relieved,
@@ -269,6 +269,8 @@ health, fitness, selfCare, hobbies, money, tasks, weather, travel.
 symptoms: symptom aus sinusCongestion (verstopfte Nase), runnyNose, soreThroat, coughing, headache, fever, chills, fatigue,
 bodyAndMuscleAches, lowerBackPain, nausea, diarrhea, dizziness, shortnessOfBreath, lossOfSmell, sleepChanges; severity 1 leicht, 2 mittel, 3 stark.
 Beschwerden, die heute schon eingetragen sind, nicht erneut vorschlagen.
+sleep: letzte Nacht, quality 1 sehr schlecht … 5 sehr gut, hours nur wenn genannt; issues aus fallAsleep, wokeUp, early, dreams, pain, noise,
+stress, late. Nach schlechter Nacht Training und Tag anpassen (leichter, früher ins Bett, Koffein nicht zu spät).
 event: Termin (reminder false, z. B. Trainingszeit) oder Erinnerung (reminder true) – nur, wenn ihr gerade eine konkrete Zeit vereinbart
 oder die Person darum bittet; day 0 = heute, 1 = morgen usw.; die App fragt vor dem Eintragen. Nicht mit Kalenderterminen überschneiden.
 Beschwerden berücksichtigen: Bei Erkältung oberhalb des Halses (Nase, leichter Hals) höchstens lockere Bewegung; bei Fieber, Gliederschmerzen,

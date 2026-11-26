@@ -25,6 +25,7 @@ Es gibt keinen zentralen Dienst: Die Entwickler betreiben keinen Server und sehe
 | 🗺 **Mein Plan** | Überblick: Gewichtsverlauf bis zum Ziel, BMI-Skala, Tagesziele, Wasser und Training |
 | 🏁 **Abenteuer** | Gamification: Charakterkarte (Level, Workouts, Serie, Klasse, Rang), teilbare Spielerkarte mit eigenem Foto, Erfolge, Wochenleiste und 🔥-Serie, tägliche Quests, eigene Quests (z. B. Lesen, Meditieren), XP, Level, Ränge (Wanderer → Legende), Attribute (Kraft, Ausdauer, Erholung, Disziplin, Balance) |
 | 🧠 **Stimmung** | Seelisches Wohlbefinden wie in Apple Health: Stimmung von sehr unangenehm bis sehr angenehm, Gefühle und Lebensbereiche, Verlauf; liest und schreibt den „Gemütszustand“ in Apple Health (iOS 18); Kompass zeigt Zusammenhänge mit Schlaf und Schritten |
+| 😴 **Schlaf** | Wie gut du geschlafen hast (5 Stufen), Dauer (aus Apple Health vorbelegt) und was gestört hat; der Coach schlägt den Eintrag vor, wenn du davon erzählst, und passt Training und Tag an |
 | 🤒 **Beschwerden** | Krankheitssymptome und Beschwerden (verstopfte Nase, Husten, Kopfschmerzen, Fieber …) mit Stärke wie in Apple Health „Symptome“ (lesen und schreiben); der Coach schlägt Einträge vor, wenn du sie erwähnst, und passt Trainingsempfehlungen an |
 | 📚 **Übungsbibliothek** | Rund 870 Übungen ([free-exercise-db](https://github.com/yuhonas/free-exercise-db), gemeinfrei): Filter nach Muskelgruppe und eigenen Geräten, Körperfigur mit Haupt- (rot) und Hilfsmuskeln (blau), Bilder im Wechsel, Anleitung (von Claude einmalig übersetzt), YouTube-Suche, eigene Rekorde und Stufen |
 | 📈 **Übungen** | Sätze mit Wiederholungen und Gewicht, Verlauf pro Übung, Stufen Bronze → Silber → Gold → Platin |
@@ -333,6 +334,7 @@ Team-ID in `app/Local.xcconfig` eintragen, oben das iPhone als Ziel wählen und 
 | Getränke | `water` | hydration, kcal, caffeine, alcohol (+ drink, name, ml) | Eingabe, Schnell-Buttons, Trinkerinnerung |
 | Training | `training` | minutes (+ name) | Eingabe (Beispielmodul) |
 | Stimmung | `mood` | mood (1–7, + valence, feelings, areas, kind, time) | Eingabe, Apple Health „Gemütszustand“ (lesen und schreiben, ab iOS 18) |
+| Schlaf | `sleep` | quality (1–5), hours (+ issues, time) | Eingabe, Coach-Vorschlag |
 | Beschwerden | `symptoms` | severity (1–3, + symptom, name, time) | Eingabe, Coach-Vorschlag, Apple Health „Symptome“ (lesen und schreiben) |
 | Rezepte | `recipes` | – (title, servings, ingredients, steps, notes, source, kcal/protein/carbs/fat pro Portion) | Reel-Link über Reelkoch, Rezepttext über Claude |
 

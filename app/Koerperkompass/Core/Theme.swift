@@ -22,6 +22,7 @@ enum Theme {
         case "recipes": .yellow
         case "mood": .mint
         case "symptoms": .red
+        case "sleep": .indigo
         default: petrol
         }
     }

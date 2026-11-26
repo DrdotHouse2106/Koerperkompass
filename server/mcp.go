@@ -264,7 +264,7 @@ var mcpTools = []map[string]any{
 		"Aktivität, Schlaf, Gewicht, Training, Stimmung, Beschwerden), Ziele und den Verlauf der letzten Tage. Vor jeder Antwort zu Ernährung, " +
 		"Training oder Gesundheit aufrufen. Keine ärztliche Beratung.",
 		"inputSchema": map[string]any{"type": "object", "properties": map[string]any{}}},
-	{"name": "koerperkompass_eintragen", "description": "Trägt Gegessenes, Getränke, Gewicht, Stimmung, Beschwerden oder einen Termin bzw. eine Erinnerung (z. B. Trainingszeit) in Körperkompass ein – " +
+	{"name": "koerperkompass_eintragen", "description": "Trägt Gegessenes, Getränke, Gewicht, Schlaf, Stimmung, Beschwerden oder einen Termin bzw. eine Erinnerung (z. B. Trainingszeit) in Körperkompass ein – " +
 		"nur, was die Person tatsächlich zu sich genommen hat bzw. ausdrücklich eintragen möchte, nach kurzer Bestätigung. Die App übernimmt " +
 		"es beim nächsten Öffnen. Nährwerte realistisch für deutsche Portionen schätzen.",
 		"inputSchema": map[string]any{"type": "object", "properties": map[string]any{
@@ -277,6 +277,9 @@ var mcpTools = []map[string]any{
 				"caffeine": map[string]any{"type": "number", "description": "mg"}, "alcohol": map[string]any{"type": "number", "description": "g"},
 			}}},
 			"weight": map[string]any{"type": "number", "description": "kg"},
+			"sleep": map[string]any{"type": "object", "description": "letzte Nacht", "properties": map[string]any{
+				"quality": map[string]any{"type": "integer", "description": "1 sehr schlecht … 5 sehr gut"}, "hours": map[string]any{"type": "number"},
+				"issues": map[string]any{"type": "array", "items": map[string]any{"type": "string", "enum": []string{"fallAsleep", "wokeUp", "early", "dreams", "pain", "noise", "stress", "late"}}}}},
 			"event": map[string]any{"type": "object", "description": "Termin im Kalender (reminder false, z. B. Trainingszeit) oder Erinnerung (reminder true)",
 				"properties": map[string]any{"title": map[string]any{"type": "string"}, "day": map[string]any{"type": "integer", "description": "0 = heute, 1 = morgen"},
 					"time": map[string]any{"type": "string", "description": "HH:MM"}, "minutes": map[string]any{"type": "integer"}, "reminder": map[string]any{"type": "boolean"}}},
