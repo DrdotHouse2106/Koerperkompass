@@ -62,11 +62,14 @@ enum Health {
         let p = HKQuery.predicateForSamples(withStart: since(days), end: nil)
         let asleep = Set(HKCategoryValueSleepAnalysis.allAsleepValues.map(\.rawValue))
         let sleep = (try? await HKSampleQueryDescriptor(predicates: [.categorySample(type: HKCategoryType(.sleepAnalysis), predicate: p)], sortDescriptors: []).result(for: store)) ?? []
-        var hours: [String: Double] = [:]
-        for s in sleep where asleep.contains(s.value) {
-            hours[Day.string(s.endDate), default: 0] += s.endDate.timeIntervalSince(s.startDate) / 3600
+        var hours: [String: Double] = [:], inBed: [String: Double] = [:]
+        for s in sleep {
+            let h = s.endDate.timeIntervalSince(s.startDate) / 3600
+            if asleep.contains(s.value) { hours[Day.string(s.endDate), default: 0] += h }
+            if s.value == HKCategoryValueSleepAnalysis.inBed.rawValue { inBed[Day.string(s.endDate), default: 0] += h }
         }
-        add("sleepHours", hours)
+        // Ohne Uhr: das iPhone allein schreibt mit Schlafplan nur „Im Bett“ – dann diese Zeit nehmen
+        add("sleepHours", hours.merging(inBed) { asleep, _ in asleep })
 
         let workouts = (try? await HKSampleQueryDescriptor(predicates: [.workout(p)], sortDescriptors: []).result(for: store)) ?? []
         var minutes: [String: Double] = [:]

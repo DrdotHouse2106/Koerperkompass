@@ -4621,6 +4621,16 @@
         }
       }
     },
+    "Gute Nacht – ich gehe schlafen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Good night – going to sleep"
+          }
+        }
+      }
+    },
     "Guten Abend": {
       "localizations": {
         "en": {
@@ -4637,6 +4647,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Good morning"
+          }
+        }
+      }
+    },
+    "Guten Morgen – aufgestanden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Good morning – I'm up"
           }
         }
       }
@@ -5077,6 +5097,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "I'm not counting for you, recruit! Count yourself, and count LOUD!"
+          }
+        }
+      }
+    },
+    "Im Bett seit %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In bed since %@"
           }
         }
       }
@@ -7407,6 +7437,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "No name"
+          }
+        }
+      }
+    },
+    "Ohne Uhr: Abends „Gute Nacht“ tippen, morgens „Guten Morgen“ – die Zeit dazwischen wird als Dauer übernommen. Mit einem Schlafplan in der Health-App misst auch das iPhone allein die Zeit im Bett.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Without a watch: tap “Good night” in the evening and “Good morning” when you get up – the time in between becomes the duration. With a sleep schedule in the Health app, the iPhone alone also measures time in bed."
           }
         }
       }

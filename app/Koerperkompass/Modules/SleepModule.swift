@@ -61,9 +61,25 @@ private struct SleepDetail: View {
     @State private var hours: Double = 7
     @State private var issues: Set<String> = []
     @State private var saved = false
+    @AppStorage("sleepStart") private var sleepStart: Double = 0  // „Gute Nacht“ gedrückt (Zeitstempel), 0 = nicht
 
     var body: some View {
         List {
+            // Ohne Uhr: abends „Gute Nacht“, morgens „Guten Morgen“ – die App rechnet die Zeit im Bett aus
+            Section {
+                if sleepStart > 0 {
+                    Button("Guten Morgen – aufgestanden", systemImage: "sun.max.fill") {
+                        hours = (Date().timeIntervalSince1970 - sleepStart) / 3600 * 2
+                        hours = min(14, max(0, hours.rounded() / 2))
+                        sleepStart = 0
+                    }.bold()
+                    Text("Im Bett seit \(Date(timeIntervalSince1970: sleepStart).formatted(date: .omitted, time: .shortened))").font(.caption).foregroundStyle(.secondary)
+                } else {
+                    Button("Gute Nacht – ich gehe schlafen", systemImage: "moon.zzz.fill") { sleepStart = Date().timeIntervalSince1970 }
+                }
+            } footer: {
+                Text("Ohne Uhr: Abends „Gute Nacht“ tippen, morgens „Guten Morgen“ – die Zeit dazwischen wird als Dauer übernommen. Mit einem Schlafplan in der Health-App misst auch das iPhone allein die Zeit im Bett.")
+            }
             Section {
                 HStack(spacing: 6) {
                     ForEach(1...5, id: \.self) { i in
