@@ -157,6 +157,14 @@ import Speech
         }
     }
 
+    /// Server-Ton für einen späteren Satz schon holen (landet im Zwischenspeicher) – für lange Vorträge ohne Lücken
+    func prefetch(_ text: String) {
+        guard let api, UserDefaults.standard.object(forKey: "serverVoice") as? Bool ?? true else { return }
+        let fixed = UserDefaults.standard.string(forKey: "serverVoicePreset") ?? ""
+        let persona = fixed.isEmpty || persona.hasPrefix("dark") ? persona : fixed
+        for part in Self.chunks(Self.speakable(text)) { Task { _ = await Self.audio(part, persona: persona, api: api) } }
+    }
+
     private var playTask: Task<Void, Never>?
     private var playing = false
 

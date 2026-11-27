@@ -78,8 +78,10 @@ struct MonologView: View {
                 block = n
                 // Nächsten Abschnitt schon schreiben lassen, während dieser läuft
                 let next = n < blocks ? Task { await fetch(n + 1, previous: lines.suffix(4).joined(separator: " ")) } : nil
-                for l in lines where !Task.isCancelled {
+                for (i, l) in lines.enumerated() where !Task.isCancelled {
                     line = l
+                    // Stimme für die nächsten zwei Zeilen schon erzeugen lassen, damit keine Lücken entstehen
+                    if i == 0 { lines.prefix(3).dropFirst().forEach(speaker.prefetch) } else if i + 2 < lines.count { speaker.prefetch(lines[i + 2]) }
                     speaker.speak(l, rate: 0.45, pitch: 0.8)
                     await speaker.waitUntilDone()
                 }
