@@ -4,6 +4,7 @@ import (
 	"context"
 	_ "embed"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
@@ -400,6 +401,51 @@ nie belehrend, keine Diagnosen. Regeln: fehlerfreies, natürliches Deutsch; kein
 Antworte ausschließlich mit JSON: {"messages": ["…", "…"]}. Sprache: ` + langName(req.Lang) + `.`
 	prompt := "Schreibe " + strconv.Itoa(req.Count) + " verschiedene Mitteilungen (morgens zuerst).\n\nDaten:\n" + req.Context
 	out, err := askModel(r.Context(), env("KK_MODEL_SMALL", "claude-haiku-5-5"), system, anthropic.BetaOutputConfigEffortLow,
+		[]anthropic.BetaMessageParam{anthropic.NewBetaUserMessage(anthropic.NewBetaTextBlock(prompt))})
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadGateway)
+		return
+	}
+	writeObject(w, out)
+}
+
+// aiMonolog: ein Abschnitt (~2–3 min) des „Dauer-Coachs“ – ununterbrochener Dark-Monolog in Blöcken, die sich steigern.
+// Die App holt Block für Block (den nächsten, während der aktuelle vorgelesen wird).
+func aiMonolog(w http.ResponseWriter, r *http.Request) {
+	var req struct {
+		Context, Lang, Theme, Previous string
+		Block, Blocks                  int
+	}
+	if !requireAI(w) || !readJSON(w, r, &req) {
+		return
+	}
+	if req.Blocks < 1 || req.Blocks > 15 {
+		req.Blocks = 8
+	}
+	lang := map[string]string{"de": "Deutsch", "en": "Englisch", "mix": "Deutsch mit einzelnen englischen Kernsätzen"}[req.Lang]
+	if lang == "" {
+		lang = "Deutsch"
+	}
+	phase := "Mitte: Druck steigern, tiefer gehen"
+	switch {
+	case req.Block <= 1:
+		phase = "Anfang: Bild des stärkeren künftigen Ichs, ruhig und eindringlich einsteigen"
+	case req.Block >= req.Blocks:
+		phase = "Ende: Höhepunkt, Taten statt Worte, klarer Handlungsaufruf für heute, kraftvoller Schluss"
+	case req.Block*3 >= req.Blocks*2:
+		phase = "später Teil: höchste Intensität, kurze harte Sätze"
+	}
+	system := darkStyle + `
+
+Du schreibst einen langen, ununterbrochenen Monolog („Dauer-Coach“), der vorgelesen wird: eine Stimme, Du-Ansprache,
+eigene Sätze. Ein Abschnitt hat etwa 320–380 Wörter (gut 2 Minuten). Kurze Hauptsätze, eine Zeile pro Satz bzw. Gedanke,
+keine Überschriften, keine Emojis, kein Markdown, keine Regieanweisungen. Wiederhole keine Bilder oder Sätze aus dem
+vorigen Abschnitt, führe den Gedanken weiter. Greife, wo es passt, konkret den Weg der Person auf (Ziel, Training,
+Schlaf, Beschwerden) – Schmerzen und Krankheit nie wegreden: dann geht es um klugen Umgang, Erholung, Geduld.
+Sprache: ` + lang + `. Antworte ausschließlich mit JSON: {"lines": ["…", "…"]}`
+	prompt := fmt.Sprintf("Thema: %s\nAbschnitt %d von %d – %s.\nEnde des vorigen Abschnitts: %s\n\nDaten der Person:\n%s",
+		req.Theme, req.Block, req.Blocks, phase, req.Previous, req.Context)
+	out, err := askModel(r.Context(), env("KK_MODEL", "claude-opus-5-5"), system, anthropic.BetaOutputConfigEffortLow,
 		[]anthropic.BetaMessageParam{anthropic.NewBetaUserMessage(anthropic.NewBetaTextBlock(prompt))})
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadGateway)

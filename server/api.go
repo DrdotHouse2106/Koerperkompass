@@ -74,6 +74,7 @@ func routes() http.Handler {
 	m.HandleFunc("POST /api/ai/next", auth(aiNext))
 	m.HandleFunc("POST /api/ai/coach", auth(aiCoach))
 	m.HandleFunc("POST /api/ai/motivation", auth(aiMotivation))
+	m.HandleFunc("POST /api/ai/monolog", auth(aiMonolog))
 	m.HandleFunc("POST /api/ai/voice", auth(aiVoice))
 	m.HandleFunc("POST /api/ai/meal", auth(aiMeal))
 	m.HandleFunc("POST /api/ai/recipe", auth(aiRecipe))

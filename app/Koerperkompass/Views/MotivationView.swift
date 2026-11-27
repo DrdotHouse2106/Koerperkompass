@@ -13,6 +13,7 @@ struct MotivationView: View {
     @State private var items: [String] = []
     @State private var order: [Int] = []
     @State private var loadingPersonal = false
+    @State private var monolog = false
     @AppStorage("motivationFavs") private var favData = Data()
     @AppStorage("motivationStyle") private var style = "soft"  // "soft" oder "dark"
     @AppStorage("darkLang") private var darkLang = DarkStory.language
@@ -45,6 +46,9 @@ struct MotivationView: View {
         .task { if style != "soft" && style != "dark" { style = "dark" } }  // früherer Stil „Meine Clips“ entfällt
         .onChange(of: darkLang) { speaker.stop(); stories = []; storyOrder = []; moreStories() }
         .onDisappear { speaker.stop() }
+        .fullScreenCover(isPresented: $monolog) {
+            NavigationStack { MonologView().toolbar { Button("Fertig") { monolog = false } } }
+        }
         .scrollTargetBehavior(.paging)
         .ignoresSafeArea()
         .toolbar(.hidden, for: .tabBar)  // sonst liegen die Knöpfe unten hinter der Tab-Leiste
@@ -64,6 +68,7 @@ struct MotivationView: View {
                     }
                     if state.aiAvailable && state.aiConsent {
                         Button("Neue persönliche Geschichten", systemImage: "sparkles") { personalStories() }.disabled(loadingPersonal)
+                        Button("Dauer-Coach (10–30 Minuten)", systemImage: "waveform") { speaker.stop(); monolog = true }
                     }
                 } else {
                     Button("Neue persönliche Sprüche", systemImage: "sparkles") { personal() }.disabled(loadingPersonal)

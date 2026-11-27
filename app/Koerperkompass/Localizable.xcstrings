@@ -241,6 +241,16 @@
         }
       }
     },
+    "%lld Minuten": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld minutes"
+          }
+        }
+      }
+    },
     "%lld Quests · %lld XP": {
       "localizations": {
         "en": {
@@ -717,6 +727,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Weight loss made easy 🎯"
+          }
+        }
+      }
+    },
+    "Abschnitt %lld von %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Part %lld of %lld"
           }
         }
       }
@@ -2001,6 +2021,26 @@
         }
       }
     },
+    "Dauer-Coach": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Continuous coach"
+          }
+        }
+      }
+    },
+    "Dauer-Coach (10–30 Minuten)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Continuous coach (10–30 minutes)"
+          }
+        }
+      }
+    },
     "Dein Coach denkt nach …": {
       "localizations": {
         "en": {
@@ -2771,6 +2811,16 @@
         }
       }
     },
+    "Durchhalten": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Perseverance"
+          }
+        }
+      }
+    },
     "Durst ist schon zu spät 😉": {
       "localizations": {
         "en": {
@@ -2977,6 +3027,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "One-arm row – 3 × 10 per side"
+          }
+        }
+      }
+    },
+    "Eine Stimme spricht ohne Pause zu dir – eigene Texte im Dark-Stil, persönlich zu deinem Weg. Läuft auch bei gesperrtem Bildschirm, z. B. beim Laufen oder im Gym.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "One voice talks to you without a break – original texts in Dark style, personal to your journey. Keeps running with the screen locked, e.g. while running or at the gym."
+          }
+        }
+      }
+    },
+    "Einen Moment …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "One moment …"
           }
         }
       }
@@ -7171,6 +7241,16 @@
         }
       }
     },
+    "Neustart": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fresh start"
+          }
+        }
+      }
+    },
     "Neutral": {
       "localizations": {
         "en": {
@@ -7337,6 +7417,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Only needed if you want to use other devices without iCloud Keychain. You don't need the old password here."
+          }
+        }
+      }
+    },
+    "Nächster Abschnitt konnte nicht geladen werden.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The next part could not be loaded."
           }
         }
       }
@@ -8901,6 +8991,16 @@
         }
       }
     },
+    "Selbstvertrauen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Self-confidence"
+          }
+        }
+      }
+    },
     "Senden": {
       "localizations": {
         "en": {
@@ -9557,6 +9657,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Add text or photo"
+          }
+        }
+      }
+    },
+    "Thema": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Theme"
           }
         }
       }

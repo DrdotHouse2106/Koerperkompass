@@ -36,6 +36,7 @@ targets:
         ITSAppUsesNonExemptEncryption: false
         UILaunchScreen: {}
         UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+        UIBackgroundModes: [audio]  # Dauer-Coach und Vorlesen laufen bei gesperrtem Bildschirm weiter
         NSHealthShareUsageDescription: Körperkompass liest Schritte, aktive Energie, Schlaf, Ruhepuls, Gewicht und Trainings, um sie dir anzuzeigen und auszuwerten.
         NSHealthUpdateUsageDescription: Körperkompass speichert dein Gewicht und deine Mahlzeiten in Apple Health.
         NSCameraUsageDescription: Die Kamera wird zum Scannen des Kopplungscodes und für Fotos von Mahlzeiten verwendet.
