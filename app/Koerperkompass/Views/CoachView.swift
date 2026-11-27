@@ -269,7 +269,7 @@ struct CoachView: View {
             }
             if let w = p.weight { Text("⚖️ \(w.short) kg").font(.caption) }
             if let e = p.event, e.start != nil { Text(e.text).font(.caption) }
-            if let q = p.sleep?.quality { Text("\(Sleep.level(Double(q)).emoji) \(String(localized: Sleep.level(Double(q)).title))" + (p.sleep?.hours.map { " · \($0.short) h" } ?? "")).font(.caption) }
+            if let q = p.sleep?.quality { Text("\(Sleep.level(Double(q)).emoji) " + String(localized: "Schlaf: \(String(localized: Sleep.level(Double(q)).title))") + (p.sleep?.hours.map { " · \($0.short) h" } ?? "")).font(.caption) }
             if let l = p.mood?.level { Text("\(Mood.levels[max(0, min(6, l - 1))].emoji) \(String(localized: Mood.levels[max(0, min(6, l - 1))].title))").font(.caption) }
             ForEach(Array((p.symptoms ?? []).enumerated()), id: \.offset) { _, s in
                 Text("🤒 \(s.label) · \(String(localized: Symptoms.severities[max(0, min(2, (s.severity ?? 1) - 1))]))").font(.caption)

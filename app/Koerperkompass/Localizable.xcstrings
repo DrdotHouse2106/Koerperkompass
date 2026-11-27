@@ -8651,6 +8651,16 @@
         }
       }
     },
+    "Schlaf: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sleep: %@"
+          }
+        }
+      }
+    },
     "Schlafdauer": {
       "localizations": {
         "en": {
