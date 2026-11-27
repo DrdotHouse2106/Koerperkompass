@@ -42,7 +42,10 @@ struct CoachView: View {
             }
         }
         struct MoodItem: Codable, Hashable { var level: Int?; var feelings: [String]?; var areas: [String]? }
-        struct SymptomItem: Codable, Hashable { var symptom: String?; var severity: Int? }
+        struct SymptomItem: Codable, Hashable {
+            var symptom: String?; var severity: Int?; var name: String?  // name bei „other“ (z. B. „Zahnschmerzen“)
+            var label: String { symptom == "other" ? (name ?? Symptoms.name("other")) : Symptoms.name(symptom ?? "") }
+        }
         /// Termin oder Erinnerung (z. B. Trainingszeit); day 0 = heute, 1 = morgen …, time „HH:MM“
         struct EventItem: Codable, Hashable {
             var title: String?; var day: Int?; var time: String?; var minutes: Int?; var reminder: Bool?
@@ -269,7 +272,7 @@ struct CoachView: View {
             if let q = p.sleep?.quality { Text("\(Sleep.level(Double(q)).emoji) \(String(localized: Sleep.level(Double(q)).title))" + (p.sleep?.hours.map { " · \($0.short) h" } ?? "")).font(.caption) }
             if let l = p.mood?.level { Text("\(Mood.levels[max(0, min(6, l - 1))].emoji) \(String(localized: Mood.levels[max(0, min(6, l - 1))].title))").font(.caption) }
             ForEach(Array((p.symptoms ?? []).enumerated()), id: \.offset) { _, s in
-                Text("🤒 \(Symptoms.name(s.symptom ?? "")) · \(String(localized: Symptoms.severities[max(0, min(2, (s.severity ?? 1) - 1))]))").font(.caption)
+                Text("🤒 \(s.label) · \(String(localized: Symptoms.severities[max(0, min(2, (s.severity ?? 1) - 1))]))").font(.caption)
             }
             if p.done == true {
                 Label("Eingetragen", systemImage: "checkmark.circle.fill").font(.caption.bold()).foregroundStyle(.green)
@@ -448,7 +451,7 @@ struct CoachView: View {
         }
         if let w = p.weight { parts.append(String(localized: "dein Gewicht von \(w.short) Kilo")) }
         if let l = p.mood?.level { parts.append(String(localized: "deine Stimmung „\(String(localized: Mood.levels[max(0, min(6, l - 1))].title))“")) }
-        let symptoms = (p.symptoms ?? []).compactMap { $0.symptom.map(Symptoms.name) }
+        let symptoms = (p.symptoms ?? []).filter { $0.symptom != nil }.map(\.label)
         if !symptoms.isEmpty { parts.append(symptoms.formatted(.list(type: .and))) }
         if let q = p.sleep?.quality { parts.append(String(localized: "deinen Schlaf „\(String(localized: Sleep.level(Double(q)).title))“")) }
         if let e = p.event, let s = e.start {
@@ -548,7 +551,7 @@ extension CoachView.Proposal {
         for s in self.symptoms ?? [] {
             guard let id = s.symptom, Symptoms.all.contains(where: { $0.id == id }) else { continue }
             let sev = max(1, min(3, s.severity ?? 1))
-            context.insert(Entry(module: "symptoms", date: date, values: ["symptom": id, "name": Symptoms.name(id), "severity": sev, "time": Day.now]))
+            context.insert(Entry(module: "symptoms", date: date, values: ["symptom": id, "name": s.label, "severity": sev, "time": Day.now]))
             if state.healthEnabled && date == Day.today { Health.saveSymptom(id, severity: sev) }
         }
         if let q = sleep?.quality, (1...5).contains(q) {

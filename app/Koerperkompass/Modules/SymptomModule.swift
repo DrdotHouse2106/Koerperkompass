@@ -15,14 +15,16 @@ struct SymptomModule: AppModule {
 
 enum Symptoms {
     /// Kennung → Name und Apple-Health-Typ
-    static let all: [(id: String, name: LocalizedStringResource, hk: HKCategoryTypeIdentifier)] = [
+    /// hk nil = gibt es in Apple Health nicht (nur in Körperkompass)
+    static let all: [(id: String, name: LocalizedStringResource, hk: HKCategoryTypeIdentifier?)] = [
         ("sinusCongestion", "Verstopfte Nase", .sinusCongestion), ("runnyNose", "Schnupfen", .runnyNose),
         ("soreThroat", "Halsschmerzen", .soreThroat), ("coughing", "Husten", .coughing), ("headache", "Kopfschmerzen", .headache),
         ("fever", "Fieber", .fever), ("chills", "Schüttelfrost", .chills), ("fatigue", "Erschöpfung", .fatigue),
         ("bodyAndMuscleAches", "Gliederschmerzen", .generalizedBodyAche), ("lowerBackPain", "Rückenschmerzen", .lowerBackPain),
         ("nausea", "Übelkeit", .nausea), ("diarrhea", "Durchfall", .diarrhea), ("dizziness", "Schwindel", .dizziness),
         ("shortnessOfBreath", "Kurzatmigkeit", .shortnessOfBreath), ("lossOfSmell", "Geruchsverlust", .lossOfSmell),
-        ("sleepChanges", "Schlafprobleme", .sleepChanges),
+        ("sleepChanges", "Schlafprobleme", .sleepChanges), ("kneePain", "Knieschmerzen", nil), ("jointPain", "Gelenkschmerzen", nil),
+        ("muscleSoreness", "Muskelkater", nil), ("other", "Sonstiges", nil),
     ]
     static let severities: [LocalizedStringResource] = ["Leicht", "Mittel", "Stark"]
 
@@ -42,13 +44,13 @@ enum Symptoms {
 }
 
 extension Health {
-    static var symptomTypes: [HKCategoryType] { Symptoms.all.map { HKCategoryType($0.hk) } }
+    static var symptomTypes: [HKCategoryType] { Symptoms.all.compactMap { $0.hk.map { HKCategoryType($0) } } }
 
     /// Beschwerde in Apple Health speichern (Stärke 1–3 → leicht/mittel/stark)
     static func saveSymptom(_ id: String, severity: Int) {
-        guard let s = Symptoms.all.first(where: { $0.id == id }) else { return }
+        guard let hk = Symptoms.all.first(where: { $0.id == id })?.hk else { return }
         let value = [HKCategoryValueSeverity.mild, .moderate, .severe][max(0, min(2, severity - 1))].rawValue
-        store.save(HKCategorySample(type: HKCategoryType(s.hk), value: value, start: Date(), end: Date())) { _, _ in }
+        store.save(HKCategorySample(type: HKCategoryType(hk), value: value, start: Date(), end: Date())) { _, _ in }
     }
 
     /// Beschwerden aus Health (andere Apps, Health-App); eigene werden übersprungen
@@ -56,8 +58,9 @@ extension Health {
         let start = Calendar.current.date(byAdding: .day, value: -(days - 1), to: Calendar.current.startOfDay(for: Date()))!
         var out: [(id: String, date: String, values: [String: Any])] = []
         for s in Symptoms.all {
+            guard let hk = s.hk else { continue }
             let p = HKQuery.predicateForSamples(withStart: start, end: nil)
-            let samples = (try? await HKSampleQueryDescriptor(predicates: [.categorySample(type: HKCategoryType(s.hk), predicate: p)], sortDescriptors: []).result(for: store)) ?? []
+            let samples = (try? await HKSampleQueryDescriptor(predicates: [.categorySample(type: HKCategoryType(hk), predicate: p)], sortDescriptors: []).result(for: store)) ?? []
             for x in samples where x.sourceRevision.source != HKSource.default() && x.value != HKCategoryValueSeverity.notPresent.rawValue {
                 let sev = x.value == HKCategoryValueSeverity.severe.rawValue ? 3 : x.value == HKCategoryValueSeverity.moderate.rawValue ? 2 : 1
                 out.append(("health-" + x.uuid.uuidString, Day.string(x.startDate),
@@ -89,6 +92,7 @@ private struct SymptomDetail: View {
     @Environment(\.modelContext) private var context
     @State private var picked: String?
     @State private var severity = 2
+    @State private var other = ""
 
     var body: some View {
         List {
@@ -104,6 +108,7 @@ private struct SymptomDetail: View {
                     }
                 }
                 .padding(.vertical, 4)
+                if picked == "other" { TextField("Was genau? (z. B. Zahnschmerzen)", text: $other) }
                 if picked != nil {
                     Picker("Stärke", selection: $severity) {
                         ForEach(1...3, id: \.self) { Text(Symptoms.severities[$0 - 1]).tag($0) }
@@ -128,10 +133,11 @@ private struct SymptomDetail: View {
 
     private func save() {
         guard let picked else { return }
-        context.insert(Entry(module: "symptoms", values: ["symptom": picked, "name": Symptoms.name(picked), "severity": severity, "time": Day.now]))
+        context.insert(Entry(module: "symptoms", values: ["symptom": picked, "name": picked == "other" && !other.isEmpty ? other : Symptoms.name(picked), "severity": severity, "time": Day.now]))
         if state.healthEnabled { Health.saveSymptom(picked, severity: severity) }
         state.changed(context)
         self.picked = nil
+        other = ""
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
     }
 }

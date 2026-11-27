@@ -286,7 +286,8 @@ var mcpTools = []map[string]any{
 			"mood": map[string]any{"type": "object", "properties": map[string]any{"level": map[string]any{"type": "integer", "description": "1 sehr unangenehm … 7 sehr angenehm"}}},
 			"symptoms": map[string]any{"type": "array", "items": map[string]any{"type": "object", "properties": map[string]any{
 				"symptom": map[string]any{"type": "string", "enum": []string{"sinusCongestion", "runnyNose", "soreThroat", "coughing", "headache", "fever",
-					"chills", "fatigue", "bodyAndMuscleAches", "lowerBackPain", "nausea", "diarrhea", "dizziness", "shortnessOfBreath", "lossOfSmell", "sleepChanges"}},
+					"chills", "fatigue", "bodyAndMuscleAches", "lowerBackPain", "nausea", "diarrhea", "dizziness", "shortnessOfBreath", "lossOfSmell", "sleepChanges", "kneePain", "jointPain", "muscleSoreness", "other"}},
+				"name":     map[string]any{"type": "string", "description": "nur bei other"},
 				"severity": map[string]any{"type": "integer", "description": "1 leicht, 2 mittel, 3 stark"},
 			}}},
 		}}},

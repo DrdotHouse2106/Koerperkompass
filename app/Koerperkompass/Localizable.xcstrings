@@ -4141,6 +4141,16 @@
         }
       }
     },
+    "Gelenkschmerzen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Joint pain"
+          }
+        }
+      }
+    },
     "Gelten jeden Tag, +15 XP pro Quest.": {
       "localizations": {
         "en": {
@@ -5691,6 +5701,16 @@
         }
       }
     },
+    "Knieschmerzen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Knee pain"
+          }
+        }
+      }
+    },
     "Koffein": {
       "localizations": {
         "en": {
@@ -6957,6 +6977,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Mountain climbers"
+          }
+        }
+      }
+    },
+    "Muskelkater": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Muscle soreness"
           }
         }
       }
@@ -10447,6 +10477,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "What your coach knows about you"
+          }
+        }
+      }
+    },
+    "Was genau? (z. B. Zahnschmerzen)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What exactly? (e.g. toothache)"
           }
         }
       }

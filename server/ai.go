@@ -260,14 +260,15 @@ Die GERÄTE-Zeile nur, wenn sich am Gerätebestand etwas geändert hat. Nichts G
 
 Einträge vorschlagen: Erzählt die Person, was sie tatsächlich gegessen oder getrunken hat, was sie heute wiegt, wie sie sich fühlt
 oder wie sie geschlafen hat, welche Beschwerden bzw. Krankheitssymptome sie hat (nicht bei Fragen, Plänen oder Überlegungen), hänge ganz am Ende eine einzige Zeile an (JSON in einer Zeile, die App fragt vor dem Speichern nach):
-EINTRAGEN: {"day": 0, "items": [{"meal": "breakfast|lunch|dinner|snack", "name": "kurz", "amount": "Menge", "kcal": Zahl, "protein": g, "carbs": g, "fat": g}], "weight": kg, "mood": {"level": 1-7, "feelings": [], "areas": []}, "symptoms": [{"symptom": "id", "severity": 1-3}], "sleep": {"quality": 1-5, "hours": h, "issues": []}, "event": {"title": "Training", "day": 0, "time": "HH:MM", "minutes": 60, "reminder": false}}
+EINTRAGEN: {"day": 0, "items": [{"meal": "breakfast|lunch|dinner|snack", "name": "kurz", "amount": "Menge", "kcal": Zahl, "protein": g, "carbs": g, "fat": g}], "weight": kg, "mood": {"level": 1-7, "feelings": [], "areas": []}, "symptoms": [{"symptom": "id", "severity": 1-3, "name": "nur bei other"}], "sleep": {"quality": 1-5, "hours": h, "issues": []}, "event": {"title": "Training", "day": 0, "time": "HH:MM", "minutes": 60, "reminder": false}}
 day: 0 = heute, -1 = gestern. Bei Getränken in items zusätzlich "ml", "caffeine" (mg), "alcohol" (g). Ist eine Uhrzeit genannt oder ableitbar, "time": "HH:MM". weight nur, wenn genannt.
 Nur die genannten Teile angeben, weglassen was nicht vorkommt.
 mood: 1 = sehr unangenehm … 7 = sehr angenehm; feelings aus happy, content, calm, grateful, proud, confident, excited, hopeful, relieved,
 drained, stressed, overwhelmed, anxious, worried, irritated, frustrated, sad, lonely, indifferent; areas aus work, family, partner, friends,
 health, fitness, selfCare, hobbies, money, tasks, weather, travel.
 symptoms: symptom aus sinusCongestion (verstopfte Nase), runnyNose, soreThroat, coughing, headache, fever, chills, fatigue,
-bodyAndMuscleAches, lowerBackPain, nausea, diarrhea, dizziness, shortnessOfBreath, lossOfSmell, sleepChanges; severity 1 leicht, 2 mittel, 3 stark.
+bodyAndMuscleAches, lowerBackPain, nausea, diarrhea, dizziness, shortnessOfBreath, lossOfSmell, sleepChanges, kneePain, jointPain,
+muscleSoreness, other (dann "name": z. B. "Zahnschmerzen"); severity 1 leicht, 2 mittel, 3 stark. Mehrere Beschwerden als mehrere Einträge.
 Beschwerden, die heute schon eingetragen sind, nicht erneut vorschlagen.
 sleep: letzte Nacht, quality 1 sehr schlecht … 5 sehr gut, hours nur wenn genannt; issues aus fallAsleep, wokeUp, early, dreams, pain, noise,
 stress, late. Nach schlechter Nacht Training und Tag anpassen (leichter, früher ins Bett, Koffein nicht zu spät).
