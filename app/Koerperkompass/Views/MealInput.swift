@@ -37,7 +37,7 @@ extension ParsedFood {
             if f.ml > 0 {
                 context.insert(Entry(module: "water", date: day, values: [
                     "drink": "custom", "name": f.name, "ml": f.ml, "hydration": f.alcohol > 0 ? 0 : f.ml,
-                    "kcal": f.kcal, "carbs": f.carbs, "caffeine": f.caffeine, "alcohol": f.alcohol, "time": time,
+                    "kcal": f.kcal, "protein": f.protein, "carbs": f.carbs, "fat": f.fat, "caffeine": f.caffeine, "alcohol": f.alcohol, "time": time,
                 ]))
                 continue
             }

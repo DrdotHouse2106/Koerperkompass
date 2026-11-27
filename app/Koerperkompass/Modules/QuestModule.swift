@@ -53,7 +53,7 @@ struct Quest {
             Set(e.filter { $0.module == "nutrition" }.compactMap { $0.text("meal") }).isSuperset(of: ["breakfast", "lunch", "dinner"])
         },
         Quest(id: "protein", title: "Eiweißziel erreichen", symbol: "bolt.heart", module: "nutrition", xp: 30, attribute: .strength) { e, p in
-            p.protein > 0 && sum(e, "nutrition", "protein") >= p.protein * 0.9
+            p.protein > 0 && sum(e, "nutrition", "protein") + sum(e, "water", "protein") >= p.protein * 0.9
         },
         Quest(id: "kcal", title: "Kalorien im Zielbereich", symbol: "target", module: "nutrition", xp: 40, attribute: .balance) { e, p in
             let k = sum(e, "nutrition", "kcal")

@@ -501,7 +501,7 @@ func coachContext(_ all: [Entry], _ p: Profile, healthUpload: Bool, mention: Str
     var lines: [String] = []
     lines.append("Profil: \(p.aiText), Trinkziel \(p.waterGoal.whole) ml")
     lines.append("Heute \(Date().formatted(.dateTime.weekday(.wide).locale(Locale(identifier: "de_DE")))), \(Day.today), \(Date().formatted(date: .omitted, time: .shortened)) Uhr:")
-    lines.append("- Gegessen: \(kcal.whole) von \(p.kcal.whole) kcal, Eiweiß \(sum("nutrition", "protein").whole)/\(p.protein.whole) g, Kohlenhydrate \(sum("nutrition", "carbs").whole)/\(p.carbs.whole) g, Fett \(sum("nutrition", "fat").whole)/\(p.fat.whole) g")
+    lines.append("- Gegessen: \(kcal.whole) von \(p.kcal.whole) kcal, Eiweiß \((sum("nutrition", "protein") + sum("water", "protein")).whole)/\(p.protein.whole) g, Kohlenhydrate \((sum("nutrition", "carbs") + sum("water", "carbs")).whole)/\(p.carbs.whole) g, Fett \((sum("nutrition", "fat") + sum("water", "fat")).whole)/\(p.fat.whole) g")
     lines.append("- Mahlzeiten: " + (meals.isEmpty ? "noch nichts eingetragen" : meals.joined(separator: ", ")))
     lines.append(drinks)
     if let s = Sleep.summary(entries) { lines.append("- Schlaf (eigenes Gefühl): " + s) }
