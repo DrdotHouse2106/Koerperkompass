@@ -40,3 +40,10 @@ Ausgewertete Vorbilder (nur Stilmerkmale, keine Texte)
   drängende Fragen in schneller Folge („Warum hältst du dich zurück?“), Erinnerung daran, was andere gesagt und getan haben;
   dramatische Stimme über Spannungsmusik; ein einzelnes Graustufen-Bild, langsam aufgedeckt; Ein-Wort-Einblendungen
   abwechselnd weiß und rot, Fragen mit „…??“, Schlüsselwörter rot.
+- 2026-11-27 Langer Monolog (TGBL – The Growth Beyond Limits, Facebook, 21 min, Englisch): ununterbrochene Du-Ansprache
+  einer tiefen, eindringlichen Erzählerstimme (~150 Wörter/min, keine Pausen) über durchgehendem Klangteppich;
+  Aufbau in Blöcken zu 2–3 Minuten, die sich steigern: Bild des stärkeren künftigen Ichs → Bruch mit dem alten Ich →
+  Preis der Veränderung (Einsamkeit, kein Applaus) → tägliche Disziplin statt Motivation → Arbeit, wenn niemand zusieht
+  → das künftige Ich bewertet jede Wiederholung → Taten statt Worte → Handlungsaufruf am Ende; Mittel: kurze Hauptsätze,
+  Gegensätze („Du bist nicht … Du bist …“), Dreierreihen, rhetorische Fragen, Zeilen mit „Weil …“; Bild ohne Sprecher,
+  Zusammenschnitt von Kampf- und Trainingsszenen (Laufen, Boxen, Dojo).
